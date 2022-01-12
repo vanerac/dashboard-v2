@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cat ${{format('{0}/package-lock.json', matrix.directory)}}
-      - run: echo ${{ hashFiles('${{matrix.directory}}/package-lock.json') }}
+      - run: echo ${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v2
