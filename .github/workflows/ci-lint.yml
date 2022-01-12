@@ -8,6 +8,7 @@ jobs:
       matrix:
         directories : ["app", "api", "front"]
     steps:
+      - run: echo ${{matrix.directories}}
       - uses: actions/checkout@v2
       - name: Cache dependencies
         id: cache
@@ -15,7 +16,7 @@ jobs:
         with:
           path: |
             ./${{matrix.directories}}/node_modules
-          key: modules-${{ hashFiles(./${{matrix.directories}}/package-lock.json) }}
+          key: modules-${{ hashFiles('./${{matrix.directories}}/package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
@@ -41,7 +42,7 @@ jobs:
         with:
           path: |
             ./{{matrix.directories}}/node_modules
-          key: modules-${{hashFiles(./${{matrix.directories}}/package-lock.json)}}
+          key: modules-${{hashFiles('./${{matrix.directories}}/package-lock.json')}}
       - run: npm run lint
         working-directory: ./${{matrix.directories}}
         name: Lint
@@ -63,7 +64,7 @@ jobs:
         with:
           path: |
             ./${{matrix.directories}}/node_modules
-          key: modules-${{ hashFiles(./${{ matrix.directories }}/package-lock.json) }}
+          key: modules-${{ hashFiles('./${{ matrix.directories }}/package-lock.json') }}
       - run: npm run prettier
         working-directory: ./${{matrix.directories}}
         name: Prettier
