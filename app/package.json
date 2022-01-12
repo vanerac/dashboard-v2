@@ -6,7 +6,11 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test --fix",
+    "prettier": "prettier './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "prettier --write './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}' --mode=fix"
   },
   "jest": {
     "preset": "jest-expo"

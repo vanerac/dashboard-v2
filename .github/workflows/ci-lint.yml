@@ -21,7 +21,8 @@ jobs:
           node-version: '16'
       - run: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        name: install app dependencies
+        working-directory: ./${{matrix.directories}}
+        name: Install dependencies
   lint:
     strategy:
       matrix:
@@ -42,13 +43,13 @@ jobs:
             ./{{matrix.directories}}/node_modules
           key: modules-${{hashFiles('./${{matrix.directories}}/package-lock.json')}}
       - run: npm run lint
-        working-directory: app
-        name: Lint App
+        working-directory: ./${{matrix.directories}}
+        name: Lint
   prettier:
     strategy:
       matrix:
         directories: [ "app", "api", "front" ]
-    name: Prettier client
+    name: Prettier
     runs-on: ubuntu-latest
     needs: install-dependencies
     steps:
@@ -62,7 +63,7 @@ jobs:
         with:
           path: |
             ./${{matrix.directories}}/node_modules
-          key: modules-${{ hashFiles('./${{ matrix.directories }}package-lock.json') }}
+          key: modules-${{ hashFiles('./${{ matrix.directories }}/package-lock.json') }}
       - run: npm run prettier
-        working-directory: app
-        name: Prettier APp
+        working-directory: ./${{matrix.directories}}
+        name: Prettier
