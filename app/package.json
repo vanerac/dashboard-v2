@@ -7,10 +7,10 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test --fix",
-    "prettier": "prettier './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}'",
-    "prettier:fix": "prettier --write './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}' --mode=fix"
+    "lint": "npx eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test",
+    "lint:fix": "npx eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test --fix",
+    "prettier": "npx prettier './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "npx prettier --write './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}' --mode=fix"
   },
   "jest": {
     "preset": "jest-expo"
