@@ -1,9 +1,4 @@
-# Github action
-# Path: .github/workflow/ci-api-lint.yml
-#
-
 name: Linter
-runs-on: ubuntu-latest
 on: [ push ]
 
 jobs:
