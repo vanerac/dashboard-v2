@@ -2,10 +2,10 @@
   "name": "area-front",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "dev": "npx next dev",
+    "build": "npx next build",
+    "start": "npx next start",
+    "lint": "npx next lint",
     "lint:fix": "next lint --fix",
     "prettier": "npx prettier '**/*.{js,jsx,ts,tsx}'",
     "prettier:fix": "npx prettier --write '**/*.{js,jsx,ts,tsx}'"

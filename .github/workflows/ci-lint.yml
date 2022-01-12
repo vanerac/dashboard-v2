@@ -9,18 +9,10 @@ jobs:
         directories : ["app", "api", "front"]
     steps:
       - uses: actions/checkout@v2
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ./${{matrix.directories}}/node_modules
-          key: modules-${{ hashFiles('./${{matrix.directories}}/package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
       - run: npm i
-        if: steps.cache.outputs.cache-hit != 'true'
         working-directory: ./${{matrix.directories}}
         name: Install dependencies
   lint:

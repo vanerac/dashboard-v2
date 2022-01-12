@@ -5,7 +5,6 @@
         "node": true
     },
     "extends": [
-        "plugin:react/recommended",
         "eslint:recommended",
         "prettier"
     ],
@@ -18,7 +17,6 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react",
         "@typescript-eslint",
         "prettier"
     ],
