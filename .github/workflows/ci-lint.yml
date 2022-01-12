@@ -8,8 +8,8 @@ jobs:
       matrix:
         directories : ["app", "api", "front"]
     steps:
-      - run: echo ${{matrix.directories}}
       - uses: actions/checkout@v2
+      - run: cat ./${{matrix.directories}}/package-lock.json
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v2
