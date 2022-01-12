@@ -2,7 +2,7 @@ name: Linter
 on: [ push ]
 
 jobs:
-  install-dependecies:
+  install-dependencies:
     runs-on: ubuntu-latest
     strategy:
       matrix:
