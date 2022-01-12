@@ -1,0 +1,20 @@
+{
+  "name": "b-yep-500-bdx-5-1-yearendproject-corentin.mas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-yearendproject-corentin.mas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-yearendproject-corentin.mas/issues"
+  },
+  "homepage": "https://github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-yearendproject-corentin.mas#readme"
+}
