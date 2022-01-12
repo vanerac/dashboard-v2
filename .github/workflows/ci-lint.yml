@@ -1,5 +1,5 @@
 # Github action
-# Path: .github/workflow/ci-lint.yml
+# Path: .github/workflow/ci-api-lint.yml
 #
 
 name: Linter
@@ -8,22 +8,29 @@ on: [ push ]
 
 jobs:
   install-dependecies:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directories : ["app", "api", "front"]
     steps:
       - uses: actions/checkout@v2
       - name: Cache dependencies
-        id: base-cache
+        id: cache
         uses: actions/cache@v2
         with:
           path: |
-            ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+            ./${{matrix.directories}}/node_modules
+          key: modules-${{ hashFiles('./${{matrix.directories}}/package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
       - run: npm i
-        if: steps.base-cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         name: install app dependencies
   lint:
+    strategy:
+      matrix:
+        directories: [ "app", "api", "front" ]
     name: Lint
     needs: install-dependencies
     runs-on: ubuntu-latest
@@ -33,25 +40,19 @@ jobs:
         with:
           node-version: '16'
       - name: Cache dependencies
-        id: base-cache
-        working-directory: app
+        id: cache
         uses: actions/cache@v2
         with:
           path: |
-            ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-      - name: Cache dependencies
-        id: client-cache
-        uses: actions/cache@v2
-        working-directory: app
-        with:
-          path: |
-            /node_modules
-          key: modules-${{ hashFiles('./client/package-lock.json') }}
+            ./{{matrix.directories}}/node_modules
+          key: modules-${{hashFiles('./${{matrix.directories}}/package-lock.json')}}
       - run: npm run lint
         working-directory: app
         name: Lint App
   prettier:
+    strategy:
+      matrix:
+        directories: [ "app", "api", "front" ]
     name: Prettier client
     runs-on: ubuntu-latest
     needs: install-dependencies
@@ -61,21 +62,12 @@ jobs:
         with:
           node-version: '16'
       - name: Cache dependencies
-        working-directory: app
-        id: base-cache
+        id: cache
         uses: actions/cache@v2
         with:
           path: |
-            ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-      - name: Cache dependencies
-        id: client-cache
-        working-directory: app
-        uses: actions/cache@v2
-        with:
-          path: |
-            ./node_modules
-          key: modules-${{ hashFiles('./client/package-lock.json') }}
+            ./${{matrix.directories}}/node_modules
+          key: modules-${{ hashFiles('./${{ matrix.directories }}package-lock.json') }}
       - run: npm run prettier
         working-directory: app
         name: Prettier APp
