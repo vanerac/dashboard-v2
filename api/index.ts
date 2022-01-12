@@ -1,5 +1,5 @@
 import express from 'express';
-import routes from  './entities'
+import routes from  './src/entities'
 
 const app = express();
 
