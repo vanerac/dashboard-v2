@@ -41,10 +41,8 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.directory }}/node_modules
+          path: ./${{ matrix.directory }}/node_modules
           key: modules-${{hashFiles(format('{0}/package-lock.json', matrix.directory))}}
-          restore-keys:
-            - modules-${{hashFiles(format('{0}/package-lock.json', matrix.directory))}}
       - run: npm run lint
         working-directory: ./${{matrix.directory}}
         name: Lint
