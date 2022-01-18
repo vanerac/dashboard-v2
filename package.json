@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-yearendproject-corentin.mas/issues"
   },
-  "homepage": "https://github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-yearendproject-corentin.mas#readme"
+  "homepage": "https://github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-yearendproject-corentin.mas#readme",
+  "dependencies": {
+    "expo-cli": "^5.0.3"
+  }
 }
