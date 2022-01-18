@@ -50,6 +50,7 @@ jobs:
             expo-token: ${{ secrets.EXPO_TOKEN }}
             expo-cache: true
       - name: Build ${{matrix.platforms}} on EAS
+        working-directory: ./app
         run: npx eas-cli build --platform ${{matrix.platforms}} --non-interactive
       - name: Upload Artifcat
         id: upload
