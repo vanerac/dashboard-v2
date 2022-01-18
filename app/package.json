@@ -11,8 +11,8 @@
     "test": "jest --watchAll",
     "lint": "npx eslint --ext .ts,.tsx components/**/* constants/* hooks/* navigation/* screens/*",
     "lint:fix": "npx eslint --ext .ts,.tsx components/**/* constants/* hooks/* navigation/* screens/* --fix",
-    "prettier": "npx prettier './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}'",
-    "prettier:fix": "npx prettier --write './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}' --mode=fix"
+    "prettier": "npx prettier components/**/* constants/* hooks/* navigation/* screens/*",
+    "prettier:fix": "npx prettier --write components/**/* constants/* hooks/* navigation/* screens/*"
   },
   "jest": {
     "preset": "jest-expo"
