@@ -91,7 +91,7 @@ jobs:
         with:
           path: ./api/node_modules
           key: modules-${{hashFiles(format('{0}/package-lock.json', 'api'))}}
-      - run: npm run build:es
+      - run: npm run build
         working-directory: ./api
         name: Build api
       - name: Upload Artifcat

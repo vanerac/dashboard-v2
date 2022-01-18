@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:commonjs && npm run build:es",
+    "build": "tsc",
     "lint": "npx eslint src/**/* index.ts --ext ts",
     "lint:fix": "npx eslint --fix src/**/* index.ts --ext ts",
     "prettier": "npx prettier src/* index.ts",
