@@ -43,9 +43,14 @@ jobs:
         with:
           path: ./app/node_modules
           key: modules-${{hashFiles(format('{0}/package-lock.json', 'app'))}}
-      - run: npm run build:${{matrix.platforms}}
-        working-directory: ./app
-        name: Build ${{matrix.platforms}}
+      - name: Setup Expo
+        uses: expo/expo-github-action@v5
+        with:
+            expo-version: 4.x
+            expo-token: ${{ secrets.EXPO_TOKEN }}
+            expo-cache: true
+      - name: Build ${{matrix.platforms}} on EAS
+        run: npx eas-cli build --platform ${{matrix.platforms}} --non-interactive
       - name: Upload Artifcat
         id: upload
         uses: actions/upload-artifact@v2
