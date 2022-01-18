@@ -1,7 +1,8 @@
 on: [ push ]
 
 jobs:
-  name: link
+  link:
+    name: link
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
