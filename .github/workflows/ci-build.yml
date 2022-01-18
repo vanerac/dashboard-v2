@@ -1,5 +1,5 @@
 name: Builder
-on: [push]
+on: [pull_request]
 
 jobs:
   install-dependencies:
