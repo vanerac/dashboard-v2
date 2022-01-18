@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Add remote
         run: |
-          git remote add upstream git:${{secrets.GITHUB_TOKEN}}@github.com:EpitechPromo2024/B-YEP-500-BDX-5-1-area-corentin.mas.git
+          git remote add upstream https://vanerac:${{secrets.TOKEN_GITHUB}}@github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-area-corentin.mas.git
       - name: Push upstream
         run: |
           git fetch upstream
