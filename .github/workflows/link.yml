@@ -7,12 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Store SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa.pub
+          echo "${{SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
       - name: Add remote
         run: |
-          git remote add upstream https://${{secrets.TOKEN_GITHUB}}@github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-area-corentin.mas.git
-      - name: Push upstream
+          git remote add upstream git@github.com/EpitechPromo2024/B-YEP-500-BDX-5-1-area-corentin.mas.git
+      - name: Push to upstream
         run: |
-          git fetch upstream
-      - name: Push
-        run: |
-          git push upstream
+          git push upstream --all --force
