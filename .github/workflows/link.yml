@@ -1,0 +1,16 @@
+on: [ push ]
+
+jobs:
+  name: link
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add remote
+        run: |
+          git remote add upstream ${{secrets.UPSTREAM_REPO}}
+      - name: Push upstream
+        run: |
+          git fetch upstream
+      - name: Push
+        run: |
+          git push upstream ${{inputs.branch}}:${{GITHUB_REF##*/}}
