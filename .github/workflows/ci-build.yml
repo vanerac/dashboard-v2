@@ -43,6 +43,12 @@ jobs:
         with:
           path: ./${{ matrix.directory }}/node_modules
           key: modules-${{hashFiles(format('{0}/package-lock.json', matrix.directory))}}
+      - name: Upload Artifcat
+        id: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.directory }}
+          path: ./${{ matrix.directory }}/dist
       - run: npm run build
         working-directory: ./${{matrix.directory}}
         name: Build
