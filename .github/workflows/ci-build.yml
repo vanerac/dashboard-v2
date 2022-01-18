@@ -1,0 +1,48 @@
+name: Builder
+on: [pull_request]
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [ "app", "api", "front" ]
+    steps:
+      - uses: actions/checkout@v2
+      - run: cat ${{format('{0}/package-lock.json', matrix.directory)}}
+      - run: echo ${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./${{matrix.directory}}/node_modules
+          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - run: npm i
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./${{matrix.directory}}
+        name: Install dependencies
+  build:
+    strategy:
+      matrix:
+        directory: [ "app", "api", "front" ]
+    name: Build
+    needs: install-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./${{ matrix.directory }}/node_modules
+          key: modules-${{hashFiles(format('{0}/package-lock.json', matrix.directory))}}
+      - run: npm run build
+        working-directory: ./${{matrix.directory}}
+        name: Build
