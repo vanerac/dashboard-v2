@@ -1,0 +1,102 @@
+name: Builder
+on: [push]
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [ "app", "api", "front" ]
+    steps:
+      - uses: actions/checkout@v2
+      - run: cat ${{format('{0}/package-lock.json', matrix.directory)}}
+      - run: echo ${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./${{matrix.directory}}/node_modules
+          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - run: npm i
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./${{matrix.directory}}
+        name: Install dependencies
+  build-app:
+    name: Build
+    needs: install-dependencies
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [ "ios", "android" ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./app/node_modules
+          key: modules-${{hashFiles(format('{0}/package-lock.json', 'app'))}}
+      - run: npm run build:${{matrix.platforms}}
+        working-directory: ./app
+        name: Build ${{matrix.platforms}}
+      - name: Upload Artifcat
+        id: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{matrix.platforms}}
+          path: ./app/dist
+  build-front:
+    name: Build Front
+    needs: install-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./front/node_modules
+          key: modules-${{hashFiles(format('{0}/package-lock.json', 'front'))}}
+      - run: npm run build
+        working-directory: ./front
+        name: Build front
+      - name: Upload Artifcat
+        id: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: front
+          path: ./front/dist
+  build-api:
+    name: Build API
+    needs: install-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./api/node_modules
+          key: modules-${{hashFiles(format('{0}/package-lock.json', 'api'))}}
+      - run: npm run build
+        working-directory: ./api
+        name: Build api
+      - name: Upload Artifcat
+        id: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: api
+          path: ./api/dist

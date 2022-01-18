@@ -3,14 +3,16 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "build:android": "npx expo build:android -t apk",
+    "build:ios": "npx expo build:ios",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "lint": "npx eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test",
-    "lint:fix": "npx eslint --ext .js,.jsx,.ts,.tsx ./app ./config ./src ./test --fix",
-    "prettier": "npx prettier './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}'",
-    "prettier:fix": "npx prettier --write './app/**/*.{js,jsx,ts,tsx}' './config/**/*.{js,jsx,ts,tsx}' './src/**/*.{js,jsx,ts,tsx}' './test/**/*.{js,jsx,ts,tsx}' --mode=fix"
+    "lint": "npx eslint --ext .ts,.tsx components/**/* constants/* hooks/* navigation/* screens/*",
+    "lint:fix": "npx eslint --ext .ts,.tsx components/**/* constants/* hooks/* navigation/* screens/* --fix",
+    "prettier": "npx prettier components/**/* constants/* hooks/* navigation/* screens/*",
+    "prettier:fix": "npx prettier --write components/**/* constants/* hooks/* navigation/* screens/*"
   },
   "jest": {
     "preset": "jest-expo"
@@ -40,6 +42,7 @@
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
     "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
