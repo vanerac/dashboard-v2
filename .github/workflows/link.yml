@@ -19,4 +19,4 @@ jobs:
           git remote add upstream git@github.com:EpitechPromo2024/B-YEP-500-BDX-5-1-area-corentin.mas.git
       - name: Push to upstream
         run: |
-          git push upstream --all --force
+          git push upstream --all
