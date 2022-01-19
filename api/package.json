@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./build/index.js",
     "build": "npx tsc --build --verbose",
     "lint": "npx eslint src/**/* index.ts --ext ts",
     "lint:fix": "npx eslint --fix src/**/* index.ts --ext ts",
@@ -12,7 +13,7 @@
     "prettier:fix": "npx prettier --write src/* index.ts",
     "build:commonjs": "rimraf lib && tsc --target es5 --outDir lib --module commonjs --declaration",
     "build:es": "rimraf es && tsc --target es6 --outDir es --module es6",
-    "ts": "ts-node src/",
+    "dev": "ts-node index.ts",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
