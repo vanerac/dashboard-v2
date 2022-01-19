@@ -29,8 +29,9 @@ export default class AuthController {
                 }
             }
         } catch (error) {
+            console.error(error);
             res.status(500).json({
-                message: error.message,
+                message: 'Something went wrong',
             });
         }
     }
@@ -64,6 +65,7 @@ export default class AuthController {
                 user,
             });
         } catch (e) {
+            console.error(e);
             res.status(500).json({
                 message: 'Something went wrong',
             });
