@@ -5,6 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import routes from './src/entities';
+import configuration from './configuration';
 
 const sessionConfig = {
     user: {},
@@ -28,7 +29,7 @@ app.use(bodyParser.json());
 
 app.use(
     cors({
-        origin: process.env.FRONTEND_HOST || 'http://localhost:3000',
+        origin: configuration.frontendHost,
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
         methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
@@ -42,6 +43,6 @@ app.use((req: Request, res: Response, next: Function) => {
 
 app.use('/api', routes);
 
-app.listen(3000, () => {
+app.listen(configuration.serverPort, () => {
     console.log('Server is running on port 3000');
 });
