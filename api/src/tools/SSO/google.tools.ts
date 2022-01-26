@@ -17,6 +17,7 @@ export class GoogleTools implements SSOTools {
             grant_type: 'authorization_code',
         };
         const data = await axios.post('https://www.googleapis.com/oauth2/v4/token', params);
+        data.data.provider = 'google';
         return data.data;
     }
 
@@ -28,6 +29,7 @@ export class GoogleTools implements SSOTools {
             grant_type: 'refresh_token',
         };
         const data = await axios.post('https://www.googleapis.com/oauth2/v4/token', params);
+        data.data.provider = 'google';
         return data.data;
     }
 
