@@ -32,14 +32,14 @@ export default class GoogleController extends SSOController {
         // get token, create user and return token
         try {
             const { code } = req.query;
-            // todo: get session from user
+            const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
             const SSOToken = await GoogleTools.getToken(code);
             const user = await GoogleTools.getUserInfos(SSOToken.access_token);
 
-            var userData: User & any = await findUserByService(user.id, 'google');
+            var userData: User & any = sessionUser || (await findUserByService(user.id, 'google'));
             if (!userData) {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
