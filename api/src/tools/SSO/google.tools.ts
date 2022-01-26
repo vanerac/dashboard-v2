@@ -1,12 +1,12 @@
-import { SSOTools, Token } from '../types';
+import { ServiceUserData, SSOTools, Token } from '../types';
 import axios from 'axios';
+import configuration from '../../../configuration';
 
 export class GoogleTools implements SSOTools {
-    static clientId: string = process.env.GOOGLE_CLIENT_ID || '';
-    static clientSecret: string = process.env.GOOGLE_CLIENT_SECRET || '';
-    static callbackURL: string = process.env.GOOGLE_CALLBACK_URI || '';
-    static scope: string = process.env.GOOGLE_SCOPE || '';
-    static state: string = process.env.GOOGLE_STATE || '';
+    static clientId: string = configuration.googleClientId || '';
+    static clientSecret: string = configuration.googleClientSecret || '';
+    static callbackURL: string = configuration.googleRedirectUri || '';
+    static scope: string = configuration.googleScopes || '';
 
     static async getToken(code: string): Promise<Token> {
         const params = {
@@ -39,6 +39,11 @@ export class GoogleTools implements SSOTools {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return data.data;
+        return {
+            id: data.data.id,
+            email: data.data.email,
+            displayName: data.data.name,
+            password: undefined,
+        };
     }
 }

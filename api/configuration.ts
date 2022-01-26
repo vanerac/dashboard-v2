@@ -37,8 +37,11 @@ export default {
     posgresDatabase: process.env.POSTGRES_DATABASE || '',
 
     // Server connection infos
-    serverPort: process.env.SERVER_PORT || '',
+    serverPort: process.env.SERVER_PORT || 3000,
     serverHost: process.env.SERVER_HOST || '',
     frontendHost: process.env.FRONTEND_HOST || '',
     frontendPort: process.env.FRONTEND_PORT || '',
+
+    // Security configuration
+    JWT_SECRET: process.env.JWT_SECRET || 'secret',
 };

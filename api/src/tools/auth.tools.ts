@@ -2,11 +2,12 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import configuration from '../../configuration';
 dotenv.config();
 
 // generate jwt token
 export const generateToken = (user: any): string => {
-    return jwt.sign(user, process.env.JWT_SECRET || 'secret', {
+    return jwt.sign(user, configuration.JWT_SECRET || 'secret', {
         expiresIn: '1h',
     });
 };

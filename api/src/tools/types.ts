@@ -10,23 +10,34 @@ export interface User {
     loginType: 'classic' | 'SSO';
 }
 
-export abstract class SSOController {
-    static async getCode($req: Request, $res: Response): Promise<void> {}
+export interface ServiceUserData {
+    id: string;
+    displayName: string;
+    email: string;
+    password: string | undefined;
+}
 
-    static async getToken($req: Request, $res: Response): Promise<void> {}
+export abstract class SSOController {
+    static async getCode($req: Request, $res: Response): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
+    static async getToken($req: Request, $res: Response): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
 }
 
 export abstract class SSOTools {
     static async getToken($code: string): Promise<string> {
-        return 'Not implemented';
+        throw new Error('Method not implemented.');
     }
 
     static async refreshToken($refreshToken: string): Promise<string> {
-        return 'Not implemented';
+        throw new Error('Method not implemented.');
     }
 
-    static async getUserInfos($token: string): Promise<any> {
-        return { error: 'Not implemented' };
+    static async getUserInfos($token: string): Promise<ServiceUserData> {
+        throw new Error('Method not implemented.');
     }
 }
 

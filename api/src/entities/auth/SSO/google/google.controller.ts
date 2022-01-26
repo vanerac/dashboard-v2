@@ -1,8 +1,7 @@
-import { SSOController, User } from '../../../../tools/types';
+import { ServiceUserData, SSOController, User } from '../../../../tools/types';
 import { Request, Response } from 'express';
 import configuration from '../../../../../configuration';
 import { GoogleTools } from '../../../../tools/SSO/google.tools';
-import pool from '../../../../tools/database.tools';
 import { generateToken } from '../../../../tools/auth.tools';
 import { createUser, findUserByService, linkService, updateToken } from '../../../../tools/SSO/sso.tool';
 
@@ -37,9 +36,9 @@ export default class GoogleController extends SSOController {
                 throw new Error('No code provided');
             }
             const SSOToken = await GoogleTools.getToken(code);
-            const user = await GoogleTools.getUserInfos(SSOToken.access_token);
+            const user: ServiceUserData = await GoogleTools.getUserInfos(SSOToken.access_token);
 
-            var userData: User & any = sessionUser || (await findUserByService(user.id, 'google'));
+            var userData: User & any = sessionUser || (await findUserByService('google', user.id));
             if (!userData) {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
@@ -47,7 +46,7 @@ export default class GoogleController extends SSOController {
                 await updateToken(userData, user, SSOToken);
             }
             delete userData.password;
-            const token = generateToken(userData.id);
+            const token = generateToken(userData);
             res.status(200).json({ data: userData, token });
         } catch (e) {
             console.log(e);
