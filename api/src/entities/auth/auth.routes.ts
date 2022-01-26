@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import AuthController from './auth.controller';
-import GoogleRoutes from './SSO/google/google.routes';
 import SsoRoutes from './SSO/sso.routes';
 
 const router = Router();
