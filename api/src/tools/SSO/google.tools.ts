@@ -33,7 +33,7 @@ export class GoogleTools implements SSOTools {
         return data.data;
     }
 
-    static async getUserInfos(token: string): Promise<any> {
+    static async getUserInfos(token: string): Promise<ServiceUserData> {
         const data = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
             headers: {
                 Authorization: `Bearer ${token}`,
