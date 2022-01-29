@@ -1,4 +1,4 @@
-import { EventEmitter } from 'puppeteer';
+import { EventEmitter } from 'events';
 import { Track } from './playerManager.tools';
 
 export type AudioPlayerEvents = 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
