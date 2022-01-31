@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "area-api",
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
@@ -24,10 +24,11 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^11.0.0",
-    "express": "^4.17.2",
+    "express": "*",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "axios": "*"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
