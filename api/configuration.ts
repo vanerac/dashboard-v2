@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: '.env' });
 
 export default {
     // Google SSO Infos
@@ -37,7 +37,7 @@ export default {
     posgresDatabase: process.env.POSTGRES_DATABASE || '',
 
     // Server connection infos
-    serverPort: process.env.SERVER_PORT || 3000,
+    serverPort: process.env.SERVER_PORT || 8080,
     serverHost: process.env.SERVER_HOST || '',
     frontendHost: process.env.FRONTEND_HOST || '',
     frontendPort: process.env.FRONTEND_PORT || '',
