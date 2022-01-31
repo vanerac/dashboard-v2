@@ -3,4 +3,9 @@
 
 node_modules
 
+data/
+config/
+logs/
 !*.json
+
+.env
