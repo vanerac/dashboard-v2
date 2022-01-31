@@ -44,5 +44,5 @@ app.use((req: Request, res: Response, next: Function) => {
 app.use('/api', routes);
 
 app.listen(configuration.serverPort, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port ', configuration.serverPort);
 });
