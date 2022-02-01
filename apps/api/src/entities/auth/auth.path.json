@@ -14,7 +14,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "./auth.components.json#schemas/loginRequest"
+              "$ref": "./auth.components.json#/schemas/loginRequest"
             }
           }
         }
@@ -68,7 +68,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "./auth.components.json#schemas/registerBody"
+              "$ref": "./auth.components.json#/schemas/registerRequest"
             }
           }
         }
