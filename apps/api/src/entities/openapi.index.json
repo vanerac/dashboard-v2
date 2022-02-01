@@ -12,10 +12,10 @@
   ],
   "paths": {
     "/auth/login": {
-      "$ref": "./auth/auth.path.json#login"
+      "$ref": "./auth/auth.path.json#/login"
     },
     "/auth/register": {
-      "$ref": "./auth/auth.path.json#register"
+      "$ref": "./auth/auth.path.json#/register"
     }
   }
 }
