@@ -10,7 +10,7 @@ export default class AuthController {
             const user = await Pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
 
             if (user.rows.length === 0) {
-                res.status(404).json({
+                res.status(401).json({
                     message: 'User not found',
                 });
             } else {

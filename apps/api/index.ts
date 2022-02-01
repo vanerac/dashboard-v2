@@ -7,8 +7,6 @@ import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
 
-const unused = undefined;
-
 const sessionConfig = {
     user: {},
     secret: process.env.COOKIE_SECRET || 'secret',

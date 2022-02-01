@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "*",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -27,8 +28,7 @@
     "express": "*",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.7.1",
-    "axios": "*"
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -43,6 +43,9 @@
     "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "express-jsdoc-swagger": "^1.6.7",
+    "openapi-typescript": "^5.1.1",
+    "openapi-typescript-codegen": "^0.18.1",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
