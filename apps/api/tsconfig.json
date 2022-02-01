@@ -1,9 +1,11 @@
 {
+  "extends": "../../packages/tsconfig/base.json",
   "compilerOptions": {
-    "extends": "tsconfig/base.json"
+    "outDir": "./build"
   },
   "include": [
     "index.ts",
     "src"
   ]
+
 }
