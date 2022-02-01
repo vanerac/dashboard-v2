@@ -2,7 +2,6 @@
   "schemas": {
     "loginRequest": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "email",
         "password"
@@ -18,7 +17,6 @@
     },
     "loginResponse": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "token"
       ],
@@ -33,7 +31,6 @@
     },
     "registerRequest": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "email",
         "password"
@@ -50,7 +47,6 @@
     },
     "registerResponse": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "user",
         "message"
