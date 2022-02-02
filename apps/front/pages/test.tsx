@@ -1,5 +1,7 @@
+import withAuth from "./withAuth";
+
 function test() {
     return <div>Salut test</div>;
 }
 
-export default test;
+export default withAuth(test);
