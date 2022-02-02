@@ -7,7 +7,7 @@ import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
-const swaggerDocument = require('./entities/openapi.index.json');
+const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(bodyParser.json());
 
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
     cors({

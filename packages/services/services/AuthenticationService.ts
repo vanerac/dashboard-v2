@@ -1,8 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { paths_1auth_1login_post_responses_200_content_application_1json_schema_properties_user } from '../models/paths_1auth_1login_post_responses_200_content_application_1json_schema_properties_user';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -54,7 +52,11 @@ export class AuthenticationService {
             password: string;
         },
     ): CancelablePromise<{
-        user: paths_1auth_1login_post_responses_200_content_application_1json_schema_properties_user;
+        user: {
+            email?: string;
+            displayName?: string;
+            id?: number;
+        };
         message: string;
     }> {
         return __request(OpenAPI, {
