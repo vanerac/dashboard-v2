@@ -1,20 +1,31 @@
 {
-  "services": {
+  "getServicesById": {
     "get": {
-      "operationId": "getUserServices",
+      "operationId": "getServicesById",
       "tags": [
-        "user"
+        "services"
       ],
       "summary": "Get user services",
       "description": "Retrieves a list of the user's connected services",
       "security": [],
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "Service ID",
+          "required": true,
+          "schema": {
+            "type": "int"
+          }
+        }
+      ],
       "responses": {
         "200": {
           "description": "Success",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "user.components.json#/schemas/userServicesResponse"
+                "$ref": "service.components.json#/schemas/ServiceResponse"
               }
             }
           }
@@ -42,14 +53,14 @@
       }
     }
   },
-  "settings": {
+  "getAllUserServices": {
     "get": {
-      "operationId": "getUserSettings",
+      "operationId": "getAllUserServices",
       "tags": [
-        "user"
+        "services"
       ],
-      "summary": "Get user settings",
-      "description": "Retrieves a list of the user's settings",
+      "summary": "Get all user services",
+      "description": "Retrieves a list of all the user's connected services",
       "security": [],
       "responses": {
         "200": {
@@ -57,13 +68,131 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "user.components.json#/schemas/registerResponse"
+                "$ref": "service.components.json#/schemas/ServiceResponse"
               }
             }
           }
         },
-        "400": {
-          "description": "Bad request",
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "updateService": {
+    "put": {
+      "operationId": "updateService",
+      "tags": [
+        "services"
+      ],
+      "summary": "Update user service",
+      "description": "Updates a user service",
+      "security": [],
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "Service ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "service.components.json#/schemas/ServiceRequest"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "service.components.json#/schemas/ServiceResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "deleteService": {
+    "delete": {
+      "operationId": "deleteService",
+      "tags": [
+        "services"
+      ],
+      "summary": "Delete user service",
+      "description": "Deletes a user service",
+      "security": [],
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "Service ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "service.components.json#/schemas/ServiceResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
           "content": {
             "application/json": {
               "schema": {

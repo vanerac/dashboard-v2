@@ -11,14 +11,14 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, type, description, enabled FROM services WHERE id = $1 AND userid = $2`;
-            const service = await Pool.query(query, [id, userId]);
-            if (!service) {
+            const query = `SELECT id, type, enabled FROM services WHERE id = $1 AND userid = $2`;
+            const { rows: services } = await Pool.query(query, [id, userId]);
+            if (!services || services.length === 0) {
                 return res.status(404).json({
                     message: 'Service not found',
                 });
             }
-            return res.status(200).json(service);
+            return res.status(200).json(services);
         } catch (error) {
             return res.status(500).json({
                 message: 'Internal server error',
@@ -35,7 +35,7 @@ export default class ServiceController {
             }
             const { id: userId } = req.session.user;
             const query = `SELECT id, type, description, enabled FROM services WHERE userid = $1`;
-            const services = await Pool.query(query, [userId]);
+            const { rows: services } = await Pool.query(query, [userId]);
             if (!services) {
                 return res.status(404).json({
                     message: 'Services not found',
@@ -60,15 +60,16 @@ export default class ServiceController {
             }
             const { id: userId } = req.session.user;
             const { enabled } = req.body;
-            const query = `UPDATE services SET enabled = $1 WHERE id = $2 AND userid = $3`;
-            const service = await Pool.query(query, [enabled, id, userId]);
-            if (!service) {
+            const query = `UPDATE services SET enabled = $1 WHERE id = $2 AND userid = $3 RETURNING id, provider, enabled`;
+            const { rows: services } = await Pool.query(query, [enabled, id, userId]);
+            if (!services || services.length === 0) {
                 return res.status(404).json({
                     message: 'Service not found',
                 });
             }
             return res.status(200).json({
                 message: 'Service updated',
+                data: services,
             });
         } catch (error) {
             return res.status(500).json({
@@ -88,8 +89,8 @@ export default class ServiceController {
             }
             const { id: userId } = req.session.user;
             const query = `DELETE FROM services WHERE id = $1 AND userid = $2`;
-            const service = await Pool.query(query, [id, userId]);
-            if (!service) {
+            const { rows: services } = await Pool.query(query, [id, userId]);
+            if (!services || services.length === 0) {
                 return res.status(404).json({
                     message: 'Service not found',
                 });

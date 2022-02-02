@@ -7,3 +7,4 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export { AuthenticationService } from './services/AuthenticationService';
+export { ServicesService } from './services/ServicesService';

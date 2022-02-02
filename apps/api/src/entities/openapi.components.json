@@ -26,6 +26,27 @@
           "type": "integer"
         }
       }
+    },
+    "Service": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "int"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "google",
+            "spotify",
+            "apple",
+            "deezer",
+            "lastfm"
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ CREATE TYPE loginType AS ENUM ('classic', 'SSO');
 CREATE TYPE roleType AS ENUM ('admin', 'user');
 CREATE TYPE widgetType AS ENUM ('playlist', 'search');
 CREATE TYPE serviceStatus AS ENUM ('OK', 'KO');
-CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'youtube', 'apple_music');
+CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple');
 
 CREATE TABLE IF NOT EXISTS Users
 (

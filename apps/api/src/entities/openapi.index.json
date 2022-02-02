@@ -16,6 +16,18 @@
     },
     "/auth/register": {
       "$ref": "auth/auth.path.json#/register"
+    },
+    "/service": {
+      "$ref": "services/service.path.json#/getAllUserServices"
+    },
+    "/service/{serviceId}": {
+      "$ref": "services/service.path.json#/getServicesById"
+    },
+    "/service/{serviceId}/": {
+      "$ref": "services/service.path.json#/updateService"
+    },
+    "/service/{serviceId}/delete": {
+      "$ref": "services/service.path.json#/deleteService"
     }
   }
 }
