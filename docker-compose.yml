@@ -3,7 +3,7 @@ version: '3'
 services:
     db:
         build:
-            context: api
+            context: apps/api
             dockerfile: Dockerfile.postgres
         ports:
             - "5432:5432"
@@ -17,9 +17,9 @@ services:
 
     front:
         build:
-            context: front
+            context: apps/front
             dockerfile: Dockerfile.front
-        ports: 
+        ports:
             - "3000:3000"
         depends_on:
             - db
