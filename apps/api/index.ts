@@ -12,6 +12,7 @@ const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
+    local: {},
     secret: process.env.COOKIE_SECRET || 'secret',
     resave: true,
     saveUninitialized: true,
@@ -21,6 +22,7 @@ const sessionConfig = {
 declare module 'express-session' {
     export interface SessionData {
         user: User;
+        [key: string]: any;
     }
 }
 

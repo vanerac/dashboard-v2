@@ -13,7 +13,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
     "types:bundle": "npx swagger-cli bundle -r -o ./apps/api/generated/openapi-v1.json apps/api/src/entities/openapi.index.json",
-    "types:generate": "openapi -i apps/api/generated/openapi-v1.json -o packages/services",
+    "types:generate": "openapi -i apps/api/generated/openapi-v1.json -o packages/services --exportSchemas true",
     "services:generate": "npm run types:bundle && npm run types:generate"
   },
   "devDependencies": {
