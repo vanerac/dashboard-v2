@@ -1,0 +1,64 @@
+{
+  "schemas": {
+    "loginRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "loginResponse": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "../openapi.components.json#/schemas/User"
+        }
+      }
+    },
+    "registerRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "registerResponse": {
+      "type": "object",
+      "required": [
+        "user",
+        "message"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "../openapi.components.json#/schemas/User"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

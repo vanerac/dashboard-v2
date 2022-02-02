@@ -1,5 +1,11 @@
 module.exports = {
-  extends: ["next", "prettier", "eslint:recommended", "plugin:prettier/recommended", "react-app"],
+  extends: [
+    "prettier",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "react-app",
+    // "next",
+  ],
   settings: {
     next: {
       rootDir: ["apps/*/", "packages/*/"],
@@ -11,16 +17,21 @@ module.exports = {
     "prefer-destructuring": [
       "error",
       {
-        "array": true,
-        "object": true
-      }
+        array: true,
+        object: true,
+      },
     ],
     "no-unused-vars": [
       "error",
-      { "vars": "all", "args": "after-used", "ignoreRestSiblings": true, "varsIgnorePattern": "^\\$", "argsIgnorePattern": "^\\$" }
+      {
+        vars: "all",
+        args: "after-used",
+        ignoreRestSiblings: true,
+        varsIgnorePattern: "^\\$",
+        argsIgnorePattern: "^\\$",
+      },
     ],
 
     "no-use-before-define": "off",
   },
-
 };

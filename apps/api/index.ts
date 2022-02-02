@@ -6,8 +6,8 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
-
-const unused = undefined;
+import swaggerUi from 'swagger-ui-express';
+const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
@@ -28,6 +28,8 @@ const app = express();
 app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(bodyParser.json());
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
     cors({
