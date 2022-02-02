@@ -2,7 +2,7 @@ CREATE TYPE loginType AS ENUM ('classic', 'SSO');
 CREATE TYPE roleType AS ENUM ('admin', 'user');
 CREATE TYPE widgetType AS ENUM ('playlist', 'search');
 CREATE TYPE serviceStatus AS ENUM ('OK', 'KO');
-CREATE TYPE serviceType AS ENUM ('spotify', 'deezer', 'youtube', 'apple_music');
+CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'youtube', 'apple_music');
 
 CREATE TABLE IF NOT EXISTS Users
 (
@@ -23,16 +23,16 @@ CREATE UNIQUE INDEX u_email ON Users (email) WHERE loginType = 'classic' AND ema
 CREATE TABLE IF NOT EXISTS Services
 (
     id           SERIAL UNIQUE,
-    type         serviceType   NOT NULL,
-    clientId     VARCHAR(256)  NOT NULL,
-    enabled      BOOLEAN       NOT NULL DEFAULT TRUE,
-    userId       INT           NOT NULL,
-    accessToken  VARCHAR(256)  NOT NULL,
-    tokenExpires TIMESTAMP     NULL,
-    refreshToken VARCHAR(256)  NULL,
-    status       serviceStatus NOT NULL DEFAULT 'OK',
-    createdAt    DATE          NOT NULL DEFAULT NOW(),
-    editedAt     DATE          NOT NULL DEFAULT NOW(),
+    provider     serviceProvider NOT NULL,
+    clientId     VARCHAR(256)    NOT NULL,
+    enabled      BOOLEAN         NOT NULL DEFAULT TRUE,
+    userId       INT             NOT NULL,
+    accessToken  VARCHAR(256)    NOT NULL,
+    tokenExpires TIMESTAMP       NULL,
+    refreshToken VARCHAR(256)    NULL,
+    status       serviceStatus   NOT NULL DEFAULT 'OK',
+    createdAt    DATE            NOT NULL DEFAULT NOW(),
+    editedAt     DATE            NOT NULL DEFAULT NOW(),
     CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES Users (id) ON DELETE CASCADE,
     CONSTRAINT uk_connection UNIQUE (type, clientId, userId),
     CONSTRAINT uk_clientId UNIQUE (type, clientId)

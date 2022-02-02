@@ -7,6 +7,7 @@ import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
+import { User } from './src/tools/types';
 const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
@@ -19,7 +20,7 @@ const sessionConfig = {
 
 declare module 'express-session' {
     export interface SessionData {
-        user: { [key: string]: any };
+        user: User;
     }
 }
 

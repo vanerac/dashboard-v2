@@ -1,0 +1,88 @@
+{
+  "services": {
+    "get": {
+      "operationId": "getUserServices",
+      "tags": [
+        "user"
+      ],
+      "summary": "Get user services",
+      "description": "Retrieves a list of the user's connected services",
+      "security": [],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "user.components.json#/schemas/userServicesResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings": {
+    "get": {
+      "operationId": "getUserSettings",
+      "tags": [
+        "user"
+      ],
+      "summary": "Get user settings",
+      "description": "Retrieves a list of the user's settings",
+      "security": [],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "user.components.json#/schemas/registerResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
