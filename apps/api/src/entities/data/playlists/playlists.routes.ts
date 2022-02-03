@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import PlaylistsController from './playlists.controller';
+
+const router = Router();
+
+router.get('/', PlaylistsController.getAll);
+router.get('/:id', PlaylistsController.getOne);
+router.post('/create', PlaylistsController.create);
+router.put('/:id/update', PlaylistsController.update);
+router.delete('/:id/delete', PlaylistsController.delete);
+
+export default router;

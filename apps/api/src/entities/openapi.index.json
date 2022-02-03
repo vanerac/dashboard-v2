@@ -23,11 +23,26 @@
     "/service/{serviceId}": {
       "$ref": "services/service.path.json#/getServicesById"
     },
-    "/service/{serviceId}/": {
-      "$ref": "services/service.path.json#/updateService"
-    },
     "/service/{serviceId}/delete": {
       "$ref": "services/service.path.json#/deleteService"
+    },
+    "/service/{serviceId}/update": {
+      "$ref": "services/service.path.json#/updateService"
+    },
+    "/data/{serviceId}/playlist/": {
+      "$ref": "data/playlists/playlist.path.json#/getAllPlaylists"
+    },
+    "/data/{serviceId}/playlist/{playlistId}": {
+      "$ref": "data/playlists/playlist.path.json#/getPlaylistById"
+    },
+    "/data/{serviceId}/playlist/create": {
+      "$ref": "data/playlists/playlist.path.json#/create"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/update": {
+      "$ref": "data/playlists/playlist.path.json#/update"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/delete": {
+      "$ref": "data/playlists/playlist.path.json#/delete"
     }
   }
 }

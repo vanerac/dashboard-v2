@@ -47,6 +47,58 @@
           "type": "boolean"
         }
       }
+    },
+    "Track": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "artist": {
+            "type": "string"
+        },
+        "album": {
+            "type": "string"
+        },
+        "duration": {
+            "type": "integer"
+        },
+        "image": {
+            "type": "string"
+        },
+        "provider": {
+            "type": "string"
+        }
+      }
+    },
+    "Playlist": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/schemas/Track"
+          }
+        }
+      }
     }
   }
 }

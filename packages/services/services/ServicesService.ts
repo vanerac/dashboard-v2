@@ -52,37 +52,6 @@ export class ServicesService {
     }
 
     /**
-     * Update user service
-     * Updates a user service
-     * @param serviceId Service ID
-     * @param requestBody
-     * @returns any Success
-     * @throws ApiError
-     */
-    public static updateService(
-        serviceId: string,
-        requestBody: {
-            enabled?: boolean;
-        },
-    ): CancelablePromise<{
-        services?: any[];
-    }> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/service/{serviceId}/',
-            path: {
-                'serviceId': serviceId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                401: `Unauthorized`,
-                500: `Internal server error`,
-            },
-        });
-    }
-
-    /**
      * Delete user service
      * Deletes a user service
      * @param serviceId Service ID
@@ -100,6 +69,37 @@ export class ServicesService {
             path: {
                 'serviceId': serviceId,
             },
+            errors: {
+                401: `Unauthorized`,
+                500: `Internal server error`,
+            },
+        });
+    }
+
+    /**
+     * Update user service
+     * Updates a user service
+     * @param serviceId Service ID
+     * @param requestBody
+     * @returns any Success
+     * @throws ApiError
+     */
+    public static updateService(
+        serviceId: string,
+        requestBody: {
+            enabled?: boolean;
+        },
+    ): CancelablePromise<{
+        services?: any[];
+    }> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/service/{serviceId}/update',
+            path: {
+                'serviceId': serviceId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 401: `Unauthorized`,
                 500: `Internal server error`,

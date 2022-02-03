@@ -1,0 +1,37 @@
+{
+  "schemas": {
+    "playlistsResponse": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "$ref": "../../openapi.components.json#/schemas/Playlist"
+        }
+      }
+    },
+    "playlistSingleResponse": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "$ref": "../../openapi.components.json#/schemas/Playlist"
+        }
+      }
+    },
+    "playlistCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "playlistUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
