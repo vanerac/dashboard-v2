@@ -13,7 +13,9 @@ export class PlaylistService {
      * @returns any Successful operation
      * @throws ApiError
      */
-    public static getAllPlaylists(): CancelablePromise<any> {
+    public static getAllPlaylists(): CancelablePromise<{
+        services?: any[];
+    }> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/data/{serviceId}/playlist/',
@@ -33,8 +35,25 @@ export class PlaylistService {
      * @throws ApiError
      */
     public static getPlaylistById(
-        playlistId: any,
-    ): CancelablePromise<any> {
+        playlistId: string,
+    ): CancelablePromise<{
+        service?: {
+            id?: string;
+            name?: string;
+            description?: string;
+            image?: string;
+            provider?: string;
+            tracks?: Array<{
+                id?: string;
+                name?: string;
+                artist?: string;
+                album?: string;
+                duration?: number;
+                image?: string;
+                provider?: string;
+            }>;
+        };
+    }> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}',
@@ -53,13 +72,37 @@ export class PlaylistService {
     /**
      * Create playlist
      * Create playlist
+     * @param requestBody
      * @returns any Successful operation
      * @throws ApiError
      */
-    public static create(): CancelablePromise<any> {
+    public static create(
+        requestBody?: {
+            name?: string;
+        },
+    ): CancelablePromise<{
+        service?: {
+            id?: string;
+            name?: string;
+            description?: string;
+            image?: string;
+            provider?: string;
+            tracks?: Array<{
+                id?: string;
+                name?: string;
+                artist?: string;
+                album?: string;
+                duration?: number;
+                image?: string;
+                provider?: string;
+            }>;
+        };
+    }> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/data/{serviceId}/playlist/create',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -72,18 +115,41 @@ export class PlaylistService {
      * Update playlist
      * Update playlist
      * @param id Playlist id
+     * @param requestBody
      * @returns any Successful operation
      * @throws ApiError
      */
     public static update(
-        id: any,
-    ): CancelablePromise<any> {
+        id: string,
+        requestBody?: {
+            name?: string;
+        },
+    ): CancelablePromise<{
+        service?: {
+            id?: string;
+            name?: string;
+            description?: string;
+            image?: string;
+            provider?: string;
+            tracks?: Array<{
+                id?: string;
+                name?: string;
+                artist?: string;
+                album?: string;
+                duration?: number;
+                image?: string;
+                provider?: string;
+            }>;
+        };
+    }> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/data/{serviceId}/playlist/{playlistId}/update',
             path: {
                 'id': id,
             },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -101,8 +167,25 @@ export class PlaylistService {
      * @throws ApiError
      */
     public static delete(
-        id: any,
-    ): CancelablePromise<any> {
+        id: string,
+    ): CancelablePromise<{
+        service?: {
+            id?: string;
+            name?: string;
+            description?: string;
+            image?: string;
+            provider?: string;
+            tracks?: Array<{
+                id?: string;
+                name?: string;
+                artist?: string;
+                album?: string;
+                duration?: number;
+                image?: string;
+                provider?: string;
+            }>;
+        };
+    }> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/data/{serviceId}/playlist/{playlistId}/delete',

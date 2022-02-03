@@ -15,7 +15,7 @@
           "description": "Service ID",
           "required": true,
           "schema": {
-            "type": "int"
+            "type": "integer"
           }
         }
       ],
