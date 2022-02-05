@@ -29,6 +29,8 @@
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
+    "puppeteer": "^13.1.2",
+    "puppeteer-stream": "^2.0.8",
     "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
