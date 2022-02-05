@@ -70,6 +70,41 @@ export class PlaylistService {
     }
 
     /**
+     * Get playlist tracks
+     * Get playlist tracks
+     * @param playlistId Playlist id
+     * @returns any Successful operation
+     * @throws ApiError
+     */
+    public static getPlaylistTracks(
+        playlistId: string,
+    ): CancelablePromise<{
+        tracks?: {
+            id?: string;
+            name?: string;
+            artist?: string;
+            album?: string;
+            duration?: number;
+            image?: string;
+            provider?: string;
+        };
+    }> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/data/{serviceId}/playlist/{playlistId}/tracks',
+            path: {
+                'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+
+    /**
      * Create playlist
      * Create playlist
      * @param requestBody
