@@ -1,0 +1,50 @@
+{
+  "schemas": {
+    "playlistsResponse": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Playlist"
+          }
+        }
+      }
+    },
+    "playlistSingleResponse": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "$ref": "../../openapi.components.json#/schemas/Playlist"
+        }
+      }
+    },
+    "playlistTracksResponse": {
+      "type": "object",
+      "properties": {
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Track"
+          }
+        }
+      }
+    },
+    "playlistCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "playlistUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

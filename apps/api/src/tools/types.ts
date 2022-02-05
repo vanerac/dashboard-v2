@@ -48,6 +48,13 @@ export interface Token {
     provider: string;
 }
 
+export enum Providers {
+    GOOGLE = 'google',
+    SPOTIFY = 'spotify',
+    APPLE = 'apple',
+    LAST_FM = 'lastfm',
+}
+
 // export abstract class SSOAudioManager {
 //     static play
 // }
