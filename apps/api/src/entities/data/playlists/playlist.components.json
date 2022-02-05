@@ -17,6 +17,15 @@
         }
       }
     },
+    "playlistTracksResponse": {
+      "type": "object",
+      "properties": {
+        "tracks": {
+          "type": "array",
+          "$ref": "../../openapi.components.json#/schemas/Track"
+        }
+      }
+    },
     "playlistCreateRequest": {
       "type": "object",
       "properties": {

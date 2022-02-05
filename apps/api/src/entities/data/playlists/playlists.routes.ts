@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/', PlaylistsController.getAll);
 router.get('/:id', PlaylistsController.getOne);
+router.get('/:id/tracks', PlaylistsController.getTracks);
 router.post('/create', PlaylistsController.create);
 router.put('/:id/update', PlaylistsController.update);
 router.delete('/:id/delete', PlaylistsController.delete);

@@ -51,7 +51,7 @@
       }
     }
   },
-  "getPlaylistById":{
+  "getPlaylistById": {
     "get": {
       "tags": [
         "playlist"
@@ -77,6 +77,79 @@
             "application/json": {
               "schema": {
                 "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "getPlaylistTracks": {
+    "get": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Get playlist tracks",
+      "description": "Get playlist tracks",
+      "operationId": "getPlaylistTracks",
+      "parameters": [
+        {
+          "name": "playlistId",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistTracksResponse"
               }
             }
           }
