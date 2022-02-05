@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import configuration from '../../configuration';
+import { User } from './types';
 dotenv.config();
 
 // generate jwt token
@@ -25,7 +26,7 @@ export const parseCookieSession = (req: Request, $res: Response, next: NextFunct
     const cookie = req.cookies['API_TOKEN'];
     try {
         if (cookie) {
-            const decoded = jwt.verify(JSON.parse(cookie), process.env.JWT_SECRET || 'secret');
+            const decoded: User & any = jwt.verify(JSON.parse(cookie), configuration.JWT_SECRET || 'secret');
             if (typeof decoded != 'string' && decoded.id) req.session.user = decoded;
         }
     } catch (e) {
@@ -54,7 +55,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     }
 
     try {
-        const decoded = jwt.verify(access_token, process.env.JWT_SECRET || 'secret');
+        const decoded: User & any = jwt.verify(access_token, configuration.JWT_SECRET || 'secret');
         if (typeof decoded != 'string' && decoded.id) {
             req.session.user = decoded;
             next();
@@ -78,3 +79,24 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         }
     }
 };
+
+export async function parseToken(req: Request, res: Response, next: NextFunction) {
+    // Parse token, decode it and set req.session.user
+    const bearerHeader = req.headers['Authorization'] || req.cookies['API_TOKEN'];
+    if (!bearerHeader) {
+        return next();
+    }
+    let access_token: string;
+
+    if (bearerHeader.startsWith('Bearer ')) {
+        const [$bearer, token] = bearerHeader.split(' ');
+        access_token = token;
+    } else {
+        access_token = JSON.parse(bearerHeader);
+    }
+    const decoded: User & any = jwt.verify(access_token, configuration.JWT_SECRET || 'secret');
+    if (typeof decoded != 'string' && decoded.id) {
+        req.session.user = decoded;
+    }
+    next();
+}

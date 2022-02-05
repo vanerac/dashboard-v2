@@ -16,6 +16,76 @@
     },
     "/auth/register": {
       "$ref": "auth/auth.path.json#/register"
+    },
+    "/service": {
+      "$ref": "services/service.path.json#/getAllUserServices"
+    },
+    "/service/{serviceId}": {
+      "$ref": "services/service.path.json#/getServicesById"
+    },
+    "/service/{serviceId}/delete": {
+      "$ref": "services/service.path.json#/deleteService"
+    },
+    "/service/{serviceId}/update": {
+      "$ref": "services/service.path.json#/updateService"
+    },
+    "/data/{serviceId}/playlist/": {
+      "$ref": "data/playlists/playlist.path.json#/getAllPlaylists"
+    },
+    "/data/{serviceId}/playlist/{playlistId}": {
+      "$ref": "data/playlists/playlist.path.json#/getPlaylistById"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/tracks": {
+      "$ref": "data/playlists/playlist.path.json#/getPlaylistTracks"
+    },
+    "/data/{serviceId}/playlist/create": {
+      "$ref": "data/playlists/playlist.path.json#/create"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/update": {
+      "$ref": "data/playlists/playlist.path.json#/update"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/delete": {
+      "$ref": "data/playlists/playlist.path.json#/delete"
+    }
+  },
+  "components": {
+    "schemas": {
+      "Track": {
+        "$ref": "./openapi.components.json#/schemas/Track"
+      },
+      "Playlist": {
+        "$ref": "./openapi.components.json#/schemas/Playlist"
+      },
+      "Service": {
+        "$ref": "./openapi.components.json#/schemas/Service"
+      },
+      "User": {
+        "$ref": "./openapi.components.json#/schemas/User"
+      },
+      "Error": {
+        "$ref": "./openapi.components.json#/schemas/Error"
+      },
+      "ServiceResponse": {
+        "$ref": "./services/service.components.json#/schemas/ServiceResponse"
+      },
+      "PlaylistResponse": {
+        "$ref": "./services/service.components.json#/schemas/ServiceResponse"
+      },
+      "playlistsResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistsResponse"
+      },
+      "playlistSingleResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistSingleResponse"
+      },
+      "playlistTracksResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistTracksResponse"
+      },
+      "playlistCreateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"
+      },
+      "playlistUpdateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistUpdateRequest"
+      }
     }
   }
 }
