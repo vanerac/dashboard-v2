@@ -5,5 +5,5 @@
 import type { Playlist } from './Playlist';
 
 export type playlistsResponse = {
-    services?: Playlist;
+    services?: Array<Playlist>;
 };

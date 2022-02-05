@@ -5,7 +5,9 @@
       "properties": {
         "services": {
           "type": "array",
-          "$ref": "../../openapi.components.json#/schemas/Playlist"
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Playlist"
+          }
         }
       }
     },
@@ -22,7 +24,9 @@
       "properties": {
         "tracks": {
           "type": "array",
-          "$ref": "../../openapi.components.json#/schemas/Track"
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Track"
+          }
         }
       }
     },

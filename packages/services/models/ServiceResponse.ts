@@ -5,5 +5,5 @@
 import type { Service } from './Service';
 
 export type ServiceResponse = {
-    services?: Service;
+    services?: Array<Service>;
 };

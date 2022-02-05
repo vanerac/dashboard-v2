@@ -5,7 +5,9 @@
       "properties": {
         "services": {
           "type": "array",
-          "$ref": "../openapi.components.json#/schemas/Service"
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Service"
+          }
         }
       }
     },

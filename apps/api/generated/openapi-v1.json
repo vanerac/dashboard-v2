@@ -910,7 +910,9 @@
         "properties": {
           "services": {
             "type": "array",
-            "$ref": "#/components/schemas/Service"
+            "items": {
+              "$ref": "#/components/schemas/Service"
+            }
           }
         }
       },
@@ -922,7 +924,9 @@
         "properties": {
           "services": {
             "type": "array",
-            "$ref": "#/components/schemas/Playlist"
+            "items": {
+              "$ref": "#/components/schemas/Playlist"
+            }
           }
         }
       },
@@ -939,7 +943,9 @@
         "properties": {
           "tracks": {
             "type": "array",
-            "$ref": "#/components/schemas/Track"
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
           }
         }
       },

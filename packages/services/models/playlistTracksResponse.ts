@@ -5,5 +5,5 @@
 import type { Track } from './Track';
 
 export type playlistTracksResponse = {
-    tracks?: Track;
+    tracks?: Array<Track>;
 };
