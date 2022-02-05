@@ -1,0 +1,21 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Title",
+    "description": "Title",
+    "version": "3.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "$ref": "auth/auth.path.json#/login"
+    },
+    "/auth/register": {
+      "$ref": "auth/auth.path.json#/register"
+    }
+  }
+}
