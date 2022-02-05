@@ -64,6 +64,27 @@
       },
       "Error": {
         "$ref": "./openapi.components.json#/schemas/Error"
+      },
+      "ServiceResponse": {
+        "$ref": "./services/service.components.json#/schemas/ServiceResponse"
+      },
+      "PlaylistResponse": {
+        "$ref": "./services/service.components.json#/schemas/ServiceResponse"
+      },
+      "playlistsResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistsResponse"
+      },
+      "playlistSingleResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistSingleResponse"
+      },
+      "playlistTracksResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistTracksResponse"
+      },
+      "playlistCreateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"
+      },
+      "playlistUpdateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistUpdateRequest"
       }
     }
   }

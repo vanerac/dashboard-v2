@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ServiceResponse } from '../models/ServiceResponse';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -10,12 +12,10 @@ export class ServicesService {
     /**
      * Get all user services
      * Retrieves a list of all the user's connected services
-     * @returns any Success
+     * @returns ServiceResponse Success
      * @throws ApiError
      */
-    public static getAllUserServices(): CancelablePromise<{
-        services?: any[];
-    }> {
+    public static getAllUserServices(): CancelablePromise<ServiceResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/service',
@@ -30,14 +30,12 @@ export class ServicesService {
      * Get user services
      * Retrieves a list of the user's connected services
      * @param serviceId Service ID
-     * @returns any Success
+     * @returns ServiceResponse Success
      * @throws ApiError
      */
     public static getServicesById(
         serviceId: number,
-    ): CancelablePromise<{
-        services?: any[];
-    }> {
+    ): CancelablePromise<ServiceResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/service/{serviceId}',
@@ -55,14 +53,12 @@ export class ServicesService {
      * Delete user service
      * Deletes a user service
      * @param serviceId Service ID
-     * @returns any Success
+     * @returns ServiceResponse Success
      * @throws ApiError
      */
     public static deleteService(
         serviceId: string,
-    ): CancelablePromise<{
-        services?: any[];
-    }> {
+    ): CancelablePromise<ServiceResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/service/{serviceId}/delete',
@@ -81,7 +77,7 @@ export class ServicesService {
      * Updates a user service
      * @param serviceId Service ID
      * @param requestBody
-     * @returns any Success
+     * @returns ServiceResponse Success
      * @throws ApiError
      */
     public static updateService(
@@ -89,9 +85,7 @@ export class ServicesService {
         requestBody: {
             enabled?: boolean;
         },
-    ): CancelablePromise<{
-        services?: any[];
-    }> {
+    ): CancelablePromise<ServiceResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/service/{serviceId}/update',
