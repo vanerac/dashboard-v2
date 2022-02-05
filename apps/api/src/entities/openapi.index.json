@@ -47,5 +47,24 @@
     "/data/{serviceId}/playlist/{playlistId}/delete": {
       "$ref": "data/playlists/playlist.path.json#/delete"
     }
+  },
+  "components": {
+    "schemas": {
+      "Track": {
+        "$ref": "./openapi.components.json#/schemas/Track"
+      },
+      "Playlist": {
+        "$ref": "./openapi.components.json#/schemas/Playlist"
+      },
+      "Service": {
+        "$ref": "./openapi.components.json#/schemas/Service"
+      },
+      "User": {
+        "$ref": "./openapi.components.json#/schemas/User"
+      },
+      "Error": {
+        "$ref": "./openapi.components.json#/schemas/Error"
+      }
+    }
   }
 }
