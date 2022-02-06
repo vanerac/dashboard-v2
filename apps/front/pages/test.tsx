@@ -1,7 +1,7 @@
 import withAuth from "./withAuth";
 
 function test() {
-    return <div>Salut test</div>;
+    return <div>Example auth route</div>;
 }
 
 export default withAuth(test);

@@ -1,203 +1,145 @@
-import styles from '../styles/login.module.css';
-import React, { useState } from 'react';
-// import Button from 'react-bootstrap/Button';
-// import { useHistory } from 'react-router-dom';
-// import Cookies from 'universal-cookie';
-// import dotenv from 'dotenv';
-// import { baseUrl } from './RequestTools';
+import Head from 'next/head';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google';
+import AppleIcon from '@mui/icons-material/Apple';
+import SvgIcon from '@mui/material/SvgIcon';
+import { mdiSpotify } from '@mdi/js';
+import { mdiRadioFm } from '@mdi/js';
 
-// dotenv.config();
+const Login = () => {
+    const router = useRouter();
 
-function Login() {
-    // const cookies = new Cookies();
-    const [currentView, setCurrentView] = useState('signUp');
-    const [userName, setUserName] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-    const [userDisplayName, setUserDisplayName] = useState('');
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const changeView = (view: any) => {
-        setCurrentView(view);
-    };
+    const svgSpotify = (
+        <SvgIcon>
+            <path d={mdiSpotify} />
+        </SvgIcon>
+    );
 
-    // if (cookies.get('isAuthenticated')) history.push('/home');
-
-    const logIn = () => {
-        console.log('loginnn');
-    };
-
-    const signUp = () => {
-        console.log('signUppp');
-    };
-
-    const updateUsername = (event: any) => {
-        setUserName(event.target.value);
-    };
-
-    const updatePassword = (event: any) => {
-        setUserPassword(event.target.value);
-    };
-
-    const updateDisplayName = (event: any) => {
-        setUserDisplayName(event.target.value);
-    };
+    const svgLastFM = (
+        <SvgIcon>
+            <path d={mdiRadioFm} />
+        </SvgIcon>
+    );
 
     return (
-        <section id="login-page" className={styles.section_login_page}>
-            {(() => {
-                switch (currentView) {
-                    case 'signUp':
-                        return (
-                            <>
-                                <form
-                                    onSubmit={(event) => event.preventDefault()}
-                                    className={styles.section_login_page_form}>
-                                    <h2 className={styles.section_login_page_form_h2}>Sign Up!</h2>
-                                    <fieldset className={styles.section_login_page_form_fieldset}>
-                                        <legend className={styles.section_login_page_form_fieldset_legend}>
-                                            Create Account
-                                        </legend>
-                                        <ul className={styles.section_login_page_form_fieldset_ul}>
-                                            <li className={styles.section_login_page_form_fieldset_ul_li}>
-                                                <label className={styles.section_login_page_form_fieldset_ul_li_label} htmlFor="username">Username:</label>
-                                                <input
-                                                    type="text"
-                                                    id="username"
-                                                    value={userName}
-                                                    onChange={(evt) => updateUsername(evt)}
-                                                    required
-                                                />
-                                            </li>
-                                            <li className={styles.section_login_page_form_fieldset_ul_li}>
-                                                <label className={styles.section_login_page_form_fieldset_ul_li_label} htmlFor="displayName">Display Name:</label>
-                                                <input
-                                                    type="text"
-                                                    id="displayName"
-                                                    value={userDisplayName}
-                                                    onChange={(evt) => updateDisplayName(evt)}
-                                                    required
-                                                />
-                                            </li>
-                                            <li className={styles.section_login_page_form_fieldset_ul_li}>
-                                                <label className={styles.section_login_page_form_fieldset_ul_li_label} htmlFor="password">Password:</label>
-                                                <input
-                                                    type="password"
-                                                    id="password"
-                                                    value={userPassword}
-                                                    onChange={(evt) => updatePassword(evt)}
-                                                    required
-                                                />
-                                            </li>
-                                        </ul>
-                                    </fieldset>
-                                    <button className={styles.section_login_page_form_button} onClick={() => signUp()}>
-                                        Submit
-                                    </button>
-                                    <button
-                                        className={styles.section_login_page_form_button}
-                                        onClick={() => changeView('logIn')}>
-                                        Have an Account?
-                                    </button>
-                                </form>
-                                {/* <Modal show={show} onHide={handleClose}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Error !</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>These identifiers are already used by another user</Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>
-                                            Close
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal> */}
-                            </>
-                        );
-                    case 'logIn':
-                        return (
-                            <>
-                                <form
-                                    onSubmit={(event) => event.preventDefault()}
-                                    className={styles.section_login_page_form}>
-                                    <h2 className={styles.section_login_page_form_h2}>Welcome Back!</h2>
-                                    <fieldset className={styles.section_login_page_form_fieldset}>
-                                        <legend className={styles.section_login_page_form_fieldset_legend}>
-                                            Log In
-                                        </legend>
-                                        <ul className={styles.section_login_page_form_fieldset_ul}>
-                                            <li className={styles.section_login_page_form_fieldset_ul_li}>
-                                                <label className={styles.section_login_page_form_fieldset_ul_li_label} htmlFor="username">Username:</label>
-                                                <input
-                                                    type="text"
-                                                    id="username"
-                                                    value={userName}
-                                                    onChange={(evt) => updateUsername(evt)}
-                                                    required
-                                                />
-                                            </li>
-                                            <li className={styles.section_login_page_form_fieldset_ul_li}>
-                                                <label className={styles.section_login_page_form_fieldset_ul_li_label} htmlFor="password">Password:</label>
-                                                <input
-                                                    type="password"
-                                                    id="password"
-                                                    value={userPassword}
-                                                    onChange={(evt) => updatePassword(evt)}
-                                                    required
-                                                />
-                                            </li>
-                                        </ul>
-                                    </fieldset>
-                                    <button className={styles.section_login_page_form_button} onClick={() => logIn()}>
-                                        Login
-                                    </button>
-                                    <button
-                                        className={styles.section_login_page_form_button}
-                                        type="button"
-                                        onClick={() => changeView('signUp')}>
-                                        Create an Account
-                                    </button>
-                                    <br />
-                                    <a
-                                        // href={baseUrl + '/api/auth/spotify/login'}
-                                        className={styles.section_login_page_form_fieldset_ul_li_a}
-                                        role="button"
-                                        aria-pressed="true">
-                                        Login With Spotify
-                                    </a>
-                                    <a
-                                        // href={baseUrl + '/api/auth/deezer/login'}
-                                        className={styles.section_login_page_form_fieldset_ul_li_a}
-                                        role="button"
-                                        aria-pressed="true">
-                                        Login With Deezer
-                                    </a>
-                                    <a
-                                        // href={baseUrl + '/api/auth/google/login'}
-                                        className={styles.section_login_page_form_fieldset_ul_li_a}
-                                        role="button"
-                                        aria-pressed="true">
-                                        Login With Google
-                                    </a>
-                                </form>
-                                {/* <Modal show={show} onHide={handleClose}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Error !</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>These login credentials are incorrect</Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>
-                                            Close
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal> */}
-                            </>
-                        );
-                    default:
-                        return <></>;
-                }
-            })()}
-        </section>
+        <>
+            <Box
+                component="main"
+                sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    flexGrow: 1,
+                    minHeight: '100%',
+                }}>
+                <Container maxWidth="sm">
+                    <form>
+                        <Box sx={{ my: 3 }}>
+                            <Typography color="textPrimary" variant="h4">
+                                Sign in
+                            </Typography>
+                            <Typography color="textSecondary" gutterBottom variant="body2">
+                                Sign in on the Music Dashboard
+                            </Typography>
+                        </Box>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    color="info"
+                                    fullWidth
+                                    startIcon={svgLastFM}
+                                    //   onClick={}
+                                    size="large"
+                                    variant="contained">
+                                    Login with LastFM
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    fullWidth
+                                    color="error"
+                                    startIcon={<GoogleIcon />}
+                                    //   onClick={}
+                                    size="large"
+                                    variant="contained">
+                                    Login with Google
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    fullWidth
+                                    color="secondary"
+                                    startIcon={svgSpotify}
+                                    //   onClick={}
+                                    size="large"
+                                    variant="contained">
+                                    Login with Spotify
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={<AppleIcon />}
+                                    //   onClick={}
+                                    size="large"
+                                    variant="contained">
+                                    Login with Apple
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <Box
+                            sx={{
+                                pb: 1,
+                                pt: 3,
+                            }}>
+                            <Typography align="center" color="textSecondary" variant="body1">
+                                or login with email address
+                            </Typography>
+                        </Box>
+                        <TextField
+                            fullWidth
+                            label="Email Address"
+                            margin="normal"
+                            name="email"
+                            //   onBlur={formik.handleBlur}
+                            type="email"
+                            variant="outlined"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            margin="normal"
+                            name="password"
+                            //   onBlur={formik.handleBlur}
+                            type="password"
+                            variant="outlined"
+                        />
+                        <Box sx={{ py: 2 }}>
+                            <Button
+                                color="primary"
+                                // disabled={}
+                                fullWidth
+                                size="large"
+                                type="submit"
+                                variant="contained">
+                                Sign In Now
+                            </Button>
+                        </Box>
+                        <Typography color="textSecondary" variant="body2">
+                            Don&apos;t have an account?{' '}
+                            <NextLink href="/register" passHref>
+                            <Link variant="subtitle2" underline="hover">
+                                    Sign Up
+                                </Link>
+                            </NextLink>
+                        </Typography>
+                    </form>
+                </Container>
+            </Box>
+        </>
     );
-}
+};
 
 export default Login;

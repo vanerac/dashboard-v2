@@ -14,9 +14,12 @@ const Home = () => {
         }
     };
 
-    const handleClick = (e: any) => {
+    const redirectLogin = (e: any) => {
         Router.push('/login');
-        console.log(e);
+    };
+
+    const redirectRegister = (e: any) => {
+        Router.push('/register');
     };
 
     const nextMode = darkModeActive ? 'Light' : 'Dark';
@@ -24,22 +27,17 @@ const Home = () => {
 
     return (
         <>
-                <p>Hello World!</p>
-                <Button
-                    onClick={handleChangeMode}
-                    color="primary"
-                    variant="contained"
-                    startIcon={<Icon />}>
-                    Use {nextMode} mode
-                </Button>
-                <br />
-                <Button
-                    color="primary"
-                    variant="contained"
-                    startIcon={<Icon />}
-                    onClick={handleClick}>
-                    Redirect to /login
-                </Button>
+            <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
+                Use {nextMode} mode
+            </Button>
+            <br />
+            <Button color="primary" variant="contained" startIcon={<Icon />} onClick={redirectLogin}>
+                Redirect to /login
+            </Button>
+            <br />
+            <Button color="primary" variant="contained" startIcon={<Icon />} onClick={redirectRegister}>
+                Redirect to /register
+            </Button>
         </>
     );
 };
