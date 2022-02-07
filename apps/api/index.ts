@@ -36,7 +36,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
     cors({
-        origin: configuration.frontendHost,
+        origin: '*',
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
         methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
