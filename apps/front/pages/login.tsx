@@ -7,9 +7,13 @@ import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
 import { mdiSpotify } from '@mdi/js';
 import { mdiRadioFm } from '@mdi/js';
+import React, { useState } from 'react';
+import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
 
 const Login = () => {
     const router = useRouter();
+    const [userName, setUserName] = useState('');
+    const [userPassword, setUserPassword] = useState('');
 
     const svgSpotify = (
         <SvgIcon>
@@ -22,6 +26,11 @@ const Login = () => {
             <path d={mdiRadioFm} />
         </SvgIcon>
     );
+
+    const submit = () => {
+        console.log(AuthenticationService.authLoginPost({ email: 'test', password: 'test' }));
+        console.log('submitting');
+    };
 
     return (
         <>
@@ -122,7 +131,8 @@ const Login = () => {
                                 // disabled={}
                                 fullWidth
                                 size="large"
-                                type="submit"
+                                onClick={submit}
+                                // type="submit"
                                 variant="contained">
                                 Sign In Now
                             </Button>
@@ -130,7 +140,7 @@ const Login = () => {
                         <Typography color="textSecondary" variant="body2">
                             Don&apos;t have an account?{' '}
                             <NextLink href="/register" passHref>
-                            <Link variant="subtitle2" underline="hover">
+                                <Link variant="subtitle2" underline="hover">
                                     Sign Up
                                 </Link>
                             </NextLink>

@@ -73,7 +73,7 @@ const Register = () => {
                                 // disabled={}
                                 fullWidth
                                 size="large"
-                                type="submit"
+                                // type="submit"
                                 variant="contained">
                                 Sign Up Now
                             </Button>
