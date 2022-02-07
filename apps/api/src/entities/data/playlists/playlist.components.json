@@ -3,7 +3,7 @@
     "playlistsResponse": {
       "type": "object",
       "properties": {
-        "services": {
+        "playlists": {
           "type": "array",
           "items": {
             "$ref": "../../openapi.components.json#/schemas/Playlist"
@@ -14,7 +14,7 @@
     "playlistSingleResponse": {
       "type": "object",
       "properties": {
-        "service": {
+        "playlist": {
           "$ref": "../../openapi.components.json#/schemas/Playlist"
         }
       }

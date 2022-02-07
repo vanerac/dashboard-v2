@@ -801,6 +801,633 @@
           }
         }
       }
+    },
+    "/playback/currentState": {
+      "get": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Get current playback state",
+        "description": "Get current playback state",
+        "operationId": "getCurrentState",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/PlaybackStateResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/queue": {
+      "get": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Get queue",
+        "description": "Get queue",
+        "operationId": "getQueue",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/GetQueueResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/queue/add": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Add to queue",
+        "description": "Add to queue",
+        "operationId": "addToQueue",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AddToQueueRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/AddToQueueResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/queue/delete": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Remove from queue",
+        "description": "Remove from queue",
+        "operationId": "removeFromQueue",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RemoveFromQueueRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/RemoveFromQueueResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/queue/clear": {
+      "delete": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Clear queue",
+        "description": "Clear queue",
+        "operationId": "clearQueue",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/ClearQueueResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/queue/move": {
+      "put": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Move in queue",
+        "description": "Move in queue",
+        "operationId": "moveInQueue",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MoveInQueueRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/MoveInQueueResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/play": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Play track",
+        "description": "Play track",
+        "operationId": "playTrack",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PlayTrackRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/PlayTrackResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/pause": {
+      "get": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Pause",
+        "description": "Pause",
+        "operationId": "pause",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/PauseResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/resume": {
+      "get": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Resume",
+        "description": "Resume",
+        "operationId": "resume",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/ResumeResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/skip": {
+      "get": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Skip",
+        "description": "Skip",
+        "operationId": "skip",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SkipResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/prev": {
+      "get": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Previous",
+        "description": "Previous",
+        "operationId": "prev",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/PrevResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/seek": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Seek",
+        "description": "Seek",
+        "operationId": "seek",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SeekRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SeekResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/volume": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Set volume",
+        "description": "Set volume",
+        "operationId": "setVolume",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SetVolumeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SetVolumeResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/shuffle": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Set shuffle",
+        "description": "Set shuffle",
+        "operationId": "setShuffle",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SetShuffleRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SetShuffleResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/repeat": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Set repeat",
+        "description": "Set repeat",
+        "operationId": "setRepeat",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SetRepeatRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SetRepeatResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/quality": {
+      "post": {
+        "tags": [
+          "playback"
+        ],
+        "summary": "Set quality",
+        "description": "Set quality",
+        "operationId": "setQuality",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SetQualityRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SetQualityResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -809,25 +1436,36 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "artist": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "album": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "duration": {
-            "type": "integer"
+            "type": "integer",
+            "required": true
           },
           "image": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "provider": {
-            "type": "string"
+            "type": "string",
+            "required": true
+          },
+          "playable": {
+            "type": "boolean",
+            "required": true
           }
         }
       },
@@ -861,10 +1499,12 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer"
+            "type": "string",
+            "required": true
           },
           "type": {
             "type": "string",
+            "required": true,
             "enum": [
               "google",
               "spotify",
@@ -874,7 +1514,8 @@
             ]
           },
           "enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "required": true
           }
         }
       },
@@ -886,10 +1527,12 @@
             "format": "email"
           },
           "displayName": {
-            "type": "string"
+            "type": "string",
+            "required": true
           },
           "id": {
-            "type": "integer"
+            "type": "string",
+            "required": false
           }
         }
       },
@@ -898,10 +1541,60 @@
         "properties": {
           "code": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "required": true
           },
           "message": {
-            "type": "string"
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "Device": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "required": true
+          },
+          "name": {
+            "type": "string",
+            "required": true
+          },
+          "volume": {
+            "type": "integer",
+            "required": true
+          },
+          "state": {
+            "type": "boolean",
+            "required": true
+          }
+        }
+      },
+      "PlaybackStatus": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track",
+            "required": true
+          },
+          "position": {
+            "type": "integer",
+            "required": true
+          },
+          "device": {
+            "type": "string",
+            "required": true
+          },
+          "state": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "playing",
+              "paused",
+              "stopped"
+            ]
           }
         }
       },
@@ -922,7 +1615,7 @@
       "playlistsResponse": {
         "type": "object",
         "properties": {
-          "services": {
+          "playlists": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Playlist"
@@ -933,7 +1626,7 @@
       "playlistSingleResponse": {
         "type": "object",
         "properties": {
-          "service": {
+          "playlist": {
             "$ref": "#/components/schemas/Playlist"
           }
         }
@@ -961,6 +1654,283 @@
         "type": "object",
         "properties": {
           "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PlaybackStateResponse": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "playing",
+              "paused",
+              "stopped"
+            ]
+          },
+          "position": {
+            "type": "number"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "volume": {
+            "type": "number"
+          },
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "AddToQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "AddToQueueResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "GetQueueResponse": {
+        "type": "object",
+        "properties": {
+          "tracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
+          }
+        }
+      },
+      "RemoveFromQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "RemoveFromQueueResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "MoveInQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          },
+          "position": {
+            "type": "number"
+          }
+        }
+      },
+      "MoveInQueueResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "ClearQueueResponse": {
+        "type": "object",
+        "properties": {
+          "tracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
+          }
+        }
+      },
+      "GetAllDevicesResponse": {
+        "type": "object",
+        "properties": {
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Device"
+            }
+          }
+        }
+      },
+      "GetCurrentDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "SetCurrentDeviceRequest": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "SetCurrentDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "RegisterDeviceRequest": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "RegisterDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "PlayTrackRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "PlayTrackResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "ResumeResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "PauseResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "SkipResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "PrevResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "SeekRequest": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "number"
+          }
+        }
+      },
+      "SeekResponse": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "number"
+          }
+        }
+      },
+      "SetVolumeRequest": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number"
+          }
+        }
+      },
+      "SetVolumeResponse": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number"
+          }
+        }
+      },
+      "SetShuffleRequest": {
+        "type": "object",
+        "properties": {
+          "shuffle": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SetShuffleResponse": {
+        "type": "object",
+        "properties": {
+          "shuffle": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SetRepeatRequest": {
+        "type": "object",
+        "properties": {
+          "repeat": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SetRepeatResponse": {
+        "type": "object",
+        "properties": {
+          "repeat": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SetQualityRequest": {
+        "type": "object",
+        "properties": {
+          "quality": {
+            "type": "string"
+          }
+        }
+      },
+      "SetQualityResponse": {
+        "type": "object",
+        "properties": {
+          "quality": {
             "type": "string"
           }
         }
