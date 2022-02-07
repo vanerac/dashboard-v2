@@ -14,7 +14,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./${{matrix.directory}}/node_modules
+            ./apps/${{matrix.directory}}/node_modules
           key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
       - uses: actions/setup-node@v2.4.1
         with:

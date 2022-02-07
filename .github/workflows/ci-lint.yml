@@ -14,8 +14,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./${{matrix.directory}}/node_modules
-          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+            ./apps/${{matrix.directory}}/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
@@ -39,8 +40,10 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./${{ matrix.directory }}/node_modules
-          key: modules-${{hashFiles(format('{0}/package-lock.json', matrix.directory))}}
+          path: |
+            ./apps/${{ matrix.directory }}/node_modules
+            ./node_modules
+          key: modules-${{hashFiles('package-lock.json')}}
       - run: npm run lint
         working-directory: ./${{matrix.directory}}
         name: Lint
@@ -60,8 +63,26 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./${{matrix.directory}}/node_modules
-          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+          path: |
+            ./apps/${{matrix.directory}}/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run prettier
         working-directory: ./${{matrix.directory}}
         name: Prettier
+  openapi:
+    needs: install-dependencies
+    name: Validate OpenAPI Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+              ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run validate-swagger
+        working-directory: ./apps/api
+        name: Validate OpenAPI Schema
