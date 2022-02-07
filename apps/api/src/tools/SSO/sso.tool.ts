@@ -1,5 +1,6 @@
-import { User, Token, ServiceUserData } from '../types';
+import { Token, ServiceUserData } from '../types';
 import pool from '../../../src/tools/database.tools';
+import { User } from '../../../../../packages/services';
 
 export async function createUser(
     displayName: string,

@@ -1,9 +1,10 @@
-import { ServiceUserData, SSOController, User } from '../../../../tools/types';
+import { ServiceUserData, SSOController } from '../../../../tools/types';
 import { Request, Response } from 'express';
 import configuration from '../../../../../configuration';
 import { createUser, findUserByService, linkService, updateToken } from '../../../../tools/SSO/sso.tool';
 import { generateToken } from '../../../../tools/auth.tools';
 import { SpotifyTools } from '../../../../tools/SSO/spotify.tools';
+import { User } from '../../../../../../../packages/services';
 
 export default class SpotifyController extends SSOController {
     static clientId: string = configuration.spotifyClientId;
