@@ -94,6 +94,18 @@
     },
     "/playback/quality": {
       "$ref": "playback/playback.path.json#/setQuality"
+    },
+    "/playback/devices": {
+      "$ref": "playback/playback.path.json#/getAllDevices"
+    },
+    "/playback/device/current": {
+      "$ref": "playback/playback.path.json#/getCurrentDevice"
+    },
+    "/playback/device/change": {
+      "$ref": "playback/playback.path.json#/setCurrentDevice"
+    },
+    "/playback/device/register": {
+      "$ref": "playback/playback.path.json#/registerDevice"
     }
   },
   "components": {

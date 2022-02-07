@@ -53,6 +53,7 @@ export type { Track } from './models/Track';
 export type { User } from './models/User';
 
 export { AuthenticationService } from './services/AuthenticationService';
+export { DevicesService } from './services/DevicesService';
 export { PlaybackService } from './services/PlaybackService';
 export { PlaylistService } from './services/PlaylistService';
 export { ServicesService } from './services/ServicesService';

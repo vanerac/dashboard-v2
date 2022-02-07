@@ -1428,6 +1428,160 @@
           }
         }
       }
+    },
+    "/playback/devices": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Get all devices",
+        "description": "Get all devices",
+        "operationId": "getAllDevices",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/GetAllDevicesResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/device/current": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Get current device",
+        "description": "Get current device",
+        "operationId": "getCurrentDevice",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/GetCurrentDeviceResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/device/change": {
+      "put": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Set current device",
+        "description": "Set current device",
+        "operationId": "setCurrentDevice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SetCurrentDeviceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/SetCurrentDeviceResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+    },
+    "/playback/device/register": {
+      "post": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Register device",
+        "description": "Register device",
+        "operationId": "registerDevice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RegisterDeviceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/components/schemas/RegisterDeviceResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/schemas/Error"
+          },
+          "403": {
+            "description": "Forbidden",
+            "$ref": "#/components/schemas/Error"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
     }
   },
   "components": {
