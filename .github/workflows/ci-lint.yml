@@ -7,6 +7,7 @@ jobs:
     strategy:
       matrix:
         directory : ["app", "api", "front"]
+      fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - name: Cache dependencies
@@ -28,6 +29,7 @@ jobs:
     strategy:
       matrix:
         directory: [ "app", "api", "front" ]
+      fail-fast: false
     name: Lint
     needs: install-dependencies
     runs-on: ubuntu-latest
