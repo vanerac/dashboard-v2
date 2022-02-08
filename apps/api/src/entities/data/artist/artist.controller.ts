@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { ArtistService, SpotifyArtistService } from './artist.service';
 import { Providers } from '../../../tools/types';
 import { PlaylistService } from '../playlists/playlist.service';
@@ -9,7 +9,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifyArtistService,
 };
 export default class ArtistController {
-    static async getArtistById(req: Request, res: Response) {
+    static async getArtistById(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -30,13 +30,11 @@ export default class ArtistController {
             const artists = await fn(req.session.local.service.accessToken, id);
             return res.json(artists);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async getFollowedArtists(req: Request, res: Response) {
+    static async getFollowedArtists(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -57,13 +55,11 @@ export default class ArtistController {
             const artists = await fn(req.session.local.service.accessToken, id);
             return res.json(artists);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async followArtist(req: Request, res: Response) {
+    static async followArtist(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -84,13 +80,11 @@ export default class ArtistController {
             const artist = await fn(req.session.local.service.accessToken, id);
             return res.json(artist);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async unfollowArtist(req: Request, res: Response) {
+    static async unfollowArtist(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -111,13 +105,11 @@ export default class ArtistController {
             const artist = await fn(req.session.local.service.accessToken, id);
             return res.json(artist);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async getArtistAlbums(req: Request, res: Response) {
+    static async getArtistAlbums(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -138,13 +130,11 @@ export default class ArtistController {
             const albums = await fn(req.session.local.service.accessToken, id);
             return res.json(albums);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async getArtistPlaylists(req: Request, res: Response) {
+    static async getArtistPlaylists(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -165,13 +155,11 @@ export default class ArtistController {
             const playlists = await fn(req.session.local.service.accessToken, id);
             return res.json(playlists);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async getArtistRelatedArtists(req: Request, res: Response) {
+    static async getArtistRelatedArtists(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -192,13 +180,11 @@ export default class ArtistController {
             const artists = await fn(req.session.local.service.accessToken, id);
             return res.json(artists);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 
-    static async getArtistTopTracks(req: Request, res: Response) {
+    static async getArtistTopTracks(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
                 return res.status(400).json({
@@ -219,9 +205,7 @@ export default class ArtistController {
             const tracks = await fn(req.session.local.service.accessToken, id);
             return res.json(tracks);
         } catch (error: any) {
-            res.status(500).json({
-                message: error.message,
-            });
+            next(error);
         }
     }
 }

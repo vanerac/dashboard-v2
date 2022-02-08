@@ -15,7 +15,8 @@
           "description": "Service ID",
           "required": true,
           "schema": {
-            "type": "integer"
+            "type": "string",
+            "format": "uuid"
           }
         }
       ],
@@ -32,6 +33,16 @@
         },
         "401": {
           "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not found",
           "content": {
             "application/json": {
               "schema": {
@@ -112,7 +123,8 @@
           "description": "Service ID",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         }
       ],
@@ -176,7 +188,8 @@
           "description": "Service ID",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         }
       ],

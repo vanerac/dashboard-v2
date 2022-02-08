@@ -15,7 +15,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -24,7 +25,8 @@
           "description": "Search query",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         }
       ],
