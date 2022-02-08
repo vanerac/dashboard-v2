@@ -14,7 +14,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/front/node_modules
+            ./apps/api/node_modules
             ./apps/app/node_modules
             ./apps/front/node_modules
             ./node_modules
@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/front/node_modules
+            ./apps/api/node_modules
             ./apps/app/node_modules
             ./apps/front/node_modules
             ./node_modules
@@ -78,7 +78,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/front/node_modules
+            ./apps/api/node_modules
             ./apps/app/node_modules
             ./apps/front/node_modules
             ./node_modules
@@ -106,7 +106,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/front/node_modules
+            ./apps/api/node_modules
             ./apps/app/node_modules
             ./apps/front/node_modules
             ./node_modules

@@ -1,1 +1,1 @@
-module.exports = require('../../packages/config/eslint-api');
+module.exports = require('../../packages/config/eslint-preset');
