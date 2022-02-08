@@ -6,7 +6,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { mdiSpotify } from '@mdi/js';
 import { mdiRadioFm } from '@mdi/js';
 import React, { useState } from 'react';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import { AuthenticationService } from '../../../packages/services';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';

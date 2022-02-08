@@ -13,4 +13,6 @@ const MyApp = (props: AppProps) => {
     );
 };
 
-export default withDarkMode(MyApp);
+const app = withDarkMode(MyApp);
+
+export default app;

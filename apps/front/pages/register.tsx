@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import { AuthenticationService } from '../../../packages/services';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
