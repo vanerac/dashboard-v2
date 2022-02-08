@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { User } from '../models/User';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -21,11 +23,7 @@ export class AuthenticationService {
         },
     ): CancelablePromise<{
         token: string;
-        user?: {
-            email?: string;
-            displayName?: string;
-            id?: number;
-        };
+        user?: User;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -53,11 +51,7 @@ export class AuthenticationService {
             displayName: string;
         },
     ): CancelablePromise<{
-        user: {
-            email?: string;
-            displayName?: string;
-            id?: number;
-        };
+        user: User;
         message: string;
     }> {
         return __request(OpenAPI, {

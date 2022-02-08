@@ -16,6 +16,250 @@
     },
     "/auth/register": {
       "$ref": "auth/auth.path.json#/register"
+    },
+    "/service": {
+      "$ref": "services/service.path.json#/getAllUserServices"
+    },
+    "/service/{serviceId}": {
+      "$ref": "services/service.path.json#/getServicesById"
+    },
+    "/service/{serviceId}/delete": {
+      "$ref": "services/service.path.json#/deleteService"
+    },
+    "/service/{serviceId}/update": {
+      "$ref": "services/service.path.json#/updateService"
+    },
+    "/data/{serviceId}/playlist/": {
+      "$ref": "data/playlists/playlist.path.json#/getAllPlaylists"
+    },
+    "/data/{serviceId}/playlist/{playlistId}": {
+      "$ref": "data/playlists/playlist.path.json#/getPlaylistById"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/tracks": {
+      "$ref": "data/playlists/playlist.path.json#/getPlaylistTracks"
+    },
+    "/data/{serviceId}/playlist/create": {
+      "$ref": "data/playlists/playlist.path.json#/create"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/update": {
+      "$ref": "data/playlists/playlist.path.json#/update"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/delete": {
+      "$ref": "data/playlists/playlist.path.json#/delete"
+    },
+    "/data/{serviceId}/search": {
+      "$ref": "data/search/search.path.json#/search"
+    },
+    "/playback/currentState": {
+      "$ref": "playback/playback.path.json#/getCurrentState"
+    },
+    "/playback/queue": {
+      "$ref": "playback/playback.path.json#/getQueue"
+    },
+    "/playback/queue/add": {
+      "$ref": "playback/playback.path.json#/addToQueue"
+    },
+    "/playback/queue/delete": {
+      "$ref": "playback/playback.path.json#/removeFromQueue"
+    },
+    "/playback/queue/clear": {
+      "$ref": "playback/playback.path.json#/clearQueue"
+    },
+    "/playback/queue/move": {
+      "$ref": "playback/playback.path.json#/moveInQueue"
+    },
+    "/playback/play": {
+      "$ref": "playback/playback.path.json#/playTrack"
+    },
+    "/playback/pause": {
+      "$ref": "playback/playback.path.json#/pauseTrack"
+    },
+    "/playback/resume": {
+      "$ref": "playback/playback.path.json#/resumeTrack"
+    },
+    "/playback/skip": {
+      "$ref": "playback/playback.path.json#/skipTrack"
+    },
+    "/playback/prev": {
+      "$ref": "playback/playback.path.json#/prevTrack"
+    },
+    "/playback/seek": {
+      "$ref": "playback/playback.path.json#/seekTrack"
+    },
+    "/playback/volume": {
+      "$ref": "playback/playback.path.json#/setVolume"
+    },
+    "/playback/shuffle": {
+      "$ref": "playback/playback.path.json#/setShuffle"
+    },
+    "/playback/repeat": {
+      "$ref": "playback/playback.path.json#/setRepeat"
+    },
+    "/playback/quality": {
+      "$ref": "playback/playback.path.json#/setQuality"
+    },
+    "/playback/devices": {
+      "$ref": "playback/playback.path.json#/getAllDevices"
+    },
+    "/playback/device/current": {
+      "$ref": "playback/playback.path.json#/getCurrentDevice"
+    },
+    "/playback/device/change": {
+      "$ref": "playback/playback.path.json#/setCurrentDevice"
+    },
+    "/playback/device/register": {
+      "$ref": "playback/playback.path.json#/registerDevice"
+    }
+  },
+  "components": {
+    "schemas": {
+      "Track": {
+        "$ref": "./openapi.components.json#/schemas/Track"
+      },
+      "Playlist": {
+        "$ref": "./openapi.components.json#/schemas/Playlist"
+      },
+      "Service": {
+        "$ref": "./openapi.components.json#/schemas/Service"
+      },
+      "User": {
+        "$ref": "./openapi.components.json#/schemas/User"
+      },
+      "Error": {
+        "$ref": "./openapi.components.json#/schemas/Error"
+      },
+      "Artist": {
+        "$ref": "./openapi.components.json#/schemas/Artist"
+      },
+      "Album": {
+        "$ref": "./openapi.components.json#/schemas/Album"
+      },
+      "SearchResult": {
+        "$ref": "./data/search/search.components.json#/schemas/SearchResult"
+      },
+      "searchQueryResponse": {
+        "$ref": "./data/search/search.components.json#/schemas/searchQueryResponse"
+      },
+      "Device": {
+        "$ref": "./openapi.components.json#/schemas/Device"
+      },
+      "PlaybackStatus": {
+        "$ref": "./openapi.components.json#/schemas/PlaybackStatus"
+      },
+      "ServiceResponse": {
+        "$ref": "./services/service.components.json#/schemas/ServiceResponse"
+      },
+      "PlaylistResponse": {
+        "$ref": "./services/service.components.json#/schemas/ServiceResponse"
+      },
+      "playlistsResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistsResponse"
+      },
+      "playlistSingleResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistSingleResponse"
+      },
+      "playlistTracksResponse": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistTracksResponse"
+      },
+      "playlistCreateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"
+      },
+      "playlistUpdateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistUpdateRequest"
+      },
+      "PlaybackStateResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/PlaybackStateResponse"
+      },
+      "AddToQueueRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/AddToQueueRequest"
+      },
+      "AddToQueueResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/AddToQueueResponse"
+      },
+      "GetQueueResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/GetQueueResponse"
+      },
+      "RemoveFromQueueRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/RemoveFromQueueRequest"
+      },
+      "RemoveFromQueueResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/RemoveFromQueueResponse"
+      },
+      "MoveInQueueRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/MoveInQueueRequest"
+      },
+      "MoveInQueueResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/MoveInQueueResponse"
+      },
+      "ClearQueueResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/ClearQueueResponse"
+      },
+      "GetAllDevicesResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/GetAllDevicesResponse"
+      },
+      "GetCurrentDeviceResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/GetCurrentDeviceResponse"
+      },
+      "SetCurrentDeviceRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SetCurrentDeviceRequest"
+      },
+      "SetCurrentDeviceResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SetCurrentDeviceResponse"
+      },
+      "RegisterDeviceRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/RegisterDeviceRequest"
+      },
+      "RegisterDeviceResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/RegisterDeviceResponse"
+      },
+      "PlayTrackRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/PlayTrackRequest"
+      },
+      "PlayTrackResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/PlayTrackResponse"
+      },
+      "ResumeResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/ResumeResponse"
+      },
+      "PauseResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/PauseResponse"
+      },
+      "SkipResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SkipResponse"
+      },
+      "PrevResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/PrevResponse"
+      },
+      "SeekRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SeekRequest"
+      },
+      "SeekResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SeekResponse"
+      },
+      "SetVolumeRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SetVolumeRequest"
+      },
+      "SetVolumeResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SetVolumeResponse"
+      },
+      "SetShuffleRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SetShuffleRequest"
+      },
+      "SetShuffleResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SetShuffleResponse"
+      },
+      "SetRepeatRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SetRepeatRequest"
+      },
+      "SetRepeatResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SetRepeatResponse"
+      },
+      "SetQualityRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SetQualityRequest"
+      },
+      "SetQualityResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SetQualityResponse"
+      }
     }
   }
 }

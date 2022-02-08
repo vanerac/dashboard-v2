@@ -1,0 +1,24 @@
+{
+  "schemas": {
+    "ServiceResponse": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Service"
+          }
+        }
+      }
+    },
+    "ServiceRequest": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

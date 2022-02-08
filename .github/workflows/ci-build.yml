@@ -1,5 +1,5 @@
 name: Builder
-on: [pull_request]
+on: [pull_request_review, workflow_dispatch]
 
 jobs:
   install-dependencies:
@@ -14,14 +14,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./${{matrix.directory}}/node_modules
-          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+            ./apps/${{matrix.directory}}/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
       - run: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: ./${{matrix.directory}}
+        working-directory: ./apps/${{matrix.directory}}
         name: Install dependencies
   build-app:
     name: Build
@@ -40,8 +41,10 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./app/node_modules
-          key: modules-${{hashFiles(format('{0}/package-lock.json', 'app'))}}
+          path: |
+            ./apps/app/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - name: Setup Expo
         uses: expo/expo-github-action@v5
         with:
@@ -49,14 +52,14 @@ jobs:
             expo-token: ${{ secrets.EXPO_TOKEN }}
             expo-cache: true
       - name: Build ${{matrix.platforms}} on EAS
-        working-directory: ./app
+        working-directory: ./apps/app
         run: npx eas-cli build --platform ${{matrix.platforms}} --non-interactive
       - name: Upload Artifcat
         id: upload
         uses: actions/upload-artifact@v2
         with:
           name: app-${{matrix.platforms}}
-          path: ./app/dist
+          path: ./apps/app/dist
   build-front:
     name: Build Front
     needs: install-dependencies
@@ -70,17 +73,19 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./front/node_modules
-          key: modules-${{hashFiles(format('{0}/package-lock.json', 'front'))}}
+          path: |
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run build
-        working-directory: ./front
+        working-directory: ./apps/front
         name: Build front
       - name: Upload Artifcat
         id: upload
         uses: actions/upload-artifact@v2
         with:
           name: front
-          path: ./front/dist
+          path: ./apps/front/dist
   build-api:
     name: Build API
     needs: install-dependencies
@@ -94,14 +99,16 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./api/node_modules
-          key: modules-${{hashFiles(format('{0}/package-lock.json', 'api'))}}
+          path: |
+            ./apps/api/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run build
-        working-directory: ./api
+        working-directory: ./apps/api
         name: Build api
       - name: Upload Artifcat
         id: upload
         uses: actions/upload-artifact@v2
         with:
           name: api
-          path: ./api/dist
+          path: ./apps/api/dist

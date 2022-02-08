@@ -1,21 +1,13 @@
 import { Request, Response } from 'express';
 
-export interface User {
-    id: number;
-    displayName: string;
-    email: string;
-    password: string | undefined;
-    createdAt: Date;
-    updatedAt: Date;
-    loginType: 'classic' | 'SSO';
-}
-
 export interface ServiceUserData {
     id: string;
     displayName: string;
     email: string;
     password: string | undefined;
 }
+
+export type UUID = string;
 
 export abstract class SSOController {
     static async getCode($req: Request, $res: Response): Promise<void> {
@@ -46,6 +38,13 @@ export interface Token {
     refresh_token: string;
     expires_in: number;
     provider: string;
+}
+
+export enum Providers {
+    GOOGLE = 'google',
+    SPOTIFY = 'spotify',
+    APPLE = 'apple',
+    LAST_FM = 'lastfm',
 }
 
 // export abstract class SSOAudioManager {

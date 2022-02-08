@@ -1,0 +1,416 @@
+{
+  "getAllPlaylists": {
+    "get": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Get all playlists",
+      "description": "Get all playlists",
+      "operationId": "getAllPlaylists",
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistsResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "getPlaylistById": {
+    "get": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Get playlist by id",
+      "description": "Get playlist by id",
+      "operationId": "getPlaylistById",
+      "parameters": [
+        {
+          "name": "playlistId",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "getPlaylistTracks": {
+    "get": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Get playlist tracks",
+      "description": "Get playlist tracks",
+      "operationId": "getPlaylistTracks",
+      "parameters": [
+        {
+          "name": "playlistId",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistTracksResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "create": {
+    "post": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Create playlist",
+      "description": "Create playlist",
+      "operationId": "create",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./playlist.components.json#/schemas/playlistCreateRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "update": {
+    "put": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Update playlist",
+      "description": "Update playlist",
+      "operationId": "update",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./playlist.components.json#/schemas/playlistUpdateRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "delete": {
+    "delete": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Delete playlist",
+      "description": "Delete playlist",
+      "operationId": "delete",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,10 +7,12 @@ import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
+import { User } from '../../packages/services';
 const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
+    local: {},
     secret: process.env.COOKIE_SECRET || 'secret',
     resave: true,
     saveUninitialized: true,
@@ -19,7 +21,8 @@ const sessionConfig = {
 
 declare module 'express-session' {
     export interface SessionData {
-        user: { [key: string]: any };
+        user: User;
+        [key: string]: any;
     }
 }
 
@@ -33,7 +36,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
     cors({
-        origin: configuration.frontendHost,
+        origin: '*',
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
         methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],

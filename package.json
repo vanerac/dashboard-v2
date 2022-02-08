@@ -1,45 +1,45 @@
 {
-         "name": "turborepo-basic-shared",
-         "version": "0.0.0",
-         "private": true,
-         "workspaces": [
-                  "apps/*",
-                  "packages/*"
-         ],
-         "scripts": {
-                  "types:generate": "openapi -i apps/api/generated/openapi-v1.json -o packages/services --client axios",
-                  "build": "turbo run build",
-                  "dev": "turbo run dev --parallel",
-                  "lint": "turbo run lint",
-                  "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-                  "prepare": "husky install",
-                  "types:bundle": "npx swagger-cli bundle -r -o ./apps/api/generated/openapi-v1.json apps/api/src/entities/openapi.index.json",
-                  "services:generate": "npm run types:bundle && npm run types:generate"
-         },
-         "devDependencies": {
-                  "husky": "^7.0.4",
-                  "prettier": "^2.5.1",
-                  "turbo": "latest"
-         },
-         "engines": {
-                  "npm": ">=7.0.0",
-                  "node": ">=14.0.0"
-         },
-         "packageManager": "npm@8.1.2",
-         "dependencies": {
-                  "@emotion/react": "^11.7.1",
-                  "@emotion/styled": "^11.6.0",
-                  "@mdi/js": "^6.5.95",
-                  "@mui/icons-material": "^5.3.1",
-                  "@mui/material": "^5.4.0",
-                  "axios": "^0.25.0",
-                  "next-dark-mode": "^3.0.0"
-         },
-         "husky": {
-                  "hooks": {
-                           "pre-commit": "npm run lint && npm run format",
-                           "pre-push": "npm run lint && npm run format",
-                           "pre-applypatch": "npm run lint && npm run format && npm run services:generate"
-                  }
-         }
+  "name": "turborepo-basic-shared",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install",
+    "types:bundle": "npx swagger-cli bundle -o ./apps/api/generated/openapi-v1.json apps/api/src/entities/openapi.index.json",
+    "types:generate": "openapi -i apps/api/generated/openapi-v1.json -o packages/services --client axios",
+    "services:generate": "npm run types:bundle && npm run types:generate"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1",
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "npm@8.1.2",
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mdi/js": "^6.5.95",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/material": "^5.4.0",
+    "axios": "^0.25.0",
+    "next-dark-mode": "^3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format",
+      "pre-push": "npm run lint && npm run format",
+      "pre-applypatch": "npm run lint && npm run format && npm run services:generate"
+    }
+  }
 }
