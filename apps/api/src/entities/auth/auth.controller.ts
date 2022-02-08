@@ -24,10 +24,7 @@ export default class AuthController {
                         .cookie('TOKEN', token, { expires: new Date(Date.now() + 3600 * 1000) })
                         .json({
                             message: 'Login successful',
-                            token: {
-                                access_token: token,
-                                expires_in: 3600,
-                            },
+                            token
                         });
                 } else {
                     res.status(401).json({

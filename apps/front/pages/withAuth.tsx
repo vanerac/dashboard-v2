@@ -1,13 +1,16 @@
 import { useRouter } from 'next/router';
+import { OpenAPI } from '../../../packages/services';
 
-function withAuth (WrappedComponent: any) {
+function withAuth(WrappedComponent: any) {
     return (props: any) => {
         if (typeof window !== 'undefined') {
             const Router = useRouter();
-            //   const accessToken = localStorage.getItem("accessToken");
-            const accessToken = 'ok';
 
-            if (accessToken != 'ok') {
+            console.log('here => ', OpenAPI.TOKEN);
+            //   const accessToken = localStorage.getItem("accessToken");
+            // const accessToken = 'ok';
+
+            if (!OpenAPI.TOKEN) {
                 Router.replace('/');
                 return null;
             }
@@ -15,6 +18,6 @@ function withAuth (WrappedComponent: any) {
         }
         return null;
     };
-};
+}
 
 export default withAuth;

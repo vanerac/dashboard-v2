@@ -13,6 +13,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import { OpenAPI } from '../../../packages/services';
 
 const Login = () => {
     let errorBool: boolean = false;
@@ -75,8 +76,9 @@ const Login = () => {
 
         if (errorBool === false) {
             AuthenticationService.authLoginPost({ email: userEmail, password: userPassword })
-                .then(() => {
-                    console.log('submitting');
+                .then((data) => {
+                    OpenAPI.TOKEN = data.token;
+                    console.log(OpenAPI.TOKEN);
                 })
                 .catch((error) => {
                     handleOpen();
