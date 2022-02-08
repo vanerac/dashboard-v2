@@ -1,6 +1,4 @@
-import Head from 'next/head';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
 import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
 import React, { useState } from 'react';
@@ -76,7 +74,7 @@ const Register = () => {
                 .then(() => {
                     console.log('submitting');
                 })
-                .catch((error) => {
+                .catch(($error) => {
                     handleOpen();
                 });
         }

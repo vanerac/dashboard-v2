@@ -1,6 +1,4 @@
-import Head from 'next/head';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
@@ -80,7 +78,7 @@ const Login = () => {
                     OpenAPI.TOKEN = data.token;
                     console.log(OpenAPI.TOKEN);
                 })
-                .catch((error) => {
+                .catch(($error) => {
                     handleOpen();
                 });
         }
