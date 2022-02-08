@@ -4,9 +4,6 @@ on: [pull_request, workflow_dispatch]
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        directory: [ "app", "api", "front" ]
     steps:
       - uses: actions/checkout@v2
       - name: Cache dependencies
@@ -24,7 +21,6 @@ jobs:
           node-version: '16'
       - run: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: ./apps/${{matrix.directory}}
         name: Install dependencies
   lint:
     strategy:
@@ -101,6 +97,7 @@ jobs:
       matrix:
         platforms: [ "ios", "android" ]
       fail-fast: false
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.4.1
