@@ -43,12 +43,8 @@
           "required": true
         },
         "password": {
-<<<<<<< HEAD
-          "type": "string"
-=======
           "type": "string",
           "required": true
->>>>>>> 8f04d033d5369233de6aecf578ab32cbb982c397
         },
         "displayName": {
           "type": "string",
