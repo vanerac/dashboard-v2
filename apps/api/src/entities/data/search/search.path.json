@@ -7,23 +7,25 @@
       "summary": "Search",
       "description": "Search",
       "operationId": "searchGet",
-      "produces": [
-        "application/json"
-      ],
+
       "parameters": [
         {
           "name": "serviceId",
           "in": "path",
           "description": "ID of service to return playlists for",
           "required": true,
-          "type": "string"
+          "schema": {
+            "type": "string"
+          }
         },
         {
           "name": "q",
           "in": "query",
           "description": "Search query",
           "required": true,
-          "type": "string"
+          "schema": {
+            "type": "string"
+          }
         }
       ],
       "responses": {

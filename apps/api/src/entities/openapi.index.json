@@ -266,32 +266,17 @@
       "PrevResponse": {
         "$ref": "./playback/playback.components.json#/schemas/PrevResponse"
       },
-      "SeekRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SeekRequest"
-      },
       "SeekResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SeekResponse"
-      },
-      "SetVolumeRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetVolumeRequest"
       },
       "SetVolumeResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetVolumeResponse"
       },
-      "SetShuffleRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetShuffleRequest"
-      },
       "SetShuffleResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetShuffleResponse"
       },
-      "SetRepeatRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetRepeatRequest"
-      },
       "SetRepeatResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetRepeatResponse"
-      },
-      "SetQualityRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetQualityRequest"
       },
       "SetQualityResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetQualityResponse"

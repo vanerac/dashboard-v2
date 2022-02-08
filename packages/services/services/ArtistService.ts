@@ -21,8 +21,8 @@ export class ArtistService {
      * @throws ApiError
      */
     public static getArtistById(
-        serviceId: any,
-        artistId: any,
+        serviceId: string,
+        artistId: string,
     ): CancelablePromise<getSingleArtist> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -32,7 +32,9 @@ export class ArtistService {
                 'artistId': artistId,
             },
             errors: {
-                404: `Artist not found`,
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -48,10 +50,10 @@ export class ArtistService {
      * @throws ApiError
      */
     public static getArtistAlbums(
-        serviceId: any,
-        artistId: any,
-        limit?: any,
-        offset?: any,
+        serviceId: string,
+        artistId: string,
+        limit?: number,
+        offset?: number,
     ): CancelablePromise<getArtistAlbumsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -65,7 +67,9 @@ export class ArtistService {
                 'offset': offset,
             },
             errors: {
-                404: `Artist not found`,
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -82,11 +86,11 @@ export class ArtistService {
      * @throws ApiError
      */
     public static getArtistTopTracks(
-        serviceId: any,
-        artistId: any,
-        country?: any,
-        limit?: any,
-        offset?: any,
+        serviceId: string,
+        artistId: string,
+        country?: string,
+        limit?: number,
+        offset?: number,
     ): CancelablePromise<getArtistTopTracksResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -101,7 +105,9 @@ export class ArtistService {
                 'offset': offset,
             },
             errors: {
-                404: `Artist not found`,
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -117,10 +123,10 @@ export class ArtistService {
      * @throws ApiError
      */
     public static getArtistRelatedArtists(
-        serviceId: any,
-        artistId: any,
-        limit?: any,
-        offset?: any,
+        serviceId: string,
+        artistId: string,
+        limit?: number,
+        offset?: number,
     ): CancelablePromise<getArtistsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -134,7 +140,9 @@ export class ArtistService {
                 'offset': offset,
             },
             errors: {
-                404: `Artist not found`,
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -148,8 +156,8 @@ export class ArtistService {
      * @throws ApiError
      */
     public static followArtist(
-        serviceId: any,
-        artistId: any,
+        serviceId: string,
+        artistId: string,
     ): CancelablePromise<getSingleArtist> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -159,8 +167,9 @@ export class ArtistService {
                 'artistId': artistId,
             },
             errors: {
-                404: `Artist not found`,
-                409: `Artist already followed`,
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -174,8 +183,8 @@ export class ArtistService {
      * @throws ApiError
      */
     public static unfollowArtist(
-        serviceId: any,
-        artistId: any,
+        serviceId: string,
+        artistId: string,
     ): CancelablePromise<getSingleArtist> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -185,8 +194,9 @@ export class ArtistService {
                 'artistId': artistId,
             },
             errors: {
-                404: `Artist not found`,
-                409: `Artist not followed`,
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -201,9 +211,9 @@ export class ArtistService {
      * @throws ApiError
      */
     public static getFollowedArtists(
-        serviceId: any,
-        limit?: any,
-        offset?: any,
+        serviceId: string,
+        limit?: number,
+        offset?: number,
     ): CancelablePromise<getArtistsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -214,6 +224,11 @@ export class ArtistService {
             query: {
                 'limit': limit,
                 'offset': offset,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                500: `Internal Server Error`,
             },
         });
     }

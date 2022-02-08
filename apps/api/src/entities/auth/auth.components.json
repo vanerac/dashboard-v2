@@ -39,16 +39,13 @@
       "properties": {
         "email": {
           "type": "string",
-          "format": "email",
-          "required": true
+          "format": "email"
         },
         "password": {
-          "type": "string",
-          "required": true
+          "type": "string"
         },
         "displayName": {
-          "type": "string",
-          "required": true
+          "type": "string"
         }
       }
     },

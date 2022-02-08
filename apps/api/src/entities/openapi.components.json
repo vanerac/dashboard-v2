@@ -5,12 +5,10 @@
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32",
-          "required": true
+          "format": "int32"
         },
         "message": {
-          "type": "string",
-          "required": true
+          "type": "string"
         }
       }
     },
@@ -22,12 +20,11 @@
           "format": "email"
         },
         "displayName": {
-          "type": "string",
-          "required": true
+          "type": "string"
+
         },
         "id": {
-          "type": "string",
-          "required": false
+          "type": "string"
         }
       }
     },
@@ -35,12 +32,10 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "required": true
+          "type": "string"
         },
         "type": {
           "type": "string",
-          "required": true,
           "enum": [
             "google",
             "spotify",
@@ -50,8 +45,7 @@
           ]
         },
         "enabled": {
-          "type": "boolean",
-          "required": true
+          "type": "boolean"
         }
       }
     },
@@ -68,36 +62,36 @@
           ]
         },
         "id": {
-          "type": "string",
-          "required": true
+          "type": "string"
+
         },
         "name": {
-          "type": "string",
-          "required": true
+          "type": "string"
+
         },
         "artist": {
-            "type": "string",
-          "required": true
+            "type": "string"
+
         },
         "album": {
-            "type": "string",
-          "required": true
+            "type": "string"
+
         },
         "duration": {
-            "type": "integer",
-          "required": true
+            "type": "integer"
+
         },
         "image": {
-            "type": "string",
-          "required": true
+            "type": "string"
+
         },
         "provider": {
-            "type": "string",
-          "required": true
+            "type": "string"
+
         },
         "playable": {
-            "type": "boolean",
-          "required": true
+            "type": "boolean"
+
         }
       }
     },
@@ -201,20 +195,19 @@
       "type": "object",
       "properties": {
         "track": {
-          "$ref": "#/schemas/Track",
-          "required": true
+          "$ref": "#/schemas/Track"
+
         },
         "position": {
-          "type": "integer",
-          "required": true
+          "type": "integer"
+
         },
         "device": {
-          "type": "string",
-          "required": true
+          "type": "string"
+
         },
         "state": {
           "type": "string",
-          "required": true,
           "enum": [
             "playing",
             "paused",
@@ -228,24 +221,24 @@
       "properties": {
         "id": {
           "type": "string",
-          "format": "uuid",
-          "required": true
+          "format": "uuid"
+
         },
         "name": {
-          "type": "string",
-          "required": true
+          "type": "string"
+
         },
         "volume": {
-          "type": "integer",
-          "required": true
+          "type": "integer"
+
         },
         "state": {
-          "type": "boolean",
-          "required": true
+          "type": "boolean"
+
         },
         "ws": {
-          "type": "string",
-          "required": true
+          "type": "string"
+
         }
       }
     }

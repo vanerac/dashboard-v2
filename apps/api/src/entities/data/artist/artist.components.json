@@ -3,10 +3,8 @@
     "getSingleArtist": {
       "type": "object",
       "properties": {
-        "artist": {
-          "schema": {
-            "$ref": "../../openapi.components.json#/schemas/Artist"
-          }
+        "schema": {
+          "$ref": "../../openapi.components.json#/schemas/Artist"
         }
       }
     },

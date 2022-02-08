@@ -5,11 +5,9 @@
       "properties": {
         "services": {
           "type": "array",
-          "items": [
-            {
-              "$ref": "../openapi.components.json#/schemas/Service"
-            }
-          ]
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Service"
+          }
         }
       }
     },
@@ -17,7 +15,6 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "required": true,
           "type": "boolean"
         }
       }

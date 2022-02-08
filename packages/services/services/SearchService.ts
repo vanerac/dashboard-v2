@@ -18,8 +18,8 @@ export class SearchService {
      * @throws ApiError
      */
     public static searchGet(
-        serviceId: any,
-        q: any,
+        serviceId: string,
+        q: string,
     ): CancelablePromise<searchQueryResponse> {
         return __request(OpenAPI, {
             method: 'GET',

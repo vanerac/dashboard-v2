@@ -21,7 +21,7 @@ export class PlaylistService {
      * @throws ApiError
      */
     public static getAllPlaylists(
-        serviceId: any,
+        serviceId: string,
     ): CancelablePromise<playlistsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -46,7 +46,7 @@ export class PlaylistService {
      * @throws ApiError
      */
     public static getPlaylistById(
-        serviceId: any,
+        serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistSingleResponse> {
         return __request(OpenAPI, {
@@ -74,7 +74,7 @@ export class PlaylistService {
      * @throws ApiError
      */
     public static getPlaylistTracks(
-        serviceId: any,
+        serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistTracksResponse> {
         return __request(OpenAPI, {
@@ -102,7 +102,7 @@ export class PlaylistService {
      * @throws ApiError
      */
     public static create(
-        serviceId: any,
+        serviceId: string,
         requestBody?: playlistCreateRequest,
     ): CancelablePromise<playlistSingleResponse> {
         return __request(OpenAPI, {
@@ -125,14 +125,14 @@ export class PlaylistService {
      * Update playlist
      * Update playlist
      * @param serviceId ID of service to return playlists for
-     * @param id Playlist id
+     * @param playlistId Playlist id
      * @param requestBody
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
     public static update(
-        serviceId: any,
-        id: string,
+        serviceId: string,
+        playlistId: string,
         requestBody?: playlistUpdateRequest,
     ): CancelablePromise<playlistSingleResponse> {
         return __request(OpenAPI, {
@@ -140,7 +140,7 @@ export class PlaylistService {
             url: '/data/{serviceId}/playlist/{playlistId}/update',
             path: {
                 'serviceId': serviceId,
-                'id': id,
+                'playlistId': playlistId,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -157,20 +157,20 @@ export class PlaylistService {
      * Delete playlist
      * Delete playlist
      * @param serviceId ID of service to return playlists for
-     * @param id Playlist id
+     * @param playlistId Playlist id
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
     public static delete(
-        serviceId: any,
-        id: string,
+        serviceId: string,
+        playlistId: string,
     ): CancelablePromise<playlistSingleResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/data/{serviceId}/playlist/{playlistId}/delete',
             path: {
                 'serviceId': serviceId,
-                'id': id,
+                'playlistId': playlistId,
             },
             errors: {
                 400: `Bad Request`,
