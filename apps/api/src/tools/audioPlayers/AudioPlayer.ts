@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Track } from './playerManager.tools';
+import { Track } from '../../../../../packages/services';
 
 export type AudioPlayerEvents = 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
 

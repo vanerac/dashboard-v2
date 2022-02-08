@@ -1,0 +1,783 @@
+{
+  "getCurrentState": {
+    "get": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Get current playback state",
+      "description": "Get current playback state",
+      "operationId": "getCurrentState",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/PlaybackStateResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "addToQueue": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Add to queue",
+      "description": "Add to queue",
+      "operationId": "addToQueue",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/AddToQueueRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/AddToQueueResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "getQueue": {
+    "get": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Get queue",
+      "description": "Get queue",
+      "operationId": "getQueue",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/GetQueueResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "removeFromQueue": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Remove from queue",
+      "description": "Remove from queue",
+      "operationId": "removeFromQueue",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/RemoveFromQueueRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/RemoveFromQueueResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "moveInQueue": {
+    "put": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Move in queue",
+      "description": "Move in queue",
+      "operationId": "moveInQueue",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/MoveInQueueRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/MoveInQueueResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "clearQueue": {
+    "delete": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Clear queue",
+      "description": "Clear queue",
+      "operationId": "clearQueue",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/ClearQueueResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "getAllDevices": {
+    "get": {
+      "tags": [
+        "devices"
+      ],
+      "summary": "Get all devices",
+      "description": "Get all devices",
+      "operationId": "getAllDevices",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/GetAllDevicesResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "getCurrentDevice": {
+    "get": {
+      "tags": [
+        "devices"
+      ],
+      "summary": "Get current device",
+      "description": "Get current device",
+      "operationId": "getCurrentDevice",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/GetCurrentDeviceResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "setCurrentDevice": {
+    "put": {
+      "tags": [
+        "devices"
+      ],
+      "summary": "Set current device",
+      "description": "Set current device",
+      "operationId": "setCurrentDevice",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetCurrentDeviceRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetCurrentDeviceResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "registerDevice": {
+    "post": {
+      "tags": [
+        "devices"
+      ],
+      "summary": "Register device",
+      "description": "Register device",
+      "operationId": "registerDevice",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/RegisterDeviceRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/RegisterDeviceResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "playTrack": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Play track",
+      "description": "Play track",
+      "operationId": "playTrack",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/PlayTrackRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/PlayTrackResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "resumeTrack": {
+    "get": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Resume",
+      "description": "Resume",
+      "operationId": "resume",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/ResumeResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "pauseTrack": {
+    "get": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Pause",
+      "description": "Pause",
+      "operationId": "pause",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/PauseResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": " ../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "skipTrack": {
+    "get": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Skip",
+      "description": "Skip",
+      "operationId": "skip",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SkipResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "prevTrack": {
+    "get": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Previous",
+      "description": "Previous",
+      "operationId": "prev",
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/PrevResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "seekTrack": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Seek",
+      "description": "Seek",
+      "operationId": "seek",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SeekRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SeekResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "setVolume": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Set volume",
+      "description": "Set volume",
+      "operationId": "setVolume",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetVolumeRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetVolumeResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "setShuffle": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Set shuffle",
+      "description": "Set shuffle",
+      "operationId": "setShuffle",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetShuffleRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetShuffleResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "setRepeat": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Set repeat",
+      "description": "Set repeat",
+      "operationId": "setRepeat",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetRepeatRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetRepeatResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  },
+  "setQuality": {
+    "post": {
+      "tags": [
+        "playback"
+      ],
+      "summary": "Set quality",
+      "description": "Set quality",
+      "operationId": "setQuality",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetQualityRequest"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "schema": {
+            "$ref": "./playback.components.json#/schemas/SetQualityResponse"
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "403": {
+          "description": "Forbidden",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        },
+        "500": {
+          "description": "Internal server error",
+          "$ref": "../openapi.components.json#/schemas/Error"
+        }
+      }
+    }
+  }
+}

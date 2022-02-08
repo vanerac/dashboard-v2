@@ -3,6 +3,8 @@ import PlaylistsController from './playlists.controller';
 
 const router = Router();
 
+// set playlist cover art
+
 router.get('/', PlaylistsController.getAll);
 router.get('/:id', PlaylistsController.getOne);
 router.get('/:id/tracks', PlaylistsController.getTracks);

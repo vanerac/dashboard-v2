@@ -5,10 +5,12 @@
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "required": true
         },
         "message": {
-          "type": "string"
+          "type": "string",
+          "required": true
         }
       }
     },
@@ -20,10 +22,12 @@
           "format": "email"
         },
         "displayName": {
-          "type": "string"
+          "type": "string",
+          "required": true
         },
         "id": {
-          "type": "integer"
+          "type": "string",
+          "required": false
         }
       }
     },
@@ -31,10 +35,12 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "integer"
+          "type": "string",
+          "required": true
         },
         "type": {
           "type": "string",
+          "required": true,
           "enum": [
             "google",
             "spotify",
@@ -44,7 +50,8 @@
           ]
         },
         "enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "required": true
         }
       }
     },
@@ -52,25 +59,36 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "required": true
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "required": true
         },
         "artist": {
-            "type": "string"
+            "type": "string",
+          "required": true
         },
         "album": {
-            "type": "string"
+            "type": "string",
+          "required": true
         },
         "duration": {
-            "type": "integer"
+            "type": "integer",
+          "required": true
         },
         "image": {
-            "type": "string"
+            "type": "string",
+          "required": true
         },
         "provider": {
-            "type": "string"
+            "type": "string",
+          "required": true
+        },
+        "playable": {
+            "type": "boolean",
+          "required": true
         }
       }
     },
@@ -97,6 +115,58 @@
           "items": {
             "$ref": "#/schemas/Track"
           }
+        }
+      }
+    },
+    "PlaybackStatus": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "#/schemas/Track",
+          "required": true
+        },
+        "position": {
+          "type": "integer",
+          "required": true
+        },
+        "device": {
+          "type": "string",
+          "required": true
+        },
+        "state": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "playing",
+            "paused",
+            "stopped"
+          ]
+        }
+      }
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "volume": {
+          "type": "integer",
+          "required": true
+        },
+        "state": {
+          "type": "boolean",
+          "required": true
+        },
+        "ws": {
+          "type": "string",
+          "required": true
         }
       }
     }

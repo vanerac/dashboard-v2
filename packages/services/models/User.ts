@@ -5,5 +5,5 @@
 export type User = {
     email?: string;
     displayName?: string;
-    id?: number;
+    id?: string;
 };

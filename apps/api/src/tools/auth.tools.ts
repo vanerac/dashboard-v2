@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import configuration from '../../configuration';
-import { User } from './types';
+import { User } from '../../../../packages/services';
 dotenv.config();
 
 // generate jwt token

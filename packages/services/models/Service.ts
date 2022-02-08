@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type Service = {
-    id?: number;
+    id?: string;
     type?: Service.type;
     enabled?: boolean;
 };
