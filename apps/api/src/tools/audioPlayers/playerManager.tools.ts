@@ -16,7 +16,7 @@ export default class PlayerManager {
 
     // Queue control
 
-    public getCurrentTrack(userId: UUID): Track {
+    public getCurrentTrack($userId: UUID): Track {
         // TODO Handles with audioPlayer;
         return {
             id: '',
@@ -62,7 +62,7 @@ export default class PlayerManager {
 
     // Update Controls
 
-    public listenForUpdates(userId: UUID, res: Response) {
+    public listenForUpdates($userId: UUID, $res: Response) {
         // Stream updates data from users player manager
         // Includes:
         // - Playback status
@@ -71,47 +71,47 @@ export default class PlayerManager {
 
     // Playback control
 
-    public async play(userId: UUID, track: Track) {
+    public async play($userId: UUID, $track: Track) {
         // Todo Play track
     }
 
-    public async pause(userId: UUID) {
+    public async pause($userId: UUID) {
         // Todo Pause track
     }
 
-    public async resume(userId: UUID) {
+    public async resume($userId: UUID) {
         // Todo Resume track
     }
 
-    public async stop(userId: UUID) {
+    public async stop($userId: UUID) {
         // Todo Stop track
     }
 
-    public async seek(userId: UUID, time: number) {
+    public async seek($userId: UUID, $time: number) {
         // Todo Seek track
     }
 
-    public async skip(userId: UUID) {
+    public async skip($userId: UUID) {
         // Todo Skip track
     }
 
-    public async previous(userId: UUID) {
+    public async previous($userId: UUID) {
         // Todo Previous track
     }
 
-    public async setVolume(userId: UUID, volume: number) {
+    public async setVolume($userId: UUID, $volume: number) {
         // Todo Set volume
     }
 
-    public async setRepeatMode(userId: UUID, repeat: boolean) {
+    public async setRepeatMode($userId: UUID, $repeat: boolean) {
         // Todo Repeat track
     }
 
-    public async setShuffleMode(userId: UUID, shuffle: boolean) {
+    public async setShuffleMode($userId: UUID, $shuffle: boolean) {
         // Todo Shuffle track
     }
 
-    public async setQuality(userId: UUID, quality: string) {
+    public async setQuality($userId: UUID, $quality: string) {
         // Todo Set quality
     }
 
@@ -154,7 +154,7 @@ export default class PlayerManager {
     }
 
     public registerDevice(userId: UUID, device: Response) {
-        const deviceId = uuid();
+        const deviceId = ''; // ||uuid();
         if (!this.devices.has(userId)) {
             this.devices.set(userId, []);
         }
