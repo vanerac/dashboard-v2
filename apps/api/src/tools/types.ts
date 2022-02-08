@@ -1,21 +1,13 @@
 import { Request, Response } from 'express';
 
-export interface User {
-    id: number;
-    displayName: string;
-    email: string;
-    password: string | undefined;
-    createdAt: Date;
-    updatedAt: Date;
-    loginType: 'classic' | 'SSO';
-}
-
 export interface ServiceUserData {
     id: string;
     displayName: string;
     email: string;
     password: string | undefined;
 }
+
+export type UUID = string;
 
 export abstract class SSOController {
     static async getCode($req: Request, $res: Response): Promise<void> {

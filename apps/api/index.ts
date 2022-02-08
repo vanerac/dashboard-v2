@@ -7,7 +7,7 @@ import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
-import { User } from './src/tools/types';
+import { User } from '../../packages/services';
 const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
@@ -36,7 +36,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
     cors({
-        origin: configuration.frontendHost,
+        origin: '*',
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
         methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],

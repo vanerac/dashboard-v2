@@ -11,6 +11,7 @@ export type Track = {
     duration?: number;
     image?: string;
     provider?: string;
+    playable?: boolean;
 };
 
 export namespace Track {
