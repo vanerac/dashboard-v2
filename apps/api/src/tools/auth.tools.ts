@@ -92,7 +92,7 @@ export async function parseToken(req: Request, res: Response, next: NextFunction
         const [$bearer, token] = bearerHeader.split(' ');
         access_token = token;
     } else {
-        access_token = JSON.parse(bearerHeader);
+        access_token = bearerHeader;
     }
     const decoded: User & any = jwt.verify(access_token, configuration.JWT_SECRET || 'secret');
     if (typeof decoded != 'string' && decoded.id) {

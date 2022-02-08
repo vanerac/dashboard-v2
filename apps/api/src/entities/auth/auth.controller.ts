@@ -3,7 +3,7 @@ import Pool from '../../tools/database.tools';
 import { checkPassword, generateToken, hashPassword } from '../../tools/auth.tools';
 
 export default class AuthController {
-    static async login(req: Request, res: Response): Promise<void> {
+    static async login(req: Request, res: Response, next: any): Promise<void> {
         try {
             const { email, password } = req.body;
 
@@ -24,7 +24,7 @@ export default class AuthController {
                         .cookie('API_TOKEN', token, { expires: new Date(Date.now() + 3600 * 1000) })
                         .json({
                             message: 'Login successful',
-                            token
+                            token,
                         });
                 } else {
                     res.status(401).json({
@@ -34,9 +34,7 @@ export default class AuthController {
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json({
-                message: 'Something went wrong',
-            });
+            next(error);
         }
     }
 
