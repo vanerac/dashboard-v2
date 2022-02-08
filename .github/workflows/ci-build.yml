@@ -14,7 +14,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/${{matrix.directory}}/node_modules
+            ./apps/front/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
@@ -42,7 +44,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
+            ./apps/front/node_modules
             ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - name: Setup Expo
@@ -75,6 +79,8 @@ jobs:
         with:
           path: |
             ./apps/front/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run build
@@ -100,7 +106,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/api/node_modules
+            ./apps/front/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run build
