@@ -50,6 +50,7 @@ export class AuthenticationService {
         requestBody: {
             email: string;
             password: string;
+            displayName: string;
         },
     ): CancelablePromise<{
         user: {
