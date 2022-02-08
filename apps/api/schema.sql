@@ -1,6 +1,4 @@
 CREATE TYPE loginType AS ENUM ('classic', 'SSO');
--- CREATE TYPE roleType AS ENUM ('admin', 'user');
--- CREATE TYPE widgetType AS ENUM ('playlist', 'search');
 CREATE TYPE serviceStatus AS ENUM ('OK', 'KO');
 CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple');
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -14,7 +12,6 @@ CREATE TABLE IF NOT EXISTS Users
     createdAt   DATE                NOT NULL DEFAULT NOW(),
     lastLogin   DATE                NULL,
     editedAt    DATE                NOT NULL DEFAULT NOW(),
---     userType    roleType            NOT NULL DEFAULT 'user',
     loginType   loginType           NOT NULL DEFAULT 'classic',
     CONSTRAINT unique_email CHECK (loginType = 'classic' AND email IS NOT NULL OR loginType = 'SSO' AND email IS NULL)
 
@@ -42,7 +39,6 @@ CREATE TABLE IF NOT EXISTS Services
 CREATE TABLE IF NOT EXISTS Widgets
 (
     id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
---     type        widgetType NOT NULL,
     serviceId   uuid NOT NULL,
     userId      uuid NOT NULL,
     refreshRate INT  NOT NULL    DEFAULT 10000,
