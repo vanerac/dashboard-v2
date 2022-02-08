@@ -12,16 +12,21 @@ export class SearchService {
     /**
      * Search
      * Search
+     * @param serviceId ID of service to return playlists for
      * @param q Search query
      * @returns searchQueryResponse Successful operation
      * @throws ApiError
      */
     public static searchGet(
-        q: any,
+        serviceId: string,
+        q: string,
     ): CancelablePromise<searchQueryResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/data/{serviceId}/search',
+            path: {
+                'serviceId': serviceId,
+            },
             query: {
                 'q': q,
             },

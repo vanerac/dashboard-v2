@@ -15,7 +15,6 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "required": true,
           "type": "boolean"
         }
       }

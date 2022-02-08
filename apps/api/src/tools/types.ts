@@ -41,10 +41,10 @@ export interface Token {
 }
 
 export enum Providers {
-    GOOGLE = 'google',
-    SPOTIFY = 'spotify',
-    APPLE = 'apple',
-    LAST_FM = 'lastfm',
+    $GOOGLE = 'google',
+    $SPOTIFY = 'spotify',
+    $APPLE = 'apple',
+    $LAST_FM = 'lastfm',
 }
 
 // export abstract class SSOAudioManager {

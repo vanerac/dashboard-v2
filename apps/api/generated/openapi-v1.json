@@ -112,16 +112,13 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "format": "email",
-                    "required": true
+                    "format": "email"
                   },
                   "password": {
-                    "type": "string",
-                    "required": true
+                    "type": "string"
                   },
                   "displayName": {
-                    "type": "string",
-                    "required": true
+                    "type": "string"
                   }
                 }
               }
@@ -352,7 +349,6 @@
                 "type": "object",
                 "properties": {
                   "enabled": {
-                    "required": true,
                     "type": "boolean"
                   }
                 }
@@ -403,6 +399,17 @@
         "summary": "Get all playlists",
         "description": "Get all playlists",
         "operationId": "getAllPlaylists",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -456,6 +463,15 @@
         "description": "Get playlist by id",
         "operationId": "getPlaylistById",
         "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "playlistId",
             "in": "path",
@@ -530,6 +546,15 @@
         "operationId": "getPlaylistTracks",
         "parameters": [
           {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "playlistId",
             "in": "path",
             "description": "Playlist id",
@@ -601,6 +626,17 @@
         "summary": "Create playlist",
         "description": "Create playlist",
         "operationId": "create",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -664,7 +700,16 @@
         "operationId": "update",
         "parameters": [
           {
-            "name": "id",
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "playlistId",
             "in": "path",
             "description": "Playlist id",
             "required": true,
@@ -746,7 +791,16 @@
         "operationId": "delete",
         "parameters": [
           {
-            "name": "id",
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "playlistId",
             "in": "path",
             "description": "Playlist id",
             "required": true,
@@ -817,16 +871,24 @@
         "summary": "Search",
         "description": "Search",
         "operationId": "searchGet",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "q",
             "in": "query",
             "description": "Search query",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -873,6 +935,602 @@
         }
       }
     },
+    "/data/{serviceId}/artist/{artistId}": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Get artist by ID",
+        "description": "Get artist by ID",
+        "operationId": "getArtistById",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "ID of artist to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getSingleArtist"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/artist/{artistId}/albums": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Get artist albums",
+        "description": "Get artist albums",
+        "operationId": "getArtistAlbums",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "ID of artist to return albums for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of albums to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset of albums to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist albums found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getArtistAlbumsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/artist/{artistId}/top-tracks": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Get artist top tracks",
+        "description": "Get artist top tracks",
+        "operationId": "getArtistTopTracks",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "ID of artist to return top tracks for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Country to return top tracks for",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of top tracks to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset of top tracks to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist top tracks found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getArtistTopTracksResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/artist/{artistId}/related": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Get artist related artists",
+        "description": "Get artist related artists",
+        "operationId": "getArtistRelatedArtists",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "ID of artist to return related artists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of related artists to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset of related artists to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist related artists found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getArtistsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/artist/{artistId}/follow": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Follow artist",
+        "description": "Follow artist",
+        "operationId": "followArtist",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "ID of artist to follow",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist followed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getSingleArtist"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/artist/{artistId}/unfollow": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Unfollow artist",
+        "description": "Unfollow artist",
+        "operationId": "unfollowArtist",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artistId",
+            "in": "path",
+            "description": "ID of artist to unfollow",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Artist unfollowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getSingleArtist"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/artist/followed": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "summary": "Get followed artists",
+        "description": "Get followed artists",
+        "operationId": "getFollowedArtists",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of artists to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset of artists to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Followed artists found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getArtistsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/playback/currentState": {
       "get": {
         "tags": [
@@ -881,27 +1539,46 @@
         "summary": "Get current playback state",
         "description": "Get current playback state",
         "operationId": "getCurrentState",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/PlaybackStateResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaybackStateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -914,27 +1591,46 @@
         "summary": "Get queue",
         "description": "Get queue",
         "operationId": "getQueue",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/GetQueueResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetQueueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -947,38 +1643,57 @@
         "summary": "Add to queue",
         "description": "Add to queue",
         "operationId": "addToQueue",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/AddToQueueRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddToQueueRequest"
+              }
             }
-          }
-        ],
+          },
+          "description": "",
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/AddToQueueResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddToQueueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -991,38 +1706,57 @@
         "summary": "Remove from queue",
         "description": "Remove from queue",
         "operationId": "removeFromQueue",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/RemoveFromQueueRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveFromQueueRequest"
+              }
             }
-          }
-        ],
+          },
+          "description": "",
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/RemoveFromQueueResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveFromQueueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1035,27 +1769,46 @@
         "summary": "Clear queue",
         "description": "Clear queue",
         "operationId": "clearQueue",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/ClearQueueResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClearQueueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1068,38 +1821,57 @@
         "summary": "Move in queue",
         "description": "Move in queue",
         "operationId": "moveInQueue",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/MoveInQueueRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveInQueueRequest"
+              }
             }
-          }
-        ],
+          },
+          "description": "",
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/MoveInQueueResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoveInQueueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1112,38 +1884,57 @@
         "summary": "Play track",
         "description": "Play track",
         "operationId": "playTrack",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/PlayTrackRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayTrackRequest"
+              }
             }
-          }
-        ],
+          },
+          "description": "",
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/PlayTrackResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayTrackResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1156,27 +1947,46 @@
         "summary": "Pause",
         "description": "Pause",
         "operationId": "pause",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/PauseResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PauseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1189,27 +1999,46 @@
         "summary": "Resume",
         "description": "Resume",
         "operationId": "resume",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/ResumeResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResumeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1222,27 +2051,46 @@
         "summary": "Skip",
         "description": "Skip",
         "operationId": "skip",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SkipResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkipResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1255,27 +2103,46 @@
         "summary": "Previous",
         "description": "Previous",
         "operationId": "prev",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/PrevResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrevResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1288,38 +2155,57 @@
         "summary": "Seek",
         "description": "Seek",
         "operationId": "seek",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SeekRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "minimum": 0
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SeekResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeekResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1332,38 +2218,55 @@
         "summary": "Set volume",
         "description": "Set volume",
         "operationId": "setVolume",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SetVolumeRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SetVolumeResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetVolumeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1376,38 +2279,55 @@
         "summary": "Set shuffle",
         "description": "Set shuffle",
         "operationId": "setShuffle",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SetShuffleRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SetShuffleResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetShuffleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1420,38 +2340,55 @@
         "summary": "Set repeat",
         "description": "Set repeat",
         "operationId": "setRepeat",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SetRepeatRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SetRepeatResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetRepeatResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1464,38 +2401,55 @@
         "summary": "Set quality",
         "description": "Set quality",
         "operationId": "setQuality",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SetQualityRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SetQualityResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetQualityResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1508,27 +2462,46 @@
         "summary": "Get all devices",
         "description": "Get all devices",
         "operationId": "getAllDevices",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/GetAllDevicesResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllDevicesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1541,27 +2514,46 @@
         "summary": "Get current device",
         "description": "Get current device",
         "operationId": "getCurrentDevice",
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/GetCurrentDeviceResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCurrentDeviceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1574,38 +2566,57 @@
         "summary": "Set current device",
         "description": "Set current device",
         "operationId": "setCurrentDevice",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/SetCurrentDeviceRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetCurrentDeviceRequest"
+              }
             }
-          }
-        ],
+          },
+          "description": "",
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/SetCurrentDeviceResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetCurrentDeviceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1618,44 +2629,70 @@
         "summary": "Register device",
         "description": "Register device",
         "operationId": "registerDevice",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/RegisterDeviceRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDeviceRequest"
+              }
             }
-          }
-        ],
+          },
+          "description": "",
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful operation",
-            "schema": {
-              "$ref": "#/components/schemas/RegisterDeviceResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterDeviceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           },
           "401": {
             "description": "Unauthorized",
-            "$ref": "#/components/schemas/Error"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/schemas/Error"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error",
-            "$ref": "#/components/schemas/Error"
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Track": {
         "type": "object",
@@ -1670,36 +2707,28 @@
             ]
           },
           "id": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "name": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "artist": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "album": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "duration": {
-            "type": "integer",
-            "required": true
+            "type": "integer"
           },
           "image": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "provider": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "playable": {
-            "type": "boolean",
-            "required": true
+            "type": "boolean"
           }
         }
       },
@@ -1742,12 +2771,10 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "type": {
             "type": "string",
-            "required": true,
             "enum": [
               "google",
               "spotify",
@@ -1757,8 +2784,7 @@
             ]
           },
           "enabled": {
-            "type": "boolean",
-            "required": true
+            "type": "boolean"
           }
         }
       },
@@ -1770,12 +2796,10 @@
             "format": "email"
           },
           "displayName": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "id": {
-            "type": "string",
-            "required": false
+            "type": "string"
           }
         }
       },
@@ -1784,12 +2808,10 @@
         "properties": {
           "code": {
             "type": "integer",
-            "format": "int32",
-            "required": true
+            "format": "int32"
           },
           "message": {
-            "type": "string",
-            "required": true
+            "type": "string"
           }
         }
       },
@@ -1815,6 +2837,12 @@
             "type": "string"
           },
           "provider": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "integer"
+          },
+          "external_urls": {
             "type": "string"
           }
         }
@@ -1883,24 +2911,71 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid",
-            "required": true
+            "format": "uuid"
           },
           "name": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "volume": {
-            "type": "integer",
-            "required": true
+            "type": "integer"
           },
           "state": {
-            "type": "boolean",
-            "required": true
+            "type": "boolean"
           },
           "ws": {
-            "type": "string",
-            "required": true
+            "type": "string"
+          }
+        }
+      },
+      "getSingleArtist": {
+        "type": "object",
+        "properties": {
+          "schema": {
+            "$ref": "#/components/schemas/Artist"
+          }
+        }
+      },
+      "getArtistsResponse": {
+        "type": "object",
+        "properties": {
+          "artists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Artist"
+            }
+          }
+        }
+      },
+      "getArtistAlbumsResponse": {
+        "type": "object",
+        "properties": {
+          "albums": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Album"
+            }
+          }
+        }
+      },
+      "getArtistPlaylistsResponse": {
+        "type": "object",
+        "properties": {
+          "playlists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Playlist"
+            }
+          }
+        }
+      },
+      "getArtistTopTracksResponse": {
+        "type": "object",
+        "properties": {
+          "tracks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
           }
         }
       },
@@ -1908,20 +2983,16 @@
         "type": "object",
         "properties": {
           "track": {
-            "$ref": "#/components/schemas/Track",
-            "required": true
+            "$ref": "#/components/schemas/Track"
           },
           "position": {
-            "type": "integer",
-            "required": true
+            "type": "integer"
           },
           "device": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "state": {
             "type": "string",
-            "required": true,
             "enum": [
               "playing",
               "paused",
@@ -2127,12 +3198,10 @@
         "type": "object",
         "properties": {
           "ws": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "name": {
-            "type": "string",
-            "required": true
+            "type": "string"
           }
         }
       },
@@ -2192,26 +3261,10 @@
           }
         }
       },
-      "SeekRequest": {
-        "type": "object",
-        "properties": {
-          "position": {
-            "type": "number"
-          }
-        }
-      },
       "SeekResponse": {
         "type": "object",
         "properties": {
           "position": {
-            "type": "number"
-          }
-        }
-      },
-      "SetVolumeRequest": {
-        "type": "object",
-        "properties": {
-          "volume": {
             "type": "number"
           }
         }
@@ -2224,26 +3277,10 @@
           }
         }
       },
-      "SetShuffleRequest": {
-        "type": "object",
-        "properties": {
-          "shuffle": {
-            "type": "boolean"
-          }
-        }
-      },
       "SetShuffleResponse": {
         "type": "object",
         "properties": {
           "shuffle": {
-            "type": "boolean"
-          }
-        }
-      },
-      "SetRepeatRequest": {
-        "type": "object",
-        "properties": {
-          "repeat": {
             "type": "boolean"
           }
         }
@@ -2256,14 +3293,6 @@
           }
         }
       },
-      "SetQualityRequest": {
-        "type": "object",
-        "properties": {
-          "quality": {
-            "type": "string"
-          }
-        }
-      },
       "SetQualityResponse": {
         "type": "object",
         "properties": {
@@ -2273,5 +3302,10 @@
         }
       }
     }
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }

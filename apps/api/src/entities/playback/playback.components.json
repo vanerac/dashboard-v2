@@ -137,12 +137,10 @@
       "type": "object",
       "properties": {
         "ws": {
-          "type": "string",
-          "required": true
+          "type": "string"
         },
         "name": {
-          "type": "string",
-          "required": true
+          "type": "string"
         }
       }
     },
@@ -202,26 +200,10 @@
         }
       }
     },
-    "SeekRequest": {
-      "type": "object",
-      "properties": {
-        "position": {
-          "type": "number"
-        }
-      }
-    },
     "SeekResponse": {
       "type": "object",
       "properties": {
         "position": {
-          "type": "number"
-        }
-      }
-    },
-    "SetVolumeRequest": {
-      "type": "object",
-      "properties": {
-        "volume": {
           "type": "number"
         }
       }
@@ -234,26 +216,10 @@
         }
       }
     },
-    "SetShuffleRequest": {
-      "type": "object",
-      "properties": {
-        "shuffle": {
-          "type": "boolean"
-        }
-      }
-    },
     "SetShuffleResponse": {
       "type": "object",
       "properties": {
         "shuffle": {
-          "type": "boolean"
-        }
-      }
-    },
-    "SetRepeatRequest": {
-      "type": "object",
-      "properties": {
-        "repeat": {
           "type": "boolean"
         }
       }
@@ -263,14 +229,6 @@
       "properties": {
         "repeat": {
           "type": "boolean"
-        }
-      }
-    },
-    "SetQualityRequest": {
-      "type": "object",
-      "properties": {
-        "quality": {
-          "type": "string"
         }
       }
     },

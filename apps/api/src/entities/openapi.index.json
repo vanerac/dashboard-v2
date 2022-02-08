@@ -50,6 +50,27 @@
     "/data/{serviceId}/search": {
       "$ref": "data/search/search.path.json#/search"
     },
+    "/data/{serviceId}/artist/{artistId}": {
+      "$ref": "data/artist/artist.path.json#/getArtistById"
+    },
+    "/data/{serviceId}/artist/{artistId}/albums": {
+      "$ref": "data/artist/artist.path.json#/getArtistAlbums"
+    },
+    "/data/{serviceId}/artist/{artistId}/top-tracks": {
+      "$ref": "data/artist/artist.path.json#/getArtistTopTracks"
+    },
+    "/data/{serviceId}/artist/{artistId}/related": {
+      "$ref": "data/artist/artist.path.json#/getArtistRelatedArtists"
+    },
+    "/data/{serviceId}/artist/{artistId}/follow": {
+      "$ref": "data/artist/artist.path.json#/followArtist"
+    },
+    "/data/{serviceId}/artist/{artistId}/unfollow": {
+      "$ref": "data/artist/artist.path.json#/unfollowArtist"
+    },
+    "/data/{serviceId}/artist/followed": {
+      "$ref": "data/artist/artist.path.json#/getFollowedArtists"
+    },
     "/playback/currentState": {
       "$ref": "playback/playback.path.json#/getCurrentState"
     },
@@ -112,6 +133,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Track": {
         "$ref": "./openapi.components.json#/schemas/Track"
@@ -142,6 +170,21 @@
       },
       "Device": {
         "$ref": "./openapi.components.json#/schemas/Device"
+      },
+      "getSingleArtist": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getSingleArtist"
+      },
+      "getArtistsResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistsResponse"
+      },
+      "getArtistAlbumsResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistAlbumsResponse"
+      },
+      "getArtistPlaylistsResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistPlaylistsResponse"
+      },
+      "getArtistTopTracksResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistTopTracksResponse"
       },
       "PlaybackStatus": {
         "$ref": "./openapi.components.json#/schemas/PlaybackStatus"
@@ -230,36 +273,26 @@
       "PrevResponse": {
         "$ref": "./playback/playback.components.json#/schemas/PrevResponse"
       },
-      "SeekRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SeekRequest"
-      },
       "SeekResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SeekResponse"
-      },
-      "SetVolumeRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetVolumeRequest"
       },
       "SetVolumeResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetVolumeResponse"
       },
-      "SetShuffleRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetShuffleRequest"
-      },
       "SetShuffleResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetShuffleResponse"
       },
-      "SetRepeatRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetRepeatRequest"
-      },
       "SetRepeatResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetRepeatResponse"
-      },
-      "SetQualityRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetQualityRequest"
       },
       "SetQualityResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetQualityResponse"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }

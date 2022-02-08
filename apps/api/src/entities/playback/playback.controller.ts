@@ -48,7 +48,7 @@ export default class PlaybackController {
 
     // Updates
 
-    public static async subscribeToUpdates(req: Request, res: Response) {}
+    public static async subscribeToUpdates($req: Request, $res: Response) {}
 
     // Playback Control
 
