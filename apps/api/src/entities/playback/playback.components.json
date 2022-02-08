@@ -136,8 +136,13 @@
     "RegisterDeviceRequest": {
       "type": "object",
       "properties": {
-        "device": {
-          "$ref": "../openapi.index.json#/components/schemas/Device"
+        "ws": {
+          "type": "string",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "required": true
         }
       }
     },

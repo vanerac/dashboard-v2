@@ -163,6 +163,10 @@
         "state": {
           "type": "boolean",
           "required": true
+        },
+        "ws": {
+          "type": "string",
+          "required": true
         }
       }
     }
