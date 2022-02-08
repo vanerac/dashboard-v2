@@ -50,6 +50,27 @@
     "/data/{serviceId}/search": {
       "$ref": "data/search/search.path.json#/search"
     },
+    "/data/{serviceId}/artist/{artistId}": {
+      "$ref": "data/artist/artist.path.json#/getArtistById"
+    },
+    "/data/{serviceId}/artist/{artistId}/albums": {
+      "$ref": "data/artist/artist.path.json#/getArtistAlbums"
+    },
+    "/data/{serviceId}/artist/{artistId}/top-tracks": {
+      "$ref": "data/artist/artist.path.json#/getArtistTopTracks"
+    },
+    "/data/{serviceId}/artist/{artistId}/related": {
+      "$ref": "data/artist/artist.path.json#/getArtistRelatedArtists"
+    },
+    "/data/{serviceId}/artist/{artistId}/follow": {
+      "$ref": "data/artist/artist.path.json#/followArtist"
+    },
+    "/data/{serviceId}/artist/{artistId}/unfollow": {
+      "$ref": "data/artist/artist.path.json#/unfollowArtist"
+    },
+    "/data/{serviceId}/artist/followed": {
+      "$ref": "data/artist/artist.path.json#/getFollowedArtists"
+    },
     "/playback/currentState": {
       "$ref": "playback/playback.path.json#/getCurrentState"
     },
@@ -142,6 +163,21 @@
       },
       "Device": {
         "$ref": "./openapi.components.json#/schemas/Device"
+      },
+      "getSingleArtist": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getSingleArtist"
+      },
+      "getArtistsResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistsResponse"
+      },
+      "getArtistAlbumsResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistAlbumsResponse"
+      },
+      "getArtistPlaylistsResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistPlaylistsResponse"
+      },
+      "getArtistTopTracksResponse": {
+        "$ref": "./data/artist/artist.components.json#/schemas/getArtistTopTracksResponse"
       },
       "PlaybackStatus": {
         "$ref": "./openapi.components.json#/schemas/PlaybackStatus"

@@ -8,6 +8,8 @@ export type Artist = {
     name?: string;
     image?: string;
     provider?: string;
+    followers?: number;
+    external_urls?: string;
 };
 
 export namespace Artist {

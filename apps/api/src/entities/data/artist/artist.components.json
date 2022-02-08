@@ -1,0 +1,58 @@
+{
+  "schemas": {
+    "getSingleArtist": {
+      "type": "object",
+      "properties": {
+        "artist": {
+          "schema": {
+            "$ref": "../../openapi.components.json#/schemas/Artist"
+          }
+        }
+      }
+    },
+    "getArtistsResponse": {
+      "type": "object",
+      "properties": {
+        "artists": {
+          "type": "array",
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Artist"
+          }
+        }
+      }
+    },
+    "getArtistAlbumsResponse": {
+      "type": "object",
+      "properties": {
+        "albums": {
+          "type": "array",
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Album"
+          }
+        }
+      }
+    },
+    "getArtistPlaylistsResponse": {
+      "type": "object",
+      "properties": {
+        "playlists": {
+          "type": "array",
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Playlist"
+          }
+        }
+      }
+    },
+    "getArtistTopTracksResponse": {
+      "type": "object",
+      "properties": {
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "../../openapi.components.json#/schemas/Track"
+          }
+        }
+      }
+    }
+  }
+}

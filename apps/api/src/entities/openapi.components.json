@@ -159,6 +159,12 @@
         },
         "provider": {
           "type": "string"
+        },
+        "followers": {
+          "type": "integer"
+        },
+        "external_urls": {
+          "type": "string"
         }
       }
     },

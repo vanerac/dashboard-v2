@@ -7,6 +7,15 @@
       "summary": "Get all playlists",
       "description": "Get all playlists",
       "operationId": "getAllPlaylists",
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "type": "string"
+        }
+      ],
       "responses": {
         "200": {
           "description": "Successful operation",
@@ -60,6 +69,13 @@
       "description": "Get playlist by id",
       "operationId": "getPlaylistById",
       "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "type": "string"
+        },
         {
           "name": "playlistId",
           "in": "path",
@@ -134,6 +150,13 @@
       "operationId": "getPlaylistTracks",
       "parameters": [
         {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "type": "string"
+        },
+        {
           "name": "playlistId",
           "in": "path",
           "description": "Playlist id",
@@ -205,6 +228,15 @@
       "summary": "Create playlist",
       "description": "Create playlist",
       "operationId": "create",
+      "parameters": [ {
+        "name": "serviceId",
+        "in": "path",
+        "description": "ID of service to return playlists for",
+        "required": true,
+        "type": "string"
+      }
+      ],
+
       "requestBody": {
         "content": {
           "application/json": {
@@ -267,6 +299,13 @@
       "description": "Update playlist",
       "operationId": "update",
       "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "type": "string"
+        },
         {
           "name": "id",
           "in": "path",
@@ -349,6 +388,13 @@
       "description": "Delete playlist",
       "operationId": "delete",
       "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "type": "string"
+        },
         {
           "name": "id",
           "in": "path",
