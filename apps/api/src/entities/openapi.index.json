@@ -133,6 +133,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Track": {
         "$ref": "./openapi.components.json#/schemas/Track"
@@ -282,5 +289,10 @@
         "$ref": "./playback/playback.components.json#/schemas/SetQualityResponse"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }

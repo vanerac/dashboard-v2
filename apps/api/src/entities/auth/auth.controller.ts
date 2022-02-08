@@ -21,7 +21,7 @@ export default class AuthController {
                 if (isPasswordValid) {
                     const token = generateToken(userData);
                     res.status(200)
-                        .cookie('TOKEN', token, { expires: new Date(Date.now() + 3600 * 1000) })
+                        .cookie('API_TOKEN', token, { expires: new Date(Date.now() + 3600 * 1000) })
                         .json({
                             message: 'Login successful',
                             token: {
