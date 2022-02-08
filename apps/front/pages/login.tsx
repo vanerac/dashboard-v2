@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -9,11 +9,44 @@ import { mdiSpotify } from '@mdi/js';
 import { mdiRadioFm } from '@mdi/js';
 import React, { useState } from 'react';
 import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
 
 const Login = () => {
-    const router = useRouter();
-    const [userName, setUserName] = useState('');
+    let errorBool: boolean = false;
+    const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+    const [errorEmptyFieldEmail, setErrorEmptyFieldEmail] = useState('');
+    const [errorEmptyFieldPassword, setErrorEmptyFieldPassword] = useState('');
+    const errorString = 'This input field cannot be empty.';
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const updatePassword = (event: any) => {
+        setErrorEmptyFieldPassword('');
+        setUserPassword(event.target.value);
+    };
+
+    const updateEmail = (event: any) => {
+        setErrorEmptyFieldEmail('');
+        setUserEmail(event.target.value);
+    };
 
     const svgSpotify = (
         <SvgIcon>
@@ -28,8 +61,27 @@ const Login = () => {
     );
 
     const submit = () => {
-        console.log(AuthenticationService.authLoginPost({ email: 'test', password: 'test' }));
-        console.log('submitting');
+        if (userPassword === '') {
+            errorBool = true;
+            setErrorEmptyFieldPassword(errorString);
+        } else setErrorEmptyFieldPassword('');
+
+        if (userEmail === '') {
+            errorBool = true;
+            setErrorEmptyFieldEmail(errorString);
+        } else setErrorEmptyFieldEmail('');
+
+        console.log(errorBool);
+
+        if (errorBool === false) {
+            AuthenticationService.authLoginPost({ email: userEmail, password: userPassword })
+                .then(() => {
+                    console.log('submitting');
+                })
+                .catch((error) => {
+                    handleOpen();
+                });
+        }
     };
 
     return (
@@ -109,20 +161,25 @@ const Login = () => {
                         </Box>
                         <TextField
                             fullWidth
+                            error={errorEmptyFieldEmail !== ''}
+                            helperText={errorEmptyFieldEmail}
                             label="Email Address"
                             margin="normal"
                             name="email"
-                            //   onBlur={formik.handleBlur}
                             type="email"
+                            onChange={(evt) => updateEmail(evt)}
                             variant="outlined"
                         />
                         <TextField
                             fullWidth
+                            error={errorEmptyFieldPassword !== ''}
+                            helperText={errorEmptyFieldPassword}
+                            // onBlur={test}
                             label="Password"
                             margin="normal"
                             name="password"
-                            //   onBlur={formik.handleBlur}
                             type="password"
+                            onChange={(evt) => updatePassword(evt)}
                             variant="outlined"
                         />
                         <Box sx={{ py: 2 }}>
@@ -148,6 +205,27 @@ const Login = () => {
                     </form>
                 </Container>
             </Box>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}>
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            An error has occurred.
+                        </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            Please try again.
+                        </Typography>
+                    </Box>
+                </Fade>
+            </Modal>
         </>
     );
 };

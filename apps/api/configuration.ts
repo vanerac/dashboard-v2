@@ -39,7 +39,7 @@ export default {
     // Server connection infos
     serverPort: process.env.SERVER_PORT || 8080,
     serverHost: process.env.SERVER_HOST || '',
-    frontendHost: process.env.FRONTEND_HOST || '',
+    frontendHost: process.env.FRONTEND_HOST || 'http://localhost:3000',
     frontendPort: process.env.FRONTEND_PORT || '',
 
     // Security configuration
