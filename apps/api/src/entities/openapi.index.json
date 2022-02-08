@@ -47,6 +47,9 @@
     "/data/{serviceId}/playlist/{playlistId}/delete": {
       "$ref": "data/playlists/playlist.path.json#/delete"
     },
+    "/data/{serviceId}/search": {
+      "$ref": "data/search/search.path.json#/search"
+    },
     "/playback/currentState": {
       "$ref": "playback/playback.path.json#/getCurrentState"
     },
@@ -124,6 +127,18 @@
       },
       "Error": {
         "$ref": "./openapi.components.json#/schemas/Error"
+      },
+      "Artist": {
+        "$ref": "./openapi.components.json#/schemas/Artist"
+      },
+      "Album": {
+        "$ref": "./openapi.components.json#/schemas/Album"
+      },
+      "SearchResult": {
+        "$ref": "./data/search/search.components.json#/schemas/SearchResult"
+      },
+      "searchQueryResponse": {
+        "$ref": "./data/search/search.components.json#/schemas/searchQueryResponse"
       },
       "Device": {
         "$ref": "./openapi.components.json#/schemas/Device"

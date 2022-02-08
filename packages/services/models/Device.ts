@@ -7,4 +7,5 @@ export type Device = {
     name?: string;
     volume?: number;
     state?: boolean;
+    ws?: string;
 };

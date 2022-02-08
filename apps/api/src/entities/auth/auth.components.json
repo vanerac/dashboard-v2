@@ -33,15 +33,22 @@
       "type": "object",
       "required": [
         "email",
-        "password"
+        "password",
+        "displayName"
       ],
       "properties": {
         "email": {
           "type": "string",
-          "format": "email"
+          "format": "email",
+          "required": true
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "required": true
+        },
+        "displayName": {
+          "type": "string",
+          "required": true
         }
       }
     },

@@ -2,19 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Track } from './Track';
-
-export type Playlist = {
-    type?: Playlist.type;
+export type Album = {
+    type?: Album.type;
     id?: string;
     name?: string;
-    description?: string;
+    artist?: string;
     image?: string;
     provider?: string;
-    tracks?: Array<Track>;
 };
 
-export namespace Playlist {
+export namespace Album {
 
     export enum type {
         ARTIST = 'artist',
