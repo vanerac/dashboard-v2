@@ -18,7 +18,7 @@ jobs:
         run: |
           git remote add upstream git@github.com:EpitechPromo2024/B-YEP-500-BDX-5-1-area-corentin.mas.git
       - name: Fetch Upstream
-        run: git fetch --unshallow upstream
+        run: git fetch --unshallow origin
       - name: Push to upstream
         run: |
           git push upstream --all --force
