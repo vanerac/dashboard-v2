@@ -1,34 +1,32 @@
 name: Linter
-on: [ push ]
+on: [ push, workflow_dispatch ]
 
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        directory : ["app", "api", "front"]
     steps:
       - uses: actions/checkout@v2
-      - run: cat ${{format('{0}/package-lock.json', matrix.directory)}}
-      - run: echo ${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v2
         with:
           path: |
-            ./${{matrix.directory}}/node_modules
-          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
       - run: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: ./${{matrix.directory}}
         name: Install dependencies
   lint:
     strategy:
       matrix:
         directory: [ "app", "api", "front" ]
+      fail-fast: false
     name: Lint
     needs: install-dependencies
     runs-on: ubuntu-latest
@@ -41,10 +39,14 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./${{ matrix.directory }}/node_modules
-          key: modules-${{hashFiles(format('{0}/package-lock.json', matrix.directory))}}
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run lint
-        working-directory: ./${{matrix.directory}}
+        working-directory: ./apps/${{matrix.directory}}
         name: Lint
   prettier:
     strategy:
@@ -62,8 +64,28 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ./${{matrix.directory}}/node_modules
-          key: modules-${{ hashFiles(format('{0}/package-lock.json', matrix.directory)) }}
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run prettier
-        working-directory: ./${{matrix.directory}}
+        working-directory: ./apps/${{matrix.directory}}
         name: Prettier
+  openapi:
+    needs: install-dependencies
+    name: Validate OpenAPI Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+              ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run validate-swagger
+        working-directory: ./apps/api
+        name: Validate OpenAPI Schema

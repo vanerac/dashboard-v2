@@ -1,0 +1,244 @@
+{
+  "schemas": {
+    "PlaybackStateResponse": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "playing",
+            "paused",
+            "stopped"
+          ]
+        },
+        "position": {
+          "type": "number"
+        },
+        "duration": {
+          "type": "number"
+        },
+        "volume": {
+          "type": "number"
+        },
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "AddToQueueRequest": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "AddToQueueResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "GetQueueResponse": {
+      "type": "object",
+      "properties": {
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.index.json#/components/schemas/Track"
+          }
+        }
+      }
+    },
+    "RemoveFromQueueRequest": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "RemoveFromQueueResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "MoveInQueueRequest": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        },
+        "position": {
+          "type": "number"
+        }
+      }
+    },
+    "MoveInQueueResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "ClearQueueResponse": {
+      "type": "object",
+      "properties": {
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.index.json#/components/schemas/Track"
+          }
+        }
+      }
+    },
+    "GetAllDevicesResponse": {
+      "type": "object",
+      "properties": {
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.index.json#/components/schemas/Device"
+          }
+        }
+      }
+    },
+    "GetCurrentDeviceResponse": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "$ref": "../openapi.index.json#/components/schemas/Device"
+        }
+      }
+    },
+    "SetCurrentDeviceRequest": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "$ref": "../openapi.index.json#/components/schemas/Device"
+        }
+      }
+    },
+    "SetCurrentDeviceResponse": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "$ref": "../openapi.index.json#/components/schemas/Device"
+        }
+      }
+    },
+    "RegisterDeviceRequest": {
+      "type": "object",
+      "properties": {
+        "ws": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "RegisterDeviceResponse": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "$ref": "../openapi.index.json#/components/schemas/Device"
+        }
+      }
+    },
+    "PlayTrackRequest": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "PlayTrackResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "ResumeResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "PauseResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "SkipResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "PrevResponse": {
+      "type": "object",
+      "properties": {
+        "track": {
+          "$ref": "../openapi.index.json#/components/schemas/Track"
+        }
+      }
+    },
+    "SeekResponse": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "number"
+        }
+      }
+    },
+    "SetVolumeResponse": {
+      "type": "object",
+      "properties": {
+        "volume": {
+          "type": "number"
+        }
+      }
+    },
+    "SetShuffleResponse": {
+      "type": "object",
+      "properties": {
+        "shuffle": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SetRepeatResponse": {
+      "type": "object",
+      "properties": {
+        "repeat": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SetQualityResponse": {
+      "type": "object",
+      "properties": {
+        "quality": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

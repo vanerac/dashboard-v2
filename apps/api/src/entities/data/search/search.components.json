@@ -1,0 +1,45 @@
+{
+  "schemas": {
+    "SearchResult": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "../../openapi.components.json#/schemas/Track"
+          },
+          {
+            "$ref": "../../openapi.components.json#/schemas/Album"
+          },
+          {
+            "$ref": "../../openapi.components.json#/schemas/Artist"
+          },
+          {
+            "$ref": "../../openapi.components.json#/schemas/Playlist"
+          }
+        ]
+      }
+    },
+    "searchQueryRequest": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    },
+    "searchQueryResponse": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "$ref": "#/schemas/SearchResult"
+        }
+      },
+      "required": [
+        "results"
+      ]
+    }
+  }
+}

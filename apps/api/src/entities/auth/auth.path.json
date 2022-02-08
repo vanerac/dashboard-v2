@@ -1,0 +1,110 @@
+{
+  "login": {
+    "post": {
+      "operationId": "authLoginPost",
+      "tags": [
+        "authentication"
+      ],
+      "summary": "Get a token",
+      "description": "Login and retrieve a token",
+      "security": [],
+      "requestBody": {
+        "description": "Login and password",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "auth.components.json#/schemas/loginRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "auth.components.json#/schemas/loginResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "register": {
+    "post": {
+      "operationId": "authRegisterPost",
+      "tags": [
+        "authentication"
+      ],
+      "summary": "Register a new user",
+      "description": "Register a new user",
+      "security": [],
+      "requestBody": {
+        "description": "Register a new user",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "auth.components.json#/schemas/registerRequest"
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "auth.components.json#/schemas/registerResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
