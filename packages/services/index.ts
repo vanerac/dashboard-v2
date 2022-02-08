@@ -21,6 +21,8 @@ export type { getArtistTopTracksResponse } from './models/getArtistTopTracksResp
 export type { GetCurrentDeviceResponse } from './models/GetCurrentDeviceResponse';
 export type { GetQueueResponse } from './models/GetQueueResponse';
 export type { getSingleArtist } from './models/getSingleArtist';
+export type { loginRequest } from './models/loginRequest';
+export type { loginResponse } from './models/loginResponse';
 export type { MoveInQueueRequest } from './models/MoveInQueueRequest';
 export type { MoveInQueueResponse } from './models/MoveInQueueResponse';
 export type { PauseResponse } from './models/PauseResponse';

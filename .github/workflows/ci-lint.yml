@@ -4,10 +4,6 @@ on: [ push, workflow_dispatch ]
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        directory : ["app", "api", "front"]
-      fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - name: Cache dependencies
@@ -15,7 +11,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/${{matrix.directory}}/node_modules
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
@@ -23,7 +21,6 @@ jobs:
           node-version: '16'
       - run: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: ./apps/${{matrix.directory}}
         name: Install dependencies
   lint:
     strategy:
@@ -43,9 +40,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/${{ matrix.directory }}/node_modules
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
-          key: modules-${{hashFiles('package-lock.json')}}
+          key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run lint
         working-directory: ./apps/${{matrix.directory}}
         name: Lint
@@ -66,7 +65,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/${{matrix.directory}}/node_modules
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run prettier

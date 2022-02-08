@@ -26,19 +26,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/loginRequest"
               }
             }
           }
@@ -49,18 +37,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "token"
-                  ],
-                  "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "user": {
-                      "$ref": "#/components/schemas/User"
-                    }
-                  }
+                  "$ref": "#/components/schemas/loginResponse"
                 }
               }
             }
@@ -126,7 +103,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -230,7 +207,8 @@
             "description": "Service ID",
             "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -247,6 +225,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -284,7 +272,8 @@
             "description": "Service ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -338,7 +327,8 @@
             "description": "Service ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -406,7 +396,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -469,7 +460,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -551,7 +543,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -633,7 +626,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -705,7 +699,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -796,7 +791,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -878,7 +874,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -887,7 +884,8 @@
             "description": "Search query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -950,7 +948,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1022,7 +1021,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1118,7 +1118,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1221,7 +1222,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1315,7 +1317,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1387,7 +1390,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1459,7 +1463,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -2687,7 +2692,7 @@
   },
   "components": {
     "securitySchemes": {
-      "bearerAuth": {
+      "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
@@ -2895,17 +2900,6 @@
           ]
         }
       },
-      "searchQueryResponse": {
-        "type": "object",
-        "properties": {
-          "results": {
-            "$ref": "#/components/schemas/SearchResult"
-          }
-        },
-        "required": [
-          "results"
-        ]
-      },
       "Device": {
         "type": "object",
         "properties": {
@@ -2932,6 +2926,42 @@
         "properties": {
           "schema": {
             "$ref": "#/components/schemas/Artist"
+          }
+        }
+      },
+      "PlaybackStatus": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          },
+          "position": {
+            "type": "integer"
+          },
+          "device": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "playing",
+              "paused",
+              "stopped"
+            ]
+          }
+        }
+      },
+      "loginResponse": {
+        "type": "object",
+        "required": [
+          "token"
+        ],
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         }
       },
@@ -2979,28 +3009,6 @@
           }
         }
       },
-      "PlaybackStatus": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          },
-          "position": {
-            "type": "integer"
-          },
-          "device": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string",
-            "enum": [
-              "playing",
-              "paused",
-              "stopped"
-            ]
-          }
-        }
-      },
       "ServiceResponse": {
         "type": "object",
         "properties": {
@@ -3045,22 +3053,6 @@
           }
         }
       },
-      "playlistCreateRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "playlistUpdateRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "PlaybackStateResponse": {
         "type": "object",
         "properties": {
@@ -3086,14 +3078,6 @@
           }
         }
       },
-      "AddToQueueRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          }
-        }
-      },
       "AddToQueueResponse": {
         "type": "object",
         "properties": {
@@ -3110,33 +3094,6 @@
             "items": {
               "$ref": "#/components/schemas/Track"
             }
-          }
-        }
-      },
-      "RemoveFromQueueRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          }
-        }
-      },
-      "RemoveFromQueueResponse": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          }
-        }
-      },
-      "MoveInQueueRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          },
-          "position": {
-            "type": "number"
           }
         }
       },
@@ -3175,49 +3132,6 @@
         "properties": {
           "device": {
             "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "SetCurrentDeviceRequest": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "SetCurrentDeviceResponse": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "RegisterDeviceRequest": {
-        "type": "object",
-        "properties": {
-          "ws": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "RegisterDeviceResponse": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "PlayTrackRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
           }
         }
       },
@@ -3300,12 +3214,132 @@
             "type": "string"
           }
         }
+      },
+      "searchQueryResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "$ref": "#/components/schemas/SearchResult"
+          }
+        },
+        "required": [
+          "results"
+        ]
+      },
+      "RemoveFromQueueResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "SetCurrentDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "RegisterDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "loginRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "playlistCreateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "playlistUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "AddToQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "RemoveFromQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "MoveInQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          },
+          "position": {
+            "type": "number"
+          }
+        }
+      },
+      "SetCurrentDeviceRequest": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "RegisterDeviceRequest": {
+        "type": "object",
+        "properties": {
+          "ws": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PlayTrackRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
       }
     }
   },
   "security": [
     {
-      "bearerAuth": []
+      "BearerAuth": []
     }
   ]
 }

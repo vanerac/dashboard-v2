@@ -6,7 +6,6 @@ import configuration from '../../configuration';
 import { User } from '../../../../packages/services';
 dotenv.config();
 
-// generate jwt token
 export const generateToken = (user: any): string => {
     return jwt.sign(user, configuration.JWT_SECRET || 'secret', {
         expiresIn: '1h',
@@ -37,7 +36,7 @@ export const parseCookieSession = (req: Request, $res: Response, next: NextFunct
 };
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    const bearerHeader = req.headers['Authorization'] || req.cookies['API_TOKEN'];
+    const bearerHeader = req.headers['authorization'] || req.headers['Authorization'] || req.cookies['API_TOKEN'];
     if (!bearerHeader) {
         return res.status(401).send({
             status: 'error',
@@ -51,7 +50,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         const [$bearer, token] = bearerHeader.split(' ');
         access_token = token;
     } else {
-        access_token = JSON.parse(bearerHeader);
+        access_token = bearerHeader;
     }
 
     try {
@@ -92,7 +91,7 @@ export async function parseToken(req: Request, res: Response, next: NextFunction
         const [$bearer, token] = bearerHeader.split(' ');
         access_token = token;
     } else {
-        access_token = JSON.parse(bearerHeader);
+        access_token = bearerHeader;
     }
     const decoded: User & any = jwt.verify(access_token, configuration.JWT_SECRET || 'secret');
     if (typeof decoded != 'string' && decoded.id) {

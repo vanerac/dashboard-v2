@@ -34,7 +34,7 @@ export class ServicesService {
      * @throws ApiError
      */
     public static getServicesById(
-        serviceId: number,
+        serviceId: string,
     ): CancelablePromise<ServiceResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -44,6 +44,7 @@ export class ServicesService {
             },
             errors: {
                 401: `Unauthorized`,
+                404: `Not found`,
                 500: `Internal server error`,
             },
         });
