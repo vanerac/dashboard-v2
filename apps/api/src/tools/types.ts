@@ -42,7 +42,7 @@ export interface Token {
 
 export enum Providers {
     $GOOGLE = 'google',
-    $SPOTIFY = 'spotify',
+    SPOTIFY = 'spotify',
     $APPLE = 'apple',
     $LAST_FM = 'lastfm',
 }
