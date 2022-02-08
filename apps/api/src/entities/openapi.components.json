@@ -51,6 +51,15 @@
     "Track": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "artist",
+            "album",
+            "track",
+            "playlist"
+          ]
+        },
         "id": {
           "type": "string"
         },
@@ -77,6 +86,15 @@
     "Playlist": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "artist",
+            "album",
+            "track",
+            "playlist"
+          ]
+        },
         "id": {
           "type": "string"
         },
@@ -97,6 +115,61 @@
           "items": {
             "$ref": "#/schemas/Track"
           }
+        }
+      }
+    },
+    "Artist": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "artist",
+            "album",
+            "track",
+            "playlist"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        }
+      }
+    },
+    "Album": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "artist",
+            "album",
+            "track",
+            "playlist"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "artist": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
         }
       }
     }

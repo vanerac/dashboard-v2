@@ -106,15 +106,22 @@
                 "type": "object",
                 "required": [
                   "email",
-                  "password"
+                  "password",
+                  "displayName"
                 ],
                 "properties": {
                   "email": {
                     "type": "string",
-                    "format": "email"
+                    "format": "email",
+                    "required": true
                   },
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "required": true
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "required": true
                   }
                 }
               }
@@ -801,6 +808,70 @@
           }
         }
       }
+    },
+    "/data/{serviceId}/search": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Search",
+        "description": "Search",
+        "operationId": "searchGet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/searchQueryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -808,6 +879,15 @@
       "Track": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "artist",
+              "album",
+              "track",
+              "playlist"
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -834,6 +914,15 @@
       "Playlist": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "artist",
+              "album",
+              "track",
+              "playlist"
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -904,6 +993,91 @@
             "type": "string"
           }
         }
+      },
+      "Artist": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "artist",
+              "album",
+              "track",
+              "playlist"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          }
+        }
+      },
+      "Album": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "artist",
+              "album",
+              "track",
+              "playlist"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "artist": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "array",
+        "items": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/Track"
+            },
+            {
+              "$ref": "#/components/schemas/Album"
+            },
+            {
+              "$ref": "#/components/schemas/Artist"
+            },
+            {
+              "$ref": "#/components/schemas/Playlist"
+            }
+          ]
+        }
+      },
+      "searchQueryResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "$ref": "#/components/schemas/SearchResult"
+          }
+        },
+        "required": [
+          "results"
+        ]
       },
       "ServiceResponse": {
         "type": "object",

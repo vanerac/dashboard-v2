@@ -1,0 +1,66 @@
+{
+  "search": {
+    "get": {
+      "tags": [
+        "search"
+      ],
+      "summary": "Search",
+      "description": "Search",
+      "operationId": "searchGet",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "q",
+          "in": "query",
+          "description": "Search query",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./search.components.json#/schemas/searchQueryResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
