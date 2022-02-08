@@ -12,9 +12,7 @@
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-    "module": {
-      "rules": [{ "test": ".txt$", "use": "raw-loader" }],
-    },
+    "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve"
