@@ -1,12 +1,10 @@
-import { AppProps } from 'next/app';
-import withDarkMode from 'next-dark-mode';
+import { AppProps as propApps } from 'next/app';
+// import withDarkMode from 'next-dark-mode';
 import React from 'react';
 import Theme from '../components/Themes';
-import { OpenAPI } from '../../../packages/services';
-// OpenAPI.WITH_CREDENTIALS = true;
 
-const MyApp = (props: AppProps) => {
-    const { Component, pageProps } = props;
+const MyApp = ({ Component, pageProps }: propApps) => {
+    // const { Component, pageProps } = props;
 
     return (
         <Theme>
@@ -15,4 +13,6 @@ const MyApp = (props: AppProps) => {
     );
 };
 
-export default withDarkMode(MyApp);
+// const app = withDarkMode(MyApp);
+
+export default MyApp;

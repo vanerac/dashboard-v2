@@ -1,6 +1,4 @@
-import Head from 'next/head';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
@@ -8,7 +6,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { mdiSpotify } from '@mdi/js';
 import { mdiRadioFm } from '@mdi/js';
 import React, { useState } from 'react';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import { AuthenticationService } from '../../../packages/services';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -80,7 +78,7 @@ const Login = () => {
                     OpenAPI.TOKEN = data.token;
                     console.log(OpenAPI.TOKEN);
                 })
-                .catch((error) => {
+                .catch(($error) => {
                     handleOpen();
                 });
         }

@@ -14,11 +14,11 @@ const Home = () => {
         }
     };
 
-    const redirectLogin = (e: any) => {
+    const redirectLogin = ($e: any) => {
         Router.push('/login');
     };
 
-    const redirectRegister = (e: any) => {
+    const redirectRegister = ($e: any) => {
         Router.push('/register');
     };
 
