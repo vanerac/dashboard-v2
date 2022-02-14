@@ -97,7 +97,7 @@ jobs:
       matrix:
         platforms: [ "ios", "android" ]
       fail-fast: false
-#     if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.4.1
@@ -121,7 +121,7 @@ jobs:
             expo-cache: true
       - name: Build ${{matrix.platforms}} on EAS
         working-directory: ./apps/app
-        run: npx eas-cli build --platform ${{matrix.platforms}} --non-interactive --local
+        run: npx eas-cli build --platform ${{matrix.platforms}} --non-interactive
       - name: Upload Artifcat
         id: upload
         uses: actions/upload-artifact@v2
