@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Artist, Track, Album } from '../../../../../packages/services';
+import { Artist, Track, Album, Tag } from '../../../../../packages/services';
 export default class StatsController {
     // myTopArtists
     static async myTopArtists(req: Request, res: Response, next: NextFunction) {
@@ -150,7 +150,52 @@ export default class StatsController {
     }
 
     // myTopTags
-    static async myTopTags(req: Request, res: Response, next: NextFunction) {}
+    static async myTopTags(req: Request, res: Response, next: NextFunction) {
+        try {
+            if (!req.session.local.service) {
+                return res.status(400).json({
+                    error: 'No service selected',
+                });
+            }
+            const { service } = req.session.local.service;
+
+            const { accessToken } = service;
+
+            const params: { [key: string]: any } = {
+                method: 'user.gettoptags',
+                user: '',
+                limit: '10',
+                api_key: '',
+                format: 'json',
+                callback: '',
+                page: '1',
+                autocorrect: '1',
+                accessToken,
+            };
+            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
+                .map((key) => `${key}=${params[key]}`)
+                .join('&')}`;
+            const response = await fetch(url);
+            const json = await response.json();
+            const { toptracks } = json;
+            const { tag } = toptracks;
+            // Map to Artist type
+            const tags: Tag[] = tag.map((tag: any) => ({
+                type: 'tag',
+                id: tag.name,
+                name: tag.name,
+                image: tag.image[3]['#text'],
+                provider: 'lastfm',
+                followers: tag.count,
+                external_urls: tag.url,
+            }));
+            res.status(200).json({
+                tags,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 
     // weeklyTopArtists
     static async chartsWeeklyTopArtists(req: Request, res: Response, next: NextFunction) {

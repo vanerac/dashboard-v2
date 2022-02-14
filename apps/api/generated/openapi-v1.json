@@ -2688,6 +2688,524 @@
           }
         }
       }
+    },
+    "/stats/me/top/artists": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top artists",
+        "description": "Get my top artists",
+        "operationId": "getMyTopArtists",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/me/top/tracks": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top tracks",
+        "description": "Get my top tracks",
+        "operationId": "getMyTopTracks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/me/top/albums": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top albums",
+        "description": "Get my top albums",
+        "operationId": "getMyTopAlbums",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlbumStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/me/top/tags": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top tags",
+        "description": "Get my top tags",
+        "operationId": "getMyTopTags",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/charts/top/artists/weekly": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get global top artists",
+        "description": "Get global top artists",
+        "operationId": "getGlobalTopArtists",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/charts/top/tracks/weekly": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get global top tracks",
+        "description": "Get global top tracks",
+        "operationId": "getGlobalTopTracks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/charts/top/albums/weekly": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get global top albums",
+        "description": "Get global top albums",
+        "operationId": "getGlobalTopAlbums",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlbumStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2918,6 +3436,17 @@
           },
           "ws": {
             "type": "string"
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
           }
         }
       },
@@ -3332,6 +3861,50 @@
         "properties": {
           "track": {
             "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "ArtistStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Artist"
+            }
+          }
+        }
+      },
+      "AlbumStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Album"
+            }
+          }
+        }
+      },
+      "TrackStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
+          }
+        }
+      },
+      "TagStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
           }
         }
       }
