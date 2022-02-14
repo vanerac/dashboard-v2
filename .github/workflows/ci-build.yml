@@ -97,7 +97,7 @@ jobs:
       matrix:
         platforms: [ "ios", "android" ]
       fail-fast: false
-#     if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.4.1
