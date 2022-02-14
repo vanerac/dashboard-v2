@@ -1,18 +1,13 @@
 import { useRouter } from 'next/router';
-import { OpenAPI } from '../../../packages/services';
 
 function withAuth(WrappedComponent: any) {
     return (props: any) => {
         if (typeof window !== 'undefined') {
             const Router = useRouter();
 
-            console.log('here => ', OpenAPI.TOKEN);
-            //   const accessToken = localStorage.getItem("accessToken");
-            // const accessToken = 'ok';
-
-            if (!OpenAPI.TOKEN) {
-                Router.replace('/');
-                return null;
+            // Todo: Note: This does not handle the case where the user is logged in but the token is expired.
+            if (!localStorage.getItem('token')) {
+                Router.push('/login');
             }
             return <WrappedComponent {...props} />;
         }
