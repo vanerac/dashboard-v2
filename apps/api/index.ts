@@ -8,6 +8,7 @@ import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
 import { User } from '../../packages/services';
+import { Service } from './src/tools/types';
 import * as OpenApiValidator from 'express-openapi-validator';
 // import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 // import SecuritySchemeObject = OpenAPIV3.SecuritySchemeObject;
@@ -15,7 +16,9 @@ const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
-    local: {},
+    local: {
+        service: undefined,
+    },
     secret: process.env.COOKIE_SECRET || 'secret',
     resave: true,
     saveUninitialized: true,
@@ -26,6 +29,7 @@ declare module 'express-session' {
     export interface SessionData {
         user: User;
         [key: string]: any;
+        service: Service;
     }
 }
 
