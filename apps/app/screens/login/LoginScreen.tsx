@@ -1,12 +1,16 @@
-import React, { useState, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import { ThemeContext } from '../constants/ThemeContext';
+import { ThemeContext } from '../../constants/ThemeContext';
+import { AuthenticationService } from '../../../../packages/services/index';
 
-export default function App() {
+export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { theme } = useContext(ThemeContext);
+    async function makeRequest() {
+        const $res = await AuthenticationService.authLoginPost({ email: email, password: password });
+    }
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
@@ -35,7 +39,9 @@ export default function App() {
                 <Text style={[styles.forgot_button, { color: theme.text }]}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.loginBtn, { backgroundColor: theme.accent }]}>
+            <TouchableOpacity
+                style={[styles.loginBtn, { backgroundColor: theme.accent }]}
+                onPress={() => makeRequest()}>
                 <Text style={{ color: theme.text }}>LOGIN</Text>
             </TouchableOpacity>
         </View>
