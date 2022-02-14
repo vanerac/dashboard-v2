@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
-import { AuthenticationService } from '../../../../packages/services/index';
+import { AuthenticationService } from '../../../../packages/services';
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ export default function LoginScreen() {
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Email."
+                    placeholder="email"
                     placeholderTextColor={theme.text}
                     value={email}
                     onChangeText={(email) => setEmail(email)}
@@ -27,7 +27,7 @@ export default function LoginScreen() {
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Password."
+                    placeholder="password"
                     placeholderTextColor={theme.text}
                     secureTextEntry={true}
                     value={password}
@@ -42,7 +42,7 @@ export default function LoginScreen() {
             <TouchableOpacity
                 style={[styles.loginBtn, { backgroundColor: theme.accent }]}
                 onPress={() => makeRequest()}>
-                <Text style={{ color: theme.text }}>LOGIN</Text>
+                <Text style={{ color: theme.text }}>LOGIN walah</Text>
             </TouchableOpacity>
         </View>
     );

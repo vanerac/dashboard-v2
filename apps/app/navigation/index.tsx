@@ -16,6 +16,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import StartScreen from '../screens/login/StartScreen';
 import LoginScreen from '../screens/login/LoginScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -38,6 +39,7 @@ function RootNavigator() {
     return (
         <Stack.Navigator>
             {/*<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />*/}
+            <Stack.Screen name="StartScreen" component={StartScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Group screenOptions={{ presentation: 'modal' }}>

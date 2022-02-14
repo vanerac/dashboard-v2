@@ -4,18 +4,25 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { ThemeContext } from '../../constants/ThemeContext';
 import { AuthenticationService } from '../../../../packages/services';
 
-export default function StartScreen() {
+export default function StartScreen({ navigation }) {
+    const { theme } = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { theme } = useContext(ThemeContext);
-    AuthenticationService.authLoginPost({ email: email, password: password });
+    const [username, setUsername] = useState('');
+    async function makeRequestRegistration() {
+        const $res = await AuthenticationService.authRegisterPost({
+            email: email,
+            password: password,
+            displayName: username,
+        });
+    }
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Email."
+                    placeholder="email"
                     placeholderTextColor={theme.text}
                     value={email}
                     onChangeText={(email) => setEmail(email)}
@@ -25,7 +32,18 @@ export default function StartScreen() {
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Password."
+                    placeholder="username"
+                    placeholderTextColor={theme.text}
+                    secureTextEntry={true}
+                    value={username}
+                    onChangeText={(username) => setUsername(username)}
+                />
+            </View>
+
+            <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
+                <TextInput
+                    style={styles.TextInput}
+                    placeholder="password"
                     placeholderTextColor={theme.text}
                     secureTextEntry={true}
                     value={password}
@@ -33,12 +51,14 @@ export default function StartScreen() {
                 />
             </View>
 
-            <TouchableOpacity>
-                <Text style={[styles.forgot_button, { color: theme.text }]}>Forgot Password?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                <Text style={[styles.already_registered_button, { color: theme.text }]}>already registered ?</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.loginBtn, { backgroundColor: theme.accent }]}>
-                <Text style={{ color: theme.text }}>LOGIN</Text>
+                <Text style={{ color: theme.text }} onPress={makeRequestRegistration}>
+                    Register
+                </Text>
             </TouchableOpacity>
         </View>
     );
@@ -70,13 +90,13 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
 
-    forgot_button: {
+    already_registered_button: {
         height: 30,
-        marginBottom: 30,
+        marginTop: 30,
     },
 
     loginBtn: {
-        width: '80%',
+        width: '70%',
         borderRadius: 25,
         height: 50,
         alignItems: 'center',
