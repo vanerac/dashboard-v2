@@ -4,10 +4,11 @@
 import type { ServiceResponse } from '../models/ServiceResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class ServicesService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get all user services
@@ -15,8 +16,8 @@ export class ServicesService {
      * @returns ServiceResponse Success
      * @throws ApiError
      */
-    public static getAllUserServices(): CancelablePromise<ServiceResponse> {
-        return __request(OpenAPI, {
+    public getAllUserServices(): CancelablePromise<ServiceResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/service',
             errors: {
@@ -33,10 +34,10 @@ export class ServicesService {
      * @returns ServiceResponse Success
      * @throws ApiError
      */
-    public static getServicesById(
+    public getServicesById(
         serviceId: string,
     ): CancelablePromise<ServiceResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/service/{serviceId}',
             path: {
@@ -57,10 +58,10 @@ export class ServicesService {
      * @returns ServiceResponse Success
      * @throws ApiError
      */
-    public static deleteService(
+    public deleteService(
         serviceId: string,
     ): CancelablePromise<ServiceResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/service/{serviceId}/delete',
             path: {
@@ -81,13 +82,13 @@ export class ServicesService {
      * @returns ServiceResponse Success
      * @throws ApiError
      */
-    public static updateService(
+    public updateService(
         serviceId: string,
         requestBody: {
             enabled?: boolean;
         },
     ): CancelablePromise<ServiceResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PUT',
             url: '/service/{serviceId}/update',
             path: {

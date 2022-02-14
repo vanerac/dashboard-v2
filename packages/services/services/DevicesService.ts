@@ -9,10 +9,11 @@ import type { SetCurrentDeviceRequest } from '../models/SetCurrentDeviceRequest'
 import type { SetCurrentDeviceResponse } from '../models/SetCurrentDeviceResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class DevicesService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get all devices
@@ -20,8 +21,8 @@ export class DevicesService {
      * @returns GetAllDevicesResponse Successful operation
      * @throws ApiError
      */
-    public static getAllDevices(): CancelablePromise<GetAllDevicesResponse> {
-        return __request(OpenAPI, {
+    public getAllDevices(): CancelablePromise<GetAllDevicesResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/devices',
             errors: {
@@ -38,8 +39,8 @@ export class DevicesService {
      * @returns GetCurrentDeviceResponse Successful operation
      * @throws ApiError
      */
-    public static getCurrentDevice(): CancelablePromise<GetCurrentDeviceResponse> {
-        return __request(OpenAPI, {
+    public getCurrentDevice(): CancelablePromise<GetCurrentDeviceResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/device/current',
             errors: {
@@ -57,10 +58,10 @@ export class DevicesService {
      * @returns SetCurrentDeviceResponse Successful operation
      * @throws ApiError
      */
-    public static setCurrentDevice(
+    public setCurrentDevice(
         requestBody: SetCurrentDeviceRequest,
     ): CancelablePromise<SetCurrentDeviceResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PUT',
             url: '/playback/device/change',
             body: requestBody,
@@ -80,10 +81,10 @@ export class DevicesService {
      * @returns RegisterDeviceResponse Successful operation
      * @throws ApiError
      */
-    public static registerDevice(
+    public registerDevice(
         requestBody: RegisterDeviceRequest,
     ): CancelablePromise<RegisterDeviceResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/device/register',
             body: requestBody,

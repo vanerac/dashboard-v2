@@ -8,10 +8,11 @@ import type { playlistTracksResponse } from '../models/playlistTracksResponse';
 import type { playlistUpdateRequest } from '../models/playlistUpdateRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class PlaylistService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get all playlists
@@ -20,10 +21,10 @@ export class PlaylistService {
      * @returns playlistsResponse Successful operation
      * @throws ApiError
      */
-    public static getAllPlaylists(
+    public getAllPlaylists(
         serviceId: string,
     ): CancelablePromise<playlistsResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/',
             path: {
@@ -45,11 +46,11 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static getPlaylistById(
+    public getPlaylistById(
         serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}',
             path: {
@@ -73,11 +74,11 @@ export class PlaylistService {
      * @returns playlistTracksResponse Successful operation
      * @throws ApiError
      */
-    public static getPlaylistTracks(
+    public getPlaylistTracks(
         serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistTracksResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}/tracks',
             path: {
@@ -101,11 +102,11 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static create(
+    public create(
         serviceId: string,
         requestBody?: playlistCreateRequest,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/data/{serviceId}/playlist/create',
             path: {
@@ -130,12 +131,12 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static update(
+    public update(
         serviceId: string,
         playlistId: string,
         requestBody?: playlistUpdateRequest,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PUT',
             url: '/data/{serviceId}/playlist/{playlistId}/update',
             path: {
@@ -161,11 +162,11 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static delete(
+    public delete(
         serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/data/{serviceId}/playlist/{playlistId}/delete',
             path: {

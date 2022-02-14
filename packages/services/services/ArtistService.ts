@@ -7,10 +7,11 @@ import type { getArtistTopTracksResponse } from '../models/getArtistTopTracksRes
 import type { getSingleArtist } from '../models/getSingleArtist';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class ArtistService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get artist by ID
@@ -20,11 +21,11 @@ export class ArtistService {
      * @returns getSingleArtist Artist found
      * @throws ApiError
      */
-    public static getArtistById(
+    public getArtistById(
         serviceId: string,
         artistId: string,
     ): CancelablePromise<getSingleArtist> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/{artistId}',
             path: {
@@ -49,13 +50,13 @@ export class ArtistService {
      * @returns getArtistAlbumsResponse Artist albums found
      * @throws ApiError
      */
-    public static getArtistAlbums(
+    public getArtistAlbums(
         serviceId: string,
         artistId: string,
         limit?: number,
         offset?: number,
     ): CancelablePromise<getArtistAlbumsResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/{artistId}/albums',
             path: {
@@ -85,14 +86,14 @@ export class ArtistService {
      * @returns getArtistTopTracksResponse Artist top tracks found
      * @throws ApiError
      */
-    public static getArtistTopTracks(
+    public getArtistTopTracks(
         serviceId: string,
         artistId: string,
         country?: string,
         limit?: number,
         offset?: number,
     ): CancelablePromise<getArtistTopTracksResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/{artistId}/top-tracks',
             path: {
@@ -122,13 +123,13 @@ export class ArtistService {
      * @returns getArtistsResponse Artist related artists found
      * @throws ApiError
      */
-    public static getArtistRelatedArtists(
+    public getArtistRelatedArtists(
         serviceId: string,
         artistId: string,
         limit?: number,
         offset?: number,
     ): CancelablePromise<getArtistsResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/{artistId}/related',
             path: {
@@ -155,11 +156,11 @@ export class ArtistService {
      * @returns getSingleArtist Artist followed
      * @throws ApiError
      */
-    public static followArtist(
+    public followArtist(
         serviceId: string,
         artistId: string,
     ): CancelablePromise<getSingleArtist> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/{artistId}/follow',
             path: {
@@ -182,11 +183,11 @@ export class ArtistService {
      * @returns getSingleArtist Artist unfollowed
      * @throws ApiError
      */
-    public static unfollowArtist(
+    public unfollowArtist(
         serviceId: string,
         artistId: string,
     ): CancelablePromise<getSingleArtist> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/{artistId}/unfollow',
             path: {
@@ -210,12 +211,12 @@ export class ArtistService {
      * @returns getArtistsResponse Followed artists found
      * @throws ApiError
      */
-    public static getFollowedArtists(
+    public getFollowedArtists(
         serviceId: string,
         limit?: number,
         offset?: number,
     ): CancelablePromise<getArtistsResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/artist/followed',
             path: {

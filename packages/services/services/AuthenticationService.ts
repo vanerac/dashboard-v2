@@ -6,10 +6,11 @@ import type { loginResponse } from '../models/loginResponse';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class AuthenticationService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get a token
@@ -18,10 +19,10 @@ export class AuthenticationService {
      * @returns loginResponse Success
      * @throws ApiError
      */
-    public static authLoginPost(
+    public authLoginPost(
         requestBody: loginRequest,
     ): CancelablePromise<loginResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/auth/login',
             body: requestBody,
@@ -40,7 +41,7 @@ export class AuthenticationService {
      * @returns any Success
      * @throws ApiError
      */
-    public static authRegisterPost(
+    public authRegisterPost(
         requestBody: {
             email: string;
             password: string;
@@ -50,7 +51,7 @@ export class AuthenticationService {
         user: User;
         message: string;
     }> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/auth/register',
             body: requestBody,
