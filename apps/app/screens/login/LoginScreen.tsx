@@ -1,24 +1,37 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
 import { AuthenticationService } from '../../../../packages/services';
+import { RootStackParamList } from '../../types';
 
-export default function LoginScreen() {
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
+
+export default function LoginScreen({ navigation }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { theme } = useContext(ThemeContext);
     async function makeRequest() {
-        const $res = await AuthenticationService.authLoginPost({ email: email, password: password });
+        try {
+            const res = await AuthenticationService.authLoginPost({ email: email, password: password });
+            console.log(res);
+            navigation.navigate('HomePage');
+        } catch (e) {
+            Alert.alert('Wrong email or wrong password');
+            console.log(e);
+        }
     }
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
-                    style={styles.TextInput}
+                    style={[styles.TextInput, { color: theme.text }]}
                     placeholder="email"
-                    placeholderTextColor={theme.text}
+                    placeholderTextColor={theme.textPlaceholder}
+                    autoCapitalize="none"
                     value={email}
                     onChangeText={(email) => setEmail(email)}
                 />
@@ -26,10 +39,11 @@ export default function LoginScreen() {
 
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
-                    style={styles.TextInput}
+                    style={[styles.TextInput, { color: theme.text }]}
                     placeholder="password"
-                    placeholderTextColor={theme.text}
+                    placeholderTextColor={theme.textPlaceholder}
                     secureTextEntry={true}
+                    autoCapitalize="none"
                     value={password}
                     onChangeText={(password) => setPassword(password)}
                 />
@@ -42,7 +56,7 @@ export default function LoginScreen() {
             <TouchableOpacity
                 style={[styles.loginBtn, { backgroundColor: theme.accent }]}
                 onPress={() => makeRequest()}>
-                <Text style={{ color: theme.text }}>LOGIN walah</Text>
+                <Text style={{ color: theme.text }}>LOGIN</Text>
             </TouchableOpacity>
         </View>
     );
@@ -71,7 +85,6 @@ const styles = StyleSheet.create({
         height: 50,
         flex: 1,
         padding: 10,
-        marginLeft: 20,
     },
 
     forgot_button: {

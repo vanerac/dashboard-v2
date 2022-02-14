@@ -5,13 +5,15 @@ export const themes = {
         primary: '#FFFFFF',
         secondary: '#CCCCCC',
         accent: '#52A1FF',
-        text: 'black',
+        text: '#000000',
+        textPlaceholder: '#E6E6E6',
     },
     dark: {
         primary: '#202020',
         secondary: '#313131',
         accent: '#52A1FF',
-        text: 'white',
+        text: '#FFFFFF',
+        textPlaceholder: '#666666',
     },
 };
 

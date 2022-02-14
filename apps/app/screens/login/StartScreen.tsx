@@ -1,29 +1,43 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
 import { AuthenticationService } from '../../../../packages/services';
+import { RootStackParamList } from '../../types';
 
-export default function StartScreen({ navigation }) {
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'StartScreen'>;
+
+export default function StartScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     async function makeRequestRegistration() {
-        const $res = await AuthenticationService.authRegisterPost({
-            email: email,
-            password: password,
-            displayName: username,
-        });
+        try {
+            const res = await AuthenticationService.authRegisterPost({
+                email: email,
+                password: password,
+                displayName: username,
+            });
+            console.log(res);
+            Alert.alert('Success');
+            navigation.navigate('HomePage');
+        } catch (e) {
+            Alert.alert('Error');
+            console.log(e);
+        }
     }
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
-                    style={styles.TextInput}
+                    style={[styles.TextInput, { color: theme.text }]}
                     placeholder="email"
-                    placeholderTextColor={theme.text}
+                    placeholderTextColor={theme.textPlaceholder}
+                    autoCapitalize="none"
                     value={email}
                     onChangeText={(email) => setEmail(email)}
                 />
@@ -31,10 +45,9 @@ export default function StartScreen({ navigation }) {
 
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
-                    style={styles.TextInput}
+                    style={[styles.TextInput, { color: theme.text }]}
                     placeholder="username"
-                    placeholderTextColor={theme.text}
-                    secureTextEntry={true}
+                    placeholderTextColor={theme.textPlaceholder}
                     value={username}
                     onChangeText={(username) => setUsername(username)}
                 />
@@ -42,10 +55,11 @@ export default function StartScreen({ navigation }) {
 
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
-                    style={styles.TextInput}
+                    style={[styles.TextInput, { color: theme.text }]}
                     placeholder="password"
-                    placeholderTextColor={theme.text}
+                    placeholderTextColor={theme.textPlaceholder}
                     secureTextEntry={true}
+                    autoCapitalize="none"
                     value={password}
                     onChangeText={(password) => setPassword(password)}
                 />
@@ -56,7 +70,11 @@ export default function StartScreen({ navigation }) {
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.loginBtn, { backgroundColor: theme.accent }]}>
-                <Text style={{ color: theme.text }} onPress={makeRequestRegistration}>
+                <Text
+                    style={{ color: theme.text }}
+                    onPress={() => {
+                        makeRequestRegistration();
+                    }}>
                     Register
                 </Text>
             </TouchableOpacity>
