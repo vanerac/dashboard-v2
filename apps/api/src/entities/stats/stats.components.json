@@ -3,7 +3,7 @@
     "ArtistStats": {
       "type": "object",
       "properties": {
-        "services": {
+        "artists": {
           "type": "array",
           "items": {
             "$ref": "../openapi.components.json#/schemas/Artist"
@@ -14,7 +14,7 @@
     "TrackStats": {
       "type": "object",
       "properties": {
-        "services": {
+        "tracks": {
           "type": "array",
           "items": {
             "$ref": "../openapi.components.json#/schemas/Track"
@@ -25,7 +25,7 @@
     "AlbumStats": {
       "type": "object",
       "properties": {
-        "services": {
+        "albums": {
           "type": "array",
           "items": {
             "$ref": "../openapi.components.json#/schemas/Album"
@@ -36,7 +36,7 @@
     "TagStats": {
       "type": "object",
       "properties": {
-        "services": {
+        "tags": {
           "type": "array",
           "items": {
             "$ref": "../openapi.components.json#/schemas/Tag"
