@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { OpenAPI } from '../../../packages/services';
+// import { OpenAPI } from '../../../packages/services';
 import Cookies from 'universal-cookie';
 
 function withAuth(WrappedComponent: any) {

@@ -1,6 +1,6 @@
-import Head from 'next/head';
+// import Head from 'next/head';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
 import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
 import React, { useState } from 'react';
@@ -77,6 +77,7 @@ const Register = () => {
                     console.log('submitting');
                 })
                 .catch((error) => {
+                    console.log(error);
                     handleOpen();
                 });
         }

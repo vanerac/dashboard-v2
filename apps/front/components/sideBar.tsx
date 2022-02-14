@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -57,12 +57,12 @@ export default function TemporaryDrawer() {
     return (
         <div>
             {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
-                <React.Fragment>
-                    {/* <Button onClick={toggleDrawer('left', true)}>SideBar</Button> */}
-                    <Drawer anchor='left' open={state['left']} onClose={toggleDrawer('left', false)}>
-                        {list('left')}
-                    </Drawer>
-                </React.Fragment>
+            <React.Fragment>
+                {/* <Button onClick={toggleDrawer('left', true)}>SideBar</Button> */}
+                <Drawer anchor="left" open={state['left']} onClose={toggleDrawer('left', false)}>
+                    {list('left')}
+                </Drawer>
+            </React.Fragment>
             {/* ))} */}
         </div>
     );

@@ -1,11 +1,11 @@
-import withAuth from "./withAuth";
-import TopBar from './../components/topBar'
+import withAuth from './withAuth';
+import TopBar from './../components/topBar';
 
 const Dasboard = () => {
-    return(
+    return (
         <TopBar />
         // <>Welcome to your dasboard</>;
-    )
+    );
 };
 
 export default withAuth(Dasboard);

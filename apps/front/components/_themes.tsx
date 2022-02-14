@@ -1,5 +1,5 @@
 import { ThemeOptions } from '@mui/material';
-import { lightBlue, orange } from '@mui/material/colors';
+// import { lightBlue, orange } from '@mui/material/colors';
 
 export const lightTheme: ThemeOptions = {
     breakpoints: {

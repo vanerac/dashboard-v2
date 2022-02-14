@@ -1,7 +1,7 @@
 import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
 import { useDarkMode } from 'next-dark-mode';
 import Router from 'next/router';
-import Head from 'next/head';
+// import Head from 'next/head';
 import NextLink from 'next/link';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -99,6 +99,7 @@ const Home = () => {
                     Router.push('/dashboard');
                 })
                 .catch((error) => {
+                    console.log(error);
                     handleOpen();
                 });
         }
