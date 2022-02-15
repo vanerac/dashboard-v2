@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { loginRequest } from '../models/loginRequest';
+import type { loginResponse } from '../models/loginResponse';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -13,18 +15,12 @@ export class AuthenticationService {
      * Get a token
      * Login and retrieve a token
      * @param requestBody Login and password
-     * @returns any Success
+     * @returns loginResponse Success
      * @throws ApiError
      */
     public static authLoginPost(
-        requestBody: {
-            email: string;
-            password: string;
-        },
-    ): CancelablePromise<{
-        token: string;
-        user?: User;
-    }> {
+        requestBody: loginRequest,
+    ): CancelablePromise<loginResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/login',

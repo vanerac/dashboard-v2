@@ -3,7 +3,7 @@ import Pool from '../../tools/database.tools';
 import { checkPassword, generateToken, hashPassword } from '../../tools/auth.tools';
 
 export default class AuthController {
-    static async login(req: Request, res: Response): Promise<void> {
+    static async login(req: Request, res: Response, next: any): Promise<void> {
         try {
             const { email, password } = req.body;
 
@@ -34,9 +34,7 @@ export default class AuthController {
             }
         } catch (error) {
             console.error(error);
-            res.status(500).json({
-                message: 'Something went wrong',
-            });
+            next(error);
         }
     }
 
@@ -63,18 +61,27 @@ export default class AuthController {
             const { rows } = await Pool.query(query, values);
 
             const [user] = rows;
+            if (!user) {
+                res.status(500).json({
+                    message: 'Error registering user',
+                });
+                return;
+            }
 
             res.status(201).json({
                 message: 'User created',
-                user,
             });
         } catch (e) {
             console.error(e);
-
-            // todo: Filter user already exists error
-            res.status(500).json({
-                message: 'Something went wrong',
-            });
+            if ((e as any).code === '23505') {
+                res.status(400).json({
+                    message: 'User already exists',
+                });
+            } else {
+                res.status(500).json({
+                    message: 'Something went wrong',
+                });
+            }
         }
     }
 }

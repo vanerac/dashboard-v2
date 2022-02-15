@@ -15,7 +15,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -88,7 +89,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -176,7 +178,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -249,7 +252,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -322,7 +326,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -421,7 +426,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -514,7 +520,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {
@@ -609,7 +616,8 @@
           "description": "ID of service to return playlists for",
           "required": true,
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         },
         {

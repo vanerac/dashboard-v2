@@ -26,19 +26,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/loginRequest"
               }
             }
           }
@@ -49,18 +37,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "token"
-                  ],
-                  "properties": {
-                    "token": {
-                      "type": "string"
-                    },
-                    "user": {
-                      "$ref": "#/components/schemas/User"
-                    }
-                  }
+                  "$ref": "#/components/schemas/loginResponse"
                 }
               }
             }
@@ -126,7 +103,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -144,6 +121,81 @@
                       "type": "string"
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/google/login": {
+      "get": {
+        "operationId": "authSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "responses": {
+          "302": {
+            "description": "Redirects to auth consent screen"
+          }
+        }
+      }
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "#/paths/~1auth~1sso~1google~1callback"
+    },
+    "/auth/sso/google/callback": {
+      "get": {
+        "operationId": "authRegisterPost",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
                 }
               }
             }
@@ -230,7 +282,8 @@
             "description": "Service ID",
             "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -247,6 +300,16 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -284,7 +347,8 @@
             "description": "Service ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -338,7 +402,8 @@
             "description": "Service ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -406,7 +471,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -469,7 +535,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -551,7 +618,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -633,7 +701,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -705,7 +774,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -796,7 +866,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -878,7 +949,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -887,7 +959,8 @@
             "description": "Search query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -950,7 +1023,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1022,7 +1096,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1118,7 +1193,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1221,7 +1297,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1315,7 +1392,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1387,7 +1465,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -1459,7 +1538,8 @@
             "description": "ID of service to return playlists for",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -2683,11 +2763,529 @@
           }
         }
       }
+    },
+    "/stats/me/top/artists": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top artists",
+        "description": "Get my top artists",
+        "operationId": "getMyTopArtists",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/me/top/tracks": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top tracks",
+        "description": "Get my top tracks",
+        "operationId": "getMyTopTracks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/me/top/albums": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top albums",
+        "description": "Get my top albums",
+        "operationId": "getMyTopAlbums",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlbumStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/me/top/tags": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get my top tags",
+        "description": "Get my top tags",
+        "operationId": "getMyTopTags",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/charts/top/artists/weekly": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get global top artists",
+        "description": "Get global top artists",
+        "operationId": "getGlobalTopArtists",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/charts/top/tracks/weekly": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get global top tracks",
+        "description": "Get global top tracks",
+        "operationId": "getGlobalTopTracks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/charts/top/albums/weekly": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "summary": "Get global top albums",
+        "description": "Get global top albums",
+        "operationId": "getGlobalTopAlbums",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlbumStats"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "securitySchemes": {
-      "bearerAuth": {
+      "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
@@ -2895,17 +3493,6 @@
           ]
         }
       },
-      "searchQueryResponse": {
-        "type": "object",
-        "properties": {
-          "results": {
-            "$ref": "#/components/schemas/SearchResult"
-          }
-        },
-        "required": [
-          "results"
-        ]
-      },
       "Device": {
         "type": "object",
         "properties": {
@@ -2927,11 +3514,58 @@
           }
         }
       },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          }
+        }
+      },
       "getSingleArtist": {
         "type": "object",
         "properties": {
           "schema": {
             "$ref": "#/components/schemas/Artist"
+          }
+        }
+      },
+      "PlaybackStatus": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          },
+          "position": {
+            "type": "integer"
+          },
+          "device": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "playing",
+              "paused",
+              "stopped"
+            ]
+          }
+        }
+      },
+      "loginResponse": {
+        "type": "object",
+        "required": [
+          "token"
+        ],
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         }
       },
@@ -2979,28 +3613,6 @@
           }
         }
       },
-      "PlaybackStatus": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          },
-          "position": {
-            "type": "integer"
-          },
-          "device": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string",
-            "enum": [
-              "playing",
-              "paused",
-              "stopped"
-            ]
-          }
-        }
-      },
       "ServiceResponse": {
         "type": "object",
         "properties": {
@@ -3045,22 +3657,6 @@
           }
         }
       },
-      "playlistCreateRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "playlistUpdateRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "PlaybackStateResponse": {
         "type": "object",
         "properties": {
@@ -3086,14 +3682,6 @@
           }
         }
       },
-      "AddToQueueRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          }
-        }
-      },
       "AddToQueueResponse": {
         "type": "object",
         "properties": {
@@ -3110,33 +3698,6 @@
             "items": {
               "$ref": "#/components/schemas/Track"
             }
-          }
-        }
-      },
-      "RemoveFromQueueRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          }
-        }
-      },
-      "RemoveFromQueueResponse": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          }
-        }
-      },
-      "MoveInQueueRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
-          },
-          "position": {
-            "type": "number"
           }
         }
       },
@@ -3175,49 +3736,6 @@
         "properties": {
           "device": {
             "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "SetCurrentDeviceRequest": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "SetCurrentDeviceResponse": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "RegisterDeviceRequest": {
-        "type": "object",
-        "properties": {
-          "ws": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "RegisterDeviceResponse": {
-        "type": "object",
-        "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
-          }
-        }
-      },
-      "PlayTrackRequest": {
-        "type": "object",
-        "properties": {
-          "track": {
-            "$ref": "#/components/schemas/Track"
           }
         }
       },
@@ -3300,12 +3818,176 @@
             "type": "string"
           }
         }
+      },
+      "searchQueryResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "$ref": "#/components/schemas/SearchResult"
+          }
+        },
+        "required": [
+          "results"
+        ]
+      },
+      "RemoveFromQueueResponse": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "SetCurrentDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "RegisterDeviceResponse": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "loginRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "playlistCreateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "playlistUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "AddToQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "RemoveFromQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "MoveInQueueRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          },
+          "position": {
+            "type": "number"
+          }
+        }
+      },
+      "SetCurrentDeviceRequest": {
+        "type": "object",
+        "properties": {
+          "device": {
+            "$ref": "#/components/schemas/Device"
+          }
+        }
+      },
+      "RegisterDeviceRequest": {
+        "type": "object",
+        "properties": {
+          "ws": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PlayTrackRequest": {
+        "type": "object",
+        "properties": {
+          "track": {
+            "$ref": "#/components/schemas/Track"
+          }
+        }
+      },
+      "ArtistStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Artist"
+            }
+          }
+        }
+      },
+      "AlbumStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Album"
+            }
+          }
+        }
+      },
+      "TrackStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Track"
+            }
+          }
+        }
+      },
+      "TagStats": {
+        "type": "object",
+        "properties": {
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          }
+        }
       }
     }
   },
   "security": [
     {
-      "bearerAuth": []
+      "BearerAuth": []
     }
   ]
 }

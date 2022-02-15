@@ -17,6 +17,18 @@
     "/auth/register": {
       "$ref": "auth/auth.path.json#/register"
     },
+    "/auth/sso/google/login": {
+      "$ref": "auth/auth.path.json#/consentSSO"
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "auth/auth.path.json#/consentSSO"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "auth/auth.path.json#/authCodeSSO"
+    },
+    "/auth/sso/google/callback": {
+      "$ref": "auth/auth.path.json#/authCodeSSO"
+    },
     "/service": {
       "$ref": "services/service.path.json#/getAllUserServices"
     },
@@ -130,11 +142,32 @@
     },
     "/playback/device/register": {
       "$ref": "playback/playback.path.json#/registerDevice"
+    },
+    "/stats/me/top/artists": {
+      "$ref": "stats/stats.path.json#/myTopArtists"
+    },
+    "/stats/me/top/tracks": {
+      "$ref": "stats/stats.path.json#/myTopTracks"
+    },
+    "/stats/me/top/albums": {
+      "$ref": "stats/stats.path.json#/myTopAlbums"
+    },
+    "/stats/me/top/tags": {
+      "$ref": "stats/stats.path.json#/myTopTags"
+    },
+    "/stats/charts/top/artists/weekly": {
+      "$ref": "stats/stats.path.json#/globalWeeklyTopArtists"
+    },
+    "/stats/charts/top/tracks/weekly": {
+      "$ref": "stats/stats.path.json#/globalWeeklyTopTracks"
+    },
+    "/stats/charts/top/albums/weekly": {
+      "$ref": "stats/stats.path.json#/globalWeeklyTopAlbums"
     }
   },
   "components": {
     "securitySchemes": {
-      "bearerAuth": {
+      "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
@@ -165,14 +198,20 @@
       "SearchResult": {
         "$ref": "./data/search/search.components.json#/schemas/SearchResult"
       },
-      "searchQueryResponse": {
-        "$ref": "./data/search/search.components.json#/schemas/searchQueryResponse"
-      },
       "Device": {
         "$ref": "./openapi.components.json#/schemas/Device"
       },
+      "Tag": {
+        "$ref": "./openapi.components.json#/schemas/Tag"
+      },
       "getSingleArtist": {
         "$ref": "./data/artist/artist.components.json#/schemas/getSingleArtist"
+      },
+      "PlaybackStatus": {
+        "$ref": "./openapi.components.json#/schemas/PlaybackStatus"
+      },
+      "loginResponse": {
+        "$ref": "./auth/auth.components.json#/schemas/loginResponse"
       },
       "getArtistsResponse": {
         "$ref": "./data/artist/artist.components.json#/schemas/getArtistsResponse"
@@ -185,9 +224,6 @@
       },
       "getArtistTopTracksResponse": {
         "$ref": "./data/artist/artist.components.json#/schemas/getArtistTopTracksResponse"
-      },
-      "PlaybackStatus": {
-        "$ref": "./openapi.components.json#/schemas/PlaybackStatus"
       },
       "ServiceResponse": {
         "$ref": "./services/service.components.json#/schemas/ServiceResponse"
@@ -204,32 +240,14 @@
       "playlistTracksResponse": {
         "$ref": "./data/playlists/playlist.components.json#/schemas/playlistTracksResponse"
       },
-      "playlistCreateRequest": {
-        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"
-      },
-      "playlistUpdateRequest": {
-        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistUpdateRequest"
-      },
       "PlaybackStateResponse": {
         "$ref": "./playback/playback.components.json#/schemas/PlaybackStateResponse"
-      },
-      "AddToQueueRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/AddToQueueRequest"
       },
       "AddToQueueResponse": {
         "$ref": "./playback/playback.components.json#/schemas/AddToQueueResponse"
       },
       "GetQueueResponse": {
         "$ref": "./playback/playback.components.json#/schemas/GetQueueResponse"
-      },
-      "RemoveFromQueueRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/RemoveFromQueueRequest"
-      },
-      "RemoveFromQueueResponse": {
-        "$ref": "./playback/playback.components.json#/schemas/RemoveFromQueueResponse"
-      },
-      "MoveInQueueRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/MoveInQueueRequest"
       },
       "MoveInQueueResponse": {
         "$ref": "./playback/playback.components.json#/schemas/MoveInQueueResponse"
@@ -242,21 +260,6 @@
       },
       "GetCurrentDeviceResponse": {
         "$ref": "./playback/playback.components.json#/schemas/GetCurrentDeviceResponse"
-      },
-      "SetCurrentDeviceRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/SetCurrentDeviceRequest"
-      },
-      "SetCurrentDeviceResponse": {
-        "$ref": "./playback/playback.components.json#/schemas/SetCurrentDeviceResponse"
-      },
-      "RegisterDeviceRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/RegisterDeviceRequest"
-      },
-      "RegisterDeviceResponse": {
-        "$ref": "./playback/playback.components.json#/schemas/RegisterDeviceResponse"
-      },
-      "PlayTrackRequest": {
-        "$ref": "./playback/playback.components.json#/schemas/PlayTrackRequest"
       },
       "PlayTrackResponse": {
         "$ref": "./playback/playback.components.json#/schemas/PlayTrackResponse"
@@ -287,12 +290,63 @@
       },
       "SetQualityResponse": {
         "$ref": "./playback/playback.components.json#/schemas/SetQualityResponse"
+      },
+      "searchQueryResponse": {
+        "$ref": "./data/search/search.components.json#/schemas/searchQueryResponse"
+      },
+      "RemoveFromQueueResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/RemoveFromQueueResponse"
+      },
+      "SetCurrentDeviceResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/SetCurrentDeviceResponse"
+      },
+      "RegisterDeviceResponse": {
+        "$ref": "./playback/playback.components.json#/schemas/RegisterDeviceResponse"
+      },
+      "loginRequest": {
+        "$ref": "./auth/auth.components.json#/schemas/loginRequest"
+      },
+      "playlistCreateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"
+      },
+      "playlistUpdateRequest": {
+        "$ref": "./data/playlists/playlist.components.json#/schemas/playlistUpdateRequest"
+      },
+      "AddToQueueRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/AddToQueueRequest"
+      },
+      "RemoveFromQueueRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/RemoveFromQueueRequest"
+      },
+      "MoveInQueueRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/MoveInQueueRequest"
+      },
+      "SetCurrentDeviceRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/SetCurrentDeviceRequest"
+      },
+      "RegisterDeviceRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/RegisterDeviceRequest"
+      },
+      "PlayTrackRequest": {
+        "$ref": "./playback/playback.components.json#/schemas/PlayTrackRequest"
+      },
+      "ArtistStats": {
+        "$ref": "./stats/stats.components.json#/schemas/ArtistStats"
+      },
+      "AlbumStats": {
+        "$ref": "./stats/stats.components.json#/schemas/AlbumStats"
+      },
+      "TrackStats": {
+        "$ref": "./stats/stats.components.json#/schemas/TrackStats"
+      },
+      "TagStats": {
+        "$ref": "./stats/stats.components.json#/schemas/TagStats"
       }
     }
   },
   "security": [
     {
-      "bearerAuth": []
+      "BearerAuth": []
     }
   ]
 }

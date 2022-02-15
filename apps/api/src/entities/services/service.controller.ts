@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import Pool from '../../tools/database.tools';
 
 export default class ServiceController {
-    static async getServicesById(req: Request, res: Response) {
+    static async getServicesById(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
             if (!req.session.user) {
@@ -11,7 +11,7 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, type, enabled FROM services WHERE id = $1 AND userid = $2`;
+            const query = `SELECT id, provider, enabled FROM services WHERE id = $1 AND userid = $2`;
             const { rows: services } = await Pool.query(query, [id, userId]);
             if (!services || services.length === 0) {
                 return res.status(404).json({
@@ -20,13 +20,11 @@ export default class ServiceController {
             }
             return res.status(200).json(services);
         } catch (error) {
-            return res.status(500).json({
-                message: 'Internal server error',
-            });
+            next(error);
         }
     }
 
-    static async getAllServices(req: Request, res: Response) {
+    static async getAllServices(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.user) {
                 return res.status(401).json({
@@ -34,22 +32,22 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, type, description, enabled FROM services WHERE userid = $1`;
+            const query = `SELECT id, provider, enabled, status FROM services WHERE userid = $1`;
             const { rows: services } = await Pool.query(query, [userId]);
             if (!services) {
                 return res.status(404).json({
                     message: 'Services not found',
                 });
             }
-            return res.status(200).json(services);
+            console.log(services);
+            return res.status(200).json({ services });
         } catch (error) {
-            return res.status(500).json({
-                message: 'Internal server error',
-            });
+            console.log(error);
+            next(error);
         }
     }
 
-    static async updateService(req: Request, res: Response) {
+    static async updateService(req: Request, res: Response, next: NextFunction) {
         // if user want to disable a service
         try {
             const { id } = req.params;
@@ -72,13 +70,11 @@ export default class ServiceController {
                 data: services,
             });
         } catch (error) {
-            return res.status(500).json({
-                message: 'Internal server error',
-            });
+            next(error);
         }
     }
 
-    static async deleteService(req: Request, res: Response) {
+    static async deleteService(req: Request, res: Response, next: NextFunction) {
         // if user want to delete a service
         try {
             const { id } = req.params;
@@ -99,9 +95,7 @@ export default class ServiceController {
                 message: 'Service deleted',
             });
         } catch (error) {
-            return res.status(500).json({
-                message: 'Internal server error',
-            });
+            next(error);
         }
     }
 }

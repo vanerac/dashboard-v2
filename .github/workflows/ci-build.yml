@@ -1,12 +1,9 @@
 name: Builder
-on: [pull_request_review, workflow_dispatch]
+on: [pull_request, workflow_dispatch]
 
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        directory: [ "app", "api", "front" ]
     steps:
       - uses: actions/checkout@v2
       - name: Cache dependencies
@@ -14,7 +11,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/${{matrix.directory}}/node_modules
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - uses: actions/setup-node@v2.4.1
@@ -22,16 +21,15 @@ jobs:
           node-version: '16'
       - run: npm i
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: ./apps/${{matrix.directory}}
         name: Install dependencies
-  build-app:
-    name: Build
-    needs: install-dependencies
-    runs-on: ubuntu-latest
+  lint:
     strategy:
       matrix:
-        platforms: [ "ios", "android" ]
+        directory: [ "app", "api", "front" ]
       fail-fast: false
+    name: Lint
+    needs: install-dependencies
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.4.1
@@ -42,7 +40,77 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
+            ./apps/api/node_modules
             ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run lint
+        working-directory: ./apps/${{matrix.directory}}
+        name: Lint
+  prettier:
+    strategy:
+      matrix:
+        directory: [ "app", "api", "front" ]
+    name: Prettier
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run prettier
+        working-directory: ./apps/${{matrix.directory}}
+        name: Prettier
+  openapi:
+    needs: install-dependencies
+    name: Validate OpenAPI Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run validate-swagger
+        working-directory: ./apps/api
+        name: Validate OpenAPI Schema
+  build-app:
+    name: Build App
+    needs: [lint, prettier, openapi]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [ "ios", "android" ]
+      fail-fast: false
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - name: Setup Expo
@@ -62,7 +130,7 @@ jobs:
           path: ./apps/app/dist
   build-front:
     name: Build Front
-    needs: install-dependencies
+    needs: [lint, prettier, openapi]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -74,6 +142,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
             ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
@@ -88,7 +158,7 @@ jobs:
           path: ./apps/front/dist
   build-api:
     name: Build API
-    needs: install-dependencies
+    needs: [lint, prettier, openapi]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -101,6 +171,8 @@ jobs:
         with:
           path: |
             ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run build

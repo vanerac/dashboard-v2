@@ -2,7 +2,7 @@
 import NextLink from 'next/link';
 // import { useRouter } from 'next/router';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import { AuthenticationService } from '../../../packages/services';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -76,8 +76,7 @@ const Register = () => {
                 .then(() => {
                     console.log('submitting');
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(($error) => {
                     handleOpen();
                 });
         }

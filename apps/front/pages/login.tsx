@@ -1,7 +1,3 @@
-import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
-import { useDarkMode } from 'next-dark-mode';
-import Router from 'next/router';
-// import Head from 'next/head';
 import NextLink from 'next/link';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -10,34 +6,20 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { mdiSpotify } from '@mdi/js';
 import { mdiRadioFm } from '@mdi/js';
 import React, { useState } from 'react';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import { AuthenticationService } from '../../../packages/services';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { OpenAPI } from '../../../packages/services';
-import Cookies from 'universal-cookie';
 
-const Home = () => {
-    const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
+const Login = () => {
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [errorEmptyFieldEmail, setErrorEmptyFieldEmail] = useState('');
     const [errorEmptyFieldPassword, setErrorEmptyFieldPassword] = useState('');
     const errorString = 'This input field cannot be empty.';
-    const cookies = new Cookies();
-
-    const handleChangeMode = () => {
-        if (darkModeActive) {
-            switchToLightMode();
-        } else {
-            switchToDarkMode();
-        }
-    };
-
-    const nextMode = darkModeActive ? 'Light' : 'Dark';
-    const Icon = darkModeActive ? LightIcon : DarkIcon;
 
     const style = {
         position: 'absolute',
@@ -59,13 +41,6 @@ const Home = () => {
         setErrorEmptyFieldPassword('');
         setUserPassword(event.target.value);
     };
-    // const redirectLogin = ($e: any) => {
-    //     Router.push('/login');
-    // };
-
-    // const redirectRegister = ($e: any) => {
-    //     Router.push('/register');
-    // };
 
     const updateEmail = (event: any) => {
         setErrorEmptyFieldEmail('');
@@ -102,11 +77,8 @@ const Home = () => {
                 .then((data) => {
                     OpenAPI.TOKEN = data.token;
                     console.log(OpenAPI.TOKEN);
-                    cookies.set('API_TOKEN', data.token, { path: '/' });
-                    Router.push('/dashboard');
                 })
-                .catch((error) => {
-                    console.log(error);
+                .catch(($error) => {
                     handleOpen();
                 });
         }
@@ -114,10 +86,6 @@ const Home = () => {
 
     return (
         <>
-            <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
-                Use {nextMode} mode
-            </Button>
-            <br />
             <Box
                 component="main"
                 sx={{
@@ -262,4 +230,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Login;
