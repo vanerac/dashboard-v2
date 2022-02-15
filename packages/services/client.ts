@@ -12,6 +12,8 @@ import { PlaybackService } from './services/PlaybackService';
 import { PlaylistService } from './services/PlaylistService';
 import { SearchService } from './services/SearchService';
 import { ServicesService } from './services/ServicesService';
+import { SsoService } from './services/SsoService';
+import { StatsService } from './services/StatsService';
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
@@ -24,6 +26,8 @@ export class ApiClient {
     public readonly playlist: PlaylistService;
     public readonly search: SearchService;
     public readonly services: ServicesService;
+    public readonly sso: SsoService;
+    public readonly stats: StatsService;
 
     public readonly request: BaseHttpRequest;
 
@@ -47,5 +51,7 @@ export class ApiClient {
         this.playlist = new PlaylistService(this.request);
         this.search = new SearchService(this.request);
         this.services = new ServicesService(this.request);
+        this.sso = new SsoService(this.request);
+        this.stats = new StatsService(this.request);
     }
 }

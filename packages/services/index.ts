@@ -72,5 +72,5 @@ export { PlaybackService } from './services/PlaybackService';
 export { PlaylistService } from './services/PlaylistService';
 export { SearchService } from './services/SearchService';
 export { ServicesService } from './services/ServicesService';
-export { StatsService } from './services/StatsService';
 export { SsoService } from './services/SsoService';
+export { StatsService } from './services/StatsService';

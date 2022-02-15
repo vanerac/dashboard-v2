@@ -109,7 +109,7 @@
   },
   "consentSSO": {
     "get": {
-      "operationId": "authSSO",
+      "operationId": "consentSSO",
       "tags": [
         "SSO"
       ],
@@ -124,7 +124,7 @@
   },
   "authCodeSSO": {
     "get": {
-      "operationId": "authRegisterPost",
+      "operationId": "authCodeSSO",
       "tags": [
         "SSO"
       ],

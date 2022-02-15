@@ -5,5 +5,5 @@
 import type { Tag } from './Tag';
 
 export type TagStats = {
-    services?: Array<Tag>;
+    tags?: Array<Tag>;
 };

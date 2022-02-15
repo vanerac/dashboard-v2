@@ -7,10 +7,11 @@ import type { TagStats } from '../models/TagStats';
 import type { TrackStats } from '../models/TrackStats';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class StatsService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get my top artists
@@ -20,11 +21,11 @@ export class StatsService {
      * @returns ArtistStats Success
      * @throws ApiError
      */
-    public static getMyTopArtists(
+    public getMyTopArtists(
         limit?: number,
         offset?: number,
     ): CancelablePromise<ArtistStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/me/top/artists',
             query: {
@@ -47,11 +48,11 @@ export class StatsService {
      * @returns TrackStats Success
      * @throws ApiError
      */
-    public static getMyTopTracks(
+    public getMyTopTracks(
         limit?: number,
         offset?: number,
     ): CancelablePromise<TrackStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/me/top/tracks',
             query: {
@@ -74,11 +75,11 @@ export class StatsService {
      * @returns AlbumStats Success
      * @throws ApiError
      */
-    public static getMyTopAlbums(
+    public getMyTopAlbums(
         limit?: number,
         offset?: number,
     ): CancelablePromise<AlbumStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/me/top/albums',
             query: {
@@ -101,11 +102,11 @@ export class StatsService {
      * @returns TagStats Success
      * @throws ApiError
      */
-    public static getMyTopTags(
+    public getMyTopTags(
         limit?: number,
         offset?: number,
     ): CancelablePromise<TagStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/me/top/tags',
             query: {
@@ -128,11 +129,11 @@ export class StatsService {
      * @returns ArtistStats Success
      * @throws ApiError
      */
-    public static getGlobalTopArtists(
+    public getGlobalTopArtists(
         limit?: number,
         offset?: number,
     ): CancelablePromise<ArtistStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/charts/top/artists/weekly',
             query: {
@@ -155,11 +156,11 @@ export class StatsService {
      * @returns TrackStats Success
      * @throws ApiError
      */
-    public static getGlobalTopTracks(
+    public getGlobalTopTracks(
         limit?: number,
         offset?: number,
     ): CancelablePromise<TrackStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/charts/top/tracks/weekly',
             query: {
@@ -182,11 +183,11 @@ export class StatsService {
      * @returns AlbumStats Success
      * @throws ApiError
      */
-    public static getGlobalTopAlbums(
+    public getGlobalTopAlbums(
         limit?: number,
         offset?: number,
     ): CancelablePromise<AlbumStats> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/stats/charts/top/albums/weekly',
             query: {
