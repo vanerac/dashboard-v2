@@ -17,6 +17,18 @@
     "/auth/register": {
       "$ref": "auth/auth.path.json#/register"
     },
+    "/auth/sso/google/login": {
+      "$ref": "auth/auth.path.json#/consentSSO"
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "auth/auth.path.json#/consentSSO"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "auth/auth.path.json#/authCodeSSO"
+    },
+    "/auth/sso/google/callback": {
+      "$ref": "auth/auth.path.json#/authCodeSSO"
+    },
     "/service": {
       "$ref": "services/service.path.json#/getAllUserServices"
     },
@@ -130,6 +142,27 @@
     },
     "/playback/device/register": {
       "$ref": "playback/playback.path.json#/registerDevice"
+    },
+    "/stats/me/top/artists": {
+      "$ref": "stats/stats.path.json#/myTopArtists"
+    },
+    "/stats/me/top/tracks": {
+      "$ref": "stats/stats.path.json#/myTopTracks"
+    },
+    "/stats/me/top/albums": {
+      "$ref": "stats/stats.path.json#/myTopAlbums"
+    },
+    "/stats/me/top/tags": {
+      "$ref": "stats/stats.path.json#/myTopTags"
+    },
+    "/stats/charts/top/artists/weekly": {
+      "$ref": "stats/stats.path.json#/globalWeeklyTopArtists"
+    },
+    "/stats/charts/top/tracks/weekly": {
+      "$ref": "stats/stats.path.json#/globalWeeklyTopTracks"
+    },
+    "/stats/charts/top/albums/weekly": {
+      "$ref": "stats/stats.path.json#/globalWeeklyTopAlbums"
     }
   },
   "components": {
@@ -167,6 +200,9 @@
       },
       "Device": {
         "$ref": "./openapi.components.json#/schemas/Device"
+      },
+      "Tag": {
+        "$ref": "./openapi.components.json#/schemas/Tag"
       },
       "getSingleArtist": {
         "$ref": "./data/artist/artist.components.json#/schemas/getSingleArtist"
@@ -293,6 +329,18 @@
       },
       "PlayTrackRequest": {
         "$ref": "./playback/playback.components.json#/schemas/PlayTrackRequest"
+      },
+      "ArtistStats": {
+        "$ref": "./stats/stats.components.json#/schemas/ArtistStats"
+      },
+      "AlbumStats": {
+        "$ref": "./stats/stats.components.json#/schemas/AlbumStats"
+      },
+      "TrackStats": {
+        "$ref": "./stats/stats.components.json#/schemas/TrackStats"
+      },
+      "TagStats": {
+        "$ref": "./stats/stats.components.json#/schemas/TagStats"
       }
     }
   },

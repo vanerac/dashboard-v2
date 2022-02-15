@@ -1,0 +1,48 @@
+{
+  "schemas": {
+    "ArtistStats": {
+      "type": "object",
+      "properties": {
+        "artists": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Artist"
+          }
+        }
+      }
+    },
+    "TrackStats": {
+      "type": "object",
+      "properties": {
+        "tracks": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Track"
+          }
+        }
+      }
+    },
+    "AlbumStats": {
+      "type": "object",
+      "properties": {
+        "albums": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Album"
+          }
+        }
+      }
+    },
+    "TagStats": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "../openapi.components.json#/schemas/Tag"
+          }
+        }
+      }
+    }
+  }
+}
