@@ -148,6 +148,81 @@
         }
       }
     },
+    "/auth/sso/google/login": {
+      "get": {
+        "operationId": "authSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "responses": {
+          "302": {
+            "description": "Redirects to auth consent screen"
+          }
+        }
+      }
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "#/paths/~1auth~1sso~1google~1callback"
+    },
+    "/auth/sso/google/callback": {
+      "get": {
+        "operationId": "authRegisterPost",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/service": {
       "get": {
         "operationId": "getAllUserServices",

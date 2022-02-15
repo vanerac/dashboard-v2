@@ -71,3 +71,4 @@ export { PlaylistService } from './services/PlaylistService';
 export { SearchService } from './services/SearchService';
 export { ServicesService } from './services/ServicesService';
 export { StatsService } from './services/StatsService';
+export { SsoService } from './services/SsoService';
