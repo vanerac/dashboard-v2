@@ -1,10 +1,15 @@
 import {ApiClient, OpenAPIConfig} from "../services";
 
-export let Client = new ApiClient();
+const defaultConfig: Partial<OpenAPIConfig> = {
+    WITH_CREDENTIALS: true,
+    CREDENTIALS: "include"
+}
+export let Client = new ApiClient(defaultConfig);
 
 
 export const updateClientConfig = (config?: Partial<OpenAPIConfig>) => {
-    Client = new ApiClient(config);
+    const newConfig = {...config, ...defaultConfig};
+    Client = new ApiClient(newConfig);
 }
 
 Object.freeze(Client);
