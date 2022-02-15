@@ -7,6 +7,8 @@ import { RootStackParamList } from '../../types';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+// import TopBar from '../../../front/components/topBar';
+
 type Props = NativeStackScreenProps<RootStackParamList, 'StartScreen'>;
 
 export default function StartScreen({ navigation }: Props) {
