@@ -1,4 +1,6 @@
+// import Head from 'next/head';
 import NextLink from 'next/link';
+// import { useRouter } from 'next/router';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
 import { AuthenticationService } from '../../../packages/services';
 import React, { useState } from 'react';
@@ -153,7 +155,7 @@ const Register = () => {
                         </Box>
                         <Typography color="textSecondary" variant="body2">
                             Have an account?{' '}
-                            <NextLink href="/login" passHref>
+                            <NextLink href="/" passHref>
                                 <Link variant="subtitle2" underline="hover">
                                     Sign In
                                 </Link>
