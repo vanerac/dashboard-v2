@@ -73,11 +73,15 @@ export default class AuthController {
             });
         } catch (e) {
             console.error(e);
-
-            // todo: Filter user already exists error
-            res.status(500).json({
-                message: 'Something went wrong',
-            });
+            if ((e as any).code === '23505') {
+                res.status(400).json({
+                    message: 'User already exists',
+                });
+            } else {
+                res.status(500).json({
+                    message: 'Something went wrong',
+                });
+            }
         }
     }
 }
