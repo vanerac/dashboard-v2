@@ -72,7 +72,7 @@ const Login = () => {
 
         if (errorBool === false) {
             Client.authentication
-                .authLoginPost({
+                .login({
                     email: userEmail,
                     password: userPassword,
                 })

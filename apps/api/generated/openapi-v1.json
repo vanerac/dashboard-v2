@@ -13,7 +13,7 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "operationId": "authLoginPost",
+        "operationId": "login",
         "tags": [
           "authentication"
         ],
@@ -67,7 +67,7 @@
     },
     "/auth/register": {
       "post": {
-        "operationId": "authRegisterPost",
+        "operationId": "register",
         "tags": [
           "authentication"
         ],

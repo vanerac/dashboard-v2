@@ -1,7 +1,7 @@
 {
   "login": {
     "post": {
-      "operationId": "authLoginPost",
+      "operationId": "login",
       "tags": [
         "authentication"
       ],
@@ -55,7 +55,7 @@
   },
   "register": {
     "post": {
-      "operationId": "authRegisterPost",
+      "operationId": "register",
       "tags": [
         "authentication"
       ],

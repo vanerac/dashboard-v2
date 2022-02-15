@@ -67,7 +67,7 @@ const Register = () => {
 
         if (errorBool === false) {
             Client.authentication
-                .authRegisterPost({
+                .register({
                     email: userEmail,
                     password: userPassword,
                     displayName: userDisplayName,

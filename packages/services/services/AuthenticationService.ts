@@ -18,7 +18,7 @@ export class AuthenticationService {
      * @returns loginResponse Success
      * @throws ApiError
      */
-    public authLoginPost(
+    public login(
         requestBody: loginRequest,
     ): CancelablePromise<loginResponse> {
         return this.httpRequest.request({
@@ -40,7 +40,7 @@ export class AuthenticationService {
      * @returns any Success
      * @throws ApiError
      */
-    public authRegisterPost(
+    public register(
         requestBody: {
             email: string;
             password: string;
