@@ -25,7 +25,7 @@ export default class GoogleController extends SSOController {
             prompt: 'consent',
         };
         const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(params)}`;
-        res.redirect(url);
+        res.status(302).redirect(url);
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
@@ -48,7 +48,7 @@ export default class GoogleController extends SSOController {
             }
             delete userData.password;
             const token = generateToken(userData);
-            res.status(200).json({ data: userData, token });
+            res.status(200).json({ token });
         } catch (e) {
             console.log(e);
             res.status(500).send(e);
