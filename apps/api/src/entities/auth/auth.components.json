@@ -52,13 +52,9 @@
     "registerResponse": {
       "type": "object",
       "required": [
-        "user",
         "message"
       ],
       "properties": {
-        "user": {
-          "$ref": "../openapi.components.json#/schemas/User"
-        },
         "message": {
           "type": "string"
         }

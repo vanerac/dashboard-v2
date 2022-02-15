@@ -110,13 +110,9 @@
                 "schema": {
                   "type": "object",
                   "required": [
-                    "user",
                     "message"
                   ],
                   "properties": {
-                    "user": {
-                      "$ref": "#/components/schemas/User"
-                    },
                     "message": {
                       "type": "string"
                     }

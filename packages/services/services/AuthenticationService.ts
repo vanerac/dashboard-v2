@@ -3,7 +3,6 @@
 /* eslint-disable */
 import type { loginRequest } from '../models/loginRequest';
 import type { loginResponse } from '../models/loginResponse';
-import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -48,7 +47,6 @@ export class AuthenticationService {
             displayName: string;
         },
     ): CancelablePromise<{
-        user: User;
         message: string;
     }> {
         return this.httpRequest.request({
