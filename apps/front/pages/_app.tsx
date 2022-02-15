@@ -1,6 +1,7 @@
 import { AppProps as propApps } from 'next/app';
 // import withDarkMode from 'next-dark-mode';
 import React, { useEffect } from 'react';
+import withDarkMode from 'next-dark-mode';
 import Theme from '../components/Themes';
 import '../../../packages/global';
 import { updateClientConfig } from '../../../packages/global'; // Load Global dependencies
@@ -29,4 +30,4 @@ const MyApp = ({ Component, pageProps }: propApps) => {
 
 // const app = withDarkMode(MyApp);
 
-export default MyApp;
+export default withDarkMode(MyApp);
