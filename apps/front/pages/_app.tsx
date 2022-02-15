@@ -1,5 +1,5 @@
 import { AppProps as propApps } from 'next/app';
-// import withDarkMode from 'next-dark-mode';
+import withDarkMode from 'next-dark-mode';
 import React from 'react';
 import Theme from '../components/Themes';
 
@@ -15,4 +15,4 @@ const MyApp = ({ Component, pageProps }: propApps) => {
 
 // const app = withDarkMode(MyApp);
 
-export default MyApp;
+export default withDarkMode(MyApp);
