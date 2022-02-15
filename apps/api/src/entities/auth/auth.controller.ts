@@ -24,7 +24,7 @@ export default class AuthController {
                         .cookie('API_TOKEN', token, { expires: new Date(Date.now() + 3600 * 1000) })
                         .json({
                             message: 'Login successful',
-                            token
+                            token,
                         });
                 } else {
                     res.status(401).json({
