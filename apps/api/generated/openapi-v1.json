@@ -3559,9 +3559,6 @@
         "properties": {
           "token": {
             "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
           }
         }
       },

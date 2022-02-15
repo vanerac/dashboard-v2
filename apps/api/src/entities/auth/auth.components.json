@@ -23,9 +23,6 @@
       "properties": {
         "token": {
           "type": "string"
-        },
-        "user": {
-          "$ref": "../openapi.components.json#/schemas/User"
         }
       }
     },
