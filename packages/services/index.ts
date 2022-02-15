@@ -65,3 +65,4 @@ export { PlaybackService } from './services/PlaybackService';
 export { PlaylistService } from './services/PlaylistService';
 export { SearchService } from './services/SearchService';
 export { ServicesService } from './services/ServicesService';
+export { SsoService } from './services/SsoService';
