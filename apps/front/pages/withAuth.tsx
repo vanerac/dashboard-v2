@@ -8,8 +8,7 @@ function withAuth(WrappedComponent: any) {
             // Todo: Note: This does not handle the case where the user is logged in but the token is expired.
             if (!localStorage.getItem('token')) {
                 Router.push('/login');
-            }
-            return <WrappedComponent {...props} />;
+            } else return <WrappedComponent {...props} />;
         }
         return null;
     };

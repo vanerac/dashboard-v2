@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
 import { useDarkMode } from 'next-dark-mode';
 import Router from 'next/router';
+import withAuth from './withAuth';
 
 const Home = () => {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
@@ -42,4 +43,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default withAuth(Home);
