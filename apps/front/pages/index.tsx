@@ -7,8 +7,7 @@ import { Button, Container, Grid, Link, TextField, Typography } from '@mui/mater
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiSpotify } from '@mdi/js';
-import { mdiRadioFm } from '@mdi/js';
+import { mdiRadioFm, mdiSpotify } from '@mdi/js';
 import React, { useState } from 'react';
 import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
 import Backdrop from '@mui/material/Backdrop';
@@ -17,8 +16,10 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { OpenAPI } from '../../../packages/services';
 import Cookies from 'universal-cookie';
+import { Test } from '../../../packages/ui';
 
 const Home = () => {
+    return Test;
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
