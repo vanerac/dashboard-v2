@@ -62,7 +62,7 @@ const handleInput = (value: any) => {
     console.log(value);
 };
 
-export default function SearchAppBar() {
+export default function SearchAppBar({ addWidget }) {
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -94,12 +94,16 @@ export default function SearchAppBar() {
             </List>
             <Divider />
             <List>
-                {['Test', 'Test', 'Test'].map((text, index) => (
+                {['Test1', 'Test2', 'Test3'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
+                <ListItem onClick={addWidget} button key={'ok'}>
+                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                    <ListItemText primary={'ok'} />
+                </ListItem>
             </List>
         </Box>
     );
