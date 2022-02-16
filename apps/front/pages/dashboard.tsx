@@ -3,7 +3,6 @@ import TopBar from './../components/topBar';
 // import Widgets from './../components/Widget';
 import ShowcaseLayout from '../components/WidgetTesting';
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 
 const Dasboard = () => {
     const [numberWidgets, setNumberWidgets] = useState(0);
@@ -21,7 +20,9 @@ const Dasboard = () => {
         <>
             <TopBar addWidget={addWidget} />
             {/* @ts-ignore */}
-            <ShowcaseLayout numberWidgets={numberWidgets} />
+            {/* <ShowcaseLayout numberWidgets={numberWidgets} /> */}
+            <ShowcaseLayout/>
+
         </>)
     );
 };
