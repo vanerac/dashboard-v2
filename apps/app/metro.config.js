@@ -1,7 +1,11 @@
 const path = require('path');
 
 module.exports = {
-    watchFolders: [path.resolve(__dirname, '../../')],
+    watchFolders: [
+        path.resolve(__dirname, '../../'),
+        // path.resolve(__dirname, '../../node_modules'),
+        // path.resolve(__dirname, 'node_modules'),
+    ],
     transformer: {
         getTransformOptions: async () => ({
             transform: {
@@ -10,4 +14,14 @@ module.exports = {
             },
         }),
     },
+    // resolver: {
+    //     extraNodeModules: new Proxy(
+    //         {},
+    //         {
+    //             get: (target, name) => {
+    //                 return path.resolve(__dirname, '..', '..', 'node_modules', name);
+    //             },
+    //         },
+    //     ),
+    // },
 };
