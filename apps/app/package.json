@@ -1,5 +1,5 @@
 {
-  "name": "area-app",
+  "name": "@area/app",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
