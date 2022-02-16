@@ -19,7 +19,6 @@ import Cookies from 'universal-cookie';
 import { Test } from '../../../packages/ui';
 
 const Home = () => {
-    return Test;
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
@@ -113,6 +112,7 @@ const Home = () => {
         }
     };
 
+    return <Test />;
     return (
         <>
             <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
