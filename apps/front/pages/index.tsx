@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Cookies from 'universal-cookie';
-import { Test } from '@area/ui';
+// import { Test } from '@area/ui';
 
 const Home = () => {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
@@ -111,7 +111,7 @@ const Home = () => {
         }
     };
 
-    return <Test />;
+    // return <Test />;
     return (
         <>
             <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
