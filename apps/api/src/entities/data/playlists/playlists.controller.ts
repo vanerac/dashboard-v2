@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { Providers } from '../../../tools/types';
-import { SpotifyPlaylistService, PlaylistService } from './playlist.service';
+import { DeezerPlaylistService, PlaylistService, SpotifyPlaylistService } from './playlist.service';
 
 const servicesList: {
     [provider: string]: PlaylistService;
 } = {
     [Providers.SPOTIFY]: SpotifyPlaylistService,
+    [Providers.DEEZER]: DeezerPlaylistService,
 };
 
 export default class PlaylistsController {

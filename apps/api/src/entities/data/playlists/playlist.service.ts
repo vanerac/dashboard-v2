@@ -107,3 +107,61 @@ export class SpotifyPlaylistService extends PlaylistService {
         return response.data.items;
     }
 }
+
+export class DeezerPlaylistService extends PlaylistService {
+    // Make queries to Deezer API
+    static override async getPlaylist(token: string, id: string): Promise<Playlist | unknown> {
+        const response = await axios.get(`https://api.deezer.com/playlist/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    }
+    static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
+        const response = await axios.get(`https://api.deezer.com/user/me/playlists`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.data;
+    }
+    static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
+        const response = await axios.post(
+            `https://api.deezer.com/user/me/playlists`,
+            {
+                title: playlist.name,
+                description: playlist.description,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    }
+    static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
+        const response = await axios.put(
+            `https://api.deezer.com/playlist/${playlist.id}`,
+            {
+                title: playlist.name,
+                description: playlist.description,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    }
+    static override async deletePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.delete(`https://api.deezer.com/playlist/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+}
