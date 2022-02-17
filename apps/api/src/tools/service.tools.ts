@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Pool from './database.tools';
+import { Service } from '../../../../packages/services/';
 
 export function parseServiceId(req: Request, res: Response, next: NextFunction): void  {
     (async () => {
@@ -23,4 +24,26 @@ export function parseServiceId(req: Request, res: Response, next: NextFunction):
         req.session.local.service = service;
         next();
     })();
+}
+
+export function hasService(provider: string) {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.session.user) {
+            return res.status(401).json({
+                message: 'Unauthorized',
+            });
+        }
+        const { id: userId } = req.session.user;
+
+        const query = `SELECT * FROM services WHERE provider = $1 AND userid = $2`;
+        const data = Pool.query(query, [provider, userId]);
+        Promise.resolve(data).then(({ rows: [service] }) => {
+            if (!service) {
+                return res.status(404).send('Service not found');
+            }
+            service as Service;
+            req.session.local.service = service;
+            next();
+        });
+    };
 }

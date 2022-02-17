@@ -48,6 +48,18 @@ export enum Providers {
     $LAST_FM = 'lastfm',
 }
 
+export interface Service {
+    id: string;
+    provider: Providers;
+    enabled: boolean;
+    userId: string;
+    accessToken: string;
+    refreshToken: string;
+    status: string;
+    createdAt: Date;
+    editedAt: Date;
+}
+
 // export abstract class SSOAudioManager {
 //     static play
 // }

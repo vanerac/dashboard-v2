@@ -90,7 +90,7 @@ jobs:
         working-directory: ./apps/api
         name: Validate OpenAPI Schema
   build-app:
-    name: Build
+    name: Build App
     needs: [lint, prettier, openapi]
     runs-on: ubuntu-latest
     strategy:

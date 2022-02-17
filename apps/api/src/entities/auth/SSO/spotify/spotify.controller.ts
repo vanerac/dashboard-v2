@@ -22,7 +22,7 @@ export default class SpotifyController extends SSOController {
             // show_dialog: true, // was boolean
         };
         const url = `https://accounts.spotify.com/authorize?${new URLSearchParams(params)}`;
-        res.redirect(url);
+        res.status(302).redirect(url);
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
@@ -44,7 +44,7 @@ export default class SpotifyController extends SSOController {
             }
             delete userData.password;
             const token = generateToken(userData);
-            res.status(200).json({ data: userData, token });
+            res.status(200).json({ token });
         } catch (e) {
             console.log(e);
             res.status(500).send(e);
