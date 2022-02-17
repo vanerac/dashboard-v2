@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import Pool from './database.tools';
 import { Service } from '../../../../packages/services/';
 
-export function parseServiceId(req: Request, res: Response, next: NextFunction): void  {
+export function parseServiceId(req: Request, res: Response, next: NextFunction): void {
     (async () => {
         const { serviceId } = req.params;
         if (!req.session.user) {
