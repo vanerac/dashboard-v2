@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 function withAuth(WrappedComponent: any) {
-
     return (props: any) => {
         if (typeof window !== 'undefined') {
             const Router = useRouter();
