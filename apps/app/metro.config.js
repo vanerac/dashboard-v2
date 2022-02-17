@@ -1,11 +1,9 @@
 const path = require('path');
 
+console.log(path.resolve(__dirname, '../../'));
+
 module.exports = {
-    watchFolders: [
-        path.resolve(__dirname, '../../'),
-        // path.resolve(__dirname, '../../node_modules'),
-        // path.resolve(__dirname, 'node_modules'),
-    ],
+    watchFolders: [path.resolve(__dirname, '../../packages/ui')],
     transformer: {
         getTransformOptions: async () => ({
             transform: {
@@ -14,14 +12,15 @@ module.exports = {
             },
         }),
     },
-    // resolver: {
-    //     extraNodeModules: new Proxy(
-    //         {},
-    //         {
-    //             get: (target, name) => {
-    //                 return path.resolve(__dirname, '..', '..', 'node_modules', name);
-    //             },
-    //         },
-    //     ),
-    // },
+    resolver: {
+        extraNodeModules: new Proxy(
+            {},
+            {
+                get: (target, name) => {
+                    return path.join(process.cwd(), 'node_modules', name);
+                },
+            },
+        ),
+    },
+    projectRoot: path.resolve(__dirname),
 };

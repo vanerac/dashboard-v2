@@ -3,7 +3,7 @@ import React from 'react';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
-import { Test } from '../../../packages/ui';
+import { Test } from '@area/ui';
 
 export default function TabOneScreen({ navigation: $nav }: RootTabScreenProps<'TabOne'>) {
     return (

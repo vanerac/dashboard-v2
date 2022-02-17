@@ -3,5 +3,5 @@ import {Text} from 'react-native';
 
 export const Test = () => {
   console.log('Loaded shared comp')
-  return <Text>Boop</Text>;
+  return <Text>CA MARCHE SA MERE</Text>;
 };
