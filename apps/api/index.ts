@@ -1,5 +1,4 @@
-import express, { NextFunction } from 'express';
-import { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -8,14 +7,16 @@ import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
 import { User } from '../../packages/services';
-import * as OpenApiValidator from 'express-openapi-validator';
+import { Service } from './src/tools/types';
 // import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 // import SecuritySchemeObject = OpenAPIV3.SecuritySchemeObject;
 const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
-    local: {},
+    local: {
+        service: undefined,
+    },
     secret: process.env.COOKIE_SECRET || 'secret',
     resave: true,
     saveUninitialized: true,
@@ -26,6 +27,7 @@ declare module 'express-session' {
     export interface SessionData {
         user: User;
         [key: string]: any;
+        service: Service;
     }
 }
 
@@ -51,32 +53,32 @@ app.use((req: Request, res: Response, next: Function) => {
     next();
 });
 
-app.use(
-    OpenApiValidator.middleware({
-        apiSpec: './generated/openapi-v1.json',
-        validateRequests: {
-            removeAdditional: 'failing',
-            allowUnknownQueryParameters: false,
-        },
-        validateResponses: {
-            removeAdditional: 'failing',
-        },
-        validateFormats: 'full',
-        operationHandlers: false,
-        // validateSecurity: {
-        //     handlers: {
-        //         BearerAuth: (req: Request, scopes: string[], schema: SecuritySchemeObject): boolean => {
-        //             // parse header token for Bearer Token
-        //             console.log(scopes, schema);
-        //             const token = req.headers['Authorization'] as string | undefined;
-        //             console.log(!!token?.match(/^Bearer\s+(.*)$/));
-        //             throw new Error('test');
-        //             return !!token?.match(/^Bearer\s+(.*)$/);
-        //         },
-        //     },
-        // },
-    }),
-);
+// app.use(
+//     OpenApiValidator.middleware({
+//         apiSpec: './generated/openapi-v1.json',
+//         validateRequests: {
+//             removeAdditional: 'failing',
+//             allowUnknownQueryParameters: false,
+//         },
+//         validateResponses: {
+//             removeAdditional: 'failing',
+//         },
+//         validateFormats: 'full',
+//         operationHandlers: false,
+//         // validateSecurity: {
+//         //     handlers: {
+//         //         BearerAuth: (req: Request, scopes: string[], schema: SecuritySchemeObject): boolean => {
+//         //             // parse header token for Bearer Token
+//         //             console.log(scopes, schema);
+//         //             const token = req.headers['Authorization'] as string | undefined;
+//         //             console.log(!!token?.match(/^Bearer\s+(.*)$/));
+//         //             throw new Error('test');
+//         //             return !!token?.match(/^Bearer\s+(.*)$/);
+//         //         },
+//         //     },
+//         // },
+//     }),
+// );
 
 app.use('/api', routes);
 
