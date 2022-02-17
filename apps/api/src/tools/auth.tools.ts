@@ -21,7 +21,7 @@ export function checkPassword(password: string, hash: string) {
     return bcrypt.compareSync(password, hash);
 }
 
-export const parseCookieSession = (req: Request, $res: Response, next: NextFunction) => {
+export const parseCookieSession = (req: Request, $res: Response, next: NextFunction): void  => {
     const cookie = req.cookies['API_TOKEN'];
     try {
         if (cookie) {

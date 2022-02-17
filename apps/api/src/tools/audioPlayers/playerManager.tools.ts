@@ -28,14 +28,14 @@ export default class PlayerManager {
         };
     }
 
-    public addToQueue(userId: UUID, track: Track) {
+    public addToQueue(userId: UUID, track: Track): void  {
         if (!this.queue.has(userId)) {
             this.queue.set(userId, []);
         }
         this.queue.get(userId)?.push(track);
     }
 
-    public removeFromQueue(userId: UUID, track: Track) {
+    public removeFromQueue(userId: UUID, track: Track): void  {
         // Todo: Note: this might not work since we are recreating the object every time
         if (this.queue.has(userId)) {
             const tracks = this.queue.get(userId);
@@ -43,7 +43,7 @@ export default class PlayerManager {
         }
     }
 
-    public clearQueue(userId: UUID) {
+    public clearQueue(userId: UUID): void  {
         if (this.queue.has(userId)) {
             this.queue.delete(userId);
         }
@@ -53,7 +53,7 @@ export default class PlayerManager {
         return this.queue.get(userId);
     }
 
-    public moveInQueue(userId: UUID, track: Track, index: number) {
+    public moveInQueue(userId: UUID, track: Track, index: number): void  {
         if (this.queue.has(userId)) {
             const tracks = this.queue.get(userId);
             tracks?.splice(index, 0, track);
@@ -62,7 +62,7 @@ export default class PlayerManager {
 
     // Update Controls
 
-    public listenForUpdates($userId: UUID, $res: Response) {
+    public listenForUpdates($userId: UUID, $res: Response): void  {
         // Stream updates data from users player manager
         // Includes:
         // - Playback status
@@ -138,7 +138,7 @@ export default class PlayerManager {
         return devices?.find((device) => device.isActive);
     }
 
-    public changeDevice(userId: UUID, deviceId: UUID) {
+    public changeDevice(userId: UUID, deviceId: UUID): undefined  {
         // Todo Change device
         if (!this.devices.has(userId)) {
             return undefined;
@@ -153,7 +153,7 @@ export default class PlayerManager {
         }
     }
 
-    public registerDevice(userId: UUID, device: Response) {
+    public registerDevice(userId: UUID, device: Response): void  {
         const deviceId = ''; // ||uuid();
         if (!this.devices.has(userId)) {
             this.devices.set(userId, []);
