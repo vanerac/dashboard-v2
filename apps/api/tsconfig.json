@@ -2,7 +2,15 @@
   "extends": "../../packages/tsconfig/base.json",
   "compilerOptions": {
     "outDir": "./build",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@area/ui": [
+        "../../packages/ui"
+      ],
+      "@area/services": [
+        "../../packages/services"
+      ]
+    }
   },
   "include": [
     "index.ts",

@@ -9,14 +9,13 @@ import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
 import { mdiRadioFm, mdiSpotify } from '@mdi/js';
 import React, { useState } from 'react';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
+import { AuthenticationService, OpenAPI } from '@area/services';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { OpenAPI } from '../../../packages/services';
 import Cookies from 'universal-cookie';
-import { Test } from '../../../packages/ui';
+import { Test } from '@area/ui';
 
 const Home = () => {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
