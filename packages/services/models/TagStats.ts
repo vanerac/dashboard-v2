@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Tag } from './Tag';
+import type { Tag } from "./Tag";
 
 export type TagStats = {
-    tags?: Array<Tag>;
+  tags?: Array<Tag>;
 };
