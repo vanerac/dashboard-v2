@@ -264,4 +264,43 @@ export class DeezerArtistService implements ArtistService {
         });
         return tracks;
     }
+    // get artist related artists
+    static async getArtistRelatedArtists(accessToken: string, artistId: string): Promise<Artist[]> {
+        const url = `https://api.deezer.com/artist/${artistId}/related`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await fetch(url, { headers });
+        const json = await response.json();
+        const artists: Artist[] = json.data.map((artist: any) => {
+            return {
+                id: artist.id,
+                name: artist.name,
+                image: artist.picture_xl,
+                followers: artist.nb_fan,
+                external_urls: artist.link,
+                provider: 'deezer',
+            };
+        });
+        return artists;
+    }
+    // get artist playlists
+    static async getArtistPlaylists(accessToken: string, artistId: string): Promise<Playlist[]> {
+        const url = `https://api.deezer.com/artist/${artistId}/playlists`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await fetch(url, { headers });
+        const json = await response.json();
+        const playlists: Playlist[] = json.data.map((playlist: any) => {
+            return {
+                id: playlist.id,
+                name: playlist.title,
+                image: playlist.picture_xl,
+                external_urls: playlist.link,
+                provider: 'deezer',
+            };
+        });
+        return playlists;
+    }
 }
