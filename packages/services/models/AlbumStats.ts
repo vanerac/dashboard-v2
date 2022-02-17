@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Album } from './Album';
+import type { Album } from "./Album";
 
 export type AlbumStats = {
-    services?: Array<Album>;
+  services?: Array<Album>;
 };

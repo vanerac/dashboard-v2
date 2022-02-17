@@ -1,257 +1,210 @@
 {
-  "schemas": {
-    "Error": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
+    "schemas": {
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
         },
-        "message": {
-          "type": "string"
+        "User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "Service": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["google", "spotify", "apple", "deezer", "lastfm"]
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Track": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["artist", "album", "track", "playlist"]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "artist": {
+                    "type": "string"
+                },
+                "album": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "playable": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Playlist": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["artist", "album", "track", "playlist"]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "tracks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/schemas/Track"
+                    }
+                }
+            }
+        },
+        "Artist": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["artist", "album", "track", "playlist"]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "followers": {
+                    "type": "integer"
+                },
+                "external_urls": {
+                    "type": "string"
+                }
+            }
+        },
+        "Album": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["artist", "album", "track", "playlist"]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "artist": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                }
+            }
+        },
+        "PlaybackStatus": {
+            "type": "object",
+            "properties": {
+                "track": {
+                    "$ref": "#/schemas/Track"
+                },
+                "position": {
+                    "type": "integer"
+                },
+                "device": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string",
+                    "enum": ["playing", "paused", "stopped"]
+                }
+            }
+        },
+        "Device": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "volume": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "boolean"
+                },
+                "ws": {
+                    "type": "string"
+                }
+            }
+        },
+        "Tag": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "count": {
+                    "type": "integer"
+                }
+            }
         }
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "displayName": {
-          "type": "string"
-
-        },
-        "id": {
-          "type": "string"
-        }
-      }
-    },
-    "Service": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "google",
-            "spotify",
-            "apple",
-            "deezer",
-            "lastfm"
-          ]
-        },
-        "enabled": {
-          "type": "boolean"
-        }
-      }
-    },
-    "Track": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "artist",
-            "album",
-            "track",
-            "playlist"
-          ]
-        },
-        "id": {
-          "type": "string"
-
-        },
-        "name": {
-          "type": "string"
-
-        },
-        "artist": {
-            "type": "string"
-
-        },
-        "album": {
-            "type": "string"
-
-        },
-        "duration": {
-            "type": "integer"
-
-        },
-        "image": {
-            "type": "string"
-
-        },
-        "provider": {
-            "type": "string"
-
-        },
-        "playable": {
-            "type": "boolean"
-
-        }
-      }
-    },
-    "Playlist": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "artist",
-            "album",
-            "track",
-            "playlist"
-          ]
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "image": {
-          "type": "string"
-        },
-        "provider": {
-          "type": "string"
-        },
-        "tracks": {
-          "type": "array",
-          "items": {
-            "$ref": "#/schemas/Track"
-          }
-        }
-      }
-    },
-    "Artist": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "artist",
-            "album",
-            "track",
-            "playlist"
-          ]
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "image": {
-          "type": "string"
-        },
-        "provider": {
-          "type": "string"
-        },
-        "followers": {
-          "type": "integer"
-        },
-        "external_urls": {
-          "type": "string"
-        }
-      }
-    },
-    "Album": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "artist",
-            "album",
-            "track",
-            "playlist"
-          ]
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "artist": {
-          "type": "string"
-        },
-        "image": {
-          "type": "string"
-        },
-        "provider": {
-          "type": "string"
-        }
-      }
-    },
-    "PlaybackStatus": {
-      "type": "object",
-      "properties": {
-        "track": {
-          "$ref": "#/schemas/Track"
-
-        },
-        "position": {
-          "type": "integer"
-
-        },
-        "device": {
-          "type": "string"
-
-        },
-        "state": {
-          "type": "string",
-          "enum": [
-            "playing",
-            "paused",
-            "stopped"
-          ]
-        }
-      }
-    },
-    "Device": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuid"
-
-        },
-        "name": {
-          "type": "string"
-
-        },
-        "volume": {
-          "type": "integer"
-
-        },
-        "state": {
-          "type": "boolean"
-
-        },
-        "ws": {
-          "type": "string"
-
-        }
-      }
-    },
-    "Tag": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "count": {
-          "type": "integer"
-        }
-      }
     }
-  }
 }
