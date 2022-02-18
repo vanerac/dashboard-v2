@@ -3,5 +3,13 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react"
+    "paths": {
+      "@area/ui": [
+        "../../packages/ui"
+      ],
+      "@area/services": [
+        "../../packages/services"
+      ]
+    }
   }
 }

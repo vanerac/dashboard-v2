@@ -59,3 +59,24 @@ export class SpotifySearchService extends SearchService {
         return [...tracks, ...albums, ...artists, ...playlists];
     }
 }
+
+// Youtube service
+export class GoogleSearchService extends SearchService {
+    static async search(accessToken: string, query: string): Promise<SearchResult> {
+        const response = await fetch(
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${process.env.GOOGLE_API_KEY}`,
+        );
+        const data = await response.json();
+        const videos = data.items.map(
+            (video: { id: any; snippet: { title: any; description: any; thumbnails: { url: any } } }) =>
+                ({
+                    id: video.id.videoId,
+                    name: video.snippet.title,
+                    artist: video.snippet.description,
+                    image: video.snippet.thumbnails.url,
+                    provider: 'youtube',
+                } as Track),
+        );
+        return videos;
+    }
+}
