@@ -205,7 +205,6 @@ export class SpotifyArtistService implements ArtistService {
     }
 }
 
-
 export class DeezerArtistService implements ArtistService {
     // get artist
     static async getArtist(accessToken: string, artistId: string): Promise<Artist> {
@@ -222,10 +221,10 @@ export class DeezerArtistService implements ArtistService {
             followers: json.nb_fan,
             external_urls: json.link,
             provider: 'deezer',
-          };
+        };
         return artist;
     }
-  
+
     static async getArtistAlbums(accessToken: string, artistId: string): Promise<Album[]> {
         const url = `https://api.deezer.com/artist/${artistId}/albums`;
         const headers = {
@@ -241,13 +240,13 @@ export class DeezerArtistService implements ArtistService {
                 release_date: album.release_date,
                 external_urls: album.link,
                 provider: 'deezer',
-              };
+            };
         });
         return albums;
     }
     // get artist top tracks
-  
-     static async getArtistTopTracks(accessToken: string, artistId: string): Promise<Track[]> {
+
+    static async getArtistTopTracks(accessToken: string, artistId: string): Promise<Track[]> {
         const url = `https://api.deezer.com/artist/${artistId}/top?limit=50`;
         const headers = {
             Authorization: `Bearer ${accessToken}`,
@@ -261,7 +260,7 @@ export class DeezerArtistService implements ArtistService {
                 image: track.album.cover_xl,
                 external_urls: track.link,
                 provider: 'deezer',
-              };
+            };
         });
         return tracks;
     }
@@ -281,11 +280,11 @@ export class DeezerArtistService implements ArtistService {
                 followers: artist.nb_fan,
                 external_urls: artist.link,
                 provider: 'deezer',
-               };
+            };
         });
         return artists;
     }
-  
+
     // get artist playlists
     static async getArtistPlaylists(accessToken: string, artistId: string): Promise<Playlist[]> {
         const url = `https://api.deezer.com/artist/${artistId}/playlists`;
@@ -303,10 +302,9 @@ export class DeezerArtistService implements ArtistService {
                 provider: 'deezer',
             };
         });
-      return playlists;
+        return playlists;
     }
-}  
- 
+}
 
 // Youtube
 export class GoogleArtistService implements ArtistService {

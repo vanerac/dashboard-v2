@@ -132,6 +132,5 @@ export class GoogleSearchService extends SearchService {
                 } as Track),
         );
         return videos;
-
     }
 }

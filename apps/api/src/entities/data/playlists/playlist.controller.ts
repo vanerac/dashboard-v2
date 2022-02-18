@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { Providers } from '../../../tools/types';
-import { GooglePlaylistService, DeezerPlaylistService, PlaylistService, SpotifyPlaylistService } from './playlist.service';
+import {
+    DeezerPlaylistService,
+    GooglePlaylistService,
+    PlaylistService,
+    SpotifyPlaylistService,
+} from './playlist.service';
 
 const servicesList: {
     [provider: string]: PlaylistService;
@@ -10,7 +15,7 @@ const servicesList: {
     [Providers.GOOGLE]: GooglePlaylistService,
 };
 
-export default class PlaylistsController {
+export default class PlaylistController {
     static async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             if (!req.session.local.service) {
