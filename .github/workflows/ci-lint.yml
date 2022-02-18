@@ -92,7 +92,7 @@ jobs:
   check-types:
     name: Validate TypeScript
     runs-on: ubuntu-latest
-    needs: [ lint, prettier, openapi ]
+    needs: install-dependencies
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.4.1
@@ -110,4 +110,4 @@ jobs:
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run check-types
         working-directory: ./apps/${{matrix.directory}}
-        name: Prettier
+        name: Checking TypeScript
