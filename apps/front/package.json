@@ -8,7 +8,8 @@
     "lint": "npx next lint",
     "lint:fix": "next lint --fix",
     "prettier": "npx prettier '**/*.{js,jsx,ts,tsx}'",
-    "prettier:fix": "npx prettier --write '**/*.{js,jsx,ts,tsx}'"
+    "prettier:fix": "npx prettier --write '**/*.{js,jsx,ts,tsx}'",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "next": "12.0.9",

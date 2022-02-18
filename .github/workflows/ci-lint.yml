@@ -89,3 +89,25 @@ jobs:
       - run: npm run validate-swagger
         working-directory: ./apps/api
         name: Validate OpenAPI Schema
+  check-types:
+    name: Validate TypeScript
+    runs-on: ubuntu-latest
+    needs: [ lint, prettier, openapi ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run check-types
+        working-directory: ./apps/${{matrix.directory}}
+        name: Prettier

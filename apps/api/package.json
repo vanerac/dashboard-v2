@@ -15,7 +15,8 @@
     "build:es": "rimraf es && tsc --target es6 --outDir es --module es6",
     "dev": "npx nodemon index.ts",
     "prepublishOnly": "npm run build",
-    "validate-swagger": "npx swagger-cli validate ./src/entities/openapi.index.json"
+    "validate-swagger": "npx swagger-cli validate ./src/entities/openapi.index.json",
+    "check-types": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
