@@ -89,9 +89,34 @@ jobs:
       - run: npm run validate-swagger
         working-directory: ./apps/api
         name: Validate OpenAPI Schema
+  check-types:
+    strategy:
+      matrix:
+        directory: [ "app", "api", "front" ]
+    name: Validate TypeScript
+    runs-on: ubuntu-latest
+    needs: [install-dependencies]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run check-types
+        working-directory: ./apps/${{matrix.directory}}
+        name: Checking TypeScript
   build-app:
     name: Build App
-    needs: [lint, prettier, openapi]
+    needs: [lint, prettier, openapi, check-types]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -130,7 +155,7 @@ jobs:
           path: ./apps/app/dist
   build-front:
     name: Build Front
-    needs: [lint, prettier, openapi]
+    needs: [lint, prettier, openapi, check-types]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -158,7 +183,7 @@ jobs:
           path: ./apps/front/dist
   build-api:
     name: Build API
-    needs: [lint, prettier, openapi]
+    needs: [lint, prettier, openapi, check-types]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
