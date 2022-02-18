@@ -205,6 +205,7 @@ export class SpotifyArtistService implements ArtistService {
     }
 }
 
+
 export class DeezerArtistService implements ArtistService {
     // get artist
     static async getArtist(accessToken: string, artistId: string): Promise<Artist> {
@@ -221,11 +222,10 @@ export class DeezerArtistService implements ArtistService {
             followers: json.nb_fan,
             external_urls: json.link,
             provider: 'deezer',
-        };
+          };
         return artist;
     }
-
-    // get artist albums
+  
     static async getArtistAlbums(accessToken: string, artistId: string): Promise<Album[]> {
         const url = `https://api.deezer.com/artist/${artistId}/albums`;
         const headers = {
@@ -241,12 +241,13 @@ export class DeezerArtistService implements ArtistService {
                 release_date: album.release_date,
                 external_urls: album.link,
                 provider: 'deezer',
-            };
+              };
         });
         return albums;
     }
     // get artist top tracks
-    static async getArtistTopTracks(accessToken: string, artistId: string): Promise<Track[]> {
+  
+     static async getArtistTopTracks(accessToken: string, artistId: string): Promise<Track[]> {
         const url = `https://api.deezer.com/artist/${artistId}/top?limit=50`;
         const headers = {
             Authorization: `Bearer ${accessToken}`,
@@ -260,7 +261,7 @@ export class DeezerArtistService implements ArtistService {
                 image: track.album.cover_xl,
                 external_urls: track.link,
                 provider: 'deezer',
-            };
+              };
         });
         return tracks;
     }
@@ -280,10 +281,11 @@ export class DeezerArtistService implements ArtistService {
                 followers: artist.nb_fan,
                 external_urls: artist.link,
                 provider: 'deezer',
-            };
+               };
         });
         return artists;
     }
+  
     // get artist playlists
     static async getArtistPlaylists(accessToken: string, artistId: string): Promise<Playlist[]> {
         const url = `https://api.deezer.com/artist/${artistId}/playlists`;
@@ -301,6 +303,105 @@ export class DeezerArtistService implements ArtistService {
                 provider: 'deezer',
             };
         });
+      return playlists;
+    }
+}  
+ 
+
+// Youtube
+export class GoogleArtistService implements ArtistService {
+    // get artist
+    static async getArtist(artistId: string): Promise<Artist> {
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${artistId}`;
+        const response = await fetch(url);
+        const json = await response.json();
+        const artist: Artist = {
+            id: json.items[0].id,
+            name: json.items[0].snippet.title,
+            image: json.items[0].snippet.thumbnails.default.url,
+            followers: json.items[0].statistics.subscriberCount,
+            external_urls: json.items[0].id,
+            provider: 'youtube',
+        };
+        return artist;
+    }
+
+    // get artist albums
+    static async getArtistAlbums(artistId: string): Promise<Album[]> {
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${artistId}`;
+        const response = await fetch(url);
+        const json = await response.json();
+        const albums: Album[] = json.items[0].contentDetails.relatedPlaylists.uploads.split(',').map((id: string) => {
+            return {
+                id,
+                name: '',
+                image: '',
+                release_date: '',
+                external_urls: {
+                    spotify: id,
+                },
+                provider: 'youtube',
+            };
+        });
+        return albums;
+    }
+    // get artist top tracks
+
+    static async getArtistTopTracks(artistId: string): Promise<Track[]> {
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${artistId}`;
+        const response = await fetch(url);
+        const json = await response.json();
+        const tracks: Track[] = json.items[0].contentDetails.relatedPlaylists.favorites.split(',').map((id: string) => {
+            return {
+                id,
+                name: '',
+                image: '',
+                external_urls: {
+                    spotify: id,
+                },
+                provider: 'youtube',
+            };
+        });
+        return tracks;
+    }
+    // get artist related artists
+    static async getArtistRelatedArtists(artistId: string): Promise<Artist[]> {
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${artistId}`;
+        const response = await fetch(url);
+        const json = await response.json();
+        const artists: Artist[] = json.items[0].contentDetails.relatedPlaylists.uploads.split(',').map((id: string) => {
+            return {
+                id,
+                name: '',
+                image: '',
+                followers: 0,
+                external_urls: {
+                    spotify: id,
+                },
+                provider: 'youtube',
+            };
+        });
+        return artists;
+    }
+
+    // get artist playlists
+    static async getArtistPlaylists(artistId: string): Promise<Playlist[]> {
+        const url = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${artistId}`;
+        const response = await fetch(url);
+        const json = await response.json();
+        const playlists: Playlist[] = json.items[0].contentDetails.relatedPlaylists.uploads
+            .split(',')
+            .map((id: string) => {
+                return {
+                    id,
+                    name: '',
+                    image: '',
+                    external_urls: {
+                        spotify: id,
+                    },
+                    provider: 'youtube',
+                };
+            });
         return playlists;
     }
 }

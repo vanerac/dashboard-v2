@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ArtistService, DeezerArtistService, SpotifyArtistService } from './artist.service';
+import { ArtistService, DeezerArtistService,GoogleArtistService, SpotifyArtistService } from './artist.service';
 import { Providers } from '../../../tools/types';
 import { PlaylistService } from '../playlists/playlist.service';
 
@@ -8,6 +8,7 @@ const servicesList: {
 } = {
     [Providers.SPOTIFY]: SpotifyArtistService,
     [Providers.DEEZER]: DeezerArtistService,
+    [Providers.GOOGLE]: GoogleArtistService,
 };
 export default class ArtistController {
     static async getArtistById(req: Request, res: Response, next: NextFunction) {

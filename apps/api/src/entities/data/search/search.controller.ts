@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { DeezerSearchService, SearchService, SpotifySearchService } from '../search/search.service';
+import { GoogleSearchService, DeezerSearchService, SearchService, SpotifySearchService } from '../search/search.service';
 import { Providers } from '../../../tools/types';
 
 const servicesList: {
@@ -7,6 +7,7 @@ const servicesList: {
 } = {
     [Providers.SPOTIFY]: SpotifySearchService,
     [Providers.DEEZER]: DeezerSearchService,
+    [Providers.GOOGLE]: GoogleSearchService,
 };
 export default class SearchController {
     // Service search
