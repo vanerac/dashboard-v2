@@ -3,7 +3,6 @@ on: [workflow_call, workflow_dispatch]
 
 jobs:
   openapi:
-    needs: install-dependencies
     name: Validate OpenAPI Schema
     runs-on: ubuntu-latest
     steps:

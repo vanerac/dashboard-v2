@@ -8,7 +8,6 @@ jobs:
         directory: [ "app", "api", "front" ]
       fail-fast: false
     name: Lint
-    needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

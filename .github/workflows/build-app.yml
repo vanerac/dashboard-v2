@@ -3,7 +3,6 @@ on: [workflow_call, workflow_dispatch]
 
 jobs:
   name: Build App
-    needs: [ lint, prettier, openapi, check-types ]
     runs-on: ubuntu-latest
     strategy:
       matrix:

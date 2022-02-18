@@ -3,7 +3,6 @@ on: [workflow_dispatch, workflow_call]
 
 jobs:
   name: Build Front
-    needs: [ lint, prettier, openapi, check-types ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
