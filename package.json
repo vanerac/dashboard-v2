@@ -4,11 +4,16 @@
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "packages/"
   ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "front": "npm run dev -w apps/front",
+    "api": "npm run dev -w apps/api",
+    "ios": "npm run ios -w apps/app",
+    "android": "npm run android -w apps/app",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
