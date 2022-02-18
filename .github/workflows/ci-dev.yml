@@ -1,8 +1,5 @@
 name: Linter
-on:
-  push:
-    branches:
-      - dev
+on: push
 
 jobs:
   install-dependencies:

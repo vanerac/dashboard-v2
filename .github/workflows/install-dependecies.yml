@@ -1,5 +1,5 @@
 name: Install Dependencies
-on: [ push, workflow_dispatch ]
+on: [ workflow_call, workflow_dispatch ]
 
 jobs:
   install-dependencies:
