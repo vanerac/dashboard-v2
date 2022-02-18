@@ -1,4 +1,4 @@
-import { Response, Request } from 'express';
+import { Request, Response } from 'express';
 import Pool from '../../tools/database.tools';
 import { checkPassword, generateToken, hashPassword } from '../../tools/auth.tools';
 
@@ -20,12 +20,10 @@ export default class AuthController {
                 delete userData.password;
                 if (isPasswordValid) {
                     const token = generateToken(userData);
-                    res.status(200)
-                        .cookie('API_TOKEN', token, { expires: new Date(Date.now() + 3600 * 1000) })
-                        .json({
-                            message: 'Login successful',
-                            token,
-                        });
+                    res.status(200).json({
+                        message: 'Login successful',
+                        token,
+                    });
                 } else {
                     res.status(401).json({
                         message: 'Invalid password',
