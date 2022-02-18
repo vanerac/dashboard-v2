@@ -2,7 +2,7 @@ name: Build API
 on: [workflow_dispatch, workflow_call]
 
 jobs:
-  name: Build Front
+  name: Build api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,15 +16,15 @@ jobs:
           path: |
             ./apps/api/node_modules
             ./apps/app/node_modules
-            ./apps/front/node_modules
+            ./apps/api/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run build
-        working-directory: ./apps/front
-        name: Build front
+        working-directory: ./apps/api
+        name: Build api
       - name: Upload Artifcat
         id: upload
         uses: actions/upload-artifact@v2
         with:
-          name: front
-          path: ./apps/front/dist
+          name: api
+          path: ./apps/api/dist
