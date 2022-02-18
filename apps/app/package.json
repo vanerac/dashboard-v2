@@ -13,7 +13,8 @@
     "lint": "npx eslint --ext .ts,.tsx components/**/* constants/* hooks/* navigation/* screens/*",
     "lint:fix": "npx eslint --ext .ts,.tsx components/**/* constants/* hooks/* navigation/* screens/* --fix",
     "prettier": "npx prettier components/**/* constants/* hooks/* navigation/* screens/*",
-    "prettier:fix": "npx prettier --write components/**/* constants/* hooks/* navigation/* screens/*"
+    "prettier:fix": "npx prettier --write components/**/* constants/* hooks/* navigation/* screens/*",
+    "check-types": "tsc --noEmit"
   },
   "jest": {
     "preset": "jest-expo"
