@@ -1,0 +1,42 @@
+name: Build Apps
+on: [workflow_call, workflow_dispatch]
+
+jobs:
+  name: Build App
+    needs: [ lint, prettier, openapi, check-types ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [ "ios", "android" ]
+      fail-fast: false
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - name: Setup Expo
+        uses: expo/expo-github-action@v5
+        with:
+          expo-version: 4.x
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+          expo-cache: true
+      - name: Build ${{matrix.platforms}} on EAS
+        working-directory: ./apps/app
+        run: npx eas-cli build --platform ${{matrix.platforms}} --non-interactive
+      - name: Upload Artifcat
+        id: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{matrix.platforms}}
+          path: ./apps/app/dist

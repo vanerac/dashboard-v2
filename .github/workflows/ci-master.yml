@@ -1,0 +1,38 @@
+name: Builder
+on:
+  pull_request:
+      branches:
+        - dev
+
+jobs:
+  install-dependencies:
+    name: Install dependencies
+    uses: ./.github/workflows/install-dependencies.yml
+  lint:
+    name: Lint
+    needs: install-dependencies
+    uses: ./.github/workflows/lint.yml
+  prettier:
+    name: Prettier
+    needs: install-dependencies
+    uses: ./.github/workflows/prettier.yml
+  openapi:
+    name: Verify OpenAPI Definition
+    needs: install-dependencies
+    uses: ./.github/workflows/validate-swagger.yml
+  check-types:
+    name: Verify Compilation
+    needs: install-dependencies
+    uses: ./.github/workflows/compile-ts.yml
+  build-app:
+    name: Build App
+    needs: [lint, prettier, openapi, check-types]
+    uses: ./.github/workflows/build-app.yml
+  build-front:
+    name: Build Front
+    needs: [lint, prettier, openapi, check-types]
+    uses: ./.github/workflows/build-front.yml
+  build-api:
+    name: Build API
+    needs: [lint, prettier, openapi, check-types]
+    uses: ./.github/workflows/build-api.yml

@@ -1,0 +1,26 @@
+name: Linter
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  install-dependencies:
+    name: Install dependencies
+    uses: ./.github/workflows/install-dependencies.yml
+  lint:
+    name: Lint
+    needs: install-dependencies
+    uses: ./.github/workflows/lint.yml
+  prettier:
+    name: Prettier
+    needs: install-dependencies
+    uses: ./.github/workflows/prettier.yml
+  openapi:
+    name: Verify OpenAPI Definition
+    needs: install-dependencies
+    uses: ./.github/workflows/validate-swagger.yml
+  check-types:
+    name: Verify Compilation
+    needs: install-dependencies
+    uses: ./.github/workflows/compile-ts.yml

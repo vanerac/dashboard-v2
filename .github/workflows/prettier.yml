@@ -1,0 +1,29 @@
+name: Prettier
+on: [workflow_dispatch, workflow_call]
+
+jobs:
+  prettier:
+    strategy:
+      matrix:
+        directory: [ "app", "api", "front" ]
+    name: Prettier
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+        with:
+          node-version: '16'
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
+            ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+      - run: npm run prettier
+        working-directory: ./apps/${{matrix.directory}}
+        name: Prettier
