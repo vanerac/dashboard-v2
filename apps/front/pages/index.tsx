@@ -9,7 +9,6 @@ import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
 import { mdiRadioFm, mdiSpotify } from '@mdi/js';
 import React, { useState } from 'react';
-import { AuthenticationService, OpenAPI } from '@area/services';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
