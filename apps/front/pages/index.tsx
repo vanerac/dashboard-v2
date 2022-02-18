@@ -1,22 +1,19 @@
 import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
 import { useDarkMode } from 'next-dark-mode';
-import Router from 'next/router';
+import withAuth from './withAuth';
 // import Head from 'next/head';
 import NextLink from 'next/link';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiSpotify } from '@mdi/js';
-import { mdiRadioFm } from '@mdi/js';
+import { mdiRadioFm, mdiSpotify } from '@mdi/js';
 import React, { useState } from 'react';
-import { AuthenticationService } from '../../../packages/services/services/AuthenticationService';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { OpenAPI } from '../../../packages/services';
-import Cookies from 'universal-cookie';
+import { Client, updateClientConfig } from '../../../packages/global';
 
 const Home = () => {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
@@ -26,7 +23,6 @@ const Home = () => {
     const [errorEmptyFieldEmail, setErrorEmptyFieldEmail] = useState('');
     const [errorEmptyFieldPassword, setErrorEmptyFieldPassword] = useState('');
     const errorString = 'This input field cannot be empty.';
-    const cookies = new Cookies();
 
     const handleChangeMode = () => {
         if (darkModeActive) {
@@ -98,17 +94,20 @@ const Home = () => {
         console.log(errorBool);
 
         if (errorBool === false) {
-            AuthenticationService.authLoginPost({ email: userEmail, password: userPassword })
-                .then((data) => {
-                    OpenAPI.TOKEN = data.token;
-                    console.log(OpenAPI.TOKEN);
-                    cookies.set('API_TOKEN', data.token, { path: '/' });
-                    Router.push('/dashboard');
+            Client.authentication
+                .login({
+                    email: userEmail,
+                    password: userPassword,
                 })
-                .catch((error) => {
-                    console.log(error);
-                    handleOpen();
-                });
+                .then((data) => {
+                    updateClientConfig({
+                        TOKEN: data.token,
+                    });
+                    localStorage.setItem('token', data.token);
+                    // Todo: Redirect to home & store expiration date?
+                })
+                // Todo: Handle 401: Token expired
+                .catch(handleOpen);
         }
     };
 
@@ -262,4 +261,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default withAuth(Home);
