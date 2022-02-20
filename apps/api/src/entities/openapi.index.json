@@ -83,6 +83,27 @@
     "/data/{serviceId}/artist/followed": {
       "$ref": "data/artist/artist.path.json#/getFollowedArtists"
     },
+    "/data/{serviceId}/track/{trackId}": {
+      "$ref": "data/track/track.path.json#/getTrackById"
+    },
+    "/data/{serviceId}/track/{trackId}/like": {
+      "$ref": "data/track/track.path.json#/likeTrack"
+    },
+    "/data/{serviceId}/track/{trackId}/unlike": {
+      "$ref": "data/track/track.path.json#/unlikeTrack"
+    },
+    "/data/{serviceId}/track/{trackId}/album": {
+      "$ref": "data/track/track.path.json#/getTrackAlbum"
+    },
+    "/data/{serviceId}/track/{trackId}/artists": {
+      "$ref": "data/track/track.path.json#/getTrackArtist"
+    },
+    "/data/{serviceId}/track/{trackId}/addToPlaylist/{playlistId}": {
+      "$ref": "data/track/track.path.json#/addToPlaylist"
+    },
+    "/data/{serviceId}/track/{trackId}/removeFromPlaylist/{playlistId}": {
+      "$ref": "data/track/track.path.json#/removeFromPlaylist"
+    },
     "/playback/currentState": {
       "$ref": "playback/playback.path.json#/getCurrentState"
     },
@@ -341,6 +362,15 @@
       },
       "TagStats": {
         "$ref": "./stats/stats.components.json#/schemas/TagStats"
+      },
+      "getTrackResponse": {
+        "$ref": "./data/track/track.components.json#/schemas/getTrackResponse"
+      },
+      "getTrackAlbumResponse": {
+        "$ref": "./data/track/track.components.json#/schemas/getTrackAlbumResponse"
+      },
+      "getTrackArtistResponse": {
+        "$ref": "./data/track/track.components.json#/schemas/getTrackArtistResponse"
       }
     }
   },
