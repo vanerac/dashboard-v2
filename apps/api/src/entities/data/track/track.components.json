@@ -1,0 +1,16 @@
+{
+  "schemas": {
+    "getTrackResponse": {
+      "type": "object",
+      "$ref": "../../openapi.components.json#/schemas/Track"
+    },
+    "getTrackAlbumResponse": {
+      "type": "object",
+      "$ref": "../../openapi.components.json#/schemas/Album"
+    },
+    "getTrackArtistResponse": {
+      "type": "object",
+      "$ref": "../../openapi.components.json#/schemas/Artist"
+    }
+  }
+}
