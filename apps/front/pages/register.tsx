@@ -2,12 +2,13 @@
 import NextLink from 'next/link';
 // import { useRouter } from 'next/router';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
-import { AuthenticationService } from '../../../packages/services';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import { Client } from '../../../packages/global';
+import Router from 'next/router';
 
 const Register = () => {
     let errorBool: boolean = false;
@@ -68,17 +69,18 @@ const Register = () => {
         } else setErrorEmptyFieldDisplayName('');
 
         if (errorBool === false) {
-            AuthenticationService.authRegisterPost({
-                email: userEmail,
-                password: userPassword,
-                displayName: userDisplayName,
-            })
-                .then(() => {
-                    console.log('submitting');
+            Client.authentication
+                .register({
+                    email: userEmail,
+                    password: userPassword,
+                    displayName: userDisplayName,
                 })
-                .catch(($error) => {
-                    handleOpen();
-                });
+                .then((data) => {
+                    console.log(data)
+                    console.log('submitting');
+                    Router.push('/login')
+                })
+                .catch(handleOpen);
         }
     };
 
@@ -155,7 +157,7 @@ const Register = () => {
                         </Box>
                         <Typography color="textSecondary" variant="body2">
                             Have an account?{' '}
-                            <NextLink href="/" passHref>
+                            <NextLink href="/login" passHref>
                                 <Link variant="subtitle2" underline="hover">
                                     Sign In
                                 </Link>

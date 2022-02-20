@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import PlaylistsRoutes from './playlists/playlists.routes';
+import PlaylistsRoutes from './playlists/playlist.routes';
 import SearchRoutes from './search/search.routes';
 
 const router = Router();

@@ -12,7 +12,7 @@ function withAuth(WrappedComponent: any) {
             // const accessToken = 'ok';
 
             if (!cookies.get('API_TOKEN')) {
-                Router.replace('/');
+                Router.replace('/login');
                 return null;
             }
             return <WrappedComponent {...props} />;
