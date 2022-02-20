@@ -4,10 +4,11 @@
 import type { searchQueryResponse } from '../models/searchQueryResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class SearchService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Search
@@ -17,11 +18,11 @@ export class SearchService {
      * @returns searchQueryResponse Successful operation
      * @throws ApiError
      */
-    public static searchGet(
+    public searchGet(
         serviceId: string,
         q: string,
     ): CancelablePromise<searchQueryResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/search',
             path: {

@@ -5,5 +5,5 @@
 import type { Album } from './Album';
 
 export type AlbumStats = {
-    services?: Array<Album>;
+    albums?: Array<Album>;
 };

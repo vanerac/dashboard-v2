@@ -41,9 +41,12 @@ export interface Token {
 }
 
 export enum Providers {
-    $GOOGLE = 'google',
+    // eslint-disable-next-line no-unused-vars
+    GOOGLE = 'google',
     // eslint-disable-next-line no-unused-vars
     SPOTIFY = 'spotify',
+    // eslint-disable-next-line no-unused-vars
+    DEEZER = 'deezer',
     $APPLE = 'apple',
     $LAST_FM = 'lastfm',
 }

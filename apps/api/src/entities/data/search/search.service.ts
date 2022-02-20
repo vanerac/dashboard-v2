@@ -59,3 +59,78 @@ export class SpotifySearchService extends SearchService {
         return [...tracks, ...albums, ...artists, ...playlists];
     }
 }
+
+export class DeezerSearchService extends SearchService {
+    static async search(accessToken: string, query: string): Promise<SearchResult> {
+        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`);
+        const data = await response.json();
+        const tracks = data.data.map(
+            (track: {
+                id: any;
+                title: any;
+                artist: { name: any };
+                album: { title: any; cover_big: any };
+                duration: number;
+            }) =>
+                ({
+                    id: track.id,
+                    name: track.title,
+                    artist: track.artist.name,
+                    album: track.album.title,
+                    image: track.album.cover_big,
+                    duration: track.duration,
+                    provider: 'deezer',
+                } as Track),
+        );
+        const albums = data.data.map(
+            (album: { id: any; title: any; artist: { name: any }; cover_big: any }) =>
+                ({
+                    id: album.id,
+                    name: album.title,
+                    artist: album.artist.name,
+                    image: album.cover_big,
+                    provider: 'deezer',
+                } as Album),
+        );
+        const artists = data.data.map(
+            (artist: { id: any; name: any; picture_big: any }) =>
+                ({
+                    id: artist.id,
+                    name: artist.name,
+                    image: artist.picture_big,
+                    provider: 'deezer',
+                } as Artist),
+        );
+        const playlists = data.data.map(
+            (playlist: { id: any; title: any; picture_big: any }) =>
+                ({
+                    id: playlist.id,
+                    name: playlist.title,
+                    image: playlist.picture_big,
+                    provider: 'deezer',
+                } as Playlist),
+        );
+        return [...tracks, ...albums, ...artists, ...playlists];
+    }
+}
+
+// Youtube service
+export class GoogleSearchService extends SearchService {
+    static async search(accessToken: string, query: string): Promise<SearchResult> {
+        const response = await fetch(
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${process.env.GOOGLE_API_KEY}`,
+        );
+        const data = await response.json();
+        const videos = data.items.map(
+            (video: { id: any; snippet: { title: any; description: any; thumbnails: { url: any } } }) =>
+                ({
+                    id: video.id.videoId,
+                    name: video.snippet.title,
+                    artist: video.snippet.description,
+                    image: video.snippet.thumbnails.url,
+                    provider: 'youtube',
+                } as Track),
+        );
+        return videos;
+    }
+}

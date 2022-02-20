@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { getTrackResponse } from '../models/getTrackResponse';
 import type { playlistCreateRequest } from '../models/playlistCreateRequest';
 import type { playlistSingleResponse } from '../models/playlistSingleResponse';
 import type { playlistsResponse } from '../models/playlistsResponse';
@@ -8,10 +9,11 @@ import type { playlistTracksResponse } from '../models/playlistTracksResponse';
 import type { playlistUpdateRequest } from '../models/playlistUpdateRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class PlaylistService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get all playlists
@@ -20,10 +22,10 @@ export class PlaylistService {
      * @returns playlistsResponse Successful operation
      * @throws ApiError
      */
-    public static getAllPlaylists(
+    public getAllPlaylists(
         serviceId: string,
     ): CancelablePromise<playlistsResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/',
             path: {
@@ -45,11 +47,11 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static getPlaylistById(
+    public getPlaylistById(
         serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}',
             path: {
@@ -73,11 +75,11 @@ export class PlaylistService {
      * @returns playlistTracksResponse Successful operation
      * @throws ApiError
      */
-    public static getPlaylistTracks(
+    public getPlaylistTracks(
         serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistTracksResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}/tracks',
             path: {
@@ -101,11 +103,11 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static create(
+    public create(
         serviceId: string,
         requestBody?: playlistCreateRequest,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/data/{serviceId}/playlist/create',
             path: {
@@ -130,12 +132,12 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static update(
+    public update(
         serviceId: string,
         playlistId: string,
         requestBody?: playlistUpdateRequest,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PUT',
             url: '/data/{serviceId}/playlist/{playlistId}/update',
             path: {
@@ -161,14 +163,76 @@ export class PlaylistService {
      * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
-    public static delete(
+    public delete(
         serviceId: string,
         playlistId: string,
     ): CancelablePromise<playlistSingleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/data/{serviceId}/playlist/{playlistId}/delete',
             path: {
+                'serviceId': serviceId,
+                'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+
+    /**
+     * Add track to playlist
+     * Add track to playlist
+     * @param trackId Playlist ID
+     * @param serviceId ID of service to return playlists for
+     * @param playlistId Playlist ID
+     * @returns getTrackResponse Successful operation
+     * @throws ApiError
+     */
+    public addToPlaylist(
+        trackId: string,
+        serviceId: string,
+        playlistId: string,
+    ): CancelablePromise<getTrackResponse> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/data/{serviceId}/track/{trackId}/addToPlaylist/{playlistId}',
+            path: {
+                'trackId': trackId,
+                'serviceId': serviceId,
+                'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+
+    /**
+     * Remove track from playlist
+     * Remove track from playlist
+     * @param trackId Track ID
+     * @param serviceId ID of service to return playlists for
+     * @param playlistId Playlist ID
+     * @returns getTrackResponse Successful operation
+     * @throws ApiError
+     */
+    public removeFromPlaylist(
+        trackId: string,
+        serviceId: string,
+        playlistId: string,
+    ): CancelablePromise<getTrackResponse> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/data/{serviceId}/track/{trackId}/removeFromPlaylist/{playlistId}',
+            path: {
+                'trackId': trackId,
                 'serviceId': serviceId,
                 'playlistId': playlistId,
             },

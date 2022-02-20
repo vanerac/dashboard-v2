@@ -2,12 +2,12 @@
 import NextLink from 'next/link';
 // import { useRouter } from 'next/router';
 import { Button, Container, Link, TextField, Typography } from '@mui/material';
-import { AuthenticationService } from '../../../packages/services';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import { Client } from '../../../packages/global';
 
 const Register = () => {
     let errorBool: boolean = false;
@@ -68,17 +68,17 @@ const Register = () => {
         } else setErrorEmptyFieldDisplayName('');
 
         if (errorBool === false) {
-            AuthenticationService.authRegisterPost({
-                email: userEmail,
-                password: userPassword,
-                displayName: userDisplayName,
-            })
+            Client.authentication
+                .register({
+                    email: userEmail,
+                    password: userPassword,
+                    displayName: userDisplayName,
+                })
+
                 .then(() => {
                     console.log('submitting');
                 })
-                .catch(($error) => {
-                    handleOpen();
-                });
+                .catch(handleOpen);
         }
     };
 

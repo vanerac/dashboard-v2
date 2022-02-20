@@ -23,10 +23,11 @@ import type { SetVolumeResponse } from '../models/SetVolumeResponse';
 import type { SkipResponse } from '../models/SkipResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class PlaybackService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get current playback state
@@ -34,8 +35,8 @@ export class PlaybackService {
      * @returns PlaybackStateResponse Successful operation
      * @throws ApiError
      */
-    public static getCurrentState(): CancelablePromise<PlaybackStateResponse> {
-        return __request(OpenAPI, {
+    public getCurrentState(): CancelablePromise<PlaybackStateResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/currentState',
             errors: {
@@ -52,8 +53,8 @@ export class PlaybackService {
      * @returns GetQueueResponse Successful operation
      * @throws ApiError
      */
-    public static getQueue(): CancelablePromise<GetQueueResponse> {
-        return __request(OpenAPI, {
+    public getQueue(): CancelablePromise<GetQueueResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/queue',
             errors: {
@@ -71,10 +72,10 @@ export class PlaybackService {
      * @returns AddToQueueResponse Successful operation
      * @throws ApiError
      */
-    public static addToQueue(
+    public addToQueue(
         requestBody: AddToQueueRequest,
     ): CancelablePromise<AddToQueueResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/queue/add',
             body: requestBody,
@@ -94,10 +95,10 @@ export class PlaybackService {
      * @returns RemoveFromQueueResponse Successful operation
      * @throws ApiError
      */
-    public static removeFromQueue(
+    public removeFromQueue(
         requestBody: RemoveFromQueueRequest,
     ): CancelablePromise<RemoveFromQueueResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/queue/delete',
             body: requestBody,
@@ -116,8 +117,8 @@ export class PlaybackService {
      * @returns ClearQueueResponse Successful operation
      * @throws ApiError
      */
-    public static clearQueue(): CancelablePromise<ClearQueueResponse> {
-        return __request(OpenAPI, {
+    public clearQueue(): CancelablePromise<ClearQueueResponse> {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/playback/queue/clear',
             errors: {
@@ -135,10 +136,10 @@ export class PlaybackService {
      * @returns MoveInQueueResponse Successful operation
      * @throws ApiError
      */
-    public static moveInQueue(
+    public moveInQueue(
         requestBody: MoveInQueueRequest,
     ): CancelablePromise<MoveInQueueResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PUT',
             url: '/playback/queue/move',
             body: requestBody,
@@ -158,10 +159,10 @@ export class PlaybackService {
      * @returns PlayTrackResponse Successful operation
      * @throws ApiError
      */
-    public static playTrack(
+    public playTrack(
         requestBody: PlayTrackRequest,
     ): CancelablePromise<PlayTrackResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/play',
             body: requestBody,
@@ -180,8 +181,8 @@ export class PlaybackService {
      * @returns PauseResponse Successful operation
      * @throws ApiError
      */
-    public static pause(): CancelablePromise<PauseResponse> {
-        return __request(OpenAPI, {
+    public pause(): CancelablePromise<PauseResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/pause',
             errors: {
@@ -198,8 +199,8 @@ export class PlaybackService {
      * @returns ResumeResponse Successful operation
      * @throws ApiError
      */
-    public static resume(): CancelablePromise<ResumeResponse> {
-        return __request(OpenAPI, {
+    public resume(): CancelablePromise<ResumeResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/resume',
             errors: {
@@ -216,8 +217,8 @@ export class PlaybackService {
      * @returns SkipResponse Successful operation
      * @throws ApiError
      */
-    public static skip(): CancelablePromise<SkipResponse> {
-        return __request(OpenAPI, {
+    public skip(): CancelablePromise<SkipResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/skip',
             errors: {
@@ -234,8 +235,8 @@ export class PlaybackService {
      * @returns PrevResponse Successful operation
      * @throws ApiError
      */
-    public static prev(): CancelablePromise<PrevResponse> {
-        return __request(OpenAPI, {
+    public prev(): CancelablePromise<PrevResponse> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/playback/prev',
             errors: {
@@ -253,10 +254,10 @@ export class PlaybackService {
      * @returns SeekResponse Successful operation
      * @throws ApiError
      */
-    public static seek(
+    public seek(
         requestBody?: number,
     ): CancelablePromise<SeekResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/seek',
             body: requestBody,
@@ -276,10 +277,10 @@ export class PlaybackService {
      * @returns SetVolumeResponse Successful operation
      * @throws ApiError
      */
-    public static setVolume(
+    public setVolume(
         requestBody?: boolean,
     ): CancelablePromise<SetVolumeResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/volume',
             body: requestBody,
@@ -299,10 +300,10 @@ export class PlaybackService {
      * @returns SetShuffleResponse Successful operation
      * @throws ApiError
      */
-    public static setShuffle(
+    public setShuffle(
         requestBody?: boolean,
     ): CancelablePromise<SetShuffleResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/shuffle',
             body: requestBody,
@@ -322,10 +323,10 @@ export class PlaybackService {
      * @returns SetRepeatResponse Successful operation
      * @throws ApiError
      */
-    public static setRepeat(
+    public setRepeat(
         requestBody?: boolean,
     ): CancelablePromise<SetRepeatResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/repeat',
             body: requestBody,
@@ -345,10 +346,10 @@ export class PlaybackService {
      * @returns SetQualityResponse Successful operation
      * @throws ApiError
      */
-    public static setQuality(
+    public setQuality(
         requestBody?: string,
     ): CancelablePromise<SetQualityResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/playback/quality',
             body: requestBody,

@@ -42,6 +42,7 @@ export abstract class PlaylistService {
 
 export class SpotifyPlaylistService extends PlaylistService {
     // Make queries to Spotify API
+    // Todo: map this to type
     static override async getPlaylist(token: string, id: string): Promise<Playlist | unknown> {
         const response = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, {
             headers: {
@@ -50,6 +51,7 @@ export class SpotifyPlaylistService extends PlaylistService {
         });
         return response.data;
     }
+    // Todo: map this to type
     static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
         const response = await axios.get(`https://api.spotify.com/v1/me/playlists`, {
             headers: {
@@ -58,6 +60,7 @@ export class SpotifyPlaylistService extends PlaylistService {
         });
         return response.data.items;
     }
+    // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
         const response = await axios.post(
             `https://api.spotify.com/v1/users/${playlist.provider}/playlists`,
@@ -74,6 +77,7 @@ export class SpotifyPlaylistService extends PlaylistService {
         );
         return response.data;
     }
+    // Todo: map this to type
     static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
         const response = await axios.put(
             `https://api.spotify.com/v1/playlists/${playlist.id}`,
@@ -90,6 +94,7 @@ export class SpotifyPlaylistService extends PlaylistService {
         );
         return response.data;
     }
+    // Todo: map this to type
     static override async deletePlaylist(token: string, id: string): Promise<void | unknown> {
         await axios.delete(`https://api.spotify.com/v1/playlists/${id}`, {
             headers: {
@@ -98,6 +103,7 @@ export class SpotifyPlaylistService extends PlaylistService {
         });
         return;
     }
+    // Todo: map this to type
     static override async getPlaylistTracks(token: string, id: string): Promise<Track[] | unknown> {
         const response = await axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
             headers: {
@@ -105,5 +111,162 @@ export class SpotifyPlaylistService extends PlaylistService {
             },
         });
         return response.data.items;
+    }
+}
+
+export class DeezerPlaylistService extends PlaylistService {
+    // Make queries to Deezer API
+    // Todo: map this to type
+    static override async getPlaylist(token: string, id: string): Promise<Playlist | unknown> {
+        const response = await axios.get(`https://api.deezer.com/playlist/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    }
+    // Todo: map this to type
+    static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
+        const response = await axios.get(`https://api.deezer.com/user/me/playlists`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.data;
+    }
+    // Todo: map this to type
+    static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
+        const response = await axios.post(
+            `https://api.deezer.com/user/me/playlists`,
+            {
+                title: playlist.name,
+                description: playlist.description,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    }
+
+    static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
+        const response = await axios.put(
+            `https://api.deezer.com/playlist/${playlist.id}`,
+            {
+                title: playlist.name,
+                description: playlist.description,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    }
+
+    // Todo: map this to type
+    static override async deletePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.delete(`https://api.deezer.com/playlist/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+    static override async getPlaylistTracks(token: string, id: string): Promise<Track[] | unknown> {
+        const response = await axios.get(`https://api.deezer.com/playlist/${id}/tracks`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.data;
+    }
+}
+
+// Youtube
+export class GooglePlaylistService extends PlaylistService {
+    // Make queries to Youtube API
+    static override async getPlaylist(token: string, id: string): Promise<Playlist | unknown> {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?id=${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.items[0];
+    }
+    static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?mine=true`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.items;
+    }
+    static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
+        const response = await axios.post(
+            `https://www.googleapis.com/youtube/v3/playlists`,
+            {
+                snippet: {
+                    title: playlist.name,
+                    description: playlist.description,
+                },
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    }
+
+    static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
+        const response = await axios.put(
+            `https://www.googleapis.com/youtube/v3/playlists`,
+            {
+                id: playlist.id,
+                snippet: {
+                    title: playlist.name,
+                    description: playlist.description,
+                },
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    }
+
+    static override async deletePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.delete(`https://www.googleapis.com/youtube/v3/playlists?id=${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+
+    static override async getPlaylistTracks(token: string, id: string): Promise<Track[] | unknown> {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data.items.map((item: any) => {
+            return {
+                id: item.snippet.resourceId.videoId,
+                name: item.snippet.title,
+                artist: item.snippet.channelTitle,
+                album: item.snippet.channelTitle,
+                duration: item.contentDetails.duration,
+                image: item.snippet.thumbnails.default.url,
+            };
+        });
     }
 }

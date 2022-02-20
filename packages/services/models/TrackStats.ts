@@ -5,5 +5,5 @@
 import type { Track } from './Track';
 
 export type TrackStats = {
-    services?: Array<Track>;
+    tracks?: Array<Track>;
 };

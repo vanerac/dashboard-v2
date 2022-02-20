@@ -1,7 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+export { ApiClient } from './client';
 export { ApiError } from './core/ApiError';
+export { BaseHttpRequest } from './core/BaseHttpRequest';
 export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
@@ -23,6 +25,9 @@ export type { getArtistTopTracksResponse } from './models/getArtistTopTracksResp
 export type { GetCurrentDeviceResponse } from './models/GetCurrentDeviceResponse';
 export type { GetQueueResponse } from './models/GetQueueResponse';
 export type { getSingleArtist } from './models/getSingleArtist';
+export { getTrackAlbumResponse } from './models/getTrackAlbumResponse';
+export { getTrackArtistResponse } from './models/getTrackArtistResponse';
+export { getTrackResponse } from './models/getTrackResponse';
 export type { loginRequest } from './models/loginRequest';
 export type { loginResponse } from './models/loginResponse';
 export type { MoveInQueueRequest } from './models/MoveInQueueRequest';
@@ -70,5 +75,6 @@ export { PlaybackService } from './services/PlaybackService';
 export { PlaylistService } from './services/PlaylistService';
 export { SearchService } from './services/SearchService';
 export { ServicesService } from './services/ServicesService';
-export { StatsService } from './services/StatsService';
 export { SsoService } from './services/SsoService';
+export { StatsService } from './services/StatsService';
+export { TrackService } from './services/TrackService';

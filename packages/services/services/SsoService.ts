@@ -4,10 +4,11 @@
 import type { loginResponse } from '../models/loginResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class SsoService {
+
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Redirects to SSO Auth screen
@@ -15,12 +16,12 @@ export class SsoService {
      * @returns void
      * @throws ApiError
      */
-    public static authSso(): CancelablePromise<void> {
-        return __request(OpenAPI, {
+    public consentSso(): CancelablePromise<void> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/google/login',
             errors: {
-                302: `Redirects to auth consent screen`,
+                308: `Redirects to auth consent screen`,
             },
         });
     }
@@ -32,10 +33,10 @@ export class SsoService {
      * @returns loginResponse Success
      * @throws ApiError
      */
-    public static authRegisterPost(
+    public authCodeSso(
         code: string,
     ): CancelablePromise<loginResponse> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/google/callback',
             query: {
