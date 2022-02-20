@@ -1,6 +1,7 @@
 import {onClick} from "..";
 import {Artist} from "../../services";
 import {Image, Text, View} from "react-native";
+import {Client} from "../../global";
 
 type ArtistListProps = {
     artists: Artist[];
@@ -26,7 +27,25 @@ export function ArtistListItem(props: {artist: Artist, onClick: onClick}) {
     *  Name
     *  Count
     *  Image
+    *   follow artist
+    *   unfollow artist
+    *   Suffle
      */
+
+
+    const follow = (artist: Artist) => {
+        Client.artist.followArtist(service.id, artist.id)
+    }
+
+    const unfollow = (artist: Artist) => {
+        Client.artist.unfollowArtist(service.id, artist.id)
+    }
+
+    const shuffle = (artist: Artist) => {
+        Client.playback.playArtist(service.id, artist.id)
+    }
+
+
     return (
         <View>
             <Text>{props.artist.name}</Text>

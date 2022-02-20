@@ -1,6 +1,7 @@
 import {onClick} from "..";
-import {Track} from "../../services";
+import {Playlist, Track} from "../../services";
 import {Image, Text, View} from "react-native";
+import {Client} from "../../global";
 
 type TrackListProps = {
   tracks: Track[];
@@ -31,6 +32,37 @@ export function TrackListItem(props: {track: Track, onClick: onClick}) {
      *  - Go to album
      *  - Play Track
      */
+
+    const playTrack = (track: Track) => {
+        Client.playback.playTrack({track});
+    }
+
+    const likeTrack = (track: Track) => {
+        Client.track.likeTrack(
+            track.id,
+            service.id, // Shoulb be service ID
+        );
+    }
+
+    const unLikeTrack = (track: Track) => {
+        Client.track.unlikeTrack(
+            track.id,
+            service.id, // Should be service ID
+        );
+    }
+
+    const addToQueue = (track: Track) => {
+        Client.playback.addToQueue({track});
+    }
+
+    const addToPlaylist = (track: Track, playlist: Playlist) => {
+        Client.playlist.addToPlaylist(track.id, service.id, playlist.id);
+    }
+
+    const goToAlbum = (track: Track) => {}
+    const goToArtist = (track: Track) => {}
+
+
 
   return (
       <View>

@@ -1,6 +1,7 @@
 import {onClick} from "..";
-import {Playlist} from "../../services";
+import {Playlist, Track} from "../../services";
 import {Text, View} from "react-native";
+import {Client} from "../../global";
 
 type PlaylistListProps = {
     playlists: Playlist[];
@@ -29,6 +30,22 @@ export function PlaylistListItem(props: {playlist: Playlist, onClick: onClick}) 
      *  Save playlist
      */
 
+
+    const addTrack = (track: Track, playlist: Playlist) => {
+        Client.playlist.addToPlaylist(track.id, service.id, playlist.id);
+    };
+
+    const playPlaylist = (playlist: Playlist) => {
+        Client.playlist.playPlaylist(playlist); // todo
+    };
+
+    const savePlaylist = (playlist: Playlist) => {
+        Client.playlist.savePlaylist(playlist); // todo
+    };
+
+    const unsavePlaylist = (playlist: Playlist) => {
+        Client.playlist.unsavePlaylist(playlist); //todo
+    };
 
     return (
         <View>
