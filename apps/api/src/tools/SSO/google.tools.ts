@@ -10,13 +10,14 @@ export class GoogleTools implements SSOTools {
 
     static async getToken(code: string): Promise<Token> {
         const params = {
+            grant_type: 'authorization_code',
             code,
             client_id: GoogleTools.clientId,
             client_secret: GoogleTools.clientSecret,
             redirect_uri: GoogleTools.callbackURL,
-            grant_type: 'authorization_code',
         };
-        const data = await axios.post('https://www.googleapis.com/oauth2/v4/token', params);
+        console.log('la => ', params);
+        const data = await axios.post('https://www.googleapis.com/oauth2/v4/token?' + new URLSearchParams(params).toString());
         data.data.provider = 'google';
         return data.data;
     }

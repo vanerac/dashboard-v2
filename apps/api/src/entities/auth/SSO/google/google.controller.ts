@@ -24,9 +24,10 @@ export default class GoogleController extends SSOController {
             redirect_uri: callbackURL || GoogleController.callbackURL,
             scope: GoogleController.scope,
             response_type: 'code',
-            access_type: 'offline',
-            prompt: 'consent',
+            // access_type: 'offline',
+            // prompt: 'consent',
         };
+        console.log("la2 => ", params)
         // @ts-ignore
         const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(params)}`;
         res.json({ url });
