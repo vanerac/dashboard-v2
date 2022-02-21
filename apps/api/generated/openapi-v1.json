@@ -146,7 +146,7 @@
     },
     "/auth/sso/google/login": {
       "get": {
-        "operationId": "consentSSO",
+        "operationId": "googleConsentSSO",
         "tags": [
           "SSO"
         ],
@@ -159,15 +159,216 @@
         }
       }
     },
-    "/auth/sso/spotify/login": {
-      "$ref": "#/paths/~1auth~1sso~1google~1login"
-    },
-    "/auth/sso/spotify/callback": {
-      "$ref": "#/paths/~1auth~1sso~1google~1callback"
-    },
     "/auth/sso/google/callback": {
       "get": {
-        "operationId": "authCodeSSO",
+        "operationId": "googleAuthCodeSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/spotify/login": {
+      "get": {
+        "operationId": "spotifyConsentSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "responses": {
+          "308": {
+            "description": "Redirects to auth consent screen"
+          }
+        }
+      }
+    },
+    "/auth/sso/spotify/callback": {
+      "get": {
+        "operationId": "spotifyAuthCodeSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/deezer/login": {
+      "get": {
+        "operationId": "deezerConsentSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "responses": {
+          "308": {
+            "description": "Redirects to auth consent screen"
+          }
+        }
+      }
+    },
+    "/auth/sso/deezer/callback": {
+      "get": {
+        "operationId": "deezerAuthCodeSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/lastfm/login": {
+      "get": {
+        "operationId": "lastfmConsentSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "responses": {
+          "308": {
+            "description": "Redirects to auth consent screen"
+          }
+        }
+      }
+    },
+    "/auth/sso/lastfm/callback": {
+      "get": {
+        "operationId": "lastfmAuthCodeSSO",
         "tags": [
           "SSO"
         ],
