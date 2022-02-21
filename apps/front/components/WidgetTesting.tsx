@@ -6,7 +6,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 import { useState } from 'react';
 import { Key } from 'react';
 
-const ShowcaseLayout = (props: { widgetsAdded: any; }) => {
+const ShowcaseLayout = (props: { widgetsAdded: any }) => {
     console.log('numero => ', props.widgetsAdded);
 
     const generateDOM = () => {
@@ -30,8 +30,10 @@ const ShowcaseLayout = (props: { widgetsAdded: any; }) => {
     };
 
     function generateLayout() {
-        return _.map(_.range(0, props.widgetsAdded), function (i: { toString: () => any; }) {
-            var y = Math.ceil(Math.random() * 4) + 1;
+        return _.map(_.range(0, props.widgetsAdded), function (i: { toString: () => any }) {
+            // var y = Math.ceil(Math.random() * 4) + 1;
+            // console.log('le Y => ', y);
+            var y = 1;
             return {
                 // x: (_.random(0, 5) * 2) % 12,
                 x: 0,
@@ -44,6 +46,8 @@ const ShowcaseLayout = (props: { widgetsAdded: any; }) => {
             };
         });
     }
+
+    console.log("c'est ici => ", generateLayout());
 
     return (
         <div>
