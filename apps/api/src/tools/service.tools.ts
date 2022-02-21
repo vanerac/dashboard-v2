@@ -21,7 +21,7 @@ export function parseServiceId(req: Request, res: Response, next: NextFunction) 
         if (!service) {
             return res.status(404).send('Service not found');
         }
-        req.session.local.service = service;
+        req.session.service = service;
         next();
     })();
 }
@@ -42,7 +42,7 @@ export function hasService(provider: string) {
                 return res.status(404).send('Service not found');
             }
             service as Service;
-            req.session.local.service = service;
+            req.session.service = service;
             next();
         });
     };

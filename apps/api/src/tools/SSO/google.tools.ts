@@ -17,7 +17,9 @@ export class GoogleTools implements SSOTools {
             redirect_uri: GoogleTools.callbackURL,
         };
         console.log('la => ', params);
-        const data = await axios.post('https://www.googleapis.com/oauth2/v4/token?' + new URLSearchParams(params).toString());
+        const data = await axios.post(
+            'https://www.googleapis.com/oauth2/v4/token?' + new URLSearchParams(params).toString(),
+        );
         data.data.provider = 'google';
         return data.data;
     }

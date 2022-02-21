@@ -105,11 +105,26 @@ const Login = () => {
         });
     };
 
-    const authSpotify = () => {};
+    const authSpotify = () => {
+        Client.sso.spotifyConsentSso(/*'http://localhost:3000/sso/spotify'*/).then((data) => {
+            console.log(data);
+            Router.push(data.url);
+        });
+    };
 
-    const authLastFM = () => {};
+    const authLastFM = () => {
+        Client.sso.lastfmConsentSso('http://localhost:3000/getLastFMCode').then((data) => {
+            console.log(data);
+            Router.push(data.url);
+        });
+    };
 
-    const authApple = () => {};
+    const authApple = () => {
+        // Client.sso.appleConsentSso('http://localhost:3000/getAppleCode').then((data) => {
+        //     console.log(data);
+        //     Router.push(data.url);
+        // });
+    };
 
     return (
         <>
