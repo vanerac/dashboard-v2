@@ -59,16 +59,40 @@ export class SpotifyPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.name,
+            description: response.data.description,
+            image: response.data.images[0].url,
+            tracks: [],
+            provider: 'spotify',
+        };
     }
     // Todo: map this to type
-    static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
-        const response = await axios.get(`https://api.spotify.com/v1/me/playlists`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data.items;
+    static override async getPlaylists(token: string): Promise<Playlist[] | undefined> {
+        try {
+            console.log('Getting playlists', token);
+            const response = await axios.get(`https://api.spotify.com/v1/me/playlists`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            return Promise.all(
+                response.data.items.map(async (item: any) => {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        description: item.description,
+                        image: item.images[0].url,
+                        tracks: [],
+                        provider: 'spotify',
+                    };
+                }),
+            );
+        } catch (error: any) {
+            console.log(error.response.data);
+        }
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -120,7 +144,21 @@ export class SpotifyPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.items;
+        return response.data.items
+            .filter(({ track: v }: any) => !!v)
+            .map(({ track: item }: any) => {
+                // console.log(item);
+
+                return {
+                    id: item.id,
+                    name: item.name,
+                    artist: item.artists[0].name,
+                    album: item.album.name,
+                    duration: item.duration_ms,
+                    image: item.album.images[0].url,
+                    provider: 'spotify',
+                };
+            });
     }
 
     // unsave playlist to favorites

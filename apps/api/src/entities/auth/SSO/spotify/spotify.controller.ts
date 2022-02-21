@@ -36,6 +36,7 @@ export default class SpotifyController extends SSOController {
                 throw new Error('No code provided');
             }
             const SSOToken = await SpotifyTools.getToken(code);
+            console.log('SSOToken', SSOToken);
             const user: ServiceUserData = await SpotifyTools.getUserInfos(SSOToken.access_token);
 
             var userData: User & any = sessionUser || (await findUserByService('spotify', user.id));
@@ -43,6 +44,7 @@ export default class SpotifyController extends SSOController {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
             } else {
+                console.log('Updating token');
                 await updateToken(userData, user, SSOToken);
             }
             delete userData.password;
