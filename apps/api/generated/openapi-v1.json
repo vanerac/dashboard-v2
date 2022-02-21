@@ -159,12 +159,6 @@
         }
       }
     },
-    "/auth/sso/spotify/login": {
-      "$ref": "#/paths/~1auth~1sso~1google~1login"
-    },
-    "/auth/sso/spotify/callback": {
-      "$ref": "#/paths/~1auth~1sso~1google~1callback"
-    },
     "/auth/sso/google/callback": {
       "get": {
         "operationId": "authCodeSSO",
@@ -218,6 +212,24 @@
           }
         }
       }
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "#/paths/~1auth~1sso~1google~1callback"
+    },
+    "/auth/sso/deezer/login": {
+      "$ref": "#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/deezer/callback": {
+      "$ref": "#/paths/~1auth~1sso~1google~1callback"
+    },
+    "/auth/sso/lastfm/login": {
+      "$ref": "#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/lastfm/callback": {
+      "$ref": "#/paths/~1auth~1sso~1google~1callback"
     },
     "/service": {
       "get": {

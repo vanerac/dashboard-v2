@@ -8,7 +8,7 @@ import { User } from '../../../../../../../packages/services';
 
 export default class GoogleController extends SSOController {
     static clientId: string = configuration.googleClientId;
-    static clientSecret: string = configuration.appleClientSecret;
+    static clientSecret: string = configuration.googleClientSecret;
     static redirectURL: string = configuration.frontendHost;
     static callbackURL: string = configuration.googleRedirectUri;
     static scope: string = configuration.googleScopes;

@@ -1,28 +1,28 @@
 import { ServiceUserData, SSOController } from '../../../../tools/types';
 import { Request, Response } from 'express';
 import configuration from '../../../../../configuration';
-import { DeezerTools } from '../../../../tools/SSO/deezer.tools';
+import { LastFmTools } from '../../../../tools/SSO/lastfm.tools';
 import { generateToken } from '../../../../tools/auth.tools';
 import { createUser, findUserByService, linkService, updateToken } from '../../../../tools/SSO/sso.tool';
 import { User } from '../../../../../../../packages/services';
 
-export default class DeezerController extends SSOController {
-    static clientId: string = configuration.deezerClientId;
-    static clientSecret: string = configuration.deezerClientSecret;
+export default class LastFmController extends SSOController {
+    static clientId: string = configuration.lastFmClientId;
+    static clientSecret: string = configuration.appleClientSecret;
     static redirectURL: string = configuration.frontendHost;
-    static callbackURL: string = configuration.deezerRedirectUri;
-    static scope: string = configuration.deezerScopes;
+    static callbackURL: string = configuration.lastFmRedirectUri;
+    static scope: string = configuration.lastFmScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
+        // redirect to lastFm for authentication
+        // callback url sends to /api/auth/lastFm/callback
         const params = {
-            client_id: DeezerController.clientId,
-            redirect_uri: DeezerController.callbackURL,
-            scope: DeezerController.scope,
+            client_id: LastFmController.clientId,
             response_type: 'code',
-            access_type: 'offline',
-            prompt: 'consent',
+            redirect_uri: LastFmController.callbackURL,
+            scope: LastFmController.scope,
         };
-        const url = `https://connect.deezer.com/oauth/auth.php?${new URLSearchParams(params)}`;
+        const url = `https://www.last.fm/api/auth/?${new URLSearchParams(params)}`;
         res.status(302).redirect(url);
     }
 
@@ -34,10 +34,10 @@ export default class DeezerController extends SSOController {
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await DeezerTools.getToken(code);
-            const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
+            const SSOToken = await LastFmTools.getToken(code);
+            const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token);
 
-            var userData: User & any = sessionUser || (await findUserByService('deezer', user.id));
+            var userData: User & any = sessionUser || (await findUserByService('lastFm', user.id));
             if (!userData) {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);

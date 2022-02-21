@@ -20,14 +20,26 @@
     "/auth/sso/google/login": {
       "$ref": "auth/auth.path.json#/consentSSO"
     },
-    "/auth/sso/spotify/login": {
-      "$ref": "auth/auth.path.json#/consentSSO"
-    },
-    "/auth/sso/spotify/callback": {
-      "$ref": "auth/auth.path.json#/authCodeSSO"
-    },
     "/auth/sso/google/callback": {
       "$ref": "auth/auth.path.json#/authCodeSSO"
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "./openapi.index.json#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "./openapi.index.json#/paths/~1auth~1sso~1google~1callback"
+    },
+    "/auth/sso/deezer/login": {
+      "$ref": "./openapi.index.json#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/deezer/callback": {
+      "$ref": "./openapi.index.json#/paths/~1auth~1sso~1google~1callback"
+    },
+    "/auth/sso/lastfm/login": {
+      "$ref": "./openapi.index.json#/paths/~1auth~1sso~1google~1login"
+    },
+    "/auth/sso/lastfm/callback": {
+      "$ref": "./openapi.index.json#/paths/~1auth~1sso~1google~1callback"
     },
     "/service": {
       "$ref": "services/service.path.json#/getAllUserServices"
