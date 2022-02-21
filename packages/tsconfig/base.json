@@ -16,15 +16,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "@area/ui": [
-        "packages/ui"
-      ],
-      "@area/services": [
-        "packages/services"
-      ]
-    }
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"]
 }

@@ -19,6 +19,9 @@ export default class PlayerManager {
     public getCurrentTrack($userId: UUID): Track {
         // TODO Handles with audioPlayer;
         return {
+            image: '',
+            playable: false,
+            type: Track.type.TRACK,
             id: '',
             name: '',
             artist: '',

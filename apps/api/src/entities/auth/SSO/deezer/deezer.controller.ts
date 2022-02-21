@@ -7,11 +7,11 @@ import { createUser, findUserByService, linkService, updateToken } from '../../.
 import { User } from '../../../../../../../packages/services';
 
 export default class DeezerController extends SSOController {
-    static clientId: string = configuration.googleClientId;
-    static clientSecret: string = configuration.appleClientSecret;
+    static clientId: string = configuration.deezerClientId;
+    static clientSecret: string = configuration.deezerClientSecret;
     static redirectURL: string = configuration.frontendHost;
-    static callbackURL: string = configuration.googleRedirectUri;
-    static scope: string = configuration.googleScopes;
+    static callbackURL: string = configuration.deezerRedirectUri;
+    static scope: string = configuration.deezerScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
         const params = {
