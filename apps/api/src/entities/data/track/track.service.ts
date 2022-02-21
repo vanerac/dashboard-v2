@@ -48,6 +48,9 @@ export class SpotifyTrackService extends TrackService {
         const response = await axios.get(url, { headers });
         // map response to track type
         return {
+            image: response.data.album.images[0].url,
+            playable: true,
+            type: Track.type.TRACK,
             id: response.data.id,
             name: response.data.name,
             artist: response.data.artist[0].name,
@@ -84,6 +87,10 @@ export class SpotifyTrackService extends TrackService {
         const response = await axios.get(url, { headers });
         // map response to artist type
         return {
+            external_urls: response.data.album.artist[0].external_urls,
+            followers: response.data.album.artist[0].followers,
+            image: response.data.album.artist[0].images[0].url,
+            type: Track.type.TRACK,
             id: response.data.album.artist[0].id,
             name: response.data.album.artist[0].name,
             provider: 'spotify',
@@ -139,6 +146,9 @@ export class YoutubeTrackService extends TrackService {
         const response = await axios.get(url);
         // map response to track type
         return {
+            image: response.data.items[0].snippet.thumbnails.default.url,
+            playable: true,
+            type: Track.type.TRACK,
             id: response.data.items[0].id,
             name: response.data.items[0].snippet.title,
             artist: response.data.items[0].snippet.channelTitle,
@@ -169,6 +179,10 @@ export class YoutubeTrackService extends TrackService {
         const response = await axios.get(url);
         // map response to artist type
         return {
+            external_urls: response.data.items[0].snippet.channelId,
+            followers: 0,
+            image: response.data.items[0].snippet.thumbnails.default.url,
+            type: Artist.type.ARTIST,
             id: response.data.items[0].snippet.channelId,
             name: response.data.items[0].snippet.channelTitle,
             provider: 'youtube',
@@ -224,6 +238,9 @@ export class DeezerTrackService extends TrackService {
         const response = await axios.get(url);
         // map response to track type
         return {
+            image: response.data.album.cover_big,
+            playable: false,
+            type: Track.type.TRACK,
             id: response.data.id,
             name: response.data.title,
             artist: response.data.artist.name,
@@ -257,6 +274,10 @@ export class DeezerTrackService extends TrackService {
             id: response.data.artist.id,
             name: response.data.artist.name,
             provider: 'deezer',
+            external_urls: response.data.artist.link,
+            followers: response.data.artist.nb_fan,
+            image: response.data.artist.picture_big,
+            type: Artist.type.ARTIST,
         };
     }
 

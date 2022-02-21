@@ -1131,6 +1131,172 @@
         }
       }
     },
+    "/data/{serviceId}/playlist/{playlistId}/save": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "summary": "Save playlist",
+        "description": "Save playlist",
+        "operationId": "save",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/playlistSingleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/playlist/{playlistId}/unsave": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "summary": "Unsave playlist",
+        "description": "Unsave playlist",
+        "operationId": "unsave",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/playlistSingleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/data/{serviceId}/search": {
       "get": {
         "tags": [
@@ -4126,7 +4292,18 @@
           "playable": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "type",
+          "id",
+          "name",
+          "artist",
+          "album",
+          "duration",
+          "image",
+          "provider",
+          "playable"
+        ]
       },
       "Playlist": {
         "type": "object",
@@ -4161,7 +4338,12 @@
               "$ref": "#/components/schemas/Track"
             }
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "provider"
+        ]
       },
       "Service": {
         "type": "object",
@@ -4182,7 +4364,12 @@
           "enabled": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "id",
+          "type",
+          "enabled"
+        ]
       },
       "User": {
         "type": "object",
@@ -4197,7 +4384,12 @@
           "id": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "email",
+          "displayName",
+          "id"
+        ]
       },
       "Error": {
         "type": "object",
@@ -4241,7 +4433,15 @@
           "external_urls": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "image",
+          "provider",
+          "followers",
+          "external_urls"
+        ]
       },
       "Album": {
         "type": "object",
@@ -4310,7 +4510,14 @@
           "ws": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "volume",
+          "state",
+          "ws"
+        ]
       },
       "Tag": {
         "type": "object",
@@ -4326,10 +4533,42 @@
       "getSingleArtist": {
         "type": "object",
         "properties": {
-          "schema": {
-            "$ref": "#/components/schemas/Artist"
+          "type": {
+            "type": "string",
+            "enum": [
+              "artist",
+              "album",
+              "track",
+              "playlist"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "integer"
+          },
+          "external_urls": {
+            "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "image",
+          "provider",
+          "followers",
+          "external_urls"
+        ]
       },
       "PlaybackStatus": {
         "type": "object",
@@ -4351,7 +4590,13 @@
               "stopped"
             ]
           }
-        }
+        },
+        "required": [
+          "track",
+          "position",
+          "device",
+          "state"
+        ]
       },
       "loginResponse": {
         "type": "object",
@@ -4814,7 +5059,18 @@
           "playable": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "type",
+          "id",
+          "name",
+          "artist",
+          "album",
+          "duration",
+          "image",
+          "provider",
+          "playable"
+        ]
       },
       "getTrackAlbumResponse": {
         "type": "object",
@@ -4875,7 +5131,15 @@
           "external_urls": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "image",
+          "provider",
+          "followers",
+          "external_urls"
+        ]
       }
     }
   },
