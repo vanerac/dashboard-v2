@@ -76,9 +76,9 @@ const Register = () => {
                     displayName: userDisplayName,
                 })
                 .then((data) => {
-                    console.log(data)
+                    console.log(data);
                     console.log('submitting');
-                    Router.push('/login')
+                    Router.push('/login');
                 })
                 .catch(handleOpen);
         }
@@ -143,12 +143,7 @@ const Register = () => {
                                 ml: -1,
                             }}></Box>
                         <Box sx={{ py: 2 }}>
-                            <Button
-                                color="primary"
-                                fullWidth
-                                size="large"
-                                onClick={submit}
-                                variant="contained">
+                            <Button color="primary" fullWidth size="large" onClick={submit} variant="contained">
                                 Sign Up Now
                             </Button>
                         </Box>

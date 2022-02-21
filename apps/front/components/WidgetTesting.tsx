@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
-import { useState } from 'react';
 import { Key } from 'react';
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const ShowcaseLayout = (props: { widgetsAdded: any }) => {
     console.log('numero => ', props.widgetsAdded);

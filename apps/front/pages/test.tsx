@@ -1,6 +1,5 @@
 import withAuth from './withAuth';
 // import Widgets from './../components/Widget';
-import ShowcaseLayout from '../components/WidgetTesting';
 import Child from './../components/test_bis';
 
 function test() {

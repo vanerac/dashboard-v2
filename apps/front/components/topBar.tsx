@@ -71,7 +71,7 @@ export default function SearchAppBar({ addWidget }) {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     const nextMode = darkModeActive ? 'Light' : 'Dark';
     const Icon = darkModeActive ? LightIcon : DarkIcon;
-    
+
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -126,7 +126,7 @@ export default function SearchAppBar({ addWidget }) {
                 </ListItem>
                 <ListItem onClick={handleChangeMode} button key={'darkode'}>
                     <ListItemIcon>{<Icon />}</ListItemIcon>
-                    <ListItemText primary={'Use Darkmode'} />
+                    <ListItemText primary={'Use ' + nextMode + 'Mode'} />
                 </ListItem>
             </List>
         </Box>

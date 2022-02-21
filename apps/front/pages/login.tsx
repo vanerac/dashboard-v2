@@ -1,6 +1,5 @@
 import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
 import { useDarkMode } from 'next-dark-mode';
-import withAuth from './withAuth';
 import Router from 'next/router';
 // import Head from 'next/head';
 import NextLink from 'next/link';
@@ -15,7 +14,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 // import { Test } from '@area/ui';
-import { Client, updateClientConfig } from '../../../packages/global';
+import { Client } from '../../../packages/global';
 import Cookies from 'universal-cookie';
 
 const Login = () => {

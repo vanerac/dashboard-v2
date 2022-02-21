@@ -15,12 +15,13 @@ const Dasboard = () => {
         console.log(numberWidgets);
     };
 
-    return (
-        React.createElement("div", null, 
+    return React.createElement(
+        'div',
+        null,
         <>
             <TopBar addWidget={addWidget} />
-            <ShowcaseLayout widgetsAdded={numberWidgets}/>
-        </>)
+            <ShowcaseLayout widgetsAdded={numberWidgets} />
+        </>,
     );
 };
 
