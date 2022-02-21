@@ -70,29 +70,24 @@ export class SpotifyPlaylistService extends PlaylistService {
     }
     // Todo: map this to type
     static override async getPlaylists(token: string): Promise<Playlist[] | undefined> {
-        try {
-            console.log('Getting playlists', token);
-            const response = await axios.get(`https://api.spotify.com/v1/me/playlists`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+        const response = await axios.get(`https://api.spotify.com/v1/me/playlists`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
-            return Promise.all(
-                response.data.items.map(async (item: any) => {
-                    return {
-                        id: item.id,
-                        name: item.name,
-                        description: item.description,
-                        image: item.images[0].url,
-                        tracks: [],
-                        provider: 'spotify',
-                    };
-                }),
-            );
-        } catch (error: any) {
-            console.log(error.response.data);
-        }
+        return Promise.all(
+            response.data.items.map(async (item: any) => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
+                    image: item.images[0].url,
+                    tracks: [],
+                    provider: 'spotify',
+                };
+            }),
+        );
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {

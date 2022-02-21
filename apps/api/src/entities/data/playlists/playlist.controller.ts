@@ -23,7 +23,6 @@ export default class PlaylistController {
                     error: 'No service selected',
                 });
             }
-            console.log(req.session.service);
             const { provider, accessToken } = req.session.service;
             const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
@@ -31,13 +30,11 @@ export default class PlaylistController {
                     error: 'Service not found',
                 });
             }
-            const fn = SpotifyPlaylistService.getPlaylists;
-            console.log(accessToken);
+            // @ts-ignore
+            const fn = serviceInstance.getPlaylists;
             const playlists = await fn(accessToken);
             return res.json(playlists);
         } catch (error) {
-            // @ts-ignore
-            console.log(error);
             next(error);
         }
     }
