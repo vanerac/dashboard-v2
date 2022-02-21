@@ -1,5 +1,5 @@
 import {onClick} from "..";
-import {Playlist, Track} from "../../services";
+import {Playlist, Service, Track} from "../../services";
 import {Text, View} from "react-native";
 import {Client} from "../../global";
 
@@ -31,19 +31,19 @@ export function PlaylistListItem(props: {playlist: Playlist, onClick: onClick}) 
      */
 
 
-    const addTrack = (track: Track, playlist: Playlist) => {
+    const addTrack = (service: Service ,track: Track, playlist: Playlist) => {
         Client.playlist.addToPlaylist(track.id, service.id, playlist.id);
     };
 
     const playPlaylist = (playlist: Playlist) => {
-        Client.playlist.playPlaylist(playlist); // todo
+        // Client.playlist.playPlaylist(playlist); // todo
     };
 
-    const savePlaylist = (playlist: Playlist) => {
+    const savePlaylist = (service: Service , playlist: Playlist) => {
         Client.playlist.save(service.id, playlist.id); // todo
     };
 
-    const unsavePlaylist = (playlist: Playlist) => {
+    const unsavePlaylist = (service: Service, playlist: Playlist) => {
         Client.playlist.unsave(service.id, playlist.id); //todo
     };
 

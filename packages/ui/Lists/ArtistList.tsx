@@ -1,5 +1,5 @@
 import {onClick} from "..";
-import {Artist} from "../../services";
+import {Artist, Service} from "../../services";
 import {Image, Text, View} from "react-native";
 import {Client} from "../../global";
 
@@ -33,16 +33,16 @@ export function ArtistListItem(props: {artist: Artist, onClick: onClick}) {
      */
 
 
-    const follow = (artist: Artist) => {
+    const follow = (service: Service, artist: Artist) => {
         Client.artist.followArtist(service.id, artist.id)
     }
 
-    const unfollow = (artist: Artist) => {
+    const unfollow = (service: Service, artist: Artist) => {
         Client.artist.unfollowArtist(service.id, artist.id)
     }
 
-    const shuffle = (artist: Artist) => {
-        Client.playback.playArtist(service.id, artist.id)
+    const shuffle = (service: Service, artist: Artist) => {
+        // Client.playback.playArtist(service.id, artist.id)
     }
 
 

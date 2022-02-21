@@ -1,5 +1,5 @@
 import {onClick} from "..";
-import {Playlist, Track} from "../../services";
+import {Playlist, Service, Track} from "../../services";
 import {Image, Text, View} from "react-native";
 import {Client} from "../../global";
 
@@ -37,14 +37,14 @@ export function TrackListItem(props: {track: Track, onClick: onClick}) {
         Client.playback.playTrack({track});
     }
 
-    const likeTrack = (track: Track) => {
+    const likeTrack = (service: Service, track: Track) => {
         Client.track.likeTrack(
             track.id,
             service.id, // Shoulb be service ID
         );
     }
 
-    const unLikeTrack = (track: Track) => {
+    const unLikeTrack = (service: Service, track: Track) => {
         Client.track.unlikeTrack(
             track.id,
             service.id, // Should be service ID
@@ -55,7 +55,7 @@ export function TrackListItem(props: {track: Track, onClick: onClick}) {
         Client.playback.addToQueue({track});
     }
 
-    const addToPlaylist = (track: Track, playlist: Playlist) => {
+    const addToPlaylist = (service: Service, track: Track, playlist: Playlist) => {
         Client.playlist.addToPlaylist(track.id, service.id, playlist.id);
     }
 
