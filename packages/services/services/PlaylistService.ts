@@ -184,6 +184,48 @@ export class PlaylistService {
     }
 
     /**
+     * Save playlist
+     * Save playlist
+     * @param serviceId ID of service to return playlists for
+     * @param playlistId Playlist id
+     * @throws ApiError
+     */
+    public save(
+        serviceId: string,
+        playlistId: string,
+    ): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/data/{serviceId}/playlist/{playlistId}/save',
+            path: {
+                'serviceId': serviceId,
+                'playlistId': playlistId,
+            },
+        });
+    }
+
+    /**
+     * Unsave playlist
+     * Unsave playlist
+     * @param serviceId ID of service to return playlists for
+     * @param playlistId Playlist id
+     * @throws ApiError
+     */
+    public unsave(
+        serviceId: string,
+        playlistId: string,
+    ): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/data/{serviceId}/playlist/{playlistId}/unsave',
+            path: {
+                'serviceId': serviceId,
+                'playlistId': playlistId,
+            },
+        });
+    }
+
+    /**
      * Add track to playlist
      * Add track to playlist
      * @param trackId Playlist ID

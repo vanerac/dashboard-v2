@@ -40,11 +40,11 @@ export function PlaylistListItem(props: {playlist: Playlist, onClick: onClick}) 
     };
 
     const savePlaylist = (playlist: Playlist) => {
-        Client.playlist.savePlaylist(playlist); // todo
+        Client.playlist.save(service.id, playlist.id); // todo
     };
 
     const unsavePlaylist = (playlist: Playlist) => {
-        Client.playlist.unsavePlaylist(playlist); //todo
+        Client.playlist.unsave(service.id, playlist.id); //todo
     };
 
     return (

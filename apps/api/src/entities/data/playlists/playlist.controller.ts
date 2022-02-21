@@ -153,4 +153,50 @@ export default class PlaylistController {
             next(error);
         }
     }
+
+    static async savePlaylist(req: Request, res: Response, next: NextFunction) {
+        try {
+            if (!req.session.local.service) {
+                return res.status(400).json({
+                    error: 'No service selected',
+                });
+            }
+            const { service } = req.session.local.service;
+            const serviceInstance: PlaylistService = servicesList[service];
+            if (!serviceInstance) {
+                return res.status(400).json({
+                    error: 'Service not found',
+                });
+            }
+            // @ts-ignore todo: fix this
+            const fn = serviceInstance.savePlaylist;
+            const playlist = await fn(req.session.local.service.accessToken, req.params.id);
+            return res.json(playlist);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async unsavePlaylist(req: Request, res: Response, next: NextFunction) {
+        try {
+            if (!req.session.local.service) {
+                return res.status(400).json({
+                    error: 'No service selected',
+                });
+            }
+            const { service } = req.session.local.service;
+            const serviceInstance: PlaylistService = servicesList[service];
+            if (!serviceInstance) {
+                return res.status(400).json({
+                    error: 'Service not found',
+                });
+            }
+            // @ts-ignore todo: fix this
+            const fn = serviceInstance.unsavePlaylist;
+            const playlist = await fn(req.session.local.service.accessToken, req.params.id);
+            return res.json(playlist);
+        } catch (error) {
+            next(error);
+        }
+    }
 }

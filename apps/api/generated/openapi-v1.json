@@ -930,6 +930,172 @@
         }
       }
     },
+    "/data/{serviceId}/playlist/{playlistId}/save": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "summary": "Save playlist",
+        "description": "Save playlist",
+        "operationId": "save",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/playlistSingleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/playlist/{playlistId}/unsave": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "summary": "Unsave playlist",
+        "description": "Unsave playlist",
+        "operationId": "unsave",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/playlistSingleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/data/{serviceId}/search": {
       "get": {
         "tags": [
