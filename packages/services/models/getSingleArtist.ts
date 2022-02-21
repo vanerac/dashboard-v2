@@ -2,8 +2,24 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Artist } from './Artist';
-
 export type getSingleArtist = {
-    schema?: Artist;
+    type?: getSingleArtist.type;
+    id: string;
+    name: string;
+    image: string;
+    provider: string;
+    followers: number;
+    external_urls: string;
 };
+
+export namespace getSingleArtist {
+
+    export enum type {
+        ARTIST = 'artist',
+        ALBUM = 'album',
+        TRACK = 'track',
+        PLAYLIST = 'playlist',
+    }
+
+
+}

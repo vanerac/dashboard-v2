@@ -46,6 +46,7 @@ export class SpotifyArtistService implements ArtistService {
         const json = await response.json();
         // parse artist to type Artist
         const parsed: Artist = {
+            provider: 'spotify',
             id: json.id,
             name: json.name,
             image: json.images[0].url,

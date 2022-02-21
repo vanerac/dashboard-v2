@@ -26,7 +26,12 @@
         "id": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "email",
+        "displayName",
+        "id"
+      ]
     },
     "Service": {
       "type": "object",
@@ -47,7 +52,12 @@
         "enabled": {
           "type": "boolean"
         }
-      }
+      },
+      "required": [
+        "id",
+        "type",
+        "enabled"
+      ]
     },
     "Track": {
       "type": "object",
@@ -93,7 +103,18 @@
             "type": "boolean"
 
         }
-      }
+      },
+      "required": [
+        "type",
+        "id",
+        "name",
+        "artist",
+        "album",
+        "duration",
+        "image",
+        "provider",
+        "playable"
+      ]
     },
     "Playlist": {
       "type": "object",
@@ -128,7 +149,12 @@
             "$ref": "#/schemas/Track"
           }
         }
-      }
+      },
+      "required": [
+        "id",
+        "name",
+        "provider"
+      ]
     },
     "Artist": {
       "type": "object",
@@ -160,7 +186,15 @@
         "external_urls": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "id",
+        "name",
+        "image",
+        "provider",
+        "followers",
+        "external_urls"
+      ]
     },
     "Album": {
       "type": "object",
@@ -214,7 +248,13 @@
             "stopped"
           ]
         }
-      }
+      },
+      "required": [
+        "track",
+        "position",
+        "device",
+        "state"
+      ]
     },
     "Device": {
       "type": "object",
@@ -240,7 +280,14 @@
           "type": "string"
 
         }
-      }
+      },
+      "required": [
+        "id",
+        "name",
+        "volume",
+        "state",
+        "ws"
+      ]
     },
     "Tag": {
       "type": "object",

@@ -24,7 +24,7 @@ export type { getArtistsResponse } from './models/getArtistsResponse';
 export type { getArtistTopTracksResponse } from './models/getArtistTopTracksResponse';
 export type { GetCurrentDeviceResponse } from './models/GetCurrentDeviceResponse';
 export type { GetQueueResponse } from './models/GetQueueResponse';
-export type { getSingleArtist } from './models/getSingleArtist';
+export { getSingleArtist } from './models/getSingleArtist';
 export { getTrackAlbumResponse } from './models/getTrackAlbumResponse';
 export { getTrackArtistResponse } from './models/getTrackArtistResponse';
 export { getTrackResponse } from './models/getTrackResponse';

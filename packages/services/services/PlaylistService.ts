@@ -184,6 +184,62 @@ export class PlaylistService {
     }
 
     /**
+     * Save playlist
+     * Save playlist
+     * @param serviceId ID of service to return playlists for
+     * @param playlistId Playlist id
+     * @returns playlistSingleResponse Successful operation
+     * @throws ApiError
+     */
+    public save(
+        serviceId: string,
+        playlistId: string,
+    ): CancelablePromise<playlistSingleResponse> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/data/{serviceId}/playlist/{playlistId}/save',
+            path: {
+                'serviceId': serviceId,
+                'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+
+    /**
+     * Unsave playlist
+     * Unsave playlist
+     * @param serviceId ID of service to return playlists for
+     * @param playlistId Playlist id
+     * @returns playlistSingleResponse Successful operation
+     * @throws ApiError
+     */
+    public unsave(
+        serviceId: string,
+        playlistId: string,
+    ): CancelablePromise<playlistSingleResponse> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/data/{serviceId}/playlist/{playlistId}/unsave',
+            path: {
+                'serviceId': serviceId,
+                'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+
+    /**
      * Add track to playlist
      * Add track to playlist
      * @param trackId Playlist ID

@@ -3,15 +3,15 @@
 /* eslint-disable */
 
 export type Track = {
-    type?: Track.type;
-    id?: string;
-    name?: string;
-    artist?: string;
-    album?: string;
-    duration?: number;
-    image?: string;
-    provider?: string;
-    playable?: boolean;
+    type: Track.type;
+    id: string;
+    name: string;
+    artist: string;
+    album: string;
+    duration: number;
+    image: string;
+    provider: string;
+    playable: boolean;
 };
 
 export namespace Track {
