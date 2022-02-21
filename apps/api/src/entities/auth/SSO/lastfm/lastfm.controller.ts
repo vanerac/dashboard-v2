@@ -26,7 +26,7 @@ export default class LastFmController extends SSOController {
         };
         // @ts-ignore
         const url = `https://www.last.fm/api/auth/?${new URLSearchParams(params)}`;
-        res.status(302).redirect(url);
+        res.json({ url });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {

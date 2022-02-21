@@ -25,7 +25,7 @@ export default class DeezerController extends SSOController {
         };
         // @ts-ignore
         const url = `https://connect.deezer.com/oauth/auth.php?${new URLSearchParams(params)}`;
-        res.status(302).redirect(url);
+        res.json({ url });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
