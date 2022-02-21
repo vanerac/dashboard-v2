@@ -17,7 +17,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import StartScreen from '../screens/login/StartScreen';
+import RegisterScreen from '../screens/login/RegisterScreen';
 import LoginScreen from '../screens/login/LoginScreen';
 import { ThemeContext } from '../constants/ThemeContext';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
@@ -43,7 +43,7 @@ function RootNavigator() {
         <Stack.Navigator>
             <Stack.Screen
                 name="StartScreen"
-                component={StartScreen}
+                component={RegisterScreen}
                 options={{
                     title: 'Registration',
                     headerStyle: { backgroundColor: theme.primary },

@@ -1,8 +1,11 @@
 const path = require('path');
 
-
 module.exports = {
-    watchFolders: [path.resolve(__dirname, '../../packages/ui')],
+    watchFolders: [
+        path.resolve(__dirname, '../../packages/ui'),
+        path.resolve(__dirname, '../../packages/global'),
+        path.resolve(__dirname, '../../packages/services'),
+    ],
     transformer: {
         getTransformOptions: async () => ({
             transform: {

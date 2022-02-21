@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
-import { AuthenticationService } from '../../../../packages/services';
+import { Client } from '../../../../packages/global';
 import { RootStackParamList } from '../../types';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -11,21 +11,21 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'StartScreen'>;
 
-export default function StartScreen({ navigation }: Props) {
+export default function RegisterScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     async function makeRequestRegistration() {
         try {
-            const res = await AuthenticationService.authRegisterPost({
+            const res = await Client.authentication.register({
                 email: email,
                 password: password,
                 displayName: username,
             });
             console.log(res);
             Alert.alert('Success');
-            navigation.navigate('HomePage');
+            navigation.navigate('LoginScreen');
         } catch (e) {
             Alert.alert('Error');
             console.log(e);

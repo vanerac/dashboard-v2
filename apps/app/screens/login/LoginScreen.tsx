@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
-import { AuthenticationService } from '../../../../packages/services';
+import { Client } from '../../../../packages/global';
 import { RootStackParamList } from '../../types';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
     async function makeRequest() {
         try {
-            const res = await AuthenticationService.authLoginPost({ email: email, password: password });
+            const res = await Client.authentication.login({ email: email, password: password });
             console.log(res);
             navigation.navigate('HomePage');
         } catch (e) {
