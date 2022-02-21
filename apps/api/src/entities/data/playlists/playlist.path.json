@@ -477,5 +477,172 @@
         }
       }
     }
+  },
+  "save": {
+    "get": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Save playlist",
+      "description": "Save playlist",
+      "operationId": "save",
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+
+        },
+        {
+          "name": "playlistId",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "unsave": {
+    "get": {
+      "tags": [
+        "playlist"
+      ],
+      "summary": "Unsave playlist",
+      "description": "Unsave playlist",
+      "operationId": "unsave",
+      "parameters": [
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "playlistId",
+          "in": "path",
+          "description": "Playlist id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Successful operation",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./playlist.components.json#/schemas/playlistSingleResponse"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

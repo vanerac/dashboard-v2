@@ -71,6 +71,12 @@
     "/data/{serviceId}/playlist/{playlistId}/delete": {
       "$ref": "data/playlists/playlist.path.json#/delete"
     },
+    "/data/{serviceId}/playlist/{playlistId}/save": {
+      "$ref": "data/playlists/playlist.path.json#/save"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/unsave": {
+      "$ref": "data/playlists/playlist.path.json#/unsave"
+    },
     "/data/{serviceId}/search": {
       "$ref": "data/search/search.path.json#/search"
     },

@@ -6,11 +6,11 @@ import type { Track } from './Track';
 
 export type Playlist = {
     type?: Playlist.type;
-    id?: string;
-    name?: string;
+    id: string;
+    name: string;
     description?: string;
     image?: string;
-    provider?: string;
+    provider: string;
     tracks?: Array<Track>;
 };
 

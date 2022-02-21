@@ -4,12 +4,12 @@
 
 export type getTrackArtistResponse = {
     type?: getTrackArtistResponse.type;
-    id?: string;
-    name?: string;
-    image?: string;
-    provider?: string;
-    followers?: number;
-    external_urls?: string;
+    id: string;
+    name: string;
+    image: string;
+    provider: string;
+    followers: number;
+    external_urls: string;
 };
 
 export namespace getTrackArtistResponse {
