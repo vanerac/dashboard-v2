@@ -1,5 +1,5 @@
 import {Artist} from "../../services";
-import {Image, View} from "react-native";
+import {Image, Text, View} from "react-native";
 
 type ArtistScreenProps = {
     artist: Partial<Artist>;

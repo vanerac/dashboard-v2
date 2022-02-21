@@ -8,6 +8,14 @@ type TrackListProps = {
   onClick: onClick
 };
 
+type TrackDisplayConfig = {
+  image: boolean;
+  title: boolean;
+  artist: boolean;
+  album: boolean;
+  duration: boolean;
+};
+
 export default function TrackList(props: TrackListProps) {
 
   return (
@@ -22,7 +30,7 @@ export default function TrackList(props: TrackListProps) {
 }
 
 
-export function TrackListItem(props: {track: Track, onClick: onClick}) {
+export function TrackListItem(props: {track: Track, onClick: onClick, config?: Partial<TrackDisplayConfig>}) {
 
     /* Todo:
      *  - Like
