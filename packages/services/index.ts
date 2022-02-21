@@ -62,6 +62,7 @@ export type { SetRepeatResponse } from './models/SetRepeatResponse';
 export type { SetShuffleResponse } from './models/SetShuffleResponse';
 export type { SetVolumeResponse } from './models/SetVolumeResponse';
 export type { SkipResponse } from './models/SkipResponse';
+export type { ssoUrl } from './models/ssoUrl';
 export type { Tag } from './models/Tag';
 export type { TagStats } from './models/TagStats';
 export { Track } from './models/Track';

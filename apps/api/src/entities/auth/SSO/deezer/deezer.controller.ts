@@ -14,14 +14,16 @@ export default class DeezerController extends SSOController {
     static scope: string = configuration.deezerScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
+        const { callbackURL } = req.query;
         const params = {
             client_id: DeezerController.clientId,
-            redirect_uri: DeezerController.callbackURL,
+            redirect_uri: callbackURL || DeezerController.callbackURL,
             scope: DeezerController.scope,
             response_type: 'code',
             access_type: 'offline',
             prompt: 'consent',
         };
+        // @ts-ignore
         const url = `https://connect.deezer.com/oauth/auth.php?${new URLSearchParams(params)}`;
         res.status(302).redirect(url);
     }

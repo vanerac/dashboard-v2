@@ -5,9 +5,27 @@
       "tags": ["SSO"],
       "summary": "Redirects to SSO Auth screen",
       "description": "Redirects to SSO Auth screen",
+      "parameters": [
+        {
+          "name": "callbackURL",
+          "in": "query",
+          "description": "A callback URL to redirect to after SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
       "responses": {
-        "308": {
-          "description": "Redirects to auth consent screen"
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../auth.components.json#/schemas/ssoUrl"
+              }
+            }
+          }
         }
       }
     }

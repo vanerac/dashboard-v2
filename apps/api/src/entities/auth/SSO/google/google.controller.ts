@@ -16,16 +16,20 @@ export default class GoogleController extends SSOController {
     static async getCode(req: Request, res: Response): Promise<void> {
         // redirect to google for authentication
         // callback url sends to /api/auth/google/callback
+
+        const { callbackURL } = req.query;
+
         const params = {
             client_id: GoogleController.clientId,
-            redirect_uri: GoogleController.callbackURL,
+            redirect_uri: callbackURL || GoogleController.callbackURL,
             scope: GoogleController.scope,
             response_type: 'code',
             access_type: 'offline',
             prompt: 'consent',
         };
+        // @ts-ignore
         const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(params)}`;
-        res.status(302).redirect(url);
+        res.json({ url });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {

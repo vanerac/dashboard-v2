@@ -14,13 +14,16 @@ export default class SpotifyController extends SSOController {
     static scope: string = configuration.spotifyScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
+        const { callbackURL } = req.query;
+
         const params = {
             client_id: SpotifyController.clientId,
             response_type: 'code',
-            redirect_uri: SpotifyController.callbackURL,
+            redirect_uri: callbackURL || SpotifyController.callbackURL,
             scope: SpotifyController.scope,
             // show_dialog: true, // was boolean
         };
+        // @ts-ignore
         const url = `https://accounts.spotify.com/authorize?${new URLSearchParams(params)}`;
         res.status(302).redirect(url);
     }

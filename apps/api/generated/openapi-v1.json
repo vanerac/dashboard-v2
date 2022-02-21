@@ -152,9 +152,27 @@
         ],
         "summary": "Redirects to SSO Auth screen",
         "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "308": {
-            "description": "Redirects to auth consent screen"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
           }
         }
       }
@@ -221,9 +239,27 @@
         ],
         "summary": "Redirects to SSO Auth screen",
         "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "308": {
-            "description": "Redirects to auth consent screen"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
           }
         }
       }
@@ -290,9 +326,27 @@
         ],
         "summary": "Redirects to SSO Auth screen",
         "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "308": {
-            "description": "Redirects to auth consent screen"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
           }
         }
       }
@@ -359,9 +413,27 @@
         ],
         "summary": "Redirects to SSO Auth screen",
         "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "308": {
-            "description": "Redirects to auth consent screen"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
           }
         }
       }
@@ -4905,6 +4977,17 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ssoUrl": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
             "type": "string"
           }
         }
