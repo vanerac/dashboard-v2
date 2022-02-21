@@ -1,3 +1,7 @@
+import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
+import { useDarkMode } from 'next-dark-mode';
+import Router from 'next/router';
+// import Head from 'next/head';
 import NextLink from 'next/link';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -9,15 +13,30 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { Client, updateClientConfig } from '../../../packages/global';
+// import { Test } from '@area/ui';
+import { Client } from '../../../packages/global';
+import Cookies from 'universal-cookie';
 
 const Login = () => {
+    const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [errorEmptyFieldEmail, setErrorEmptyFieldEmail] = useState('');
     const [errorEmptyFieldPassword, setErrorEmptyFieldPassword] = useState('');
     const errorString = 'This input field cannot be empty.';
+    const cookies = new Cookies();
+
+    const handleChangeMode = () => {
+        if (darkModeActive) {
+            switchToLightMode();
+        } else {
+            switchToDarkMode();
+        }
+    };
+
+    const nextMode = darkModeActive ? 'Light' : 'Dark';
+    const Icon = darkModeActive ? LightIcon : DarkIcon;
 
     const style = {
         position: 'absolute',
@@ -77,10 +96,13 @@ const Login = () => {
                     password: userPassword,
                 })
                 .then((data) => {
-                    updateClientConfig({
-                        TOKEN: data.token,
-                    });
-                    localStorage.setItem('token', data.token);
+                    console.log(data);
+                    // updateClientConfig({
+                    //     TOKEN: data.token,
+                    // });
+                    // localStorage.setItem('token', data.token);
+                    cookies.set('API_TOKEN', data.token, { path: '/' });
+                    Router.push('/');
                     // Todo: Redirect to home & store expiration date?
                 })
                 // Todo: Handle 401: Token expired
@@ -90,6 +112,10 @@ const Login = () => {
 
     return (
         <>
+            <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
+                Use {nextMode} mode
+            </Button>
+            <br />
             <Box
                 component="main"
                 sx={{

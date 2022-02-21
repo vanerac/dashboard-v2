@@ -16,6 +16,10 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Cookies from 'universal-cookie';
+import Router from 'next/router';
+import { useDarkMode } from 'next-dark-mode';
+import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -62,13 +66,26 @@ const handleInput = (value: any) => {
     console.log(value);
 };
 
-export default function SearchAppBar() {
+export default function SearchAppBar({ addWidget }) {
+    const cookies = new Cookies();
+    const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
+    const nextMode = darkModeActive ? 'Light' : 'Dark';
+    const Icon = darkModeActive ? LightIcon : DarkIcon;
+
     const [state, setState] = React.useState({
         top: false,
         left: false,
         bottom: false,
         right: false,
     });
+
+    const handleChangeMode = () => {
+        if (darkModeActive) {
+            switchToLightMode();
+        } else {
+            switchToDarkMode();
+        }
+    };
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -78,7 +95,12 @@ export default function SearchAppBar() {
         setState({ ...state, left: open });
     };
 
-    const list = (anchor) => (
+    const logout = () => {
+        cookies.remove('API_TOKEN', { path: '/' });
+        Router.push('/login');
+    };
+
+    const list = (anchor: string) => (
         <Box
             sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
             role="presentation"
@@ -94,12 +116,18 @@ export default function SearchAppBar() {
             </List>
             <Divider />
             <List>
-                {['Test', 'Test', 'Test'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem onClick={logout} button key={'logout'}>
+                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                    <ListItemText primary={'Logout'} />
+                </ListItem>
+                <ListItem onClick={addWidget} button key={'add_widget'}>
+                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                    <ListItemText primary={'Add Widget'} />
+                </ListItem>
+                <ListItem onClick={handleChangeMode} button key={'darkode'}>
+                    <ListItemIcon>{<Icon />}</ListItemIcon>
+                    <ListItemText primary={'Use ' + nextMode + 'Mode'} />
+                </ListItem>
             </List>
         </Box>
     );
