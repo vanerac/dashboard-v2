@@ -1,13 +1,11 @@
 import withAuth from './withAuth';
 import TopBar from './../components/topBar';
 // import Widgets from './../components/Widget';
-import ShowcaseLayout from '../components/WidgetTesting';
+import ShowcaseLayout from '../components/WidgetGrid';
 import React, { useState } from 'react';
 
 const Dasboard = () => {
     const [numberWidgets, setNumberWidgets] = useState(0);
-    //@ts-ignore
-    // const gridProps = window.gridProps || {};
 
     const addWidget = () => {
         console.log('add Widget');

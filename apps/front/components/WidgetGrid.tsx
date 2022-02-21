@@ -8,7 +8,6 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
     console.log('numero => ', props.widgetsAdded);
 
     const generateDOM = () => {
-        //@ts-ignore
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
                 // <div key={i} className={l.static ? 'static' : ''}>
@@ -19,7 +18,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
                         </span>
                     ) : ( */}
                     {/* <span className="text">{i}</span> */}
-                    <>oui chef</>
+                    {/* <>oui chef</> */}
                     {/* <Card /> */}
                     {/* )} */}
                 </div>
@@ -57,9 +56,6 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
             {/* <button onClick={onNewLayout}>Generate New Layout</button> */}
             {/* <button onClick={this.onCompactTypeChange}>Change Compaction Type</button> */}
             <ResponsiveReactGridLayout
-                //@ts-ignore
-                // {...this.props}
-                //@ts-ignore
                 layouts={{ lg: generateLayout() }}
                 // onBreakpointChange={this.onBreakpointChange}
                 // onLayoutChange={this.onLayoutChange}
@@ -67,11 +63,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
                 // measureBeforeMount={false}
                 // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
                 // and set `measureBeforeMount={true}`.
-                //@ts-ignore
-                // useCSSTransforms={this.state.mounted}
-                //@ts-ignore
                 compactType={'vertical'}
-                //@ts-ignore
                 preventCollision={!'vertical'}>
                 {generateDOM()}
             </ResponsiveReactGridLayout>
