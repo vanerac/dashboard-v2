@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Pool from './database.tools';
-import { Service } from '@area/services';
+import { Service } from '../../../../packages/services';
 
 export function parseServiceId(req: Request, res: Response, next: NextFunction) {
     (async () => {
