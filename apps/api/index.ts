@@ -6,7 +6,7 @@ import session from 'express-session';
 import routes from './src/entities';
 import configuration from './configuration';
 import swaggerUi from 'swagger-ui-express';
-import { User } from '@area/services';
+import { User } from '../../packages/services';
 import { Service } from './src/tools/types';
 // import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 // import SecuritySchemeObject = OpenAPIV3.SecuritySchemeObject;

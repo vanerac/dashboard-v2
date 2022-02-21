@@ -1,4 +1,4 @@
-import { Album, Artist, Track } from '@area/services';
+import { Album, Artist, Track } from '../../../../../../packages/services';
 import axios from 'axios';
 
 export class TrackService {
