@@ -19,10 +19,7 @@ const Dasboard = () => {
         React.createElement("div", null, 
         <>
             <TopBar addWidget={addWidget} />
-            {/* @ts-ignore */}
-            {/* <ShowcaseLayout numberWidgets={numberWidgets} /> */}
-            <ShowcaseLayout/>
-
+            <ShowcaseLayout widgetsAdded={numberWidgets}/>
         </>)
     );
 };

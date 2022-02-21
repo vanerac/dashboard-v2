@@ -59,13 +59,6 @@ const Login = () => {
         setErrorEmptyFieldPassword('');
         setUserPassword(event.target.value);
     };
-    // const redirectLogin = ($e: any) => {
-    //     Router.push('/login');
-    // };
-
-    // const redirectRegister = ($e: any) => {
-    //     Router.push('/register');
-    // };
 
     const updateEmail = (event: any) => {
         setErrorEmptyFieldEmail('');
@@ -118,7 +111,6 @@ const Login = () => {
         }
     };
 
-    // return <Test />;
     return (
         <>
             <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>

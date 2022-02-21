@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import { useState } from 'react';
+import { Key } from 'react';
 
-const ShowcaseLayout_bis = () => {
+const ShowcaseLayout = (props: { widgetsAdded: any; }) => {
+    console.log('numero => ', props.widgetsAdded);
+
     const generateDOM = () => {
         //@ts-ignore
-        return _.map(generateLayout(), function (l, i) {
+        return _.map(generateLayout(), function (l: any, i: Key) {
             return (
                 // <div key={i} className={l.static ? 'static' : ''}>
                 <div key={i} style={{ backgroundColor: 'lightblue', borderRadius: '4px' }}>
@@ -23,10 +27,10 @@ const ShowcaseLayout_bis = () => {
                 </div>
             );
         });
-    }
+    };
 
     function generateLayout() {
-        return _.map(_.range(0, 27), function (i) {
+        return _.map(_.range(0, props.widgetsAdded), function (i: { toString: () => any; }) {
             var y = Math.ceil(Math.random() * 4) + 1;
             return {
                 // x: (_.random(0, 5) * 2) % 12,
@@ -48,7 +52,7 @@ const ShowcaseLayout_bis = () => {
                 columns)
             </div> */}
             {/* <div>Compaction type: {_.capitalize(this.state.compactType) || 'No Compaction'}</div> */}
-            {/* <button onClick={this.onNewLayout}>Generate New Layout</button> */}
+            {/* <button onClick={onNewLayout}>Generate New Layout</button> */}
             {/* <button onClick={this.onCompactTypeChange}>Change Compaction Type</button> */}
             <ResponsiveReactGridLayout
                 //@ts-ignore
@@ -71,6 +75,6 @@ const ShowcaseLayout_bis = () => {
             </ResponsiveReactGridLayout>
         </div>
     );
-}
+};
 
-export default ShowcaseLayout_bis;
+export default ShowcaseLayout;

@@ -129,7 +129,6 @@ const Register = () => {
                             fullWidth
                             error={errorEmptyFieldPassword !== ''}
                             helperText={errorEmptyFieldPassword}
-                            // onBlur={test}
                             label="Password"
                             margin="normal"
                             name="password"
@@ -146,10 +145,8 @@ const Register = () => {
                         <Box sx={{ py: 2 }}>
                             <Button
                                 color="primary"
-                                // disabled={}
                                 fullWidth
                                 size="large"
-                                // type="submit"
                                 onClick={submit}
                                 variant="contained">
                                 Sign Up Now
