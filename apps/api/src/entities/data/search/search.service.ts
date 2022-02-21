@@ -1,4 +1,4 @@
-import { Album, Artist, Playlist, SearchResult, Track } from '../../../../../../packages/services';
+import { Album, Artist, Playlist, SearchResult, Track } from '@area/services';
 
 export abstract class SearchService {
     static async search($accessToken: string, $query: string): Promise<SearchResult | unknown> {

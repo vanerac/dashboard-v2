@@ -3,8 +3,8 @@ import { AppProps as propApps } from 'next/app';
 import React, { useEffect } from 'react';
 import withDarkMode from 'next-dark-mode';
 import Theme from '../components/Themes';
-import '../../../packages/global';
-import { updateClientConfig } from '../../../packages/global'; // Load Global dependencies
+import '@area/packages/global';
+import { updateClientConfig } from '@area/packages/global'; // Load Global dependencies
 
 const MyApp = ({ Component, pageProps }: propApps) => {
     // const { Component, pageProps } = props;

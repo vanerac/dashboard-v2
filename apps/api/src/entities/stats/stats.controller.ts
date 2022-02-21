@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Artist, Track, Album, Tag } from '../../../../../packages/services';
+import { Artist, Track, Album, Tag } from '@area/services';
 export default class StatsController {
     // myTopArtists
     static async myTopArtists(req: Request, res: Response, next: NextFunction) {

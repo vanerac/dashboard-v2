@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 // import { Test } from '@area/ui';
-import { Client, updateClientConfig } from '../../../packages/global';
+import { Client, updateClientConfig } from '@area/packages/global';
 
 const Home = () => {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();

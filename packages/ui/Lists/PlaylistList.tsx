@@ -1,7 +1,7 @@
 import {onClick} from "..";
 import {Playlist, Service, Track} from "../../services";
 import {Text, View} from "react-native";
-import {Client} from "../../global";
+import {Client} from "../../utils";
 
 type PlaylistListProps = {
     playlists: Playlist[];

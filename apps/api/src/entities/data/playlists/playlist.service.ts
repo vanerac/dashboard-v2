@@ -1,23 +1,6 @@
 import axios from 'axios';
 
-export interface Track {
-    id: string;
-    name: string;
-    artist: string;
-    album: string;
-    duration: number;
-    image: string;
-    provider: string;
-}
-
-export interface Playlist {
-    id: string;
-    name: string;
-    description: string;
-    image: string;
-    tracks: Track[];
-    provider: string;
-}
+import { Playlist, Track } from '@area/services';
 
 export abstract class PlaylistService {
     static async getPlaylist($token: string, $id: string): Promise<Playlist | unknown> {

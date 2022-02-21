@@ -1,10 +1,10 @@
-import { ServiceUserData, SSOController } from '../../../../tools/types';
+import { ServiceUserData, SSOController } from '@tools/types';
 import { Request, Response } from 'express';
 import configuration from '../../../../../configuration';
-import { GoogleTools } from '../../../../tools/SSO/google.tools';
-import { generateToken } from '../../../../tools/auth.tools';
-import { createUser, findUserByService, linkService, updateToken } from '../../../../tools/SSO/sso.tool';
-import { User } from '../../../../../../../packages/services';
+import { GoogleTools } from '@tools/SSO/google.tools';
+import { generateToken } from '@tools/auth.tools';
+import { createUser, findUserByService, linkService, updateToken } from '@tools/SSO/sso.tool';
+import { User } from '@area/services';
 
 export default class GoogleController extends SSOController {
     static clientId: string = configuration.googleClientId;

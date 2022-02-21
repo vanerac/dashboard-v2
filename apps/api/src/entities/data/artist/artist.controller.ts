@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ArtistService, DeezerArtistService, GoogleArtistService, SpotifyArtistService } from './artist.service';
-import { Providers } from '../../../tools/types';
+import { Providers } from '@tools/types';
 import { PlaylistService } from '../playlists/playlist.service';
 
 const servicesList: {

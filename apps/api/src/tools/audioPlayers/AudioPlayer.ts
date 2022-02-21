@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Track } from '../../../../../packages/services';
+import { Track } from '@area/services';
 
 export type AudioPlayerEvents = 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
 

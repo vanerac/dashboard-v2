@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import AuthRoutes from './auth/auth.routes';
 import ServiceRoutes from './services/service.routes';
-import { parseToken, verifyToken } from '../tools/auth.tools';
+import { parseToken, verifyToken } from '@tools/auth.tools';
 import dataRoutes from './data/data.routes';
-import { parseServiceId } from '../tools/service.tools';
+import { parseServiceId } from '@tools/service.tools';
 
 const router = Router();
 

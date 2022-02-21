@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Providers } from '../../../tools/types';
+import { Providers } from '@tools/types';
 import {
     DeezerPlaylistService,
     GooglePlaylistService,

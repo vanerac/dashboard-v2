@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import configuration from '../../configuration';
-import { User } from '../../../../packages/services';
+import { User } from '@area/services';
 dotenv.config();
 
 export const generateToken = (user: any): string => {

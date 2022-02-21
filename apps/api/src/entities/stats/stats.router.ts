@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { hasService } from '../../tools/service.tools';
+import { hasService } from '@tools/service.tools';
 import StatsController from './stats.controller';
 
 const router = Router();

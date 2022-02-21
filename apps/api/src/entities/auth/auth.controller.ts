@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Pool from '../../tools/database.tools';
-import { checkPassword, generateToken, hashPassword } from '../../tools/auth.tools';
+import { checkPassword, generateToken, hashPassword } from '@tools/auth.tools';
 
 export default class AuthController {
     static async login(req: Request, res: Response, next: any): Promise<void> {

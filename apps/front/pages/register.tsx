@@ -7,7 +7,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { Client } from '../../../packages/global';
+import { Client } from '@area/packages/global';
 
 const Register = () => {
     let errorBool: boolean = false;

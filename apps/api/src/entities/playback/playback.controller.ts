@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import PlayerManager from '../../tools/audioPlayers/playerManager.tools';
-import { UUID } from '../../tools/types';
+import { UUID } from '@tools/types';
 
 const playerManager = new PlayerManager();
 

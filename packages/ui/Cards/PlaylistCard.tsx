@@ -1,7 +1,7 @@
 import {Playlist} from "../../services";
 import React, {useEffect, useState} from 'react'
 import {View} from "react-native";
-import {Client} from "../../global";
+import {Client} from "../../utils";
 import {onClick, ServiceProvider} from "../index";
 
 type PlaylistFetchProps = {

@@ -3,12 +3,25 @@
   "compilerOptions": {
     "outDir": "./build",
     "resolveJsonModule": true,
+    "baseUrl": "../../",
     "paths": {
-      "@area/ui": [
-        "../../packages/ui"
+      "@area/*": [
+        "packages/*"
       ],
-      "@area/services": [
-        "../../packages/services"
+      "@services/*": [
+        "packages/services/*"
+      ],
+      "@ui/*": [
+        "packages/ui/*"
+      ],
+      "@utils/*": [
+        "packages/utils/*"
+      ],
+      "@tools/*": [
+        "apps/api/src/tools/*"
+      ],
+      "@*": [
+        "apps/api/src/*"
       ]
     }
   },

@@ -1,4 +1,4 @@
-import { Album, Artist, Playlist, Track } from '../../../../../../packages/services';
+import { Album, Artist, Playlist, Track } from '@area/services';
 
 export class ArtistService {
     static async getArtistById($accessToken: string, $artistId: string): Promise<Artist> {

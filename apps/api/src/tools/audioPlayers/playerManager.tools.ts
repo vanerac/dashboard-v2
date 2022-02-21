@@ -1,4 +1,4 @@
-import { Track } from '../../../../../packages/services';
+import { Track } from '@area/services';
 import { AudioPlayer } from './AudioPlayer';
 import { Response } from 'express';
 import { Providers, UUID } from '../types';

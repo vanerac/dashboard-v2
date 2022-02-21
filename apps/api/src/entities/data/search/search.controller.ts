@@ -5,7 +5,7 @@ import {
     SearchService,
     SpotifySearchService,
 } from '../search/search.service';
-import { Providers } from '../../../tools/types';
+import { Providers } from '@tools/types';
 
 const servicesList: {
     [provider: string]: SearchService;

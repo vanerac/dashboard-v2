@@ -3,15 +3,19 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react",
+    "baseUrl": "../../",
     "paths": {
-      "@area/global": [
-        "../../packages/global"
+      "@area/*": [
+        "packages/*"
       ],
-      "@area/ui": [
-        "../../packages/ui"
+      "@services/*": [
+        "packages/services/*"
       ],
-      "@area/services": [
-        "../../packages/services"
+      "@ui/*": [
+        "packages/ui/*"
+      ],
+      "@utils/*": [
+        "packages/utils/*"
       ]
     }
   }

@@ -1,7 +1,7 @@
 import {onClick} from "..";
 import {Artist, Service} from "../../services";
 import {Image, Text, View} from "react-native";
-import {Client} from "../../global";
+import {Client} from "../../utils";
 
 type ArtistListProps = {
     artists: Artist[];

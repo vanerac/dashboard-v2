@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
-import { Client } from '../../../../packages/global';
+import { Client } from '@area/utils';
 import { RootStackParamList } from '../../types';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
