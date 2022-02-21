@@ -188,18 +188,25 @@ export class PlaylistService {
      * Save playlist
      * @param serviceId ID of service to return playlists for
      * @param playlistId Playlist id
+     * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
     public save(
         serviceId: string,
         playlistId: string,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<playlistSingleResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}/save',
             path: {
                 'serviceId': serviceId,
                 'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
             },
         });
     }
@@ -209,18 +216,25 @@ export class PlaylistService {
      * Unsave playlist
      * @param serviceId ID of service to return playlists for
      * @param playlistId Playlist id
+     * @returns playlistSingleResponse Successful operation
      * @throws ApiError
      */
     public unsave(
         serviceId: string,
         playlistId: string,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<playlistSingleResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/data/{serviceId}/playlist/{playlistId}/unsave',
             path: {
                 'serviceId': serviceId,
                 'playlistId': playlistId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                500: `Internal Server Error`,
             },
         });
     }
