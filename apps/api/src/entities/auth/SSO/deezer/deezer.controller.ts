@@ -31,12 +31,12 @@ export default class DeezerController extends SSOController {
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code } = req.query;
+            const { code, callbackURL } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await DeezerTools.getToken(code);
+            const SSOToken = await DeezerTools.getToken(code, (callbackURL as string) || DeezerController.callbackURL);
             const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
 
             var userData: User & any = sessionUser || (await findUserByService('deezer', user.id));

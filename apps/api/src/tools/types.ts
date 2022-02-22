@@ -20,7 +20,7 @@ export abstract class SSOController {
 }
 
 export abstract class SSOTools {
-    static async getToken($code: string): Promise<string> {
+    static async getToken($code: string, callbackURL: string): Promise<string> {
         throw new Error('Method not implemented.');
     }
 

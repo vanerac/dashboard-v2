@@ -46,6 +46,15 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "name": "callbackURL",
+          "in": "query",
+          "description": "A callback URL to redirect to after SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
         }
       ],
       "responses": {

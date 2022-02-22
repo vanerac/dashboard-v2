@@ -8,13 +8,13 @@ export class GoogleTools implements SSOTools {
     static callbackURL: string = configuration.googleRedirectUri || '';
     static scope: string = configuration.googleScopes || '';
 
-    static async getToken(code: string): Promise<Token> {
+    static async getToken(code: string, callbackURL: string): Promise<Token> {
         const params = {
             grant_type: 'authorization_code',
             code,
             client_id: GoogleTools.clientId,
             client_secret: GoogleTools.clientSecret,
-            redirect_uri: GoogleTools.callbackURL,
+            redirect_uri: callbackURL || GoogleTools.callbackURL,
         };
         console.log('la => ', params);
         const data = await axios.post(
