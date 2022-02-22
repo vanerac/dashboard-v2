@@ -25,7 +25,7 @@ export default class SpotifyController extends SSOController {
         };
         // @ts-ignore
         const url = `https://accounts.spotify.com/authorize?${new URLSearchParams(params)}`;
-        res.json({ url });
+        res.json({ url, ...params, base_url: 'https://accounts.spotify.com/authorize' });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {

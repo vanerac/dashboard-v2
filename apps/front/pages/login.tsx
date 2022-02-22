@@ -177,7 +177,7 @@ const Login = () => {
                             <Grid item xs={12} md={6}>
                                 <SpotifySSO
                                     callbackURL={'http://localhost:3000/sso/spotify'}
-                                    redirectFn={({ url }) => Router.push(url)}
+                                    onClick={({ url }) => Router.push(url)}
                                 />
                                 {/*<Button*/}
                                 {/*    fullWidth*/}

@@ -7,7 +7,8 @@ import {Text, TouchableOpacity} from 'react-native'
 
 export type SSOButtonProps = {
     callbackURL: string // Callback URL to receive code, optional (recommended)
-    redirectFn: (args: { url: string }) => void // Redirect when you get code
+    // Todo: this becomes an onClick event
+    onClick: (args: { url: string }) => void // Redirect when you get code
 
 }
 //
@@ -15,10 +16,10 @@ export type SSOButtonProps = {
 //   <path d={mdiSpotify} />
 // </SvgIcon>)
 
-export default function SpotifySSO({callbackURL, redirectFn}: SSOButtonProps) {
+export default function SpotifySSO({callbackURL, onClick}: SSOButtonProps) {
 
     const authSpotify = () => {
-        Client.sso.spotifyConsentSso(callbackURL).then(redirectFn);
+        Client.sso.spotifyConsentSso(callbackURL).then(onClick);
     };
 
     // return <Button

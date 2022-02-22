@@ -27,10 +27,9 @@ export default class GoogleController extends SSOController {
             // access_type: 'offline',
             // prompt: 'consent',
         };
-        console.log('la2 => ', params);
         // @ts-ignore
         const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(params)}`;
-        res.json({ url });
+        res.json({ url, ...params, base_url: 'https://accounts.google.com/o/oauth2/v2/auth' });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {

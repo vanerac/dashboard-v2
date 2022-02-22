@@ -1,22 +1,73 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-
 import { ThemeContext } from '../../constants/ThemeContext';
 import { Client } from '../../../../packages/global';
 import { RootStackParamList } from '../../types';
-
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import SpotifySSO from '@area/ui/Buttons/SSO/SpotifySSO';
+import { ssoUrl } from '@area/services';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
+
+function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }) {
+    const [$request, response, promptAsync] = useAuthRequest(
+        {
+            clientId: SSOData.client_id,
+            redirectUri: SSOData.redirect_uri,
+            scopes: ['user-read-email', 'user-read-private'],
+        },
+        {
+            authorizationEndpoint: SSOData.base_url,
+        },
+    );
+
+    const [code, setCode] = useState('');
+
+    const triggerSSO = async () => {
+        try {
+            console.log('trigger');
+            await promptAsync();
+        } catch (e: any) {
+            Alert.alert('Error', e.message);
+        }
+    };
+
+    useEffect(() => {
+        console.log('got response');
+        if (response && response.type === 'success') {
+            console.log('valid reponse');
+            setCode(response.params.code);
+        }
+    }, [response]);
+
+    useEffect(() => {
+        if (code) {
+            console.log('got code');
+            (async () => {
+                const token = await Client.sso.spotifyAuthCodeSso(code, SSOData.redirect_uri);
+                console.log(token);
+                Alert.alert(`Welcome`);
+            })();
+        }
+    }, [code]);
+
+    if (!SSOData.url) {
+        return null;
+    }
+
+    return (
+        <View>
+            <TouchableOpacity onPress={triggerSSO}>
+                <Text>Login with Spotify</Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
 
 export default function LoginScreen({ navigation }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { theme } = useContext(ThemeContext);
-
-    const [authEndPoint, setAuthEndPoint] = useState('');
 
     async function makeRequest() {
         try {
@@ -29,44 +80,27 @@ export default function LoginScreen({ navigation }: Props) {
         }
     }
 
-    const setSSOUrl = (url: string, service: 'spotify' | 'youtube') => {
-        setAuthEndPoint(url);
-    };
-
-    const redirectURI = makeRedirectUri({
-        native: 'myapp://redirect',
+    const [SSOData, setSSOData] = useState<ssoUrl>({
+        response_type: '',
+        scope: '',
+        url: '',
+        client_id: '',
+        redirect_uri: 'com.spotify.music://',
+        base_url: '',
     });
 
-    const url = {
-        authorizationEndpoint: Client.sso.spotifyConsentSso(redirectURI),
-        // tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
-    };
+    // create redirect uri
+    const redirectURI = makeRedirectUri({
+        native: true,
+    });
 
-    const [request, response, promptAsync] = useAuthRequest(
-        {
-            clientId: 'e3t0ixFSw5lrApAqVPrGMA',
-            scopes: Auth.scopes,
-            redirectUri: makeRedirectUri({
-                native: 'myapp://redirect',
-            }),
-        },
-        url,
-    );
-
-    useEffect(() => {
-        if (response?.type === 'success') {
-            const { code } = response.params;
-            api.getAccessToken(code).then((token) => {
-                navigation.navigate('Home');
-            });
-        }
-    }, [response]);
+    Client.sso.spotifyConsentSso(redirectURI).then((data: ssoUrl) => {
+        setSSOData(data);
+    });
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
-            <View>
-                <SpotifySSO redirectFn={({ url }) => setSSOUrl.apply(null, url, 'spotify')} callbackURL={redirectURI} />
-            </View>
+            <SpotifyTriggerSSO SSOData={SSOData} />
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
                     style={[styles.TextInput, { color: theme.text }]}
