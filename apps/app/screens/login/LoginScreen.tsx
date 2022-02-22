@@ -17,7 +17,7 @@ export default function LoginScreen({ navigation }: Props) {
         try {
             const res = await Client.authentication.login({ email: email, password: password });
             console.log(res);
-            navigation.navigate('HomePage');
+            navigation.navigate('TabNavigator');
         } catch (e) {
             Alert.alert('Wrong email or wrong password');
             console.log(e);

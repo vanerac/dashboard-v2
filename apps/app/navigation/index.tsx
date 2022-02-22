@@ -17,6 +17,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import HomeTab from '../screens/tabs/HomeTab';
 import RegisterScreen from '../screens/login/RegisterScreen';
 import LoginScreen from '../screens/login/LoginScreen';
 import { ThemeContext } from '../constants/ThemeContext';
@@ -59,7 +60,7 @@ function RootNavigator() {
                     headerTintColor: theme.text,
                 }}
             />
-            <Stack.Screen name="HomePage" component={BottomTabNavigator} />
+            <Stack.Screen name="TabNavigator" component={BottomTabNavigator} />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen name="Modal" component={ModalScreen} />
@@ -79,15 +80,15 @@ export function BottomTabNavigator() {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="TabOne"
+            initialRouteName="HomeTab"
             screenOptions={{
                 tabBarActiveTintColor: Colors[colorScheme].tint,
             }}>
             <BottomTab.Screen
                 name="TabOne"
-                component={TabOneScreen}
-                options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-                    title: 'Tab One',
+                component={HomeTab}
+                options={({ navigation }: RootTabScreenProps<'HomeTab'>) => ({
+                    title: 'HomeTab',
                     tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
                     headerRight: () => (
                         <Pressable
