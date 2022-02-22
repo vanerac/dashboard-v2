@@ -12,9 +12,6 @@ function ssoApple() {
     // Client.sso.appleAuthCodeSso(code, '').then((data) => {
     //     const { token } = data;
     //     cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
-    //     updateClientConfig({
-    //         TOKEN: token,
-    //     });
     //     Router.push('/');
     // });
     // }
