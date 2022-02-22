@@ -18,13 +18,13 @@ export default class SearchController {
     // Service search
     static async serviceSearch(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: SearchService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: SearchService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -32,7 +32,7 @@ export default class SearchController {
             }
             // @ts-ignore todo: fix this
             const fn = serviceInstance.search;
-            const searchResults = await fn(req.session.local.service.accessToken, req.query.q);
+            const searchResults = await fn(accessToken, req.query.q);
             return res.json(searchResults);
         } catch (error) {
             next(error);

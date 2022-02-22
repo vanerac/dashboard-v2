@@ -16,27 +16,32 @@ export default class GoogleController extends SSOController {
     static async getCode(req: Request, res: Response): Promise<void> {
         // redirect to google for authentication
         // callback url sends to /api/auth/google/callback
+
+        const { callbackURL } = req.query;
+
         const params = {
             client_id: GoogleController.clientId,
-            redirect_uri: GoogleController.callbackURL,
+            redirect_uri: callbackURL || GoogleController.callbackURL,
             scope: GoogleController.scope,
             response_type: 'code',
-            access_type: 'offline',
-            prompt: 'consent',
+            // access_type: 'offline',
+            // prompt: 'consent',
         };
+        console.log('la2 => ', params);
+        // @ts-ignore
         const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(params)}`;
-        res.status(302).redirect(url);
+        res.json({ url });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code } = req.query;
+            const { code, callbackURL } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await GoogleTools.getToken(code);
+            const SSOToken = await GoogleTools.getToken(code, (callbackURL as string) || GoogleController.callbackURL);
             const user: ServiceUserData = await GoogleTools.getUserInfos(SSOToken.access_token);
 
             var userData: User & any = sessionUser || (await findUserByService('google', user.id));

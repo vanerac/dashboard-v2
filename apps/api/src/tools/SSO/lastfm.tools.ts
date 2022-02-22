@@ -16,7 +16,7 @@ export class LastFmTools implements SSOTools {
         return response.data.session.key;
     }
 
-    static async getToken(code: string): Promise<Token> {
+    static async getToken(code: string, $callbackURL: string): Promise<Token> {
         const response = await axios({
             method: 'post',
             url: 'https://ws.audioscrobbler.com/2.0/',

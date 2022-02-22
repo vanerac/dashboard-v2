@@ -345,6 +345,9 @@
       "loginRequest": {
         "$ref": "./auth/auth.components.json#/schemas/loginRequest"
       },
+      "ssoUrl": {
+        "$ref": "./auth/auth.components.json#/schemas/ssoUrl"
+      },
       "playlistCreateRequest": {
         "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"
       },

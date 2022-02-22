@@ -1,17 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
-import { Artist, Track, Album, Tag } from '../../../../../packages/services';
+import { NextFunction, Request, Response } from 'express';
+import { Album, Artist, Tag, Track } from '../../../../../packages/services';
+
 export default class StatsController {
     // myTopArtists
     static async myTopArtists(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettopartists',
@@ -54,14 +53,12 @@ export default class StatsController {
     // myTopTracks
     static async myTopTracks(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettoptracks',
@@ -103,14 +100,12 @@ export default class StatsController {
     // myTopAlbums
     static async myTopAlbums(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettopalbums',
@@ -152,14 +147,12 @@ export default class StatsController {
     // myTopTags
     static async myTopTags(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettoptags',
@@ -200,14 +193,12 @@ export default class StatsController {
     // weeklyTopArtists
     static async chartsWeeklyTopArtists(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'chart.gettopartists',
@@ -248,14 +239,12 @@ export default class StatsController {
     // weeklyTopTracks
     static async chartsWeeklyTopTracks(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'chart.gettoptracks',
@@ -296,14 +285,12 @@ export default class StatsController {
     // weeklyTopAlbums
     static async chartsWeeklyTopAlbums(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'chart.gettopalbums',
