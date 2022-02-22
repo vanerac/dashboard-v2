@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
     forgotPassword: {
         width: '67%',
         alignItems: 'flex-end',
-        marginBottom: 15,
-        marginTop: 20,
+        marginBottom: 35,
+        marginTop: 5,
     },
 
     loginBtn: {
-        width: '80%',
+        width: '70%',
         borderRadius: 25,
         height: 50,
         alignItems: 'center',
