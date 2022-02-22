@@ -9,4 +9,5 @@ export type ssoUrl = {
     redirect_uri: string;
     response_type?: string;
     scope?: string;
+    scopes?: Array<string>;
 };

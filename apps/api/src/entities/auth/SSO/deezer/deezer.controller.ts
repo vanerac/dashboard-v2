@@ -15,10 +15,11 @@ export default class DeezerController extends SSOController {
 
     static async getCode(req: Request, res: Response): Promise<void> {
         const { callbackURL } = req.query;
+        const scopes = DeezerController.scope.split(',');
         const params = {
             client_id: DeezerController.clientId,
             redirect_uri: callbackURL || DeezerController.callbackURL,
-            scope: DeezerController.scope,
+            scope: scopes.join(','),
             response_type: 'code',
             access_type: 'offline',
             prompt: 'consent',
