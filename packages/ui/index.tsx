@@ -16,5 +16,8 @@ export * from "./Cards/TrackCard"
 export * from "./Screens/ArtistScreen"
 export * from "./Screens/PlaylistScreen"
 
+// Buttons
+export * from "./Buttons/SSO/SpotifySSO"
+
 export type ServiceProvider = 'spotify' | 'youtube'| 'apple' | 'deezer';
 export type onClick = (value: any) => void;

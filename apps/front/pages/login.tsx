@@ -16,6 +16,7 @@ import Fade from '@mui/material/Fade';
 // import { Test } from '@area/ui';
 import { Client } from '../../../packages/global';
 import Cookies from 'universal-cookie';
+import SpotifySSO from '@area/ui/Buttons/SSO/SpotifySSO';
 
 const Login = () => {
     let errorBool: boolean = false;
@@ -174,15 +175,19 @@ const Login = () => {
                                 </Button>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Button
-                                    fullWidth
-                                    color="secondary"
-                                    startIcon={svgSpotify}
-                                    onClick={authSpotify}
-                                    size="large"
-                                    variant="contained">
-                                    Login with Spotify
-                                </Button>
+                                <SpotifySSO
+                                    callbackURL={'http://localhost:3000/sso/spotify'}
+                                    redirectFn={({ url }) => Router.push(url)}
+                                />
+                                {/*<Button*/}
+                                {/*    fullWidth*/}
+                                {/*    color="secondary"*/}
+                                {/*    startIcon={svgSpotify}*/}
+                                {/*    onClick={authSpotify}*/}
+                                {/*    size="large"*/}
+                                {/*    variant="contained">*/}
+                                {/*    Login with Spotify*/}
+                                {/*</Button>*/}
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
