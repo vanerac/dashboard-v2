@@ -1,26 +1,48 @@
+// const path = require('path');
+//
+// module.exports = {
+//     watchFolders: [
+//         path.resolve(__dirname, '../../packages/ui'),
+//         path.resolve(__dirname, '../../packages/global'),
+//         path.resolve(__dirname, '../../packages/services'),
+//     ],
+//     transformer: {
+//         getTransformOptions: async () => ({
+//             transform: {
+//                 experimentalImportSupport: false,
+//                 inlineRequires: false,
+//             },
+//         }),
+//     },
+//     resolver: {
+//         extraNodeModules: new Proxy(
+//             {},
+//             {
+//                 get: (target, name) => {
+//                     return path.join(process.cwd(), 'node_modules', name);
+//                 },
+//             },
+//         ),
+//     },
+//     projectRoot: path.resolve(__dirname),
+// };
+
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
 
-console.log(path.resolve(__dirname, '../../'));
+// Find the workspace root, this can be replaced with `find-yarn-workspace-root`
+const workspaceRoot = path.resolve(__dirname, '../..');
+const projectRoot = __dirname;
 
-module.exports = {
-    watchFolders: [path.resolve(__dirname, '../../packages/ui')],
-    transformer: {
-        getTransformOptions: async () => ({
-            transform: {
-                experimentalImportSupport: false,
-                inlineRequires: false,
-            },
-        }),
-    },
-    resolver: {
-        extraNodeModules: new Proxy(
-            {},
-            {
-                get: (target, name) => {
-                    return path.join(process.cwd(), 'node_modules', name);
-                },
-            },
-        ),
-    },
-    projectRoot: path.resolve(__dirname),
-};
+const config = getDefaultConfig(projectRoot);
+
+// 1. Watch all files within the monorepo
+config.watchFolders = [workspaceRoot];
+// 2. Let Metro know where to resolve packages, and in what order
+config.resolver.nodeModulesPaths = [
+    path.resolve(projectRoot, 'node_modules'),
+    path.resolve(workspaceRoot, 'node_modules'),
+];
+
+module.exports = config;

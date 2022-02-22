@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { Client } from '../../../packages/global';
+import Router from 'next/router';
 
 const Register = () => {
     let errorBool: boolean = false;
@@ -74,9 +75,10 @@ const Register = () => {
                     password: userPassword,
                     displayName: userDisplayName,
                 })
-
-                .then(() => {
+                .then((data) => {
+                    console.log(data);
                     console.log('submitting');
+                    Router.push('/login');
                 })
                 .catch(handleOpen);
         }
@@ -127,7 +129,6 @@ const Register = () => {
                             fullWidth
                             error={errorEmptyFieldPassword !== ''}
                             helperText={errorEmptyFieldPassword}
-                            // onBlur={test}
                             label="Password"
                             margin="normal"
                             name="password"
@@ -142,20 +143,13 @@ const Register = () => {
                                 ml: -1,
                             }}></Box>
                         <Box sx={{ py: 2 }}>
-                            <Button
-                                color="primary"
-                                // disabled={}
-                                fullWidth
-                                size="large"
-                                // type="submit"
-                                onClick={submit}
-                                variant="contained">
+                            <Button color="primary" fullWidth size="large" onClick={submit} variant="contained">
                                 Sign Up Now
                             </Button>
                         </Box>
                         <Typography color="textSecondary" variant="body2">
                             Have an account?{' '}
-                            <NextLink href="/" passHref>
+                            <NextLink href="/login" passHref>
                                 <Link variant="subtitle2" underline="hover">
                                     Sign In
                                 </Link>

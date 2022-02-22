@@ -38,6 +38,16 @@ export abstract class PlaylistService {
     static async getPlaylistTracks($token: string, $id: string): Promise<Track[] | unknown> {
         throw new Error('Method not implemented.');
     }
+
+    // unsave playlist to favorites
+    static async unsavePlaylist($token: string, $id: string): Promise<void | unknown> {
+        throw new Error('Method not implemented.');
+    }
+
+    // Save playlist to favorites
+    static async savePlaylist($token: string, $id: string): Promise<void | unknown> {
+        throw new Error('Method not implemented.');
+    }
 }
 
 export class SpotifyPlaylistService extends PlaylistService {
@@ -49,16 +59,35 @@ export class SpotifyPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.name,
+            description: response.data.description,
+            image: response.data.images[0].url,
+            tracks: [],
+            provider: 'spotify',
+        };
     }
     // Todo: map this to type
-    static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
+    static override async getPlaylists(token: string): Promise<Playlist[] | undefined> {
         const response = await axios.get(`https://api.spotify.com/v1/me/playlists`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.items;
+
+        return Promise.all(
+            response.data.items.map(async (item: any) => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
+                    image: item.images[0].url,
+                    tracks: [],
+                    provider: 'spotify',
+                };
+            }),
+        );
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -110,7 +139,45 @@ export class SpotifyPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.items;
+        return response.data.items
+            .filter(({ track: v }: any) => !!v)
+            .map(({ track: item }: any) => {
+                // console.log(item);
+
+                return {
+                    id: item.id,
+                    name: item.name,
+                    artist: item.artists[0].name,
+                    album: item.album.name,
+                    duration: item.duration_ms,
+                    image: item.album.images[0].url,
+                    provider: 'spotify',
+                };
+            });
+    }
+
+    // unsave playlist to favorites
+    static override async unsavePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.delete(`https://api.spotify.com/v1/playlists/${id}/followers`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+
+    // Save playlist to favorites
+    static override async savePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.put(
+            `https://api.spotify.com/v1/playlists/${id}/followers`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return;
     }
 }
 
@@ -183,6 +250,30 @@ export class DeezerPlaylistService extends PlaylistService {
             },
         });
         return response.data.data;
+    }
+
+    // unsave playlist to favorites
+    static override async unsavePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.delete(`https://api.deezer.com/user/me/playlists/${id}/followers`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+
+    // Save playlist to favorites
+    static override async savePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.put(
+            `https://api.deezer.com/user/me/playlists/${id}/followers`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return;
     }
 }
 
@@ -268,5 +359,34 @@ export class GooglePlaylistService extends PlaylistService {
                 image: item.snippet.thumbnails.default.url,
             };
         });
+    }
+
+    // save playlist to favorites
+    static override async savePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.post(
+            `https://www.googleapis.com/youtube/v3/playlists?id=${id}`,
+            {
+                snippet: {
+                    title: 'Favorites',
+                    description: 'Favorites',
+                },
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return;
+    }
+
+    // unsave playliust from favorites
+    static override async unsavePlaylist(token: string, id: string): Promise<void | unknown> {
+        await axios.delete(`https://www.googleapis.com/youtube/v3/playlists?id=${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
     }
 }

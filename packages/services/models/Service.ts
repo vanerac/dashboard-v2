@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 export type Service = {
-    id?: string;
-    type?: Service.type;
-    enabled?: boolean;
+    id: string;
+    type: Service.type;
+    enabled: boolean;
 };
 
 export namespace Service {

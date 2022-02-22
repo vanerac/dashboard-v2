@@ -146,28 +146,40 @@
     },
     "/auth/sso/google/login": {
       "get": {
-        "operationId": "consentSSO",
+        "operationId": "googleConsentSSO",
         "tags": [
           "SSO"
         ],
         "summary": "Redirects to SSO Auth screen",
         "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "308": {
-            "description": "Redirects to auth consent screen"
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/auth/sso/spotify/login": {
-      "$ref": "#/paths/~1auth~1sso~1google~1login"
-    },
-    "/auth/sso/spotify/callback": {
-      "$ref": "#/paths/~1auth~1sso~1google~1callback"
-    },
     "/auth/sso/google/callback": {
       "get": {
-        "operationId": "authCodeSSO",
+        "operationId": "googleAuthCodeSSO",
         "tags": [
           "SSO"
         ],
@@ -180,6 +192,303 @@
             "in": "query",
             "description": "Auth code returned by provider",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/spotify/login": {
+      "get": {
+        "operationId": "spotifyConsentSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/spotify/callback": {
+      "get": {
+        "operationId": "spotifyAuthCodeSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/deezer/login": {
+      "get": {
+        "operationId": "deezerConsentSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/deezer/callback": {
+      "get": {
+        "operationId": "deezerAuthCodeSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/lastfm/login": {
+      "get": {
+        "operationId": "lastfmConsentSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Redirects to SSO Auth screen",
+        "description": "Redirects to SSO Auth screen",
+        "parameters": [
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ssoUrl"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sso/lastfm/callback": {
+      "get": {
+        "operationId": "lastfmAuthCodeSSO",
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Assign token tu user and/or login to user account",
+        "description": "Assign token tu user and/or login to user account",
+        "security": [],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "Auth code returned by provider",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -855,6 +1164,172 @@
         "summary": "Delete playlist",
         "description": "Delete playlist",
         "operationId": "delete",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/playlistSingleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/playlist/{playlistId}/save": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "summary": "Save playlist",
+        "description": "Save playlist",
+        "operationId": "save",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/playlistSingleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{serviceId}/playlist/{playlistId}/unsave": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "summary": "Unsave playlist",
+        "description": "Unsave playlist",
+        "operationId": "unsave",
         "parameters": [
           {
             "name": "serviceId",
@@ -3925,7 +4400,18 @@
           "playable": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "type",
+          "id",
+          "name",
+          "artist",
+          "album",
+          "duration",
+          "image",
+          "provider",
+          "playable"
+        ]
       },
       "Playlist": {
         "type": "object",
@@ -3960,7 +4446,12 @@
               "$ref": "#/components/schemas/Track"
             }
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "provider"
+        ]
       },
       "Service": {
         "type": "object",
@@ -3981,7 +4472,12 @@
           "enabled": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "id",
+          "type",
+          "enabled"
+        ]
       },
       "User": {
         "type": "object",
@@ -3996,7 +4492,12 @@
           "id": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "email",
+          "displayName",
+          "id"
+        ]
       },
       "Error": {
         "type": "object",
@@ -4040,7 +4541,15 @@
           "external_urls": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "image",
+          "provider",
+          "followers",
+          "external_urls"
+        ]
       },
       "Album": {
         "type": "object",
@@ -4109,7 +4618,14 @@
           "ws": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "volume",
+          "state",
+          "ws"
+        ]
       },
       "Tag": {
         "type": "object",
@@ -4125,10 +4641,42 @@
       "getSingleArtist": {
         "type": "object",
         "properties": {
-          "schema": {
-            "$ref": "#/components/schemas/Artist"
+          "type": {
+            "type": "string",
+            "enum": [
+              "artist",
+              "album",
+              "track",
+              "playlist"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "integer"
+          },
+          "external_urls": {
+            "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "image",
+          "provider",
+          "followers",
+          "external_urls"
+        ]
       },
       "PlaybackStatus": {
         "type": "object",
@@ -4150,7 +4698,13 @@
               "stopped"
             ]
           }
-        }
+        },
+        "required": [
+          "track",
+          "position",
+          "device",
+          "state"
+        ]
       },
       "loginResponse": {
         "type": "object",
@@ -4463,6 +5017,17 @@
           }
         }
       },
+      "ssoUrl": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        }
+      },
       "playlistCreateRequest": {
         "type": "object",
         "properties": {
@@ -4613,7 +5178,18 @@
           "playable": {
             "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "type",
+          "id",
+          "name",
+          "artist",
+          "album",
+          "duration",
+          "image",
+          "provider",
+          "playable"
+        ]
       },
       "getTrackAlbumResponse": {
         "type": "object",
@@ -4674,7 +5250,15 @@
           "external_urls": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "id",
+          "name",
+          "image",
+          "provider",
+          "followers",
+          "external_urls"
+        ]
       }
     }
   },

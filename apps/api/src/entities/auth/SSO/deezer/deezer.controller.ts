@@ -7,34 +7,36 @@ import { createUser, findUserByService, linkService, updateToken } from '../../.
 import { User } from '../../../../../../../packages/services';
 
 export default class DeezerController extends SSOController {
-    static clientId: string = configuration.googleClientId;
-    static clientSecret: string = configuration.appleClientSecret;
+    static clientId: string = configuration.deezerClientId;
+    static clientSecret: string = configuration.deezerClientSecret;
     static redirectURL: string = configuration.frontendHost;
-    static callbackURL: string = configuration.googleRedirectUri;
-    static scope: string = configuration.googleScopes;
+    static callbackURL: string = configuration.deezerRedirectUri;
+    static scope: string = configuration.deezerScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
+        const { callbackURL } = req.query;
         const params = {
             client_id: DeezerController.clientId,
-            redirect_uri: DeezerController.callbackURL,
+            redirect_uri: callbackURL || DeezerController.callbackURL,
             scope: DeezerController.scope,
             response_type: 'code',
             access_type: 'offline',
             prompt: 'consent',
         };
+        // @ts-ignore
         const url = `https://connect.deezer.com/oauth/auth.php?${new URLSearchParams(params)}`;
-        res.status(302).redirect(url);
+        res.json({ url });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code } = req.query;
+            const { code, callbackURL } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await DeezerTools.getToken(code);
+            const SSOToken = await DeezerTools.getToken(code, (callbackURL as string) || DeezerController.callbackURL);
             const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
 
             var userData: User & any = sessionUser || (await findUserByService('deezer', user.id));

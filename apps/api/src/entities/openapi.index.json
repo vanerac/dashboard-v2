@@ -18,16 +18,28 @@
       "$ref": "auth/auth.path.json#/register"
     },
     "/auth/sso/google/login": {
-      "$ref": "auth/auth.path.json#/consentSSO"
-    },
-    "/auth/sso/spotify/login": {
-      "$ref": "auth/auth.path.json#/consentSSO"
-    },
-    "/auth/sso/spotify/callback": {
-      "$ref": "auth/auth.path.json#/authCodeSSO"
+      "$ref": "./auth/sso/google/google.path.json#/consentSSO"
     },
     "/auth/sso/google/callback": {
-      "$ref": "auth/auth.path.json#/authCodeSSO"
+      "$ref": "./auth/sso/google/google.path.json#/authCodeSSO"
+    },
+    "/auth/sso/spotify/login": {
+      "$ref": "./auth/sso/spotify/spotify.path.json#/consentSSO"
+    },
+    "/auth/sso/spotify/callback": {
+      "$ref": "./auth/sso/spotify/spotify.path.json#/authCodeSSO"
+    },
+    "/auth/sso/deezer/login": {
+      "$ref": "./auth/sso/deezer/deezer.path.json#/consentSSO"
+    },
+    "/auth/sso/deezer/callback": {
+      "$ref": "./auth/sso/deezer/deezer.path.json#/authCodeSSO"
+    },
+    "/auth/sso/lastfm/login": {
+      "$ref": "./auth/sso/lastfm/lastfm.path.json#/consentSSO"
+    },
+    "/auth/sso/lastfm/callback": {
+      "$ref": "./auth/sso/lastfm/lastfm.path.json#/authCodeSSO"
     },
     "/service": {
       "$ref": "services/service.path.json#/getAllUserServices"
@@ -58,6 +70,12 @@
     },
     "/data/{serviceId}/playlist/{playlistId}/delete": {
       "$ref": "data/playlists/playlist.path.json#/delete"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/save": {
+      "$ref": "data/playlists/playlist.path.json#/save"
+    },
+    "/data/{serviceId}/playlist/{playlistId}/unsave": {
+      "$ref": "data/playlists/playlist.path.json#/unsave"
     },
     "/data/{serviceId}/search": {
       "$ref": "data/search/search.path.json#/search"
@@ -326,6 +344,9 @@
       },
       "loginRequest": {
         "$ref": "./auth/auth.components.json#/schemas/loginRequest"
+      },
+      "ssoUrl": {
+        "$ref": "./auth/auth.components.json#/schemas/ssoUrl"
       },
       "playlistCreateRequest": {
         "$ref": "./data/playlists/playlist.components.json#/schemas/playlistCreateRequest"

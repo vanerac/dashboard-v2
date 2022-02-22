@@ -5,10 +5,10 @@
 import type { Track } from './Track';
 
 export type PlaybackStatus = {
-    track?: Track;
-    position?: number;
-    device?: string;
-    state?: PlaybackStatus.state;
+    track: Track;
+    position: number;
+    device: string;
+    state: PlaybackStatus.state;
 };
 
 export namespace PlaybackStatus {

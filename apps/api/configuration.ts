@@ -29,6 +29,12 @@ export default {
     appleRedirectUri: process.env.APPLE_REDIRECT_URI || '',
     appleScopes: process.env.APPLE_SCOPES || '',
 
+    // LastFm SSO Infos
+    lastFmClientId: process.env.LASTFM_CLIENT_ID || '',
+    lastFmClientSecret: process.env.LASTFM_CLIENT_SECRET || '',
+    lastFmRedirectUri: process.env.LASTFM_REDIRECT_URI || '',
+    lastFmScopes: process.env.LASTFM_SCOPES || '',
+
     // Database connection infos
     posgresHost: process.env.POSTGRES_HOST || '',
     posgresPort: process.env.POSTGRES_PORT || '',
