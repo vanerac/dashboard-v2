@@ -39,22 +39,29 @@ export default class SpotifyController extends SSOController {
                 code,
                 (callbackURL as string) || SpotifyController.callbackURL,
             );
-            console.log('SSOToken', SSOToken);
             const user: ServiceUserData = await SpotifyTools.getUserInfos(SSOToken.access_token);
+            let userData: User & any = await findUserByService('spotify', user.id);
 
-            var userData: User & any = sessionUser || (await findUserByService('spotify', user.id));
-            if (!userData) {
+            if (sessionUser) {
+                if (!userData) {
+                    await linkService(sessionUser, user, SSOToken);
+                } else {
+                    await updateToken(userData, user, SSOToken);
+                }
+                userData = sessionUser;
+            } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
-            } else {
-                console.log('Updating token');
-                await updateToken(userData, user, SSOToken);
             }
+
             delete userData.password;
+            delete userData.iat;
+            delete userData.exp;
+
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
-            console.log(e);
+            console.error(e);
             res.status(500).send(e);
         }
     }

@@ -43,15 +43,23 @@ export default class GoogleController extends SSOController {
             }
             const SSOToken = await GoogleTools.getToken(code, (callbackURL as string) || GoogleController.callbackURL);
             const user: ServiceUserData = await GoogleTools.getUserInfos(SSOToken.access_token);
+            let userData: User & any = await findUserByService('google', user.id);
 
-            var userData: User & any = sessionUser || (await findUserByService('google', user.id));
-            if (!userData) {
+            if (sessionUser) {
+                if (!userData) {
+                    await linkService(sessionUser, user, SSOToken);
+                } else {
+                    await updateToken(userData, user, SSOToken);
+                }
+                userData = sessionUser;
+            } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
-            } else {
-                await updateToken(userData, user, SSOToken);
             }
+
             delete userData.password;
+            delete userData.iat;
+            delete userData.exp;
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
