@@ -13,13 +13,13 @@ const servicesList: {
 export default class ArtistController {
     static async getArtistById(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -29,7 +29,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getArtistById;
-            const artists = await fn(req.session.local.service.accessToken, id);
+            const artists = await fn(accessToken, id);
             return res.json(artists);
         } catch (error: any) {
             next(error);
@@ -38,13 +38,13 @@ export default class ArtistController {
 
     static async getFollowedArtists(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -54,7 +54,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getFollowedArtists;
-            const artists = await fn(req.session.local.service.accessToken, id);
+            const artists = await fn(accessToken, id);
             return res.json(artists);
         } catch (error: any) {
             next(error);
@@ -63,13 +63,13 @@ export default class ArtistController {
 
     static async followArtist(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -79,7 +79,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.followArtist;
-            const artist = await fn(req.session.local.service.accessToken, id);
+            const artist = await fn(accessToken, id);
             return res.json(artist);
         } catch (error: any) {
             next(error);
@@ -88,13 +88,13 @@ export default class ArtistController {
 
     static async unfollowArtist(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -104,7 +104,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.unfollowArtist;
-            const artist = await fn(req.session.local.service.accessToken, id);
+            const artist = await fn(accessToken, id);
             return res.json(artist);
         } catch (error: any) {
             next(error);
@@ -113,13 +113,13 @@ export default class ArtistController {
 
     static async getArtistAlbums(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -129,7 +129,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getArtistAlbums;
-            const albums = await fn(req.session.local.service.accessToken, id);
+            const albums = await fn(accessToken, id);
             return res.json(albums);
         } catch (error: any) {
             next(error);
@@ -138,13 +138,13 @@ export default class ArtistController {
 
     static async getArtistPlaylists(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -154,7 +154,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getArtistPlaylists;
-            const playlists = await fn(req.session.local.service.accessToken, id);
+            const playlists = await fn(accessToken, id);
             return res.json(playlists);
         } catch (error: any) {
             next(error);
@@ -163,13 +163,13 @@ export default class ArtistController {
 
     static async getArtistRelatedArtists(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -179,7 +179,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getArtistRelatedArtists;
-            const artists = await fn(req.session.local.service.accessToken, id);
+            const artists = await fn(accessToken, id);
             return res.json(artists);
         } catch (error: any) {
             next(error);
@@ -188,13 +188,13 @@ export default class ArtistController {
 
     static async getArtistTopTracks(req: Request, res: Response, next: NextFunction) {
         try {
-            if (!req.session.local.service) {
+            if (!req.session.service) {
                 return res.status(400).json({
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.local.service;
-            const serviceInstance: PlaylistService = servicesList[service];
+            const { provider, accessToken } = req.session.service;
+            const serviceInstance: PlaylistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -204,7 +204,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getArtistTopTracks;
-            const tracks = await fn(req.session.local.service.accessToken, id);
+            const tracks = await fn(accessToken, id);
             return res.json(tracks);
         } catch (error: any) {
             next(error);

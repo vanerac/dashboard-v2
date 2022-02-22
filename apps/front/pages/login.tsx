@@ -1,5 +1,5 @@
-import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
-import { useDarkMode } from 'next-dark-mode';
+// import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
+// import { useDarkMode } from 'next-dark-mode';
 import Router from 'next/router';
 // import Head from 'next/head';
 import NextLink from 'next/link';
@@ -18,7 +18,6 @@ import { Client } from '../../../packages/global';
 import Cookies from 'universal-cookie';
 
 const Login = () => {
-    const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -26,17 +25,6 @@ const Login = () => {
     const [errorEmptyFieldPassword, setErrorEmptyFieldPassword] = useState('');
     const errorString = 'This input field cannot be empty.';
     const cookies = new Cookies();
-
-    const handleChangeMode = () => {
-        if (darkModeActive) {
-            switchToLightMode();
-        } else {
-            switchToDarkMode();
-        }
-    };
-
-    const nextMode = darkModeActive ? 'Light' : 'Dark';
-    const Icon = darkModeActive ? LightIcon : DarkIcon;
 
     const style = {
         position: 'absolute',
@@ -110,11 +98,39 @@ const Login = () => {
         }
     };
 
+    const authGoogle = () => {
+        Client.sso.googleConsentSso('http://localhost:3000/sso/google').then((data) => {
+            console.log(data);
+            Router.push(data.url);
+        });
+    };
+
+    const authSpotify = () => {
+        Client.sso.spotifyConsentSso('http://localhost:3000/sso/spotify').then((data) => {
+            console.log(data);
+            Router.push(data.url);
+        });
+    };
+
+    const authLastFM = () => {
+        Client.sso.lastfmConsentSso('http://localhost:3000/getLastFMCode').then((data) => {
+            console.log(data);
+            Router.push(data.url);
+        });
+    };
+
+    const authApple = () => {
+        // Client.sso.appleConsentSso('http://localhost:3000/getAppleCode').then((data) => {
+        //     console.log(data);
+        //     Router.push(data.url);
+        // });
+    };
+
     return (
         <>
-            <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
+            {/* <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
                 Use {nextMode} mode
-            </Button>
+            </Button> */}
             <br />
             <Box
                 component="main"
@@ -140,7 +156,7 @@ const Login = () => {
                                     color="info"
                                     fullWidth
                                     startIcon={svgLastFM}
-                                    //   onClick={}
+                                    onClick={authLastFM}
                                     size="large"
                                     variant="contained">
                                     Login with LastFM
@@ -151,7 +167,7 @@ const Login = () => {
                                     fullWidth
                                     color="error"
                                     startIcon={<GoogleIcon />}
-                                    //   onClick={}
+                                    onClick={authGoogle}
                                     size="large"
                                     variant="contained">
                                     Login with Google
@@ -162,7 +178,7 @@ const Login = () => {
                                     fullWidth
                                     color="secondary"
                                     startIcon={svgSpotify}
-                                    //   onClick={}
+                                    onClick={authSpotify}
                                     size="large"
                                     variant="contained">
                                     Login with Spotify
@@ -173,7 +189,7 @@ const Login = () => {
                                     fullWidth
                                     color="primary"
                                     startIcon={<AppleIcon />}
-                                    //   onClick={}
+                                    onClick={authApple}
                                     size="large"
                                     variant="contained">
                                     Login with Apple
