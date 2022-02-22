@@ -10,9 +10,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettopartists',
@@ -60,9 +58,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettoptracks',
@@ -109,9 +105,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettopalbums',
@@ -158,9 +152,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettoptags',
@@ -206,9 +198,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'chart.gettopartists',
@@ -254,9 +244,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'chart.gettoptracks',
@@ -302,9 +290,7 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { service } = req.session.service;
-
-            const { accessToken } = service;
+            const { accessToken } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'chart.gettopalbums',
