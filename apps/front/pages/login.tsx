@@ -106,7 +106,7 @@ const Login = () => {
     };
 
     const authSpotify = () => {
-        Client.sso.spotifyConsentSso(/*'http://localhost:3000/sso/spotify'*/).then((data) => {
+        Client.sso.spotifyConsentSso('http://localhost:3000/sso/spotify').then((data) => {
             console.log(data);
             Router.push(data.url);
         });
