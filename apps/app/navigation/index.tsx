@@ -15,7 +15,6 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import HomeTab from '../screens/tabs/HomeTab';
 import RegisterScreen from '../screens/login/RegisterScreen';
@@ -85,7 +84,7 @@ export function BottomTabNavigator() {
                 tabBarActiveTintColor: Colors[colorScheme].tint,
             }}>
             <BottomTab.Screen
-                name="TabOne"
+                name="HomeTab"
                 component={HomeTab}
                 options={({ navigation }: RootTabScreenProps<'HomeTab'>) => ({
                     title: 'HomeTab',
