@@ -195,6 +195,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -279,6 +288,15 @@
             "in": "query",
             "description": "Auth code returned by provider",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -369,6 +387,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -453,6 +480,15 @@
             "in": "query",
             "description": "Auth code returned by provider",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "callbackURL",
+            "in": "query",
+            "description": "A callback URL to redirect to after SSO authentication",
+            "required": false,
             "schema": {
               "type": "string"
             }

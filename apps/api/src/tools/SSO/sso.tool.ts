@@ -1,4 +1,4 @@
-import { Token, ServiceUserData } from '../types';
+import { ServiceUserData, Token } from '../types';
 import pool from '../../../src/tools/database.tools';
 import { User } from '../../../../../packages/services';
 
@@ -33,6 +33,7 @@ export async function linkService(user: User, serviceUserData: ServiceUserData, 
 
 export async function updateToken(user: User, serviceUserData: any, token: Token) {
     // update, token, refreshtoken, expiresat
+
     const updateSSOQuery = `UPDATE services SET accessToken = $1, refreshtoken = $2, tokenExpires = $3 WHERE userId = $4 AND clientid = $5 AND provider = $6`;
     const tokenExpiration: Date = new Date(Date.now() + token.expires_in * 1000);
     const updateSSOValues = [
@@ -40,9 +41,10 @@ export async function updateToken(user: User, serviceUserData: any, token: Token
         token.refresh_token,
         tokenExpiration,
         user.id,
-        serviceUserData.clientId,
+        serviceUserData.id,
         token.provider,
     ];
+    console.log(updateSSOValues);
     return pool.query(updateSSOQuery, updateSSOValues);
 }
 

@@ -24,8 +24,8 @@ export default class GoogleController extends SSOController {
             redirect_uri: callbackURL || GoogleController.callbackURL,
             scope: GoogleController.scope,
             response_type: 'code',
-            access_type: 'offline',
-            prompt: 'consent',
+            // access_type: 'offline',
+            // prompt: 'consent',
         };
         // @ts-ignore
         const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams(params)}`;
@@ -35,12 +35,12 @@ export default class GoogleController extends SSOController {
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code } = req.query;
+            const { code, callbackURL } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await GoogleTools.getToken(code);
+            const SSOToken = await GoogleTools.getToken(code, (callbackURL as string) || GoogleController.callbackURL);
             const user: ServiceUserData = await GoogleTools.getUserInfos(SSOToken.access_token);
 
             var userData: User & any = sessionUser || (await findUserByService('google', user.id));

@@ -32,12 +32,12 @@ export default class LastFmController extends SSOController {
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code } = req.query;
+            const { code, callbackURL } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await LastFmTools.getToken(code);
+            const SSOToken = await LastFmTools.getToken(code, (callbackURL as string) || LastFmController.callbackURL);
             const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token);
 
             var userData: User & any = sessionUser || (await findUserByService('lastFm', user.id));

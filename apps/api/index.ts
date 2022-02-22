@@ -14,9 +14,7 @@ const swaggerDocument = require('./generated/openapi-v1.json');
 
 const sessionConfig = {
     user: {},
-    local: {
-        service: undefined,
-    },
+    service: {},
     secret: process.env.COOKIE_SECRET || 'secret',
     resave: true,
     saveUninitialized: true,
