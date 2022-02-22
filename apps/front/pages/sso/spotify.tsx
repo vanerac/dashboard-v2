@@ -20,7 +20,14 @@ function ssoSpotify() {
     }
     return (
         <>
-            <SpinnerCircular />
+            <SpinnerCircular
+                size={90}
+                thickness={98}
+                speed={100}
+                color="#36ad47"
+                secondaryColor="rgba(0, 0, 0, 0.44)"
+                style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+            />
         </>
     );
 }
