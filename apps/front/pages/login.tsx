@@ -14,8 +14,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 // import { Test } from '@area/ui';
-import { Client } from '../../../packages/global';
 import Cookies from 'universal-cookie';
+import { getClient } from '../utils/ApiClient';
 
 const Login = () => {
     let errorBool: boolean = false;
@@ -78,8 +78,8 @@ const Login = () => {
         console.log(errorBool);
 
         if (errorBool === false) {
-            Client.authentication
-                .login({
+            getClient()
+                .authentication.login({
                     email: userEmail,
                     password: userPassword,
                 })
@@ -99,24 +99,30 @@ const Login = () => {
     };
 
     const authGoogle = () => {
-        Client.sso.googleConsentSso('http://localhost:3000/sso/google').then((data) => {
-            console.log(data);
-            Router.push(data.url);
-        });
+        getClient()
+            .sso.googleConsentSso('http://localhost:3000/sso/google')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
     };
 
     const authSpotify = () => {
-        Client.sso.spotifyConsentSso('http://localhost:3000/sso/spotify').then((data) => {
-            console.log(data);
-            Router.push(data.url);
-        });
+        getClient()
+            .sso.spotifyConsentSso('http://localhost:3000/sso/spotify')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
     };
 
     const authLastFM = () => {
-        Client.sso.lastfmConsentSso('http://localhost:3000/getLastFMCode').then((data) => {
-            console.log(data);
-            Router.push(data.url);
-        });
+        getClient()
+            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
     };
 
     const authApple = () => {
