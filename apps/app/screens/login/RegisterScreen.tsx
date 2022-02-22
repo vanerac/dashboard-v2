@@ -67,10 +67,6 @@ export default function RegisterScreen({ navigation }: Props) {
                 />
             </View>
 
-            <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
-                <Text style={[styles.already_registered_button, { color: theme.text }]}>already registered ?</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity style={[styles.loginBtn, { backgroundColor: theme.accent }]}>
                 <Text
                     style={{ color: theme.text }}
