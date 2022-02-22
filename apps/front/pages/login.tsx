@@ -99,7 +99,7 @@ const Login = () => {
     };
 
     const authGoogle = () => {
-        Client.sso.googleConsentSso('http://localhost:3000/getGoogleCode').then((data) => {
+        Client.sso.googleConsentSso('http://localhost:3000/sso/google').then((data) => {
             console.log(data);
             Router.push(data.url);
         });
