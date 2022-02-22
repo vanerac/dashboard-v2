@@ -37,3 +37,6 @@ yarn-error.log*
 db/
 data/
 logs
+
+# expo
+yarn.lock

@@ -9,7 +9,7 @@ import { ssoUrl } from '@area/services';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
-function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }) {
+function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Props) {
     // console.log('SSOData', SSOData);
     const [$request, response, promptAsync] = useAuthRequest(
         {
@@ -36,7 +36,7 @@ function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }) {
     useEffect(() => {
         console.log('got response');
         if (response && response.type === 'success') {
-            console.log('valid reponse');
+            console.log('valid response');
             setCode(response.params.code);
         }
     }, [response]);
@@ -125,15 +125,28 @@ export default function LoginScreen({ navigation }: Props) {
                 />
             </View>
 
-            <TouchableOpacity>
-                <Text style={[styles.forgot_button, { color: theme.text }]}>Forgot Password?</Text>
-            </TouchableOpacity>
+            <View style={styles.forgotPassword}>
+                <TouchableOpacity onPress={() => Alert.alert('Not implemented yet')}>
+                    <Text style={{ color: theme.text }}>Forgot Password?</Text>
+                </TouchableOpacity>
+            </View>
 
             <TouchableOpacity
                 style={[styles.loginBtn, { backgroundColor: theme.accent }]}
                 onPress={() => makeRequest()}>
                 <Text style={{ color: theme.text }}>LOGIN</Text>
             </TouchableOpacity>
+
+            <View style={styles.signInButton}>
+                <Text style={{ color: theme.text }}>Forgot Password? </Text>
+                <TouchableOpacity>
+                    <Text
+                        style={[styles.signIn, { color: theme.accent }]}
+                        onPress={() => navigation.navigate('RegisterScreen')}>
+                        Sign In
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -163,9 +176,22 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 
-    forgot_button: {
+    signInButton: {
+        flexDirection: 'row',
         height: 30,
         marginBottom: 30,
+        marginTop: 30,
+    },
+
+    signIn: {
+        fontWeight: 'bold',
+    },
+
+    forgotPassword: {
+        width: '67%',
+        alignItems: 'flex-end',
+        marginBottom: 15,
+        marginTop: 20,
     },
 
     loginBtn: {
@@ -174,6 +200,6 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 40,
+        marginTop: 15,
     },
 });
