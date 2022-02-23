@@ -51,6 +51,7 @@ export class SsoService {
             },
             errors: {
                 400: `Bad request`,
+                409: `Conflict`,
                 500: `Internal server error`,
             },
         });
@@ -96,6 +97,7 @@ export class SsoService {
             },
             errors: {
                 400: `Bad request`,
+                409: `Conflict`,
                 500: `Internal server error`,
             },
         });
@@ -141,6 +143,7 @@ export class SsoService {
             },
             errors: {
                 400: `Bad request`,
+                409: `Conflict`,
                 500: `Internal server error`,
             },
         });
@@ -186,6 +189,7 @@ export class SsoService {
             },
             errors: {
                 400: `Bad request`,
+                409: `Conflict`,
                 500: `Internal server error`,
             },
         });
