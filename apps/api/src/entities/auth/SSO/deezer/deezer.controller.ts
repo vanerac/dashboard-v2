@@ -40,10 +40,12 @@ export default class DeezerController extends SSOController {
             const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('deezer', user.id);
 
-            if (userData) {
-                await updateToken(userData, user, SSOToken);
-            } else if (sessionUser) {
-                await linkService(sessionUser, user, SSOToken);
+            if (sessionUser) {
+                if (!userData) {
+                    await linkService(sessionUser, user, SSOToken);
+                } else {
+                    await updateToken(userData, user, SSOToken);
+                }
                 userData = sessionUser;
             } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
