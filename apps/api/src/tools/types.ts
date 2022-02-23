@@ -47,7 +47,8 @@ export enum Providers {
     SPOTIFY = 'spotify',
     // eslint-disable-next-line no-unused-vars
     DEEZER = 'deezer',
-    $APPLE = 'apple',
+    // eslint-disable-next-line no-unused-vars
+    APPLE = 'apple',
     $LAST_FM = 'lastfm',
 }
 

@@ -41,6 +41,12 @@
     "/auth/sso/lastfm/callback": {
       "$ref": "./auth/sso/lastfm/lastfm.path.json#/authCodeSSO"
     },
+    "/auth/sso/apple/login": {
+      "$ref": "./auth/sso/apple/apple.path.json#/consentSSO"
+    },
+    "/auth/sso/apple/callback": {
+      "$ref": "./auth/sso/apple/apple.path.json#/authCodeSSO"
+    },
     "/service": {
       "$ref": "services/service.path.json#/getAllUserServices"
     },
