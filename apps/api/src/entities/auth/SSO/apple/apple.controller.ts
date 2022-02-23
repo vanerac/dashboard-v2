@@ -40,12 +40,10 @@ export default class AppleController extends SSOController {
             const user: ServiceUserData = await AppleTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('apple', user.id);
 
-            if (sessionUser) {
-                if (!userData) {
-                    await linkService(sessionUser, user, SSOToken);
-                } else {
-                    await updateToken(userData, user, SSOToken);
-                }
+            if (userData) {
+                await updateToken(userData, user, SSOToken);
+            } else if (sessionUser) {
+                await linkService(sessionUser, user, SSOToken);
                 userData = sessionUser;
             } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
@@ -58,8 +56,13 @@ export default class AppleController extends SSOController {
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
-            console.log(e);
-            res.status(500).send(e);
+            if ((e as any).code === '23505') {
+                res.status(409).json({
+                    message: 'Account already assigned to another user',
+                });
+            } else {
+                res.status(500).send(e);
+            }
         }
     }
 }
