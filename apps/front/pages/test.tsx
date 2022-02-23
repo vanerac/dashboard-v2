@@ -1,11 +1,9 @@
 import withAuth from './withAuth';
-import SideBar from './../components/sideBar';
+// import Widgets from './../components/Widget';
+import { SpinnerCircular } from 'spinners-react';
 
 function test() {
-    return (
-        // <div>Example auth route</div>;
-        <SideBar />
-    );
+    return <SpinnerCircular />;
 }
 
 export default withAuth(test);

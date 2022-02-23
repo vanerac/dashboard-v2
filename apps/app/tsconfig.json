@@ -2,7 +2,11 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "jsx": "react",
     "paths": {
+      "@area/global": [
+        "../../packages/global"
+      ],
       "@area/ui": [
         "../../packages/ui"
       ],

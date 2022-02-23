@@ -1,3 +1,7 @@
+// import { Brightness4 as DarkIcon, Brightness7 as LightIcon } from '@mui/icons-material';
+// import { useDarkMode } from 'next-dark-mode';
+import Router from 'next/router';
+// import Head from 'next/head';
 import NextLink from 'next/link';
 import { Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -9,7 +13,9 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { Client, updateClientConfig } from '../../../packages/global';
+// import { Test } from '@area/ui';
+import Cookies from 'universal-cookie';
+import { getClient } from '../utils/ApiClient';
 
 const Login = () => {
     let errorBool: boolean = false;
@@ -18,6 +24,7 @@ const Login = () => {
     const [errorEmptyFieldEmail, setErrorEmptyFieldEmail] = useState('');
     const [errorEmptyFieldPassword, setErrorEmptyFieldPassword] = useState('');
     const errorString = 'This input field cannot be empty.';
+    const cookies = new Cookies();
 
     const style = {
         position: 'absolute',
@@ -71,25 +78,61 @@ const Login = () => {
         console.log(errorBool);
 
         if (errorBool === false) {
-            Client.authentication
-                .login({
+            getClient()
+                .authentication.login({
                     email: userEmail,
                     password: userPassword,
                 })
                 .then((data) => {
-                    updateClientConfig({
-                        TOKEN: data.token,
-                    });
-                    localStorage.setItem('token', data.token);
-                    // Todo: Redirect to home & store expiration date?
+                    console.log(data);
+                    cookies.set('API_TOKEN', data.token, { path: '/' });
+                    Router.push('/');
                 })
                 // Todo: Handle 401: Token expired
                 .catch(handleOpen);
         }
     };
 
+    const authGoogle = () => {
+        getClient()
+            .sso.googleConsentSso('http://localhost:3000/sso/google')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
+    };
+
+    const authSpotify = () => {
+        getClient()
+            .sso.spotifyConsentSso('http://localhost:3000/sso/spotify')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
+    };
+
+    const authLastFM = () => {
+        getClient()
+            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
+    };
+
+    const authApple = () => {
+        // Client.sso.appleConsentSso('http://localhost:3000/getAppleCode').then((data) => {
+        //     console.log(data);
+        //     Router.push(data.url);
+        // });
+    };
+
     return (
         <>
+            {/* <Button onClick={handleChangeMode} color="primary" variant="contained" startIcon={<Icon />}>
+                Use {nextMode} mode
+            </Button> */}
+            <br />
             <Box
                 component="main"
                 sx={{
@@ -114,7 +157,7 @@ const Login = () => {
                                     color="info"
                                     fullWidth
                                     startIcon={svgLastFM}
-                                    //   onClick={}
+                                    onClick={authLastFM}
                                     size="large"
                                     variant="contained">
                                     Login with LastFM
@@ -125,7 +168,7 @@ const Login = () => {
                                     fullWidth
                                     color="error"
                                     startIcon={<GoogleIcon />}
-                                    //   onClick={}
+                                    onClick={authGoogle}
                                     size="large"
                                     variant="contained">
                                     Login with Google
@@ -136,7 +179,7 @@ const Login = () => {
                                     fullWidth
                                     color="secondary"
                                     startIcon={svgSpotify}
-                                    //   onClick={}
+                                    onClick={authSpotify}
                                     size="large"
                                     variant="contained">
                                     Login with Spotify
@@ -147,7 +190,7 @@ const Login = () => {
                                     fullWidth
                                     color="primary"
                                     startIcon={<AppleIcon />}
-                                    //   onClick={}
+                                    onClick={authApple}
                                     size="large"
                                     variant="contained">
                                     Login with Apple

@@ -11,5 +11,7 @@ router.get('/:id/tracks', PlaylistController.getTracks);
 router.post('/create', PlaylistController.create);
 router.put('/:id/update', PlaylistController.update);
 router.delete('/:id/delete', PlaylistController.delete);
+router.get('/:id/save', PlaylistController.savePlaylist);
+router.get('/:id/unsave', PlaylistController.unsavePlaylist);
 
 export default router;

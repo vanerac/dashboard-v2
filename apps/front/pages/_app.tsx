@@ -7,10 +7,6 @@ import '../../../packages/global';
 import { updateClientConfig } from '../../../packages/global'; // Load Global dependencies
 
 const MyApp = ({ Component, pageProps }: propApps) => {
-    // const { Component, pageProps } = props;
-
-    // If token in localstorage, update client
-
     useEffect(() => {
         if (localStorage.getItem('token')) {
             const token = localStorage.getItem('token');
@@ -27,7 +23,5 @@ const MyApp = ({ Component, pageProps }: propApps) => {
         </Theme>
     );
 };
-
-// const app = withDarkMode(MyApp);
 
 export default withDarkMode(MyApp);

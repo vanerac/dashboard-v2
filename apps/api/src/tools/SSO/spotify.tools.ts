@@ -9,14 +9,14 @@ export class SpotifyTools implements SSOTools {
     static callbackURL: string = configuration.spotifyRedirectUri;
     static scope: string = configuration.spotifyScopes;
 
-    static async getToken(code: string): Promise<Token> {
+    static async getToken(code: string, callbackURL: string): Promise<Token> {
         const response = await axios({
             method: 'post',
             url: 'https://accounts.spotify.com/api/token',
             data: querystring.stringify({
                 grant_type: 'authorization_code',
                 code,
-                redirect_uri: SpotifyTools.callbackURL,
+                redirect_uri: callbackURL || SpotifyTools.callbackURL,
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
