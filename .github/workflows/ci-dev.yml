@@ -4,20 +4,20 @@ on: push
 jobs:
   install-dependencies:
     name: Install dependencies
-    uses: ./.github/actions/install-dependencies.yml
-  lint:
-    name: Lint
-    needs: install-dependencies
-    uses: ./.github/actions/lint.yml
-  prettier:
-    name: Prettier
-    needs: install-dependencies
-    uses: ./.github/actions/prettier.yml
-  openapi:
-    name: Verify OpenAPI Definition
-    needs: install-dependencies
-    uses: ./.github/actions/validate-swagger.yml
-  check-types:
-    name: Verify Compilation
-    needs: install-dependencies
-    uses: ./.github/actions/compile-ts.yml
+    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@feature/ci/reusable-workflows
+#  lint:
+#    name: Lint
+#    needs: install-dependencies
+#    uses: ./.github/actions/lint.yml
+#  prettier:
+#    name: Prettier
+#    needs: install-dependencies
+#    uses: ./.github/actions/prettier.yml
+#  openapi:
+#    name: Verify OpenAPI Definition
+#    needs: install-dependencies
+#    uses: ./.github/actions/validate-swagger.yml
+#  check-types:
+#    name: Verify Compilation
+#    needs: install-dependencies
+#    uses: ./.github/actions/compile-ts.yml
