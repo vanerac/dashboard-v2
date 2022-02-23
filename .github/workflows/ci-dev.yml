@@ -9,18 +9,18 @@ jobs:
   install-dependencies:
     name: Install dependencies
     uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@feature/ci/reusable-worflows
-  lint:
-    name: Lint
-    needs: install-dependencies
-    uses: vanerac/dashboard-v2/.github/workflows/lint.yml@feature/ci/reusable-worflows
-  prettier:
-    name: Prettier
-    needs: install-dependencies
-    uses: vanerac/dashboard-v2/.github/workflows/prettier.yml@feature/ci/reusable-worflows
-  openapi:
-    name: Verify OpenAPI Definition
-    needs: install-dependencies
-    uses: vanerac/dashboard-v2/.github/workflows/validate-swagger.yml@feature/ci/reusable-worflows
+#  lint:
+#    name: Lint
+#    needs: install-dependencies
+#    uses: vanerac/dashboard-v2/.github/workflows/lint.yml@feature/ci/reusable-worflows
+#  prettier:
+#    name: Prettier
+#    needs: install-dependencies
+#    uses: vanerac/dashboard-v2/.github/workflows/prettier.yml@feature/ci/reusable-worflows
+#  openapi:
+#    name: Verify OpenAPI Definition
+#    needs: install-dependencies
+#    uses: vanerac/dashboard-v2/.github/workflows/validate-swagger.yml@feature/ci/reusable-worflows
 #  check-types:
 #    name: Verify Compilation
 #    needs: install-dependencies
