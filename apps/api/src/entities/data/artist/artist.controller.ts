@@ -15,7 +15,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifyArtistService,
     [Providers.DEEZER]: DeezerArtistService,
     [Providers.GOOGLE]: GoogleArtistService,
-    [Providers.$APPLE]: AppleArtistService,
+    [Providers.APPLE]: AppleArtistService,
 };
 export default class ArtistController {
     static async getArtistById(req: Request, res: Response, next: NextFunction) {

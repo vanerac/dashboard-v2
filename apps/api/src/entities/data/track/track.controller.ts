@@ -15,7 +15,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifyTrackService,
     [Providers.DEEZER]: DeezerTrackService,
     [Providers.GOOGLE]: YoutubeTrackService,
-    [Providers.$APPLE]: AppleTrackService,
+    [Providers.APPLE]: AppleTrackService,
 };
 
 export default class TrackController {

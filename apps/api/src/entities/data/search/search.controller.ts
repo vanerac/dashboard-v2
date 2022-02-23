@@ -14,7 +14,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifySearchService,
     [Providers.DEEZER]: DeezerSearchService,
     [Providers.GOOGLE]: GoogleSearchService,
-    [Providers.$APPLE]: AppleSearchService,
+    [Providers.APPLE]: AppleSearchService,
 };
 export default class SearchController {
     // Service search

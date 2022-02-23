@@ -14,7 +14,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifyPlaylistService,
     [Providers.DEEZER]: DeezerPlaylistService,
     [Providers.GOOGLE]: GooglePlaylistService,
-    [Providers.$APPLE]: ApplePlaylistService,
+    [Providers.APPLE]: ApplePlaylistService,
 };
 
 export default class PlaylistController {
