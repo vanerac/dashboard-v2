@@ -90,6 +90,16 @@
                         }
                     }
                 },
+                "409": {
+                    "description": "Conflict",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../openapi.components.json#/schemas/Error"
+                            }
+                        }
+                    }
+                },
                 "500": {
                     "description": "Internal server error",
                     "content": {

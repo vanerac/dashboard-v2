@@ -60,6 +60,54 @@ export class SpotifySearchService extends SearchService {
     }
 }
 
+export class AppleSearchService extends SearchService {
+    static async search(accessToken: string, query: string): Promise<SearchResult> {
+        const response = await fetch(`https://api.music.apple.com/v1/catalog/us/search?term=${query}`);
+        const data = await response.json();
+        const tracks = data.results.songs.map(
+            (track: any) =>
+                ({
+                    id: track.id,
+                    name: track.name,
+                    artist: track.artistName,
+                    album: track.albumName,
+                    image: track.artwork[0].url,
+                    duration: track.durationMillis,
+                    provider: 'apple',
+                } as Track),
+        );
+        const albums = data.results.albums.map(
+            (album: any) =>
+                ({
+                    id: album.id,
+                    name: album.name,
+                    artist: album.artistName,
+                    image: album.artwork[0].url,
+                    provider: 'apple',
+                } as Album),
+        );
+        const artists = data.results.artists.map(
+            (artist: { id: any; name: any; artwork: { url: any }[] }) =>
+                ({
+                    id: artist.id,
+                    name: artist.name,
+                    image: artist.artwork[0].url,
+                    provider: 'apple',
+                } as Artist),
+        );
+        const playlists = data.results.playlists.map(
+            (playlist: { id: any; name: any; artwork: { url: any }[] }) =>
+                ({
+                    id: playlist.id,
+                    name: playlist.name,
+                    image: playlist.artwork[0].url,
+                    provider: 'apple',
+                } as Playlist),
+        );
+        return [...tracks, ...albums, ...artists, ...playlists];
+    }
+}
+
 export class DeezerSearchService extends SearchService {
     static async search(accessToken: string, query: string): Promise<SearchResult> {
         const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`);

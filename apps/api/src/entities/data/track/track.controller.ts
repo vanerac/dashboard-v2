@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { Providers } from '../../../tools/types';
 
-import { DeezerTrackService, SpotifyTrackService, TrackService, YoutubeTrackService } from './track.service';
+import {
+    AppleTrackService,
+    DeezerTrackService,
+    SpotifyTrackService,
+    TrackService,
+    YoutubeTrackService,
+} from './track.service';
 
 const servicesList: {
     [key: string]: TrackService;
@@ -9,6 +15,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifyTrackService,
     [Providers.DEEZER]: DeezerTrackService,
     [Providers.GOOGLE]: YoutubeTrackService,
+    [Providers.APPLE]: AppleTrackService,
 };
 
 export default class TrackController {

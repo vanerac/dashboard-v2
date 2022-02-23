@@ -138,6 +138,128 @@ export class SpotifyTrackService extends TrackService {
     }
 }
 
+export class AppleTrackService extends TrackService {
+    static async getTrack(accessToken: string, trackId: string): Promise<Track> {
+        // make request to apple music api
+        // return track
+        const url = `https://api.music.apple.com/v1/catalog/us/songs/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await axios.get(url, { headers });
+        // map response to track type
+        return {
+            image: response.data.attributes.artwork.url,
+            playable: true,
+            type: Track.type.TRACK,
+            id: response.data.id,
+            name: response.data.attributes.name,
+            artist: response.data.attributes.artistName,
+            album: response.data.attributes.albumName,
+            duration: response.data.attributes.durationInMillis,
+            provider: 'apple',
+        };
+    }
+
+    static async getAlbum(accessToken: string, trackId: string): Promise<Album> {
+        // make request to apple music api
+        // return album
+        const url = `https://api.music.apple.com/v1/catalog/us/songs/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await axios.get(url, { headers });
+        // map response to album type
+        return {
+            id: response.data.relationships.albums.data[0].id,
+            name: response.data.attributes.albumName,
+            artist: response.data.attributes.artistName,
+            provider: 'apple',
+        };
+    }
+
+    static async getArtists(accessToken: string, trackId: string): Promise<Artist> {
+        // make request to apple music api
+        // return artist
+        const url = `https://api.music.apple.com/v1/catalog/us/songs/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await axios.get(url, { headers });
+        // map response to artist type
+        return {
+            external_urls: response.data.attributes.artistUrl,
+            followers: response.data.attributes.artistId,
+            image: response.data.attributes.artwork.url,
+            type: Track.type.ARTIST,
+            id: response.data.relationships.artists.data[0].id,
+            name: response.data.attributes.artistName,
+            provider: 'apple',
+        };
+    }
+
+    static async getAlbums(accessToken: string, trackId: string): Promise<Album> {
+        // make request to apple music api
+        // return album
+        const url = `https://api.music.apple.com/v1/catalog/us/songs/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const response = await axios.get(url, { headers });
+        // map response to album type
+        return {
+            id: response.data.relationships.albums.data[0].id,
+            name: response.data.attributes.albumName,
+            artist: response.data.attributes.artistName,
+            provider: 'apple',
+        };
+    }
+
+    // like
+    static async like(accessToken: string, trackId: string): Promise<void> {
+        // make request to apple music api
+        // return nothing
+        const url = `https://api.music.apple.com/v1/me/library/songs/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        await axios.put(url, {}, { headers });
+    }
+
+    // unlike
+    static async unlike(accessToken: string, trackId: string): Promise<void> {
+        // make request to apple music api
+        // return nothing
+        const url = `https://api.music.apple.com/v1/me/library/songs/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        await axios.delete(url, { headers });
+    }
+
+    // add to playlist
+    static async addToPlaylist(accessToken: string, trackId: string, playlistId: string): Promise<void> {
+        // make request to apple music api
+        // return nothing
+        const url = `https://api.music.apple.com/v1/me/library/playlists/${playlistId}/tracks`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        await axios.post(url, { data: { id: trackId } }, { headers });
+    }
+
+    // remove from playlist
+    static async removeFromPlaylist(accessToken: string, trackId: string, playlistId: string): Promise<void> {
+        // make request to apple music api
+        // return nothing
+        const url = `https://api.music.apple.com/v1/me/library/playlists/${playlistId}/tracks/${trackId}`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        await axios.delete(url, { headers });
+    }
+}
+
 export class YoutubeTrackService extends TrackService {
     static async getById(accessToken: string, trackId: string): Promise<Track> {
         // make request to youtube api

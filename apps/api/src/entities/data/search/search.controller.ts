@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import {
+    AppleSearchService,
     DeezerSearchService,
     GoogleSearchService,
     SearchService,
@@ -13,6 +14,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifySearchService,
     [Providers.DEEZER]: DeezerSearchService,
     [Providers.GOOGLE]: GoogleSearchService,
+    [Providers.APPLE]: AppleSearchService,
 };
 export default class SearchController {
     // Service search

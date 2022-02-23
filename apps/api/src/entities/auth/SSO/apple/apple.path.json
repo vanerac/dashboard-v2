@@ -1,7 +1,7 @@
 {
   "consentSSO": {
     "get": {
-      "operationId": "lastfmConsentSSO",
+      "operationId": "appleConsentSSO",
       "tags": ["SSO"],
       "summary": "Redirects to SSO Auth screen",
       "description": "Redirects to SSO Auth screen",
@@ -32,7 +32,7 @@
   },
   "authCodeSSO": {
     "get": {
-      "operationId": "lastfmAuthCodeSSO",
+      "operationId": "appleAuthCodeSSO",
       "tags": ["SSO"],
       "summary": "Assign token tu user and/or login to user account",
       "description": "Assign token tu user and/or login to user account",
@@ -70,16 +70,6 @@
         },
         "400": {
           "description": "Bad request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "../../../openapi.components.json#/schemas/Error"
-              }
-            }
-          }
-        },
-        "409": {
-          "description": "Conflict",
           "content": {
             "application/json": {
               "schema": {
