@@ -72,7 +72,7 @@ export default class AuthController {
         } catch (e) {
             console.error(e);
             if ((e as any).code === '23505') {
-                res.status(400).json({
+                res.status(409).json({
                     message: 'User already exists',
                 });
             } else {

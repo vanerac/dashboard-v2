@@ -56,6 +56,7 @@ export class AuthenticationService {
             mediaType: 'application/json',
             errors: {
                 400: `Bad request`,
+                409: `Conflict`,
                 500: `Internal server error`,
             },
         });

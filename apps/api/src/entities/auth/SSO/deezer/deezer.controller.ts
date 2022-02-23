@@ -58,8 +58,13 @@ export default class DeezerController extends SSOController {
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
-            console.log(e);
-            res.status(500).send(e);
+            if ((e as any).code === '23505') {
+                res.status(409).json({
+                    message: 'Account already assigned to another user',
+                });
+            } else {
+                res.status(500).send(e);
+            }
         }
     }
 }
