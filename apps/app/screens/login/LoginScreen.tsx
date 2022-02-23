@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
 import { Client } from '../../../../packages/global';
 import { RootStackParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ssoUrl } from '@area/services';
+import Icon from 'react-native-vector-icons/Entypo';
+import Constants from 'expo-constants';
+
+const SCHEME = Constants.manifest?.scheme;
+const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
@@ -59,7 +64,9 @@ function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Pro
     return (
         <View>
             <TouchableOpacity onPress={triggerSSO}>
-                <Text>Login with Spotify</Text>
+                <Text>
+                    <Icon name="spotify" size={40} color="#1DB954" />
+                </Text>
             </TouchableOpacity>
         </View>
     );
@@ -89,10 +96,11 @@ export default function LoginScreen({ navigation }: Props) {
         redirect_uri: 'com.spotify.music://',
         base_url: '',
     });
-
+    // console.log({ SCHEME });
     // create redirect uri
     const redirectURI = makeRedirectUri({
-        native: 'myapp://redirect',
+        native: `${SCHEME}://redirect`,
+        useProxy,
     });
 
     Client.sso.spotifyConsentSso(redirectURI).then((data: ssoUrl) => {
@@ -101,7 +109,6 @@ export default function LoginScreen({ navigation }: Props) {
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
-            <SpotifyTriggerSSO SSOData={SSOData} />
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
                 <TextInput
                     style={[styles.TextInput, { color: theme.text }]}
@@ -131,6 +138,13 @@ export default function LoginScreen({ navigation }: Props) {
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.ssoText}>
+                <Text style={{ color: theme.text }}>Or log in with :</Text>
+                <View style={styles.ssoIcons}>
+                    <SpotifyTriggerSSO SSOData={SSOData} />
+                </View>
+            </View>
+
             <TouchableOpacity
                 style={[styles.loginBtn, { backgroundColor: theme.accent }]}
                 onPress={() => makeRequest()}>
@@ -138,7 +152,7 @@ export default function LoginScreen({ navigation }: Props) {
             </TouchableOpacity>
 
             <View style={styles.signInButton}>
-                <Text style={{ color: theme.text }}>Forgot Password? </Text>
+                <Text style={{ color: theme.text }}>Already registered? </Text>
                 <TouchableOpacity>
                     <Text
                         style={[styles.signIn, { color: theme.accent }]}
@@ -192,6 +206,19 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginBottom: 35,
         marginTop: 5,
+    },
+
+    ssoText: {
+        width: '67%',
+        alignItems: 'flex-start',
+        marginBottom: 35,
+        marginTop: 5,
+    },
+
+    ssoIcons: {
+        width: '67%',
+        alignItems: 'flex-start',
+        marginTop: 20,
     },
 
     loginBtn: {
