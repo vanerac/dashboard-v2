@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Providers } from '../../../tools/types';
 import {
+    ApplePlaylistService,
     DeezerPlaylistService,
     GooglePlaylistService,
     PlaylistService,
@@ -13,6 +14,7 @@ const servicesList: {
     [Providers.SPOTIFY]: SpotifyPlaylistService,
     [Providers.DEEZER]: DeezerPlaylistService,
     [Providers.GOOGLE]: GooglePlaylistService,
+    [Providers.$APPLE]: ApplePlaylistService,
 };
 
 export default class PlaylistController {
