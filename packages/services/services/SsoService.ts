@@ -195,4 +195,49 @@ export class SsoService {
         });
     }
 
+    /**
+     * Redirects to SSO Auth screen
+     * Redirects to SSO Auth screen
+     * @param callbackUrl A callback URL to redirect to after SSO authentication
+     * @returns ssoUrl Success
+     * @throws ApiError
+     */
+    public appleConsentSso(
+        callbackUrl?: string,
+    ): CancelablePromise<ssoUrl> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/auth/sso/apple/login',
+            query: {
+                'callbackURL': callbackUrl,
+            },
+        });
+    }
+
+    /**
+     * Assign token tu user and/or login to user account
+     * Assign token tu user and/or login to user account
+     * @param code Auth code returned by provider
+     * @param callbackUrl A callback URL to redirect to after SSO authentication
+     * @returns loginResponse Success
+     * @throws ApiError
+     */
+    public appleAuthCodeSso(
+        code: string,
+        callbackUrl?: string,
+    ): CancelablePromise<loginResponse> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/auth/sso/apple/callback',
+            query: {
+                'code': code,
+                'callbackURL': callbackUrl,
+            },
+            errors: {
+                400: `Bad request`,
+                500: `Internal server error`,
+            },
+        });
+    }
+
 }
