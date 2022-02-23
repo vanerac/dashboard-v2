@@ -18,8 +18,6 @@ import { Client, updateClientConfig } from '../../../packages/global';
 import Cookies from 'universal-cookie';
 import { getClient } from '.';
 
-
-
 const Login = () => {
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
@@ -81,20 +79,15 @@ const Login = () => {
         console.log(errorBool);
 
         if (errorBool === false) {
-            Client.authentication
-                .login({
+            getClient()
+                .authentication.login({
                     email: userEmail,
                     password: userPassword,
                 })
                 .then((data) => {
                     console.log(data);
-                    updateClientConfig({
-                        TOKEN: data.token,
-                    });
-                    // localStorage.setItem('token', data.token);
                     cookies.set('API_TOKEN', data.token, { path: '/' });
                     Router.push('/');
-                    // Todo: Redirect to home & store expiration date?
                 })
                 // Todo: Handle 401: Token expired
                 .catch(handleOpen);
@@ -102,24 +95,30 @@ const Login = () => {
     };
 
     const authGoogle = () => {
-        getClient().sso.googleConsentSso('http://localhost:3000/sso/google').then((data) => {
-            console.log(data);
-            Router.push(data.url);
-        });
+        getClient()
+            .sso.googleConsentSso('http://localhost:3000/sso/google')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
     };
 
     const authSpotify = () => {
-        getClient().sso.spotifyConsentSso('http://localhost:3000/sso/spotify').then((data) => {
-            console.log(data);
-            Router.push(data.url);
-        });
+        getClient()
+            .sso.spotifyConsentSso('http://localhost:3000/sso/spotify')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
     };
 
     const authLastFM = () => {
-        getClient().sso.lastfmConsentSso('http://localhost:3000/getLastFMCode').then((data) => {
-            console.log(data);
-            Router.push(data.url);
-        });
+        getClient()
+            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            });
     };
 
     const authApple = () => {
