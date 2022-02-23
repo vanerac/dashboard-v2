@@ -14,7 +14,7 @@ const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
-function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl; navigation: Props }) {
+function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props) {
     // console.log('SSOData', SSOData);
     const { url, redirect_uri } = SSOData;
 
@@ -29,7 +29,7 @@ function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl; navigatio
                     .then((data) => {
                         console.log(data);
                         Alert.alert('Success', 'You are now logged in!');
-                        // navigation.navigate('App');
+                        navigation.navigate('HomePage');
                     })
                     .catch((err) => {
                         Alert.alert('Error', err.message);
@@ -51,7 +51,7 @@ function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl; navigatio
     );
 }
 
-export default function LoginScreen({ navigation }: Props) {
+export default function LoginScreen({ navigation, route }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { theme } = useContext(ThemeContext);
@@ -120,7 +120,7 @@ export default function LoginScreen({ navigation }: Props) {
             <View style={styles.ssoText}>
                 <Text style={{ color: theme.text }}>Or log in with :</Text>
                 <View style={styles.ssoIcons}>
-                    <SpotifyTriggerSSO SSOData={SSOData} />
+                    <SpotifyTriggerSSO SSOData={SSOData} navigation={navigation} route={route} />
                 </View>
             </View>
 
