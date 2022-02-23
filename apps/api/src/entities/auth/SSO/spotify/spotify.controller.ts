@@ -42,18 +42,13 @@ export default class SpotifyController extends SSOController {
             const user: ServiceUserData = await SpotifyTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('spotify', user.id);
 
-            if (sessionUser) {
-                console.log('is logged')
-                if (!userData) {
-                    console.log('Linking new service to user')
-                    await linkService(sessionUser, user, SSOToken);
-                } else {
-                    console.log('Updating token')
-                    await updateToken(userData, user, SSOToken);
-                }
+            if (userData) {
+                await updateToken(userData, user, SSOToken);
+            } else if (sessionUser) {
+                await linkService(sessionUser, user, SSOToken);
                 userData = sessionUser;
             } else {
-                console.log('Not loggedm creating user')
+                console.log('Not loggedm creating user');
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
             }

@@ -3,7 +3,6 @@ import TopBar from './../components/topBar';
 // import Widgets from './../components/Widget';
 import ShowcaseLayout from '../components/WidgetGrid';
 import React, { useEffect, useState } from 'react';
-import { Client } from '../../../packages/global';
 import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
 import { Service } from '../../../packages/services/models/Service';
@@ -40,7 +39,7 @@ const Dasboard = () => {
         'div',
         null,
         <>
-            <TopBar addWidget={addWidget} />
+            <TopBar addWidget={addWidget} connectedServices={servicesList} />
             <ShowcaseLayout widgetsAdded={numberWidgets} />
         </>,
     );

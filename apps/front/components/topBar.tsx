@@ -14,7 +14,6 @@ import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Cookies from 'universal-cookie';
 import Router from 'next/router';
 import { useDarkMode } from 'next-dark-mode';
@@ -75,19 +74,28 @@ const handleInput = (value: any) => {
     console.log(value);
 };
 
-export default function SearchAppBar({ addWidget }) {
+export default function SearchAppBar({ addWidget, connectedServices }) {
     const cookies = new Cookies();
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     const nextMode = darkModeActive ? 'Light' : 'Dark';
     const Icon = darkModeActive ? LightIcon : DarkIcon;
+    console.log(connectedServices);
+    const spotifyService = connectedServices.find((service: { provider: string }) => service.provider === 'spotify');
+    const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
+    const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
+    const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+
+    console.log('here => ', spotifyService);
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
-        getClient().services.getAllUserServices().then((data) => {
-            console.log(data);
-        });
-    }
+        getClient()
+            .services.getAllUserServices()
+            .then((data) => {
+                console.log(data);
+            });
+    };
     const handleClose = () => setOpen(false);
 
     const style = {
@@ -117,7 +125,7 @@ export default function SearchAppBar({ addWidget }) {
     const authGoogle = () => {
         getClient()
             .sso.googleConsentSso('http://localhost:3000/sso/google')
-            .then((data: { url: string | UrlObject; }) => {
+            .then((data: { url: string | UrlObject }) => {
                 console.log(data);
                 Router.push(data.url);
             });
@@ -126,7 +134,7 @@ export default function SearchAppBar({ addWidget }) {
     const authSpotify = () => {
         getClient()
             .sso.spotifyConsentSso('http://localhost:3000/sso/spotify')
-            .then((data: { url: string | UrlObject; }) => {
+            .then((data: { url: string | UrlObject }) => {
                 console.log(data);
                 Router.push(data.url);
             });
@@ -135,7 +143,7 @@ export default function SearchAppBar({ addWidget }) {
     const authLastFM = () => {
         getClient()
             .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
-            .then((data: { url: string | UrlObject; }) => {
+            .then((data: { url: string | UrlObject }) => {
                 console.log(data);
                 Router.push(data.url);
             });
@@ -290,6 +298,7 @@ export default function SearchAppBar({ addWidget }) {
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
                                 <Button
+                                    disabled={lastFMService}
                                     color="info"
                                     fullWidth
                                     startIcon={svgLastFM}
@@ -301,6 +310,7 @@ export default function SearchAppBar({ addWidget }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
+                                    disabled={googleService}
                                     fullWidth
                                     color="error"
                                     startIcon={<GoogleIcon />}
@@ -312,6 +322,7 @@ export default function SearchAppBar({ addWidget }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
+                                    disabled={spotifyService}
                                     fullWidth
                                     color="secondary"
                                     startIcon={svgSpotify}
@@ -323,6 +334,7 @@ export default function SearchAppBar({ addWidget }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
+                                    disabled={appleService}
                                     fullWidth
                                     color="primary"
                                     startIcon={<AppleIcon />}

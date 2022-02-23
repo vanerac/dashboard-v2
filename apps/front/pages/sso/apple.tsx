@@ -1,7 +1,7 @@
 // import { Client, updateClientConfig } from '../../../../packages/global';
 import { SpinnerCircular } from 'spinners-react';
 // import Cookies from 'universal-cookie';
-import loadingScreen from '../../components/wrapperLoadingScreen'
+import loadingScreen from '../../components/wrapperLoadingScreen';
 // const cookies = new Cookies();
 
 function ssoApple() {
