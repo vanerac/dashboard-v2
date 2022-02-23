@@ -16,6 +16,12 @@ type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Props) {
     // console.log('SSOData', SSOData);
+    const redirectURI = makeRedirectUri({
+        native: `${SCHEME}://redirect`,
+        useProxy,
+    });
+    const ssoData.redirectUri.startAsync();
+
     const [$request, response, promptAsync] = useAuthRequest(
         {
             clientId: SSOData.client_id,
@@ -97,11 +103,7 @@ export default function LoginScreen({ navigation }: Props) {
         base_url: '',
     });
     // console.log({ SCHEME });
-    // create redirect uri
-    const redirectURI = makeRedirectUri({
-        native: `${SCHEME}://redirect`,
-        useProxy,
-    });
+    // create redirect url
 
     Client.sso.spotifyConsentSso(redirectURI).then((data: ssoUrl) => {
         setSSOData(data);
