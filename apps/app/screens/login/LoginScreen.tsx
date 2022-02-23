@@ -16,11 +16,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Props) {
     // console.log('SSOData', SSOData);
-    const { url } = SSOData;
-    const redirectUrl = makeRedirectUri({
-        useProxy,
-        native: `${SCHEME}://auth`,
-    });
+    const { url, redirect_uri } = SSOData;
 
     const triggerSSO = async () => {
         startAsync({
@@ -29,7 +25,7 @@ function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Pro
             if (type === 'success') {
                 const { code } = params;
                 Client.sso
-                    .spotifyAuthCodeSso(code, redirectUrl)
+                    .spotifyAuthCodeSso(code, redirect_uri)
                     .then(() => {
                         Alert.alert('Success', 'You are now logged in!');
                         // navigation.navigate('App');
