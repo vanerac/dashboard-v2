@@ -1,6 +1,7 @@
 import * as React from "react";
 
 export * from "./Test";
+export * from "./CardTest"
 
 // Lists
 export * from "./Lists/ArtistList"
