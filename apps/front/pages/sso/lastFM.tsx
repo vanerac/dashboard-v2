@@ -2,6 +2,7 @@ import { SpinnerCircular } from 'spinners-react';
 import Cookies from 'universal-cookie';
 import Router from 'next/router';
 import { getClient } from '../../utils/ApiClient';
+import loadingScreen from '../../components/wrapperLoadingScreen';
 
 const cookies = new Cookies();
 
@@ -31,4 +32,4 @@ function ssoLastfm() {
     );
 }
 
-export default ssoLastfm;
+export default loadingScreen(ssoLastfm);

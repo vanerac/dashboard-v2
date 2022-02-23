@@ -1,9 +1,7 @@
-import withAuth from './withAuth';
-// import Widgets from './../components/Widget';
-import { SpinnerCircular } from 'spinners-react';
+import { CardTest } from '@area/ui';
 
 function test() {
-    return <SpinnerCircular />;
+    return <CardTest />;
 }
 
-export default withAuth(test);
+export default test;
