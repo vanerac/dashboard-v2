@@ -2,7 +2,8 @@ name: Build Frontend
 on: [workflow_dispatch, workflow_dispatch]
 
 jobs:
-  name: Build Front
+  build-front:
+    name: Build Front
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -2,7 +2,8 @@ name: Build Apps
 on: [workflow_call, workflow_dispatch]
 
 jobs:
-  name: Build App
+  build-apps:
+    name: Build App
     runs-on: ubuntu-latest
     strategy:
       matrix:
