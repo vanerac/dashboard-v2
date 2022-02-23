@@ -1,45 +1,44 @@
 import { ServiceUserData, SSOController } from '../../../../tools/types';
 import { Request, Response } from 'express';
 import configuration from '../../../../../configuration';
-import { DeezerTools } from '../../../../tools/SSO/deezer.tools';
-import { generateToken } from '../../../../tools/auth.tools';
+
 import { createUser, findUserByService, linkService, updateToken } from '../../../../tools/SSO/sso.tool';
+import { generateToken } from '../../../../tools/auth.tools';
+import { AppleTools } from '../../../../tools/SSO/apple.tools';
 import { User } from '../../../../../../../packages/services';
 
-export default class DeezerController extends SSOController {
-    static clientId: string = configuration.deezerClientId;
-    static clientSecret: string = configuration.deezerClientSecret;
+export default class AppleController extends SSOController {
+    static clientId: string = configuration.appleClientId;
+    static clientSecret: string = configuration.appleClientSecret;
     static redirectURL: string = configuration.frontendHost;
-    static callbackURL: string = configuration.deezerRedirectUri;
-    static scope: string = configuration.deezerScopes;
+    static callbackURL: string = configuration.appleRedirectUri;
+    static scope: string = configuration.appleScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
         const { callbackURL } = req.query;
-        const scopes = DeezerController.scope.split(',');
         const params = {
-            client_id: DeezerController.clientId,
-            redirect_uri: callbackURL || DeezerController.callbackURL,
-            scope: scopes.join(','),
+            client_id: AppleController.clientId,
+            redirect_uri: callbackURL || AppleController.callbackURL,
+            scope: AppleController.scope,
             response_type: 'code',
             access_type: 'offline',
             prompt: 'consent',
         };
         // @ts-ignore
-        const url = `https://connect.deezer.com/oauth/auth.php?${new URLSearchParams(params)}`;
-        res.json({ url, ...params, base_url: 'https://connect.deezer.com/oauth/auth.php' });
+        const url = `https://appleid.apple.com/auth/authorize?${new URLSearchParams(params).toString()}`;
+        res.json({ url });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
-        // get token, create user and return token
         try {
             const { code, callbackURL } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await DeezerTools.getToken(code, (callbackURL as string) || DeezerController.callbackURL);
-            const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
-            let userData: User & any = await findUserByService('deezer', user.id);
+            const SSOToken = await AppleTools.getToken(code, (callbackURL as string) || AppleController.callbackURL);
+            const user: ServiceUserData = await AppleTools.getUserInfos(SSOToken.access_token);
+            let userData: User & any = await findUserByService('apple', user.id);
 
             if (userData) {
                 await updateToken(userData, user, SSOToken);

@@ -277,6 +277,143 @@ export class DeezerPlaylistService extends PlaylistService {
     }
 }
 
+export class ApplePlaylistService extends PlaylistService {
+    // Make queries to Apple Music API
+    static async getPlaylist(token: string, id: string): Promise<Playlist> {
+        // get playlist by id
+        const response = await axios.get(`https://api.music.apple.com/v1/catalog/us/playlists/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return {
+            id: response.data.data.attributes.id,
+            name: response.data.data.attributes.name,
+            description: response.data.data.attributes.description,
+            image: response.data.data.attributes.artwork.url,
+            provider: 'apple',
+            tracks: [],
+        };
+    }
+    static async getPlaylists(token: string): Promise<Playlist[]> {
+        // get user playlists
+        const response = await axios.get(`https://api.music.apple.com/v1/me/library/playlists`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.data.map((playlist: any) => {
+            return {
+                id: playlist.id,
+                name: playlist.attributes.name,
+                description: playlist.attributes.description,
+                image: playlist.attributes.artwork.url,
+                provider: 'apple',
+                tracks: [],
+            };
+        });
+    }
+    static async createPlaylist(token: string, playlist: Playlist): Promise<Playlist> {
+        // create playlist
+        const response = await axios.post(
+            'https://api.music.apple.com/v1/me/library/playlists',
+            {
+                name: playlist.name,
+                description: playlist.description,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return {
+            id: response.data.data.attributes.id,
+            name: response.data.data.attributes.name,
+            description: response.data.data.attributes.description,
+            image: response.data.data.attributes.artwork.url,
+            provider: 'apple',
+            tracks: [],
+        };
+    }
+    static async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist> {
+        // update playlist
+        const response = await axios.put(
+            `https://api.music.apple.com/v1/me/library/playlists/${playlist.id}`,
+            {
+                name: playlist.name,
+                description: playlist.description,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return {
+            id: response.data.data.attributes.id,
+            name: response.data.data.attributes.name,
+            description: response.data.data.attributes.description,
+            image: response.data.data.attributes.artwork.url,
+            provider: 'apple',
+            tracks: [],
+        };
+    }
+    static async deletePlaylist(token: string, id: string): Promise<void> {
+        // delete playlist
+        await axios.delete(`https://api.music.apple.com/v1/me/library/playlists/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+    static async getPlaylistTracks(token: string, id: string): Promise<Track[]> {
+        // get playlist tracks
+        const response = await axios.get(`https://api.music.apple.com/v1/me/library/playlists/${id}/tracks`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.data.map((track: any) => {
+            return {
+                id: track.id,
+                name: track.attributes.name,
+                artist: track.attributes.artistName,
+                album: track.attributes.albumName,
+                image: track.attributes.artwork.url,
+                provider: 'apple',
+            };
+        });
+    }
+
+    // unsave playlist to favorites
+    static async unsavePlaylist(token: string, id: string): Promise<void> {
+        // unsave playlist
+        await axios.delete(`https://api.music.apple.com/v1/me/library/playlists/${id}/relationships/favorites`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return;
+    }
+
+    // Save playlist to favorites
+    static async savePlaylist(token: string, id: string): Promise<void> {
+        // save playlist
+        await axios.post(
+            `https://api.music.apple.com/v1/me/library/playlists/${id}/relationships/favorites`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return;
+    }
+}
+
 // Youtube
 export class GooglePlaylistService extends PlaylistService {
     // Make queries to Youtube API

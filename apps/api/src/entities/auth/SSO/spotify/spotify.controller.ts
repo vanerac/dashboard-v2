@@ -16,16 +16,17 @@ export default class SpotifyController extends SSOController {
     static async getCode(req: Request, res: Response): Promise<void> {
         const { callbackURL } = req.query;
 
+        const scopes = SpotifyController.scope.split(' ');
         const params = {
             client_id: SpotifyController.clientId,
             response_type: 'code',
             redirect_uri: callbackURL || SpotifyController.callbackURL,
-            scope: SpotifyController.scope,
+            scope: scopes.join(' '),
             // show_dialog: true, // was boolean
         };
         // @ts-ignore
         const url = `https://accounts.spotify.com/authorize?${new URLSearchParams(params)}`;
-        res.json({ url });
+        res.json({ url, ...params, base_url: 'https://accounts.spotify.com/authorize', scopes: scopes });
     }
 
     static async getToken(req: Request, res: Response): Promise<void> {
@@ -60,8 +61,13 @@ export default class SpotifyController extends SSOController {
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
-            console.error(e);
-            res.status(500).send(e);
+            if ((e as any).code === '23505') {
+                res.status(409).json({
+                    message: 'Account already assigned to another user',
+                });
+            } else {
+                res.status(500).send(e);
+            }
         }
     }
 }

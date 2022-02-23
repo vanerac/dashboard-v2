@@ -42,19 +42,19 @@ function RootNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="StartScreen"
-                component={RegisterScreen}
+                name="LoginScreen"
+                component={LoginScreen}
                 options={{
-                    title: 'Registration',
+                    title: 'Sign in',
                     headerStyle: { backgroundColor: theme.primary },
                     headerTintColor: theme.text,
                 }}
             />
             <Stack.Screen
-                name="LoginScreen"
-                component={LoginScreen}
+                name="RegisterScreen"
+                component={RegisterScreen}
                 options={{
-                    title: 'Sign in',
+                    title: 'Registration',
                     headerStyle: { backgroundColor: theme.primary },
                     headerTintColor: theme.text,
                 }}

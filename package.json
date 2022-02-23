@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-      "packages/*",
-      "apps/*"
-    ],
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -20,6 +20,7 @@
     "services:generate": "npm run types:bundle && npm run types:generate"
   },
   "devDependencies": {
+    "@types/react-native-vector-icons": "^6.4.10",
     "prettier": "^2.5.1",
     "turbo": "latest"
   },
@@ -40,8 +41,9 @@
     "next-dark-mode": "^3.0.0",
     "react": "^17.0.2",
     "react-grid-layout": "^1.3.3",
-    "spinners-react": "^1.0.6",
     "react-native": "^0.67.2",
+    "react-native-vector-icons": "^9.1.0",
+    "spinners-react": "^1.0.6",
     "universal-cookie": "^4.0.4"
   }
 }

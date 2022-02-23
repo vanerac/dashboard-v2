@@ -9,7 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // import TopBar from '../../../front/components/topBar';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'StartScreen'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'RegisterScreen'>;
 
 export default function RegisterScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
@@ -66,10 +66,6 @@ export default function RegisterScreen({ navigation }: Props) {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
-
-            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                <Text style={[styles.already_registered_button, { color: theme.text }]}>already registered ?</Text>
-            </TouchableOpacity>
 
             <TouchableOpacity style={[styles.loginBtn, { backgroundColor: theme.accent }]}>
                 <Text
