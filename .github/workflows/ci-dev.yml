@@ -21,7 +21,7 @@ jobs:
     name: Verify OpenAPI Definition
     needs: install-dependencies
     uses: vanerac/dashboard-v2/.github/workflows/validate-swagger.yml@feature/ci/reusable-worflows
-  check-types:
-    name: Verify Compilation
-    needs: install-dependencies
-    uses: vanerac/dashboard-v2/.github/workflows/compile-ts.yml@feature/ci/reusable-worflows
+#  check-types:
+#    name: Verify Compilation
+#    needs: install-dependencies
+#    uses: vanerac/dashboard-v2/.github/workflows/compile-ts.yml@feature/ci/reusable-worflows

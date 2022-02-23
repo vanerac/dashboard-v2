@@ -1,4 +1,4 @@
-name: Compile Apps
+name: Compile TS
 on: [workflow_dispatch, workflow_call]
 
 jobs:
