@@ -85,13 +85,8 @@ const Login = () => {
                 })
                 .then((data) => {
                     console.log(data);
-                    // updateClientConfig({
-                    //     TOKEN: data.token,
-                    // });
-                    // localStorage.setItem('token', data.token);
                     cookies.set('API_TOKEN', data.token, { path: '/' });
                     Router.push('/');
-                    // Todo: Redirect to home & store expiration date?
                 })
                 // Todo: Handle 401: Token expired
                 .catch(handleOpen);

@@ -1,4 +1,3 @@
-import { updateClientConfig } from '../../../../packages/global';
 import { SpinnerCircular } from 'spinners-react';
 import Cookies from 'universal-cookie';
 import Router from 'next/router';
@@ -15,9 +14,6 @@ function ssoLastfm() {
             .then((data) => {
                 const { token } = data;
                 cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
-                updateClientConfig({
-                    TOKEN: token,
-                });
                 Router.push('/');
             });
     }
