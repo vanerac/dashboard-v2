@@ -1,9 +1,6 @@
 name: Push CI
 on:
   push:
-    branches:
-      - 'feature/**'
-      - 'fix/**'
     branches-ignore:
       - 'master'
       - 'release/**'
