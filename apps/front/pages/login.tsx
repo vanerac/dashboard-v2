@@ -53,7 +53,7 @@ const Login = () => {
         setUserEmail(event.target.value);
     };
 
-    const svgSpotify = (
+    const $svgSpotify = (
         <SvgIcon>
             <path d={mdiSpotify} />
         </SvgIcon>
@@ -106,7 +106,7 @@ const Login = () => {
         });
     };
 
-    const authSpotify = () => {
+    const $authSpotify = () => {
         Client.sso.spotifyConsentSso('http://localhost:3000/sso/spotify').then((data) => {
             console.log(data);
             Router.push(data.url);
