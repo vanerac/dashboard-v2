@@ -18,7 +18,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/${{matrix.directory}}/node_modules
+            ./apps/api/node_modules
+            ./apps/app/node_modules
+            ./apps/front/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run check-types
