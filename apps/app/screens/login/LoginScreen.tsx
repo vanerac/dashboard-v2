@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
 import { Client } from '../../../../packages/global';
 import { RootStackParamList } from '../../types';
@@ -16,56 +16,32 @@ type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Props) {
     // console.log('SSOData', SSOData);
-    const redirectURI = makeRedirectUri({
-        native: `${SCHEME}://redirect`,
+    const { url } = SSOData;
+    const redirectUrl = makeRedirectUri({
         useProxy,
+        native: `${SCHEME}://auth`,
     });
-    const ssoData.redirectUri.startAsync();
-
-    const [$request, response, promptAsync] = useAuthRequest(
-        {
-            clientId: SSOData.client_id,
-            redirectUri: SSOData.redirect_uri,
-            scopes: SSOData.scopes,
-        },
-        {
-            authorizationEndpoint: SSOData.base_url,
-        },
-    );
-
-    const [code, setCode] = useState('');
 
     const triggerSSO = async () => {
-        try {
-            console.log('trigger');
-            await promptAsync();
-        } catch (e: any) {
-            Alert.alert('Error', e.message);
-        }
+        startAsync({
+            authUrl: url,
+        }).then(({ type, params }: any) => {
+            if (type === 'success') {
+                const { code } = params;
+                Client.sso
+                    .spotifyAuthCodeSso(code, redirectUrl)
+                    .then(() => {
+                        Alert.alert('Success', 'You are now logged in!');
+                        // navigation.navigate('App');
+                    })
+                    .catch((err) => {
+                        Alert.alert('Error', err.message);
+                    });
+            } else {
+                Alert.alert('Error', 'Something went wrong');
+            }
+        });
     };
-
-    useEffect(() => {
-        console.log('got response');
-        if (response && response.type === 'success') {
-            console.log('valid response');
-            setCode(response.params.code);
-        }
-    }, [response]);
-
-    useEffect(() => {
-        if (code) {
-            console.log('got code');
-            (async () => {
-                const token = await Client.sso.spotifyAuthCodeSso(code, SSOData.redirect_uri);
-                console.log(token);
-                Alert.alert(`Welcome`);
-            })();
-        }
-    }, [code]);
-
-    if (!SSOData.url) {
-        return null;
-    }
 
     return (
         <View>
@@ -103,7 +79,11 @@ export default function LoginScreen({ navigation }: Props) {
         base_url: '',
     });
     // console.log({ SCHEME });
-    // create redirect url
+    // create redirect uri
+    const redirectURI = makeRedirectUri({
+        native: `${SCHEME}://redirect`,
+        useProxy,
+    });
 
     Client.sso.spotifyConsentSso(redirectURI).then((data: ssoUrl) => {
         setSSOData(data);
