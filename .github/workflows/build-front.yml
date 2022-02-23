@@ -1,5 +1,5 @@
 name: Build Frontend
-on: [workflow_dispatch, workflow_dispatch]
+on: [workflow_call, workflow_dispatch]
 
 jobs:
   build-front:
