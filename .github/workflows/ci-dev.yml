@@ -4,7 +4,7 @@ on: push
 jobs:
   install-dependencies:
     name: Install dependencies
-    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@${GITHUB_REF##*/}
+    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@${{GITHUB_REF##*/}}
 #  lint:
 #    name: Lint
 #    needs: install-dependencies
