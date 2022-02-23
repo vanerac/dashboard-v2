@@ -14,7 +14,7 @@ const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
-function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Props) {
+function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl; navigation: Props }) {
     // console.log('SSOData', SSOData);
     const { url, redirect_uri } = SSOData;
 
@@ -26,7 +26,8 @@ function SpotifyTriggerSSO({ SSOData }: { SSOData: ssoUrl }, { navigation }: Pro
                 const { code } = params;
                 Client.sso
                     .spotifyAuthCodeSso(code, redirect_uri)
-                    .then(() => {
+                    .then((data) => {
+                        console.log(data);
                         Alert.alert('Success', 'You are now logged in!');
                         // navigation.navigate('App');
                     })
