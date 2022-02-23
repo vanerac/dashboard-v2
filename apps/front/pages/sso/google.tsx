@@ -8,11 +8,10 @@ import { useEffect } from 'react';
 const cookies = new Cookies();
 
 function SsoGoogle() {
-    if (typeof window !== 'undefined') {
-        let params = new URL(window.location.href).searchParams;
-        let code = params.get('code');
-
-        useEffect(() => {
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let params = new URL(window.location.href).searchParams;
+            let code = params.get('code');
             getClient()
                 .sso.googleAuthCodeSso(code, 'http://localhost:3000/sso/google')
                 .then((data) => {
@@ -20,8 +19,8 @@ function SsoGoogle() {
                     cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
                     Router.push('/');
                 });
-        });
-    }
+        }
+    });
 
     return (
         <>
