@@ -2,6 +2,10 @@ name: Push CI
 on: push
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{github.head_ref}}
   install-dependencies:
     name: Install dependencies
     uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@${{github.head_ref}}
