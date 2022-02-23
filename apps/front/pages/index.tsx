@@ -2,10 +2,11 @@ import withAuth from './withAuth';
 import TopBar from './../components/topBar';
 // import Widgets from './../components/Widget';
 import ShowcaseLayout from '../components/WidgetGrid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Client } from '../../../packages/global';
 import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
+import { Service } from '../../../packages/services/models/Service';
 const cookies = new Cookies();
 
 export function getClient() {
@@ -16,6 +17,7 @@ export function getClient() {
 
 const Dasboard = () => {
     const [numberWidgets, setNumberWidgets] = useState(0);
+    const [servicesList, setServicesList] = useState<Service[]>([]);
 
     const addWidget = () => {
         console.log('add Widget');
@@ -23,11 +25,17 @@ const Dasboard = () => {
         console.log(numberWidgets);
     };
 
-    console.log('ici => ', Client.request.config.TOKEN);
-    getClient().services.getAllUserServices().then((data) => {
-        console.log(data);
-    });
+    // console.log('ici => ', Client.request.config.TOKEN);
+    useEffect(() => {
+        getClient()
+            .services.getAllUserServices()
+            .then((data) => {
+                setServicesList(data.services);
+                console.log(data);
+            });
+    }, []);
 
+    console.log(servicesList);
     return React.createElement(
         'div',
         null,
