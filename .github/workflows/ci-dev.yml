@@ -2,8 +2,8 @@ name: Push CI
 on:
   push:
     branches:
-      - feature/**
-      - fix/**
+      - 'feature/**'
+      - 'fix/**'
 
 jobs:
   install-dependencies:
