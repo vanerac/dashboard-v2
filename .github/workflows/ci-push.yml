@@ -4,6 +4,10 @@ on:
     branches:
       - 'feature/**'
       - 'fix/**'
+    branches-ignore:
+      - 'master'
+      - 'release/**'
+      - 'dev'
 
 jobs:
   install-dependencies:
