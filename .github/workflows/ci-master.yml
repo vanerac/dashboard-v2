@@ -1,8 +1,8 @@
 name: Build CI
 on:
   pull_request:
-      branches:
-        - 'master'
+    branches:
+      - 'master'
 
 jobs:
   install-dependencies:
