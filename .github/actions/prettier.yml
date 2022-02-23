@@ -18,9 +18,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ./apps/api/node_modules
-            ./apps/app/node_modules
-            ./apps/front/node_modules
+            ./apps/${{matrix.directory}}/node_modules
             ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
       - run: npm run prettier
