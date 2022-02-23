@@ -4,7 +4,6 @@ import RGL, { WidthProvider } from 'react-grid-layout';
 import { Key } from 'react';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import { CardTest } from '../../../packages/ui/CardTest';
 
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
@@ -12,12 +11,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
     console.log(generateLayout());
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
-            // return <div key={i} style={{ backgroundColor: 'lightblue', borderRadius: '4px' }}></div>;
-            return (
-                <div key={i}>
-                    <CardTest />
-                </div>
-            );
+            return <div key={i} style={{ backgroundColor: 'lightblue', borderRadius: '4px' }}></div>;
         });
     };
 
@@ -36,7 +30,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
     return (
         <ResponsiveReactGridLayout
             layout={generateLayout()}
-            // isResizable={false}
+            isResizable={false}
             compactType={'vertical'}
             preventCollision={!'vertical'}>
             {generateDOM()}
