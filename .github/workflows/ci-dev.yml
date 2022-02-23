@@ -6,9 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{github.head_ref}}
-  install-dependencies:
-    name: Install dependencies
-    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@${{github.head_ref}}
+#  install-dependencies:
+#    name: Install dependencies
+#    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@${{github.head_ref}}
 #  lint:
 #    name: Lint
 #    needs: install-dependencies
