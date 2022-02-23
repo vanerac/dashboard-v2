@@ -45,12 +45,10 @@ export default class GoogleController extends SSOController {
             const user: ServiceUserData = await GoogleTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('google', user.id);
 
-            if (sessionUser) {
-                if (!userData) {
-                    await linkService(sessionUser, user, SSOToken);
-                } else {
-                    await updateToken(userData, user, SSOToken);
-                }
+            if (userData) {
+                await updateToken(userData, user, SSOToken);
+            } else if (sessionUser) {
+                await linkService(sessionUser, user, SSOToken);
                 userData = sessionUser;
             } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
