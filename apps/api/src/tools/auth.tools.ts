@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import configuration from '../../configuration';
 import { User } from '../../../../packages/services';
+
 dotenv.config();
 
 export const generateToken = (user: any): string => {
@@ -81,7 +82,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
 
 export async function parseToken(req: Request, res: Response, next: NextFunction) {
     // Parse token, decode it and set req.session.user
-    const bearerHeader = req.headers['Authorization'] || req.cookies['API_TOKEN'];
+    const bearerHeader = req.headers['Authorization'] || req.headers['authorization'] || req.cookies['API_TOKEN'];
     if (!bearerHeader) {
         return next();
     }

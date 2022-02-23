@@ -5,12 +5,12 @@ import { getClient } from '../../utils/ApiClient';
 
 const cookies = new Cookies();
 
-function ssoGoogle() {
+function ssoLastfm() {
     if (typeof window !== 'undefined') {
         let params = new URL(window.location.href).searchParams;
         let code = params.get('code');
         getClient()
-            .sso.googleAuthCodeSso(code, 'http://localhost:3000/sso/google')
+            .sso.lastfmAuthCodeSso(code, '')
             .then((data) => {
                 const { token } = data;
                 cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
@@ -31,4 +31,4 @@ function ssoGoogle() {
     );
 }
 
-export default ssoGoogle;
+export default ssoLastfm;

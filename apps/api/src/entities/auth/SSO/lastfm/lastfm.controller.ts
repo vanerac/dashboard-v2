@@ -39,20 +39,31 @@ export default class LastFmController extends SSOController {
             }
             const SSOToken = await LastFmTools.getToken(code, (callbackURL as string) || LastFmController.callbackURL);
             const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token);
+            let userData: User & any = await findUserByService('lastfm', user.id);
 
-            var userData: User & any = sessionUser || (await findUserByService('lastFm', user.id));
-            if (!userData) {
+            if (userData) {
+                await updateToken(userData, user, SSOToken);
+            } else if (sessionUser) {
+                await linkService(sessionUser, user, SSOToken);
+                userData = sessionUser;
+            } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
-            } else {
-                await updateToken(userData, user, SSOToken);
             }
+
             delete userData.password;
+            delete userData.iat;
+            delete userData.exp;
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
-            console.log(e);
-            res.status(500).send(e);
+            if ((e as any).code === '23505') {
+                res.status(409).json({
+                    message: 'Account already assigned to another user',
+                });
+            } else {
+                res.status(500).send(e);
+            }
         }
     }
 }
