@@ -7,8 +7,8 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { Client } from '../../../packages/global';
 import Router from 'next/router';
+import { getClient } from '../utils/ApiClient';
 
 const Register = () => {
     let errorBool: boolean = false;
@@ -69,8 +69,8 @@ const Register = () => {
         } else setErrorEmptyFieldDisplayName('');
 
         if (errorBool === false) {
-            Client.authentication
-                .register({
+            getClient()
+                .authentication.register({
                     email: userEmail,
                     password: userPassword,
                     displayName: userDisplayName,
