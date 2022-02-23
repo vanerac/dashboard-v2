@@ -7,32 +7,32 @@ on:
 jobs:
   install-dependencies:
     name: Install dependencies
-    uses: ./.github/workflows/install-dependencies.yml
+    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@feature/ci/reusable-worflows
   lint:
     name: Lint
     needs: install-dependencies
-    uses: ./.github/workflows/lint.yml
+    uses: vanerac/dashboard-v2/.github/workflows/lint.yml@feature/ci/reusable-worflows
   prettier:
     name: Prettier
     needs: install-dependencies
-    uses: ./.github/workflows/prettier.yml
+    uses: vanerac/dashboard-v2/.github/workflows/prettier.yml@feature/ci/reusable-worflows
   openapi:
     name: Verify OpenAPI Definition
     needs: install-dependencies
-    uses: ./.github/workflows/validate-swagger.yml
+    uses: vanerac/dashboard-v2/.github/workflows/validate-swagger.yml@feature/ci/reusable-worflows
   check-types:
     name: Verify Compilation
     needs: install-dependencies
-    uses: ./.github/workflows/compile-ts.yml
+    uses: vanerac/dashboard-v2/.github/workflows/compile-ts.yml@feature/ci/reusable-worflows
   build-app:
     name: Build App
     needs: [lint, prettier, openapi, check-types]
-    uses: ./.github/workflows/build-app.yml
+    uses: vanerac/dashboard-v2/.github/workflows/build-app.yml@feature/ci/reusable-worflows
   build-front:
     name: Build Front
     needs: [lint, prettier, openapi, check-types]
-    uses: ./.github/workflows/build-front.yml
+    uses: vanerac/dashboard-v2/.github/workflows/build-front.yml@feature/ci/reusable-worflows
   build-api:
     name: Build API
     needs: [lint, prettier, openapi, check-types]
-    uses: ./.github/workflows/build-api.yml
+    uses: vanerac/dashboard-v2/.github/workflows/build-api.yml@feature/ci/reusable-worflows

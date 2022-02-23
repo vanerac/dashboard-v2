@@ -1,27 +1,27 @@
 name: Push CI
-on: push
+on:
+  push:
+    branches:
+      - feature/**
+      - fix/**
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{github.head_ref}}
-#  install-dependencies:
-#    name: Install dependencies
-#    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@${{github.head_ref}}
-#  lint:
-#    name: Lint
-#    needs: install-dependencies
-#    uses: vanerac/dashboard-v2/.github/workflows/lint.yml
-#  prettier:
-#    name: Prettier
-#    needs: install-dependencies
-#    uses: vanerac/dashboard-v2/.github/workflows/prettier.yml
-#  openapi:
-#    name: Verify OpenAPI Definition
-#    needs: install-dependencies
-#    uses: vanerac/dashboard-v2/.github/workflows/validate-swagger.yml
-#  check-types:
-#    name: Verify Compilation
-#    needs: install-dependencies
-#    uses: vanerac/dashboard-v2/.github/workflows/compile-ts.yml
+  install-dependencies:
+    name: Install dependencies
+    uses: vanerac/dashboard-v2/.github/workflows/install-dependencies.yml@feature/ci/reusable-worflows
+  lint:
+    name: Lint
+    needs: install-dependencies
+    uses: vanerac/dashboard-v2/.github/workflows/lint.yml@feature/ci/reusable-worflows
+  prettier:
+    name: Prettier
+    needs: install-dependencies
+    uses: vanerac/dashboard-v2/.github/workflows/prettier.yml@feature/ci/reusable-worflows
+  openapi:
+    name: Verify OpenAPI Definition
+    needs: install-dependencies
+    uses: vanerac/dashboard-v2/.github/workflows/validate-swagger.yml@feature/ci/reusable-worflows
+  check-types:
+    name: Verify Compilation
+    needs: install-dependencies
+    uses: vanerac/dashboard-v2/.github/workflows/compile-ts.yml@feature/ci/reusable-worflows
