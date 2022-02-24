@@ -41,10 +41,11 @@ CREATE TABLE IF NOT EXISTS Widgets
     id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     serviceId   uuid NOT NULL,
     userId      uuid NOT NULL,
-    refreshRate INT  NOT NULL    DEFAULT 10000,
     config      TEXT NOT NULL,
-    positionX   INT  NOT NULL    DEFAULT 0,
-    positionY   INT  NOT NULL    DEFAULT 0,
+    x           INT  NOT NULL    DEFAULT 0,
+    y           INT  NOT NULL    DEFAULT 0,
+    w           INT  NOT NULL,
+    h           INT  NOT NULL,
     CONSTRAINT fk_serviceId FOREIGN KEY (serviceId) REFERENCES Services (id) ON DELETE CASCADE,
     CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES Users (id) ON DELETE CASCADE
 );
