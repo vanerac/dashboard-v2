@@ -3,6 +3,8 @@ CREATE TYPE serviceStatus AS ENUM ('OK', 'KO');
 CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple');
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+CREATE TYPE widgetType AS ENUM('stat', 'album', 'playlist', 'artist', 'search');
+
 CREATE TABLE IF NOT EXISTS Users
 (
     id          uuid PRIMARY KEY             DEFAULT uuid_generate_v4(),
@@ -46,6 +48,10 @@ CREATE TABLE IF NOT EXISTS Widgets
     y           INT  NOT NULL    DEFAULT 0,
     w           INT  NOT NULL,
     h           INT  NOT NULL,
+    type        widgetType NOT NULL,
+    data        VARCHAR(256) NULL,
+    createdAt   DATE NOT NULL DEFAULT NOW(),
+    editedAt    DATE NOT NULL DEFAULT NOW(),
     CONSTRAINT fk_serviceId FOREIGN KEY (serviceId) REFERENCES Services (id) ON DELETE CASCADE,
     CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES Users (id) ON DELETE CASCADE
 );

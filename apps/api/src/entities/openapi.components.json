@@ -323,10 +323,36 @@
         "height": {
           "type": "integer"
         },
-        "config": {
-          "type": "object"
+        "type": {
+          "type": "string",
+          "enum": [
+            "stat", "album", "playlist", "artist", "search"
+          ]
+        },
+        "data": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "editedAt": {
+          "type": "string",
+          "format": "date-time"
         }
-      }
+      },
+      "required": [
+        "id",
+        "serviceId",
+        "x",
+        "y",
+        "width",
+        "height",
+        "type",
+        "data",
+        "createdAt",
+        "editedAt"
+      ]
     }
   }
 }

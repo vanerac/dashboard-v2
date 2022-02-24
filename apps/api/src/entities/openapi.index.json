@@ -59,6 +59,24 @@
     "/service/{serviceId}/update": {
       "$ref": "services/service.path.json#/updateService"
     },
+    "/widget": {
+      "$ref": "widget/widget.path.json#/getAllUserWidgets"
+    },
+    "/widget/{widgetId}": {
+      "$ref": "widget/widget.path.json#/getById"
+    },
+    "/widget/{widgetId}/delete": {
+      "$ref": "widget/widget.path.json#/delete"
+    },
+    "/widget/{widgetId}/update": {
+      "$ref": "widget/widget.path.json#/update"
+    },
+    "/widget/create": {
+      "$ref": "widget/widget.path.json#/create"
+    },
+    "/widget/update-bulk": {
+      "$ref": "widget/widget.path.json#/updateBulk"
+    },
     "/data/{serviceId}/playlist/": {
       "$ref": "data/playlists/playlist.path.json#/getAllPlaylists"
     },
