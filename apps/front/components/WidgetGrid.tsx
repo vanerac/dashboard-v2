@@ -23,7 +23,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
 
     function generateLayout() {
         return _.map(_.range(0, props.widgetsAdded.length), function (i) {
-            console.log(i)
+            console.log(i);
             return {
                 x: props.widgetsAdded[i].x,
                 y: props.widgetsAdded[i].y,
@@ -36,8 +36,8 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
 
     const onLayoutChange = (layout: any) => {
         // TODO : route PUT pour modifier dans la db
-        console.log(layout)
-    }
+        console.log(layout);
+    };
 
     return (
         <ResponsiveReactGridLayout
