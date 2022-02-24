@@ -1,6 +1,6 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import Pool from '../../tools/database.tools';
-import {Widget} from '../../../build/packages/services';
+import { Widget } from '../../../build/packages/services';
 
 export default class WidgetController {
     static async getAll(req: Request, res: Response, next: NextFunction) {
