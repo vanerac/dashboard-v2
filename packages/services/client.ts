@@ -15,6 +15,7 @@ import { ServicesService } from './services/ServicesService';
 import { SsoService } from './services/SsoService';
 import { StatsService } from './services/StatsService';
 import { TrackService } from './services/TrackService';
+import { WidgetService } from './services/WidgetService';
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
@@ -30,6 +31,7 @@ export class ApiClient {
     public readonly sso: SsoService;
     public readonly stats: StatsService;
     public readonly track: TrackService;
+    public readonly widget: WidgetService;
 
     public readonly request: BaseHttpRequest;
 
@@ -56,5 +58,6 @@ export class ApiClient {
         this.sso = new SsoService(this.request);
         this.stats = new StatsService(this.request);
         this.track = new TrackService(this.request);
+        this.widget = new WidgetService(this.request);
     }
 }

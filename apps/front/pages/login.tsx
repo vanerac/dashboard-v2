@@ -175,10 +175,6 @@ const Login = () => {
                                 </Button>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                {/* <SpotifySSO
-                                    callbackURL={'http://localhost:3000/sso/spotify'}
-                                    onClick={({ url }) => Router.push(url)}
-                                /> */}
                                 <Button
                                     fullWidth
                                     color="secondary"
