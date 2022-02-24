@@ -21,7 +21,7 @@ export default class PlayerManager {
         return {
             image: '',
             playable: false,
-            type: Track.type.TRACK,
+            type: 'track',
             id: '',
             name: '',
             artist: '',

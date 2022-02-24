@@ -3,22 +3,10 @@
 /* eslint-disable */
 
 export type Album = {
-    type?: Album.type;
+    type?: 'artist' | 'album' | 'track' | 'playlist';
     id?: string;
     name?: string;
     artist?: string;
     image?: string;
     provider?: string;
 };
-
-export namespace Album {
-
-    export enum type {
-        ARTIST = 'artist',
-        ALBUM = 'album',
-        TRACK = 'track',
-        PLAYLIST = 'playlist',
-    }
-
-
-}

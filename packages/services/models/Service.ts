@@ -4,19 +4,6 @@
 
 export type Service = {
     id: string;
-    type: Service.type;
+    type: 'google' | 'spotify' | 'apple' | 'deezer' | 'lastfm';
     enabled: boolean;
 };
-
-export namespace Service {
-
-    export enum type {
-        GOOGLE = 'google',
-        SPOTIFY = 'spotify',
-        APPLE = 'apple',
-        DEEZER = 'deezer',
-        LASTFM = 'lastfm',
-    }
-
-
-}
