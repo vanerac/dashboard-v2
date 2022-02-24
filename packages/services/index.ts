@@ -68,6 +68,7 @@ export type { TagStats } from './models/TagStats';
 export { Track } from './models/Track';
 export type { TrackStats } from './models/TrackStats';
 export type { User } from './models/User';
+export type { Widget } from './models/Widget';
 
 export { ArtistService } from './services/ArtistService';
 export { AuthenticationService } from './services/AuthenticationService';
