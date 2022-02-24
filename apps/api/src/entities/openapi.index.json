@@ -249,6 +249,9 @@
       "Tag": {
         "$ref": "./openapi.components.json#/schemas/Tag"
       },
+      "Widget": {
+        "$ref": "./openapi.components.json#/schemas/Widget"
+      },
       "getSingleArtist": {
         "$ref": "./data/artist/artist.components.json#/schemas/getSingleArtist"
       },

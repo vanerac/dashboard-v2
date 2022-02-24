@@ -4784,6 +4784,34 @@
           }
         }
       },
+      "Widget": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "serviceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "x": {
+            "type": "integer"
+          },
+          "y": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "config": {
+            "type": "object"
+          }
+        }
+      },
       "getSingleArtist": {
         "type": "object",
         "properties": {
