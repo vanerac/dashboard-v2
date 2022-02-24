@@ -79,13 +79,13 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     const nextMode = darkModeActive ? 'Light' : 'Dark';
     const Icon = darkModeActive ? LightIcon : DarkIcon;
-    console.log(connectedServices);
+    // console.log(connectedServices);
     const spotifyService = connectedServices.find((service: { provider: string }) => service.provider === 'spotify');
     const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
     const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
 
-    console.log('here => ', spotifyService);
+    // console.log('here => ', spotifyService);
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
