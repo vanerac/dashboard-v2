@@ -16,8 +16,6 @@ import Fade from '@mui/material/Fade';
 import Cookies from 'universal-cookie';
 import { getClient } from '../utils/ApiClient';
 
-
-
 const Login = () => {
     let errorBool: boolean = false;
     const [userEmail, setUserEmail] = useState('');
@@ -53,7 +51,7 @@ const Login = () => {
         setUserEmail(event.target.value);
     };
 
-    const $svgSpotify = (
+    const svgSpotify = (
         <SvgIcon>
             <path d={mdiSpotify} />
         </SvgIcon>
@@ -102,7 +100,7 @@ const Login = () => {
                 Router.push(data.url);
             });
     };
-  
+
     const authSpotify = () => {
         getClient()
             .sso.spotifyConsentSso('http://localhost:3000/sso/spotify')
@@ -177,19 +175,15 @@ const Login = () => {
                                 </Button>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <SpotifySSO
-                                    callbackURL={'http://localhost:3000/sso/spotify'}
-                                    onClick={({ url }) => Router.push(url)}
-                                />
-                                {/*<Button*/}
-                                {/*    fullWidth*/}
-                                {/*    color="secondary"*/}
-                                {/*    startIcon={svgSpotify}*/}
-                                {/*    onClick={authSpotify}*/}
-                                {/*    size="large"*/}
-                                {/*    variant="contained">*/}
-                                {/*    Login with Spotify*/}
-                                {/*</Button>*/}
+                                <Button
+                                    fullWidth
+                                    color="secondary"
+                                    startIcon={svgSpotify}
+                                    onClick={authSpotify}
+                                    size="large"
+                                    variant="contained">
+                                    Login with Spotify
+                                </Button>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
