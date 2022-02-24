@@ -5063,12 +5063,16 @@
           },
           "enabled": {
             "type": "boolean"
+          },
+          "accountName": {
+            "type": "string"
           }
         },
         "required": [
           "id",
           "type",
-          "enabled"
+          "enabled",
+          "accountName"
         ]
       },
       "User": {

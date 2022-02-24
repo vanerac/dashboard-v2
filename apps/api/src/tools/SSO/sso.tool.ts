@@ -17,7 +17,7 @@ export async function createUser(
 }
 
 export async function linkService(user: User, serviceUserData: ServiceUserData, token: Token) {
-    const createSSOQuery = `INSERT INTO services (provider, clientId, userId, accessToken, refreshtoken, tokenExpires) VALUES ($1, $2, $3, $4, $5, $6)`;
+    const createSSOQuery = `INSERT INTO services (provider, clientId, userId, accessToken, refreshtoken, tokenExpires, accountName) VALUES ($1, $2, $3, $4, $5, $6, $7)`;
     // token.expires_in === 3600
     const tokenExpiration: Date = new Date(Date.now() + token.expires_in * 1000);
     const createSSOValues = [
@@ -27,6 +27,7 @@ export async function linkService(user: User, serviceUserData: ServiceUserData, 
         token.access_token,
         token.refresh_token,
         tokenExpiration,
+        serviceUserData.displayName,
     ];
     return pool.query(createSSOQuery, createSSOValues);
 }
