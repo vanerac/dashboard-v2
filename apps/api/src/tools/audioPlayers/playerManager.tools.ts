@@ -48,61 +48,61 @@ export default class PlayerManager {
     }
 
     // Queue control
-    // public getCurrentTrack($userId: UUID): Track {
-    //     // TODO Handles with audioPlayer;
-    //     return {
-    //         image: '',
-    //         playable: false,
-    //         type: 'track',
-    //         id: '',
-    //         name: '',
-    //         artist: '',
-    //         album: '',
-    //         duration: 0,
-    //         provider: '',
-    //     };
-    // }
-    //
-    // public addToQueue(userId: UUID, track: Track) {
-    //     if (!this.queue.has(userId)) {
-    //         this.queue.set(userId, []);
-    //     }
-    //     this.queue.get(userId)?.push(track);
-    // }
-    //
-    // public removeFromQueue(userId: UUID, track: Track) {
-    //     // Todo: Note: this might not work since we are recreating the object every time
-    //     if (this.queue.has(userId)) {
-    //         const tracks = this.queue.get(userId);
-    //         tracks?.splice(tracks.indexOf(track), 1);
-    //     }
-    // }
-    //
-    // public clearQueue(userId: UUID) {
-    //     if (this.queue.has(userId)) {
-    //         this.queue.delete(userId);
-    //     }
-    // }
-    //
-    // public getQueue(userId: UUID): Track[] | undefined {
-    //     return this.queue.get(userId);
-    // }
-    //
-    // public moveInQueue(userId: UUID, track: Track, index: number) {
-    //     if (this.queue.has(userId)) {
-    //         const tracks = this.queue.get(userId);
-    //         tracks?.splice(index, 0, track);
-    //     }
-    // }
-    //
-    // // Update Controls
-    //
-    // public listenForUpdates($userId: UUID, $res: Response) {
-    //     // Stream updates data from users player manager
-    //     // Includes:
-    //     // - Playback status
-    //     // - device updates (change isActive)
-    // }
+    public getCurrentTrack($userId: UUID): Track {
+        // TODO Handles with audioPlayer;
+        return {
+            image: '',
+            playable: false,
+            type: 'track',
+            id: '',
+            name: '',
+            artist: '',
+            album: '',
+            duration: 0,
+            provider: '',
+        };
+    }
+
+    public addToQueue($userId: UUID, $track: Track) {
+        // if (!this.queue.has(userId)) {
+        //     this.queue.set(userId, []);
+        // }
+        // this.queue.get(userId)?.push(track);
+    }
+
+    public removeFromQueue($userId: UUID, $track: Track) {
+        // Todo: Note: this might not work since we are recreating the object every time
+        // if (this.queue.has(userId)) {
+        //     const tracks = this.queue.get(userId);
+        //     tracks?.splice(tracks.indexOf(track), 1);
+        // }
+    }
+
+    public clearQueue($userId: UUID) {
+        // if (this.queue.has(userId)) {
+        //     this.queue.delete(userId);
+        // }
+    }
+
+    public getQueue($userId: UUID): Track[] | void {
+        // return this.queue.get(userId);
+    }
+
+    public moveInQueue($userId: UUID, $track: Track, $index: number) {
+        // if (this.queue.has(userId)) {
+        //     const tracks = this.queue.get(userId);
+        //     tracks?.splice(index, 0, track);
+        // }
+    }
+
+    // Update Controls
+
+    public listenForUpdates($userId: UUID, $res: Response) {
+        // Stream updates data from users player manager
+        // Includes:
+        // - Playback status
+        // - device updates (change isActive)
+    }
 
     // Playback control
 
