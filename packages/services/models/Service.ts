@@ -6,6 +6,7 @@ export type Service = {
     id: string;
     type: Service.type;
     enabled: boolean;
+    accountName: string;
 };
 
 export namespace Service {
