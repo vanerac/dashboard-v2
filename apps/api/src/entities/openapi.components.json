@@ -299,6 +299,60 @@
           "type": "integer"
         }
       }
+    },
+    "Widget": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "serviceId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        },
+        "width": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "stat", "album", "playlist", "artist", "search"
+          ]
+        },
+        "data": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "editedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "serviceId",
+        "x",
+        "y",
+        "width",
+        "height",
+        "type",
+        "data",
+        "createdAt",
+        "editedAt"
+      ]
     }
   }
 }

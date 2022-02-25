@@ -1,13 +1,9 @@
-/* istanbul ignore file */
-/* tslint:disable */
-/* eslint-disable */
 export { ApiClient } from './client';
 export { ApiError } from './core/ApiError';
 export { BaseHttpRequest } from './core/BaseHttpRequest';
 export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
-
 export type { AddToQueueRequest } from './models/AddToQueueRequest';
 export type { AddToQueueResponse } from './models/AddToQueueResponse';
 export { Album } from './models/Album';
@@ -68,8 +64,7 @@ export type { TagStats } from './models/TagStats';
 export { Track } from './models/Track';
 export type { TrackStats } from './models/TrackStats';
 export type { User } from './models/User';
-export { Widget } from './models/Widget';
-
+export type { Widget } from './models/Widget';
 export { ArtistService } from './services/ArtistService';
 export { AuthenticationService } from './services/AuthenticationService';
 export { DevicesService } from './services/DevicesService';
@@ -80,4 +75,4 @@ export { ServicesService } from './services/ServicesService';
 export { SsoService } from './services/SsoService';
 export { StatsService } from './services/StatsService';
 export { TrackService } from './services/TrackService';
-export { WidgetService } from './services/WidgetService';
+//# sourceMappingURL=index.d.ts.map
