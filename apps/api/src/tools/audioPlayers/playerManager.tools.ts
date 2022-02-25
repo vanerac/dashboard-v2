@@ -2,6 +2,17 @@ import { Track } from '../../../../../packages/services';
 import { AudioPlayer } from './AudioPlayer';
 import { Response } from 'express';
 import { Providers, UUID } from '../types';
+import path from 'path';
+
+const providers: {
+    [$key in Providers]: string;
+} = {
+    [Providers.SPOTIFY]: path.join(__dirname, 'playerDOM', 'spotify.html'),
+    [Providers.DEEZER]: path.join(__dirname, 'playerDOM', 'deezer.html'),
+    [Providers.GOOGLE]: path.join(__dirname, 'playerDOM', 'google.html'),
+    [Providers.APPLE]: path.join(__dirname, 'playerDOM', 'apple.html'),
+    [Providers.$LAST_FM]: path.join(__dirname, 'playerDOM', 'lastfm.html'),
+};
 
 export default class PlayerManager {
     /* Notes:
@@ -9,13 +20,25 @@ export default class PlayerManager {
      * It is responsible for creating, destroying, and updating the audio players.
      */
 
-    private audioPlayers: { userId: UUID; players: { provider: Providers; player: AudioPlayer }[] }[] = [];
+    private audioPlayers: { userId: UUID; provider: Providers; player: AudioPlayer }[] = [];
+    // Device becomes ws
     private devices: Map<UUID, { deviceId: UUID; ref: Response; isActive: boolean }[]> = new Map();
     private queue: Map<UUID, Track[]> = new Map();
+
     constructor() {}
 
-    // Queue control
+    private getPlayer(userId: UUID, provider: Providers): AudioPlayer {
+        const player = this.audioPlayers.find((player) => player.userId === userId && player.provider === provider);
+        if (!player) {
+            const player = new AudioPlayer('', providers[provider]);
+            this.audioPlayers.push({ userId, provider, player });
+            return player;
+        } else {
+            return player.player;
+        }
+    }
 
+    // Queue control
     public getCurrentTrack($userId: UUID): Track {
         // TODO Handles with audioPlayer;
         return {
@@ -161,6 +184,8 @@ export default class PlayerManager {
         if (!this.devices.has(userId)) {
             this.devices.set(userId, []);
         }
+        // todo: create ws
+        WebSocket.createWebSocket(deviceId);
         this.devices.get(userId)?.push({ deviceId, ref: device, isActive: false });
         this.changeDevice(userId, deviceId);
     }

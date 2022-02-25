@@ -1,13 +1,15 @@
 import { EventEmitter } from 'events';
 import { Track } from '../../../../../packages/services';
+import { getStream, launch, Stream } from 'puppeteer-stream';
+import { Browser, Page } from 'puppeteer';
 
-export type AudioPlayerEvents = 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
+export type AudioPlayerEvents = 'unknown' | 'ready' | 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
 
-export abstract class AudioPlayer extends EventEmitter {
+export class AudioPlayer extends EventEmitter {
     static readonly DEFAULT_VOLUME = 1;
     static readonly DEFAULT_LOOP = false;
 
-    protected _state: AudioPlayerEvents = 'stopped';
+    protected _state: AudioPlayerEvents = 'unknown';
     protected _playingTrack: Track | null = null;
 
     protected _isPlaying: boolean | undefined;
@@ -18,8 +20,42 @@ export abstract class AudioPlayer extends EventEmitter {
     protected _duration: number | undefined;
     protected _queue: Track[] | undefined;
 
-    protected constructor() {
+    private _browser: Browser | undefined;
+    private _page: Page | undefined;
+
+    constructor(private token: string, private readonly url: string) {
         super();
+
+        this.url = url;
+        this.token = token;
+        launch({
+            defaultViewport: {
+                width: 1920,
+                height: 1080,
+            },
+        }).then(async (browser) => {
+            this._browser = browser;
+            this._page = await browser.newPage();
+            this._page.on('error', (error) => {
+                this.emit('error', error);
+            });
+            await this._page.goto(this.url);
+            await this.initPlayer();
+            this.state = 'ready';
+        });
+    }
+
+    private async initPlayer() {
+        // pass token to the page
+        if (this._page) {
+            await this._page.evaluate((token) => {
+                (window as any).token = token;
+            }, this.token);
+            // emit tokenrefresh on page
+            this._page.emit('tokenrefresh', this.token);
+        } else {
+            throw new Error('Page is not initialized');
+        }
     }
 
     public get state(): AudioPlayerEvents {
@@ -29,6 +65,19 @@ export abstract class AudioPlayer extends EventEmitter {
     protected set state(state: AudioPlayerEvents) {
         this._state = state;
         this.emit('stateChanged', state);
+    }
+
+    protected async getStream(): Promise<Stream> {
+        if (!this._page) {
+            throw new Error('No page');
+        }
+        return await getStream(this._page, { audio: true, video: false });
+    }
+
+    protected async updateToken(token: string): Promise<void> {
+        this.token = token;
+        // refresh page
+        await this._page?.goto(this.url);
     }
 
     public get playingTrack(): Track | null {
