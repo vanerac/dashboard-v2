@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS Widgets
     id        uuid PRIMARY KEY      DEFAULT uuid_generate_v4(),
     serviceId uuid         NOT NULL,
     userId    uuid         NOT NULL,
-    config    TEXT         NOT NULL,
     x         INT          NOT NULL DEFAULT 0,
     y         INT          NOT NULL DEFAULT 0,
     width     INT          NOT NULL,
