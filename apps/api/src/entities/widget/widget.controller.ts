@@ -7,7 +7,7 @@ export default class WidgetController {
         try {
             const { user } = req.session;
             const query = `SELECT * FROM widgets WHERE userId = ${user?.id}`;
-            const widgets = await Pool.query(query);
+            const { rows: widgets } = await Pool.query(query);
             res.json(widgets);
         } catch (e) {
             next(e);
@@ -19,7 +19,14 @@ export default class WidgetController {
             const { id } = req.params;
             const { user } = req.session;
             const query = `SELECT * FROM widgets WHERE id = ${id} AND userId = ${user?.id}`;
-            const widget = await Pool.query(query);
+            const {
+                rows: [widget],
+            } = await Pool.query(query);
+            if (!widget) {
+                return res.status(404).json({
+                    message: 'Widget not found',
+                });
+            }
             res.json(widget);
         } catch (e) {
             next(e);
@@ -40,14 +47,16 @@ export default class WidgetController {
             const query = `INSERT INTO widgets(${Object.keys(req.body).join(',')}, userId) VALUES(${Object.values(
                 req.body,
             ).map(($value, index) => `${index + 1}`)}, ${Object.values.length + 1})`;
-            const widget = await Pool.query(query, [...Object.keys(req.body), user?.id]);
+            const {
+                rows: [widget],
+            } = await Pool.query(query, [...Object.keys(req.body), user?.id]);
             res.json(widget);
         } catch (e) {
             next(e);
         }
     }
 
-    static updateBulk(req: Request, res: Response, next: NextFunction) {
+    static async updateBulk(req: Request, res: Response, next: NextFunction) {
         // take x,height,y,width
         try {
             const { widgets }: { widgets: Widget[] } = req.body;
@@ -70,7 +79,9 @@ export default class WidgetController {
                 return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = ${widget.id}`;
             });
 
-            const result = Pool.query(updateQuery.join(';'));
+            const {
+                rows: [result],
+            } = await Pool.query(updateQuery.join(';'));
             res.json(result);
         } catch (e) {
             next(e);
@@ -89,8 +100,10 @@ export default class WidgetController {
             const query = `UPDATE widgets SET ${Object.keys(req.body)
                 .map((key) => `${key} = ${req.body[key]}`)
                 .join(', ')} WHERE id = ${id} AND userId = ${user?.id}`;
-            const widget = await Pool.query(query);
-            if (!widget.rows.length) {
+            const {
+                rows: [widget],
+            } = await Pool.query(query);
+            if (!widget) {
                 return res.status(404).json({
                     error: 'Widget not found',
                 });
@@ -106,8 +119,10 @@ export default class WidgetController {
             const { id } = req.params;
             const { user } = req.session;
             const query = `DELETE FROM widgets WHERE id = ${id} AND userId = ${user?.id}`;
-            const widget = await Pool.query(query);
-            if (!widget.rows.length) {
+            const {
+                rows: [widget],
+            } = await Pool.query(query);
+            if (!widget) {
                 return res.status(404).json({
                     error: 'Widget not found',
                 });
