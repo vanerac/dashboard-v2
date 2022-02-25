@@ -16,7 +16,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "types:bundle": "npx swagger-cli bundle -o ./apps/api/generated/openapi-v1.json apps/api/src/entities/openapi.index.json",
-    "types:generate": "openapi -i apps/api/generated/openapi-v1.json -o packages/services --client axios --name ApiClient",
+    "types:generate": "openapi -i apps/api/generated/openapi-v1.json -o packages/services --client axios --name ApiClient --useUnionTypes",
     "services:generate": "npm run types:bundle && npm run types:generate"
   },
   "devDependencies": {
