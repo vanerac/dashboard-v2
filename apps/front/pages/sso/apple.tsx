@@ -1,20 +1,27 @@
-// import { Client, updateClientConfig } from '../../../../packages/global';
 import { SpinnerCircular } from 'spinners-react';
-// import Cookies from 'universal-cookie';
 import loadingScreen from '../../components/wrapperLoadingScreen';
-// const cookies = new Cookies();
+import { useEffect } from 'react';
+import { getClient } from '../../utils/ApiClient';
+import Cookies from 'universal-cookie';
+import Router from 'next/router';
 
-function ssoApple() {
-    // if (typeof window !== 'undefined') {
-    // let params = new URL(window.location.href).searchParams;
-    // let code = params.get('code');
-    // COMING SOON
-    // Client.sso.appleAuthCodeSso(code, '').then((data) => {
-    //     const { token } = data;
-    //     cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
-    //     Router.push('/');
-    // });
-    // }
+const cookies = new Cookies();
+
+function SsoApple() {
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let params = new URL(window.location.href).searchParams;
+            let code = params.get('code');
+            getClient()
+                .sso.appleAuthCodeSso(code, '')
+                .then((data) => {
+                    const { token } = data;
+                    cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
+                    Router.push('/');
+                });
+        }
+    });
+
     return (
         <>
             <SpinnerCircular
@@ -29,4 +36,4 @@ function ssoApple() {
     );
 }
 
-export default loadingScreen(ssoApple);
+export default loadingScreen(SsoApple);
