@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS Services
     accessToken  VARCHAR(256)    NOT NULL,
     tokenExpires TIMESTAMP       NULL,
     refreshToken VARCHAR(256)    NULL,
+    accountName  VARCHAR(256)    NULL,
     status       serviceStatus   NOT NULL DEFAULT 'OK',
     createdAt    DATE            NOT NULL DEFAULT NOW(),
     editedAt     DATE            NOT NULL DEFAULT NOW(),
