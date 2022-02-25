@@ -2,21 +2,26 @@ import { SpinnerCircular } from 'spinners-react';
 import Cookies from 'universal-cookie';
 import Router from 'next/router';
 import { getClient } from '../../utils/ApiClient';
+import loadingScreen from '../../components/wrapperLoadingScreen';
+import { useEffect } from 'react';
 
 const cookies = new Cookies();
 
-function ssoSpotify() {
-    if (typeof window !== 'undefined') {
-        let params = new URL(window.location.href).searchParams;
-        let code = params.get('code');
-        getClient()
-            .sso.spotifyAuthCodeSso(code, 'http://localhost:3000/sso/spotify')
-            .then((data) => {
-                const { token } = data;
-                cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
-                Router.push('/');
-            });
-    }
+function SsoSpotify() {
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let params = new URL(window.location.href).searchParams;
+            let code = params.get('code');
+            getClient()
+                .sso.spotifyAuthCodeSso(code, 'http://localhost:3000/sso/spotify')
+                .then((data) => {
+                    const { token } = data;
+                    cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
+                    Router.push('/');
+                });
+        }
+    });
+
     return (
         <>
             <SpinnerCircular
@@ -31,4 +36,4 @@ function ssoSpotify() {
     );
 }
 
-export default ssoSpotify;
+export default loadingScreen(SsoSpotify);

@@ -8,29 +8,36 @@ import 'react-resizable/css/styles.css';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any }) => {
-    console.log(generateLayout());
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return <div key={i} style={{ backgroundColor: 'lightblue', borderRadius: '4px' }}></div>;
         });
     };
+    console.log(props.widgetsAdded);
 
     function generateLayout() {
-        return _.map(_.range(0, props.widgetsAdded), function (i: { toString: () => any }) {
+        return _.map(_.range(0, props.widgetsAdded.length), function (i) {
+            console.log(i);
             return {
-                x: 0,
-                y: 0,
-                w: 2,
-                h: 1.5,
+                x: props.widgetsAdded[i].x,
+                y: props.widgetsAdded[i].y,
+                w: props.widgetsAdded[i].w,
+                h: props.widgetsAdded[i].h,
                 i: i.toString(),
             };
         });
     }
 
+    const onLayoutChange = (layout: any) => {
+        // TODO : route PUT pour modifier dans la db
+        console.log(layout);
+    };
+
     return (
         <ResponsiveReactGridLayout
             layout={generateLayout()}
-            isResizable={false}
+            onLayoutChange={onLayoutChange}
+            // isResizable={false}
             compactType={'vertical'}
             preventCollision={!'vertical'}>
             {generateDOM()}

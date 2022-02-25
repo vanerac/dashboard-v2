@@ -15,7 +15,6 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 // import { Test } from '@area/ui';
 import Cookies from 'universal-cookie';
-import SpotifySSO from '@area/ui/Buttons/SSO/SpotifySSO';
 import { getClient } from '../utils/ApiClient';
 
 const Login = () => {

@@ -71,6 +71,83 @@ export default function SearchAppBar({ addWidget }) {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     const nextMode = darkModeActive ? 'Light' : 'Dark';
     const Icon = darkModeActive ? LightIcon : DarkIcon;
+ 
+    // console.log(connectedServices);
+    const spotifyService = connectedServices.find((service: { provider: string }) => service.provider === 'spotify');
+    const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
+    const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
+    const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+
+    // console.log('here => ', spotifyService);
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+        getClient()
+            .services.getAllUserServices()
+            .then((data) => {
+                console.log(data);
+            });
+    };
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const svgSpotify = (
+        <SvgIcon>
+            <path d={mdiSpotify} />
+        </SvgIcon>
+    );
+
+    const svgLastFM = (
+        <SvgIcon>
+            <path d={mdiRadioFm} />
+        </SvgIcon>
+    );
+
+    const authGoogle = () => {
+        getClient()
+            .sso.googleConsentSso('http://localhost:3000/sso/google')
+            .then((data: { url: string | UrlObject }) => {
+                console.log(data);
+                Router.push(data.url);
+            });
+    };
+
+    const authSpotify = () => {
+        getClient()
+            .sso.spotifyConsentSso('http://localhost:3000/sso/spotify')
+            .then((data: { url: string | UrlObject }) => {
+                console.log(data);
+                Router.push(data.url);
+            });
+    };
+
+    const authLastFM = () => {
+        getClient()
+            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .then((data: { url: string | UrlObject }) => {
+                console.log(data);
+                Router.push(data.url);
+            });
+    };
+
+    const authApple = () => {
+        // Client.sso.appleConsentSso('http://localhost:3000/getAppleCode').then((data) => {
+        //     console.log(data);
+        //     Router.push(data.url);
+        // });
+    };
 
     const [state, setState] = React.useState({
         top: false,
