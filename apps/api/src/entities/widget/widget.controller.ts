@@ -38,7 +38,7 @@ export default class WidgetController {
             const { user } = req.session;
             try {
                 Object.keys(req.body).forEach((key) => {
-                    if (!['serviceId', 'x', 'y', 'width', 'height', 'type'].includes(key))
+                    if (!['serviceId', 'x', 'y', 'width', 'height', 'type', 'data'].includes(key))
                         throw new Error(`Invalid property: ${key}`);
                 });
             } catch (e) {
@@ -46,10 +46,11 @@ export default class WidgetController {
             }
             const query = `INSERT INTO widgets(${Object.keys(req.body).join(',')}, userId) VALUES(${Object.values(
                 req.body,
-            ).map(($value, index) => `${index + 1}`)}, ${Object.values.length + 1})`;
+            ).map(($value, index) => `$${index + 1}`)}, $${Object.values(req.body).length + 1})`;
+            console.log(query, [...Object.values(req.body), user?.id]);
             const {
                 rows: [widget],
-            } = await Pool.query(query, [...Object.keys(req.body), user?.id]);
+            } = await Pool.query(query, [...Object.values(req.body), user?.id]);
             res.json(widget);
         } catch (e) {
             next(e);
@@ -94,9 +95,10 @@ export default class WidgetController {
             const { user } = req.session;
 
             Object.keys(req.body).map((key) => {
-                if (!['x', 'y', 'width', 'height'].includes(key)) throw new Error(`Invalid property: ${key}`);
+                if (!['x', 'y', 'width', 'height', 'data'].includes(key)) throw new Error(`Invalid property: ${key}`);
             });
 
+            // Todo: Note, this is not a good way to do this, but it's a quick fix
             const query = `UPDATE widgets SET ${Object.keys(req.body)
                 .map((key) => `${key} = ${req.body[key]}`)
                 .join(', ')} WHERE id = ${id} AND userId = ${user?.id}`;

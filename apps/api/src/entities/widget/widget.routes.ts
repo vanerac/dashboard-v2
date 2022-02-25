@@ -9,3 +9,5 @@ router.get('/:id', WidgetController.getById);
 router.post('/create/', WidgetController.create);
 router.put('/update/:id', WidgetController.update);
 router.delete('/delete/:id', WidgetController.delete);
+
+export default router;
