@@ -10,6 +10,7 @@ import { ServicesService } from './services/ServicesService';
 import { SsoService } from './services/SsoService';
 import { StatsService } from './services/StatsService';
 import { TrackService } from './services/TrackService';
+import { WidgetService } from './services/WidgetService';
 declare type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export declare class ApiClient {
     readonly artist: ArtistService;
@@ -22,6 +23,7 @@ export declare class ApiClient {
     readonly sso: SsoService;
     readonly stats: StatsService;
     readonly track: TrackService;
+    readonly widget: WidgetService;
     readonly request: BaseHttpRequest;
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest?: HttpRequestConstructor);
 }

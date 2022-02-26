@@ -5773,6 +5773,10 @@
         "properties": {
           "track": {
             "$ref": "#/components/schemas/Track"
+          },
+          "serviceId": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       },

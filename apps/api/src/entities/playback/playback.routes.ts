@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import PlaybackController from './playback.controller';
+import { parseServiceId } from '../../tools/service.tools';
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.delete('/queue/clear', PlaybackController.clearQueue);
 router.get('/listen', PlaybackController.subscribeToUpdates);
 
 // Playback control
-router.post('/play', PlaybackController.playTrack);
+router.post('/play/:serviceId', parseServiceId, PlaybackController.playTrack);
 router.get('/resume', PlaybackController.resumeSong);
 router.get('/pause', PlaybackController.pausePlayback);
 router.get('/skip', PlaybackController.skipTrack);

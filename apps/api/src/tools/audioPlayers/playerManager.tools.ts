@@ -11,36 +11,47 @@ export default class PlayerManager {
      * It is responsible for creating, destroying, and updating the audio players.
      */
 
-    private audioPlayers: { userId: UUID; provider: string; player: AudioPlayer; isActive: boolean }[] = [];
+    private audioPlayers: {
+        userId: UUID;
+        serviceId: UUID;
+        provider: string;
+        player: AudioPlayer;
+        isActive: boolean;
+    }[] = [];
     // Device becomes ws
     // private devices: Map<UUID, { deviceId: UUID; ref: Response; isActive: boolean }[]> = new Map();
     // private queue: Map<UUID, Track[]> = new Map();
 
     constructor() {}
 
-    private async getPlayer(userId: UUID, provider: string): Promise<AudioPlayer> {
-        const player = this.audioPlayers.find((player) => player.userId === userId && player.provider === provider);
+    private async getPlayer(userId: UUID, provider: string, serviceId: UUID): Promise<AudioPlayer> {
+        const player = this.audioPlayers.find(
+            (player) => player.userId === userId && player.provider === provider && player.serviceId === serviceId,
+        );
         if (!player) {
             // Todo replace this by wrapper function that refreshes token
-            const query = `SELECT accessToken FROM services WHERE userId = ? AND provider = ?`;
-            const values = [userId, provider];
-            const {
-                rows: [{ accessToken }],
-            } = await Pool.query(query, values);
-            if (!accessToken) {
-                throw new Error('Service Not connected');
+            const query = `SELECT accessToken FROM services WHERE id = $1`;
+            const values = [serviceId];
+            const { rows } = await Pool.query(query, values);
+            if (rows.length === 0) {
+                throw new Error('Service not found');
             }
+            console.log('rows', rows);
+            const [{ accesstoken: accessToken }] = rows;
+            console.log('accessToken', accessToken);
             let audioPlayer: AudioPlayer | undefined;
+            console.log(provider);
             switch (provider) {
                 case Providers.SPOTIFY:
                     audioPlayer = new SpotifyAudioPlayer(accessToken);
+                    break;
                 default:
                     audioPlayer = undefined;
             }
             if (!audioPlayer) {
                 throw new Error('Could not create audio player');
             }
-            this.audioPlayers.push({ userId, provider, player: audioPlayer, isActive: false });
+            this.audioPlayers.push({ userId, provider, player: audioPlayer, isActive: false, serviceId: serviceId });
             return audioPlayer;
         } else {
             return player.player;
@@ -106,19 +117,24 @@ export default class PlayerManager {
 
     // Playback control
 
-    public async play(userId: UUID, track: Track) {
+    public async play(userId: UUID, track: Track, serviceId: UUID) {
         // Todo Play track
         // get player linked tu user and from track provider
         // play track
-        const player = await this.getPlayer(userId, track.provider);
+        const player = await this.getPlayer(userId, track.provider, serviceId);
         if (player) {
             await this.pause(userId);
             const index = this.audioPlayers.findIndex(
-                (player) => player.userId === userId && player.provider === track.provider,
+                (player) =>
+                    player.serviceId === serviceId && player.userId === userId && player.provider === track.provider,
             );
-            const activeIndex = this.audioPlayers.findIndex((player) => player.userId === userId && player.isActive);
+            const activeIndex = this.audioPlayers.findIndex(
+                (player) => player.serviceId === serviceId && player.userId === userId && player.isActive,
+            );
             if (index !== activeIndex) {
-                this.audioPlayers[activeIndex].isActive = false;
+                if (activeIndex !== -1) {
+                    this.audioPlayers[activeIndex].isActive = false;
+                }
                 this.audioPlayers[index].isActive = true;
             }
             await player.play(track);

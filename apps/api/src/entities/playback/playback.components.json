@@ -157,8 +157,16 @@
       "properties": {
         "track": {
           "$ref": "../openapi.index.json#/components/schemas/Track"
+        },
+        "serviceId": {
+          "type": "string",
+          "format": "uuid"
         }
-      }
+      },
+      "required": [
+        "track",
+        "serviceId"
+      ]
     },
     "PlayTrackResponse": {
       "type": "object",

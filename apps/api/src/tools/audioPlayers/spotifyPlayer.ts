@@ -6,8 +6,9 @@ import path from 'path';
 import { getStream, launch, Stream } from 'puppeteer-stream';
 import axios from 'axios';
 import { AudioPlayer } from './AudioPlayer';
+import { Browser, Page } from 'puppeteer';
 
-const domFile = `file://${path.join(__dirname, 'playerDOM', 'spotifyPlayerDOM.html')}`;
+const domFile = `file://${path.join(__dirname, 'playerDOM', 'spotify.html')}`;
 
 declare global {
     // eslint-disable-next-line no-unused-vars
@@ -23,10 +24,13 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
 
     private deviceId: string | undefined;
     private eventManager: EventEmitter = new EventEmitter();
+    private page: Page | undefined;
+    private browser: Browser | undefined;
 
     constructor(token: string) {
         super(token);
-        // super.token = token;
+        this.token = token;
+        console.log('SpotifyAudioPlayer', token);
 
         // todo: bind events from eventManager to super
 
@@ -54,42 +58,49 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         console.log('[initPuppeteer] Loading page');
         await page.goto(domPath);
 
-        super._browser = browser;
-        super._page = page;
+        this.browser = browser;
+        this.page = page;
+        console.log('[initPuppeteer] Done');
     }
 
     private async initSpotify() {
         console.log('[initSpotify] Starting Spotify Player');
-        super._page.evaluate((token: string) => {
-            // @ts-ignore
-            // eslint-disable-next-line no-undef
-            window.player = new Spotify.Player(
-                {
-                    name: 'Spotify Audio Player',
-                    getOAuthToken: (cb: ($arg: any) => void) => {
-                        cb(token);
+        console.log(this.token);
+        await this.page?.evaluate((token) => console.log(token), this.token);
+        await this.page.evaluate(
+            (token: string) =>
+                // @ts-ignore
+                // eslint-disable-next-line no-undef
+                (window.player = new Spotify.Player(
+                    {
+                        name: 'Spotify Audio Player',
+                        getOAuthToken: (cb: ($arg: any) => void) => {
+                            cb(token);
+                        },
                     },
-                },
-                super.token,
-            );
-        });
+                    token,
+                )),
+            this.token,
+        );
 
         console.log('[initSpotify] Connecting Spotify Player');
-        await super._page.evaluate(() => {
-            window.player.connect();
+        await this.page.evaluate(() => {
+            window.player.connect(); // Todo Error here
         });
+        console.log('[initSpotify] Done');
     }
 
     private async elevateEvents() {
-        const self = this;
+        // const self = this;
+        const { eventManager } = this;
 
         console.log('[elevateEvents] Exposing elevate function');
-        await super._page.exposeFunction('ELEVATE', (event: string, data: any) => {
-            self.eventManager.emit(event, data);
+        await this.page.exposeFunction('ELEVATE', (event: string, data: any) => {
+            eventManager.emit(event, data);
         });
 
         console.log('[elevateEvents] Setting up events');
-        await super._page.evaluate(() => {
+        await this.page.evaluate(() => {
             const events = [
                 'ready',
                 'not_ready',
@@ -101,10 +112,13 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
             ];
             if (window.ELEVATE) {
                 events.forEach((event) => {
+                    console.log(event);
                     window.player.addListener(event, window.ELEVATE.bind(null, event));
+                    window.player.addListener(event, console.log);
                 });
             }
         });
+        console.log('[elevateEvents] Done');
     }
 
     private async connectDevice() {
@@ -113,13 +127,18 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
             this.eventManager.once('ready', ({ device_id }) => {
                 resolve(device_id);
             });
-            this.eventManager.once('error', (error) => {
-                console.log('Error: ', error);
-                throw new Error(error);
-            });
+            ['not_ready', 'initialization_error', 'authentication_error', 'account_error', 'playback_error'].forEach(
+                (event) => {
+                    this.eventManager.on(event, (error) => {
+                        console.log('Error: ', error);
+                        throw new Error(error);
+                    });
+                },
+            );
         });
+        await new Promise((r) => setTimeout(r, 1000));
         console.log('[connectDevice] Connecting device');
-        await super._page.evaluate(() => {
+        await this.page.evaluate(() => {
             window.player.connect();
         });
         console.time('[connectDevice] Waiting for deviceID');
@@ -130,11 +149,11 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
     }
 
     public override getStream(): Promise<Stream> {
-        if (!super._page) {
+        if (!this.page) {
             throw new Error('Page not initialized');
         }
 
-        return getStream(super._page, {
+        return getStream(this.page, {
             audio: true,
             video: false,
             frameSize: 20,
@@ -143,12 +162,31 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
     }
 
     override async playTrack(track: Track) {
+        if (this.state === 'unknown') {
+            console.log('[playTrack] Waiting for ready event');
+            await new Promise((resolve) => {
+                this.eventManager.once('ready', resolve);
+                [
+                    'not_ready',
+                    'initialization_error',
+                    'authentication_error',
+                    'account_error',
+                    'playback_error',
+                ].forEach((event) => {
+                    this.eventManager.on(event, (error) => {
+                        console.log('[playTrack] Error: ', error);
+                        throw new Error(error);
+                    });
+                });
+            });
+        }
         if (track.provider !== 'spotify') {
             throw new Error('Track provider is not spotify');
         }
         if (!this.deviceId) {
             throw new Error('Device id not set');
         }
+        console.log('[playTrack] Playing track');
         // Todo: this will reset the player device
         const url = `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`;
         const data = {
@@ -158,37 +196,37 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
     }
 
     override async resumeTrack() {
-        if (!super._page) {
+        if (!this.page) {
             throw new Error('No page');
         }
-        return super._page.evaluate(() => {
+        return this.page.evaluate(() => {
             return window.player.resume();
         });
     }
 
     override async pauseTrack() {
-        if (!super._page) {
+        if (!this.page) {
             throw new Error('No page');
         }
-        return super._page.evaluate(() => {
+        return this.page.evaluate(() => {
             return window.player.pause();
         });
     }
 
     override async stopTrack() {
-        if (!super._page) {
+        if (!this.page) {
             throw new Error('No page');
         }
-        return super._page.evaluate(() => {
+        return this.page.evaluate(() => {
             return window.player.disconnect();
         });
     }
 
     override async seekTrack(time: number) {
-        if (!super._page) {
+        if (!this.page) {
             throw new Error('No page');
         }
-        return super._page.evaluate((pos: any) => {
+        return this.page.evaluate((pos: any) => {
             return window.player.seek(pos);
         }, time);
     }
