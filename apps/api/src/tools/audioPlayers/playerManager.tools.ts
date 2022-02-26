@@ -74,6 +74,7 @@ export default class PlayerManager {
             album: '',
             duration: 0,
             provider: '',
+            uri: '',
         };
     }
 

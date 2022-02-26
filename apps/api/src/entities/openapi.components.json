@@ -21,7 +21,6 @@
         },
         "displayName": {
           "type": "string"
-
         },
         "id": {
           "type": "string"
@@ -77,35 +76,30 @@
         },
         "id": {
           "type": "string"
-
         },
         "name": {
           "type": "string"
-
         },
         "artist": {
-            "type": "string"
-
+          "type": "string"
         },
         "album": {
-            "type": "string"
-
+          "type": "string"
         },
         "duration": {
-            "type": "integer"
-
+          "type": "integer"
         },
         "image": {
-            "type": "string"
-
+          "type": "string"
         },
         "provider": {
-            "type": "string"
-
+          "type": "string"
         },
         "playable": {
-            "type": "boolean"
-
+          "type": "boolean"
+        },
+        "uri": {
+          "type": "string"
         }
       },
       "required": [
@@ -117,7 +111,8 @@
         "duration",
         "image",
         "provider",
-        "playable"
+        "playable",
+        "uri"
       ]
     },
     "Playlist": {
@@ -234,15 +229,12 @@
       "properties": {
         "track": {
           "$ref": "#/schemas/Track"
-
         },
         "position": {
           "type": "integer"
-
         },
         "device": {
           "type": "string"
-
         },
         "state": {
           "type": "string",
@@ -266,23 +258,18 @@
         "id": {
           "type": "string",
           "format": "uuid"
-
         },
         "name": {
           "type": "string"
-
         },
         "volume": {
           "type": "integer"
-
         },
         "state": {
           "type": "boolean"
-
         },
         "ws": {
           "type": "string"
-
         }
       },
       "required": [
@@ -330,7 +317,11 @@
         "type": {
           "type": "string",
           "enum": [
-            "stat", "album", "playlist", "artist", "search"
+            "stat",
+            "album",
+            "playlist",
+            "artist",
+            "search"
           ]
         },
         "data": {

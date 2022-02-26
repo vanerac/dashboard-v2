@@ -12,4 +12,5 @@ export type getTrackResponse = {
     image: string;
     provider: string;
     playable: boolean;
+    uri: string;
 };

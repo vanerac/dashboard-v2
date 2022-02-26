@@ -57,6 +57,7 @@ export class SpotifyTrackService extends TrackService {
             album: response.data.album.name,
             duration: response.data.duration_ms,
             provider: 'spotify',
+            uri: response.data.uri,
         };
     }
 
@@ -158,6 +159,7 @@ export class AppleTrackService extends TrackService {
             album: response.data.attributes.albumName,
             duration: response.data.attributes.durationInMillis,
             provider: 'apple',
+            uri: response.data.attributes.url,
         };
     }
 
@@ -277,6 +279,7 @@ export class YoutubeTrackService extends TrackService {
             album: response.data.items[0].snippet.channelTitle,
             duration: response.data.items[0].contentDetails.duration,
             provider: 'youtube',
+            uri: `https://www.youtube.com/watch?v=${response.data.items[0].id}`,
         };
     }
 
@@ -369,6 +372,7 @@ export class DeezerTrackService extends TrackService {
             album: response.data.album.title,
             duration: response.data.duration,
             provider: 'deezer',
+            uri: response.data.preview,
         };
     }
 

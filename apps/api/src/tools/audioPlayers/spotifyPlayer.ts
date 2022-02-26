@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Track } from './playerManager.tools';
+import { Track } from '../../../../../packages/services';
 import 'puppeteer-stream';
 import { EventEmitter } from 'events';
 import path from 'path';
@@ -196,7 +196,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         // Todo: this will reset the player device
         const url = `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`;
         const data = {
-            uris: [`spotify:track:${track.id}`],
+            uris: [track.uri],
             position_ms: 0,
         };
         const headers = {
