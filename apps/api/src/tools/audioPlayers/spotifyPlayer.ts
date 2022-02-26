@@ -122,6 +122,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
                 });
             }
         });
+        eventManager.on('ready', () => (this.state = 'ready'));
         console.log('[elevateEvents] Done');
     }
 
@@ -196,6 +197,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         const url = `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`;
         const data = {
             uris: [`spotify:track:${track.id}`],
+            position_ms: 0,
         };
         const headers = {
             Authorization: `Bearer ${this.token}`,
@@ -206,6 +208,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
             const { status, data } = error.response;
             console.log('[playTrack] Error:', status, data);
         });
+        await this.resumeTrack();
     }
 
     override async resumeTrack() {
