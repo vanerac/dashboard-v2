@@ -24,18 +24,45 @@ const Dasboard = () => {
 
     const [numberWidgets, setNumberWidgets] = useState([]);
 
-    const addWidget = () => {
-        // TODO : api call => balancer un widget en db
+    const spotifyService = servicesList.find((service: { provider: string }) => service.provider === 'spotify');
+    const googleService = servicesList.find((service: { provider: string }) => service.provider === 'google');
+    const appleService = servicesList.find((service: { provider: string }) => service.provider === 'apple');
+    const lastFMService = servicesList.find((service: { provider: string }) => service.provider === 'lastFM');
+
+    const addWidget = (widgetServicetype) => {
         console.log('add Widget');
+        console.log('ici => ', spotifyService);
+        console.log('ici => ', googleService);
+        const widgetService = widgetServicetype.split(':')[0];
+        const typeService = widgetServicetype.split(':')[1];
+
         const newWidget = {
-            serviceId: '911fbe56-b7f4-4a3e-9eba-cec2d907909b',
+            serviceId: undefined,
             x: 0,
             y: 0,
             width: 2,
             height: 2,
-            type: 'stat',
+            type: typeService,
             data: 'string',
         };
+
+        switch (widgetService) {
+            case 'spotify':
+                newWidget.serviceId = spotifyService.id;
+                break;
+            case 'apple':
+                newWidget.serviceId = appleService.id;
+                break;
+            case 'lastFM':
+                newWidget.serviceId = lastFMService.id;
+                break;
+            case 'youtube':
+                newWidget.serviceId = googleService.id;
+                break;
+            default:
+                console.log('ERROR CRETING NEW WIDGET');
+        }
+
         setNumberWidgets((numberWidgets) => [...numberWidgets, newWidget]);
         getClient()
             // @ts-ignore
@@ -43,56 +70,15 @@ const Dasboard = () => {
             .then((data) => {
                 console.log('ici => ', data);
             });
-        console.log(numberWidgets);
     };
-
-    // console.log('ici => ', Client.request.config.TOKEN);
-    // useEffect(() => {
-    //     getClient()
-    //         .services.getAllUserServices()
-    //         .then((data) => {
-    //             setServicesList(data.services);
-    //             console.log(data);
-    //         });
-
-    //     getClient()
-    //         .widget.createWidget({
-    //             serviceId: '911fbe56-b7f4-4a3e-9eba-cec2d907909b',
-    //             x: 0,
-    //             y: 0,
-    //             width: 2,
-    //             height: 2,
-    //             type: 'stat',
-    //             data: 'string',
-    //         })
-    //         .then((data) => {
-    //             console.log('ici => ', data);
-    //         });
-
-    //     getClient()
-    //         .widget.getAllWidgets()
-    //         .then((data) => {
-    //             console.log(data);
-    //         });
-    // }, []);
 
     useEffect(() => {
         Promise.all([getClient().services.getAllUserServices(), getClient().widget.getAllWidgets()]).then((data) => {
-            // console.log('services => ', data[0]);
             setServicesList(data[0].services);
-            // console.log('widget => ', data[1]);
-            // var newArray = numberWidgets.concat(data[1]);
-            // console.log('data de [1][0] => ', data[1][0]);
-            // console.log('newArray => ', newArray);
-            // setNumberWidgets((numberWidgets) => [...numberWidgets, newArray]);
             setNumberWidgets(data[1]);
-            // console.log('le use state est al => ', numberWidgets);
         });
     }, []);
 
-    // console.log('data => ', test_data.w);
-
-    // console.log(servicesList);
     return React.createElement(
         'div',
         null,

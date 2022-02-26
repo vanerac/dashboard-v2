@@ -10,12 +10,14 @@ import { Widgets } from '@mui/icons-material';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any }) => {
-    console.log('widgets added -> ', props.widgetsAdded)
+    console.log('widgets added -> ', props.widgetsAdded);
 
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
+            console.log(l);
             return (
                 <div key={i}>
+                    {l.widgetType} + {l.widgetService}
                     <CardTest />
                 </div>
             );
@@ -29,6 +31,8 @@ const ShowcaseLayout = (props: { widgetsAdded: any }) => {
                 y: props.widgetsAdded[i].y,
                 w: props.widgetsAdded[i].width,
                 h: props.widgetsAdded[i].height,
+                widgetType: props.widgetsAdded[i].type,
+                widgetService: props.widgetsAdded[i].serviceid,
                 i: i.toString(),
             };
         });
