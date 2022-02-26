@@ -6,8 +6,8 @@ export default class WidgetController {
     static async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const { user } = req.session;
-            const query = `SELECT * FROM widgets WHERE userId = ${user?.id}`;
-            const { rows: widgets } = await Pool.query(query);
+            const query = `SELECT * FROM widgets WHERE userId = $1`;
+            const { rows: widgets } = await Pool.query(query, [user?.id]);
             res.json(widgets);
         } catch (e) {
             next(e);
