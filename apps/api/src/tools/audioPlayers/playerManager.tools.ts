@@ -4,6 +4,8 @@ import { Response } from 'express';
 import { Providers, UUID } from '../types';
 import Pool from '../database.tools';
 import SpotifyAudioPlayer from './spotifyPlayer';
+import { AddressInfo, createServer, Server, Socket } from 'net';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class PlayerManager {
     /* Notes:
@@ -19,8 +21,15 @@ export default class PlayerManager {
         isActive: boolean;
     }[] = [];
     // Device becomes ws
-    // private devices: Map<UUID, { deviceId: UUID; ref: Response; isActive: boolean }[]> = new Map();
+    // private devices: Map<UUID, { deviceId: UUID; ref: Socket; isActive: boolean }[]> = new Map();
+    private devices: {
+        deviceId: UUID;
+        userId: UUID;
+        ref: Socket;
+        isActive: boolean;
+    }[] = [];
     // private queue: Map<UUID, Track[]> = new Map();
+    private servers = new Map<UUID, { server: Server; port: number; url: string }>();
 
     constructor() {}
 
@@ -36,11 +45,11 @@ export default class PlayerManager {
             if (rows.length === 0) {
                 throw new Error('Service not found');
             }
-            console.log('rows', rows);
+
             const [{ accesstoken: accessToken }] = rows;
-            console.log('accessToken', accessToken);
+
             let audioPlayer: AudioPlayer | undefined;
-            console.log(provider);
+
             switch (provider) {
                 case Providers.SPOTIFY:
                     audioPlayer = new SpotifyAudioPlayer(accessToken);
@@ -125,24 +134,40 @@ export default class PlayerManager {
         // Todo Play track
         // get player linked tu user and from track provider
         // play track
-        const player = await this.getPlayer(userId, track.provider, serviceId);
-        if (player) {
-            await this.pause(userId);
-            const index = this.audioPlayers.findIndex(
-                (player) =>
-                    player.serviceId === serviceId && player.userId === userId && player.provider === track.provider,
-            );
-            const activeIndex = this.audioPlayers.findIndex(
-                (player) => player.serviceId === serviceId && player.userId === userId && player.isActive,
-            );
-            if (index !== activeIndex) {
-                if (activeIndex !== -1) {
-                    this.audioPlayers[activeIndex].isActive = false;
-                }
-                this.audioPlayers[index].isActive = true;
-            }
-            await player.play(track);
+        const device = this.devices.find((device) => device.userId === userId && device.isActive);
+        if (!device) {
+            throw new Error('No active device');
         }
+        const player = await this.getPlayer(userId, track.provider, serviceId);
+        if (!player) {
+            throw new Error('Could not instantiate player');
+        }
+
+        await this.pause(userId);
+        const index = this.audioPlayers.findIndex(
+            (player) =>
+                player.serviceId === serviceId && player.userId === userId && player.provider === track.provider,
+        );
+        const activeIndex = this.audioPlayers.findIndex(
+            (player) => player.serviceId === serviceId && player.userId === userId && player.isActive,
+        );
+        if (index !== activeIndex) {
+            if (activeIndex !== -1) {
+                this.audioPlayers[activeIndex].isActive = false;
+            }
+            this.audioPlayers[index].isActive = true;
+        }
+        await player.play(track);
+        const stream = await player.getStream();
+        (async () => {
+            let data;
+            while ((data = stream.read())) {
+                device.ref.write(data);
+            }
+        })();
+        setTimeout(() => {
+            device.ref.end();
+        }, 10000);
     }
 
     public async pause($userId: UUID) {
@@ -238,49 +263,67 @@ export default class PlayerManager {
 
     // Device control
 
-    public getAvailableDevices($userId: UUID) {
-        // if (!this.devices.has(userId)) {
-        //     return undefined;
-        // }
-        // const devices = this.devices.get(userId);
-        // devices?.map((device) => ({
-        //     deviceId: device.deviceId,
-        //     isActive: device.isActive,
-        // }));
-        // return devices;
+    public getAvailableDevices(userId: UUID) {
+        return this.devices
+            .filter((device) => device.userId === userId)
+            .map((device) => ({ deviceId: device.deviceId, isActive: device.isActive }));
     }
 
-    public getCurrentDevice($userId: UUID) {
-        // // Todo Get current device
-        // if (!this.devices.has(userId)) {
-        //     return undefined;
-        // }
-        // const devices = this.devices.get(userId);
-        // return devices?.find((device) => device.isActive);
+    public getCurrentDevice(userId: UUID) {
+        const device = this.devices.find((device) => device.userId === userId && device.isActive);
+        return device ? { deviceId: device.deviceId, isActive: device.isActive } : null;
     }
 
-    public changeDevice($userId: UUID, $deviceId: UUID) {
-        // Todo Change device
-        // if (!this.devices.has(userId)) {
-        //     return undefined;
-        // }
-        // const active = this.devices.get(userId)?.find((device) => device.isActive);
-        // if (active) {
-        //     active.isActive = false;
-        // }
-        // const device = this.devices.get(userId)?.find((device) => device.deviceId === deviceId);
-        // if (device) {
-        //     device.isActive = true;
-        // }
+    public changeDevice(userId: UUID, deviceId: UUID) {
+        const device = this.devices.find((device) => device.userId === userId && device.deviceId === deviceId);
+        if (device) {
+            device.isActive = true;
+            this.devices.forEach((device) => {
+                if (device.userId === userId && device.deviceId !== deviceId) {
+                    device.isActive = false;
+                }
+            });
+        }
     }
 
-    public registerDevice($userId: UUID, $device: Response) {
-        // const deviceId = ''; // ||uuid();
-        // if (!this.devices.has(userId)) {
-        //     this.devices.set(userId, []);
-        // }
-        // // todo: create ws
-        // this.devices.get(userId)?.push({ deviceId, ref: device, isActive: false });
-        // this.changeDevice(userId, deviceId);
+    // Returns an url to let the player register a new device
+    public async registerDevice(userId: UUID): Promise<string> {
+        if (this.servers.has(userId)) {
+            const server = this.servers.get(userId);
+            if (server) return server?.url;
+            throw new Error('Server not found');
+        } else {
+            const server = createServer((connection) => {
+                console.log('New device registered for user', userId);
+                const deviceId = uuidv4();
+                this.devices.push({
+                    userId,
+                    ref: connection,
+                    deviceId: deviceId,
+                    isActive: true,
+                });
+                connection.once('close', () => {
+                    // Todo handle connection closing
+                    console.log('Device disconnected for user', userId);
+                    this.devices = this.devices.filter((device) => device.deviceId !== deviceId);
+                });
+            });
+            await new Promise<void>((resolve) => {
+                server.listen(0, resolve);
+            });
+
+            const serverConfig = {
+                port: (server.address() as AddressInfo)?.port,
+                server,
+                url: `http://localhost:${(server.address() as AddressInfo)?.port}`,
+            };
+
+            this.servers.set(userId, serverConfig);
+            this.servers.get(userId)?.server.on('close', () => {
+                this.servers.delete(userId);
+                this.devices = this.devices.filter((device) => device.userId !== userId);
+            });
+            return serverConfig.url;
+        }
     }
 }

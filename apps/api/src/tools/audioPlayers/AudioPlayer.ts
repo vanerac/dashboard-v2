@@ -37,7 +37,7 @@ export class AudioPlayer extends EventEmitter {
         this.emit('stateChanged', state);
     }
 
-    protected async getStream(): Promise<Stream> {
+    public async getStream(): Promise<Stream> {
         throw new Error('Not implemented');
     }
 

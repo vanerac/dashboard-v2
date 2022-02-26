@@ -63,7 +63,6 @@ export default class PlaybackController {
             const {
                 service: { id: serviceId },
             } = req.session;
-            console.log(req.session.service);
             await playerManager.play(user?.id as string, track, serviceId);
             return res.json({});
         } catch (e) {
@@ -160,7 +159,7 @@ export default class PlaybackController {
     public static async registerDevice(req: Request, res: Response) {
         // Todo: see if there isnt a better way of doing this
         const { user } = req.session;
-        await playerManager.registerDevice(user?.id as string, res);
-        return res.json({});
+        const url = await playerManager.registerDevice(user?.id as string);
+        return res.json({ url });
     }
 }
