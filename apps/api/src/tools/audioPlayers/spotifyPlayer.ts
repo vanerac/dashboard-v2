@@ -42,6 +42,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         await this.initSpotify();
         await this.elevateEvents();
         await this.connectDevice();
+        this.eventManager.emit('device');
     }
 
     // Todo: pass this in a AudioPlayer
@@ -52,11 +53,14 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
                 width: 1280,
                 height: 720,
             },
+            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         });
         console.log('[initPuppeteer] Starting page');
         const page = await browser.newPage();
         console.log('[initPuppeteer] Loading page');
+        // await page.goto('https://hls-js.netlify.app/demo/');
         await page.goto(domPath);
+        await new Promise((resolve) => setTimeout(resolve, 1000000000000));
 
         this.browser = browser;
         this.page = page;
@@ -144,7 +148,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         console.time('[connectDevice] Waiting for deviceID');
         await deviceId;
         console.timeEnd('[connectDevice] Waiting for deviceID');
-        this.deviceId = deviceId.toString();
+        this.deviceId = (await deviceId).toString();
         console.log('[connectDevice] DeviceID:', this.deviceId);
     }
 
@@ -184,15 +188,24 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
             throw new Error('Track provider is not spotify');
         }
         if (!this.deviceId) {
-            throw new Error('Device id not set');
+            await new Promise((resolve) => this.eventManager.once('device', resolve));
+            // throw new Error('Device id not set');
         }
         console.log('[playTrack] Playing track');
         // Todo: this will reset the player device
         const url = `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`;
         const data = {
-            uris: [track.id],
+            uris: [`spotify:track:${track.id}`],
         };
-        await axios.put(url, data);
+        const headers = {
+            Authorization: `Bearer ${this.token}`,
+        };
+
+        await axios.put(url, JSON.stringify(data), { headers }).catch(async (error) => {
+            // parse error data
+            const { status, data } = error.response;
+            console.log('[playTrack] Error:', status, data);
+        });
     }
 
     override async resumeTrack() {

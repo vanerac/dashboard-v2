@@ -51,6 +51,9 @@ export default class PlayerManager {
             if (!audioPlayer) {
                 throw new Error('Could not create audio player');
             }
+            audioPlayer.on('error', (err) => {
+                console.log('[playerManager] error', err);
+            });
             this.audioPlayers.push({ userId, provider, player: audioPlayer, isActive: false, serviceId: serviceId });
             return audioPlayer;
         } else {
