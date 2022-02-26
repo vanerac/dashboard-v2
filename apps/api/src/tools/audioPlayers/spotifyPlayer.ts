@@ -121,9 +121,9 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         });
         eventManager.on('ready', () => (this.state = 'ready'));
         eventManager.on('not_ready', () => (this.state = 'not_ready'));
-        eventManager.on('player_state_changed', (data: any) => {
-            console.log(data);
-        });
+        // eventManager.on('player_state_changed', (data: any) => {
+        //     console.log(data);
+        // });
         console.log('[elevateEvents] Done');
     }
 

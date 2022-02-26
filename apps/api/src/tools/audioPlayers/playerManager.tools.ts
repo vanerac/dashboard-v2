@@ -4,8 +4,10 @@ import { Response } from 'express';
 import { Providers, UUID } from '../types';
 import Pool from '../database.tools';
 import SpotifyAudioPlayer from './spotifyPlayer';
-import { AddressInfo, createServer, Server, Socket } from 'net';
+import { AddressInfo } from 'net';
 import { v4 as uuidv4 } from 'uuid';
+import { createWebSocketStream, WebSocketServer } from 'ws';
+import { Duplex, pipeline } from 'stream';
 
 export default class PlayerManager {
     /* Notes:
@@ -25,11 +27,11 @@ export default class PlayerManager {
     private devices: {
         deviceId: UUID;
         userId: UUID;
-        ref: Socket;
+        ref: Duplex;
         isActive: boolean;
     }[] = [];
     // private queue: Map<UUID, Track[]> = new Map();
-    private servers = new Map<UUID, { server: Server; port: number; url: string }>();
+    private servers = new Map<UUID, { server: WebSocketServer; port: number; url: string }>();
 
     constructor() {}
 
@@ -159,15 +161,10 @@ export default class PlayerManager {
         }
         await player.play(track);
         const stream = await player.getStream();
-        (async () => {
-            let data;
-            while ((data = stream.read())) {
-                device.ref.write(data);
-            }
-        })();
-        setTimeout(() => {
-            device.ref.end();
-        }, 10000);
+        pipeline(stream, device.ref, () => {
+            console.log('[playerManager] pipe closed, stopping player');
+            player.pause();
+        });
     }
 
     public async pause($userId: UUID) {
@@ -286,6 +283,17 @@ export default class PlayerManager {
         }
     }
 
+    private handleDevice(userId: UUID, stream: Duplex) {
+        const deviceId = uuidv4();
+        this.devices.push({
+            userId,
+            ref: stream,
+            deviceId: deviceId,
+            isActive: true,
+        });
+        console.log(`Device connected: ${deviceId}`);
+    }
+
     // Returns an url to let the player register a new device
     public async registerDevice(userId: UUID): Promise<string> {
         if (this.servers.has(userId)) {
@@ -293,29 +301,28 @@ export default class PlayerManager {
             if (server) return server?.url;
             throw new Error('Server not found');
         } else {
-            const server = createServer((connection) => {
-                console.log('New device registered for user', userId);
-                const deviceId = uuidv4();
-                this.devices.push({
-                    userId,
-                    ref: connection,
-                    deviceId: deviceId,
-                    isActive: true,
-                });
-                connection.once('close', () => {
-                    // Todo handle connection closing
-                    console.log('Device disconnected for user', userId);
-                    this.devices = this.devices.filter((device) => device.deviceId !== deviceId);
-                });
-            });
-            await new Promise<void>((resolve) => {
-                server.listen(0, resolve);
+            let wss;
+            await new Promise((resolve) => {
+                wss = new WebSocketServer({ port: 0 }, resolve as any);
             });
 
+            if (!wss) throw new Error('Server not found');
+            wss = wss as WebSocketServer;
+            console.log(wss.address());
+
+            wss.on('connection', (ws) => {
+                console.log(ws);
+                const duplex = createWebSocketStream(ws);
+                this.handleDevice(userId, duplex);
+            });
+
+            wss.on('error', (err) => {
+                console.log(err);
+            });
             const serverConfig = {
-                port: (server.address() as AddressInfo)?.port,
-                server,
-                url: `http://localhost:${(server.address() as AddressInfo)?.port}`,
+                port: (wss.address() as AddressInfo)?.port,
+                server: wss,
+                url: `ws://localhost:${(wss.address() as AddressInfo)?.port}`,
             };
 
             this.servers.set(userId, serverConfig);
