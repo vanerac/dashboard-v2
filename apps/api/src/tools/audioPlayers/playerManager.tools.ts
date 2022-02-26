@@ -271,15 +271,26 @@ export default class PlayerManager {
         return device ? { deviceId: device.deviceId, isActive: device.isActive } : null;
     }
 
-    public changeDevice(userId: UUID, deviceId: UUID) {
+    public async changeDevice(userId: UUID, deviceId: UUID) {
+        // if active player, redirect audio to new device
+        const index = this.audioPlayers.findIndex((player) => player.userId === userId && player.isActive);
         const device = this.devices.find((device) => device.userId === userId && device.deviceId === deviceId);
-        if (device) {
-            device.isActive = true;
-            this.devices.forEach((device) => {
-                if (device.userId === userId && device.deviceId !== deviceId) {
-                    device.isActive = false;
-                }
+        if (!device) {
+            throw new Error('Device not found');
+        }
+        if (index !== -1) {
+            const { player } = this.audioPlayers[index];
+            const stream = await player.getStream();
+            pipeline(stream, device.ref, () => {
+                console.log('[playerManager] pipe closed, stopping player');
+                player.pause();
             });
+
+            this.devices.forEach((device, index) => {
+                this.devices[index].isActive = device.deviceId === deviceId;
+            });
+
+            // emit global event
         }
     }
 
@@ -308,10 +319,8 @@ export default class PlayerManager {
 
             if (!wss) throw new Error('Server not found');
             wss = wss as WebSocketServer;
-            console.log(wss.address());
 
             wss.on('connection', (ws) => {
-                console.log(ws);
                 const duplex = createWebSocketStream(ws);
                 this.handleDevice(userId, duplex);
             });

@@ -152,7 +152,7 @@ export default class PlaybackController {
     public static async changeDevice(req: Request, res: Response) {
         const { user } = req.session;
         const { device } = req.body;
-        await playerManager.changeDevice(user?.id as string, device as UUID);
+        await playerManager.changeDevice(user?.id as string, device.id as UUID);
         return res.json({});
     }
 
