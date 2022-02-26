@@ -24,9 +24,13 @@ const Dasboard = () => {
 
     const [numberWidgets, setNumberWidgets] = useState([]);
 
+    // @ts-ignore
     const spotifyService = servicesList.find((service: { provider: string }) => service.provider === 'spotify');
+    // @ts-ignore
     const googleService = servicesList.find((service: { provider: string }) => service.provider === 'google');
+    // @ts-ignore
     const appleService = servicesList.find((service: { provider: string }) => service.provider === 'apple');
+    // @ts-ignore
     const lastFMService = servicesList.find((service: { provider: string }) => service.provider === 'lastFM');
 
     const addWidget = (widgetServicetype) => {
