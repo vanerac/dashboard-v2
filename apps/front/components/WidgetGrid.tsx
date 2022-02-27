@@ -10,16 +10,13 @@ import { getClient } from '../utils/ApiClient';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
-    console.log('printing at the begginiing => ', props.widgetsAdded);
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
-                // <div>
                 <div key={i}>
                     {l.widgetType} + {l.widgetService} + {l.widgetKey}
                     <CardTest deleteWidget={props.deleteWidget} widgetKey={l.widgetKey} />
                 </div>
-                // </div>
             );
         });
     };
@@ -46,12 +43,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
             props.widgetsAdded[index].height = item.h;
             props.widgetsAdded[index].width = item.w;
         });
-        // console.log('props.widgetsAdded => ', props.widgetsAdded);
-        // console.log('layout => ', layout);
-
-        // if (props.widgetsAdded.length === layout.length) {
         getClient().widget.updateBulk(props.widgetsAdded).then();
-        // }
     };
 
     return (

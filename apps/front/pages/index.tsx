@@ -31,10 +31,10 @@ const Dasboard = () => {
 
     const addWidget = (widgetServicetype: string) => {
         const [widgetService, typeService] = widgetServicetype.split(':');
+        console.log('You just created a ' + widgetService + ' - ' + typeService + ' widget !');
 
         const newWidget = {
             serviceId: undefined,
-            id: undefined,
             x: 0,
             y: 0,
             width: 2,
