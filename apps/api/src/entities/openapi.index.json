@@ -65,10 +65,10 @@
     "/widget/{widgetId}": {
       "$ref": "widget/widget.path.json#/getById"
     },
-    "/widget/{widgetId}/delete": {
+    "/widget/delete/{widgetId}": {
       "$ref": "widget/widget.path.json#/delete"
     },
-    "/widget/{widgetId}/update": {
+    "/widget/update/{widgetId}": {
       "$ref": "widget/widget.path.json#/update"
     },
     "/widget/create": {

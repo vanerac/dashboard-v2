@@ -1021,7 +1021,7 @@
         }
       }
     },
-    "/widget/{widgetId}/delete": {
+    "/widget/delete/{widgetId}": {
       "delete": {
         "tags": [
           "widget"
@@ -1086,7 +1086,7 @@
         }
       }
     },
-    "/widget/{widgetId}/update": {
+    "/widget/update/{widgetId}": {
       "put": {
         "tags": [
           "widget"

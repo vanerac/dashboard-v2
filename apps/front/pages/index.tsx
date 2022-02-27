@@ -17,11 +17,6 @@ export function getClient() {
 const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
 
-    // const test_data = [
-    // { x: 0, y: 0, w: 0, h: 0, serviceType: 'spotify', widgetType: 2 },
-    // { x: 0, y: 0, w: 7, h: 3, serviceType: 'google', widgetType: 3 },
-    // ];
-
     const [numberWidgets, setNumberWidgets] = useState([]);
 
     // @ts-ignore
@@ -33,7 +28,7 @@ const Dasboard = () => {
     // @ts-ignore
     const lastFMService = servicesList.find((service: { provider: string }) => service.provider === 'lastFM');
 
-    const addWidget = (widgetServicetype) => {
+    const addWidget = (widgetServicetype: string) => {
         console.log('add Widget');
         console.log('ici => ', spotifyService);
         console.log('ici => ', googleService);
@@ -83,12 +78,23 @@ const Dasboard = () => {
         });
     }, []);
 
+    const deleteWidget = (widgetKey: string) => {
+        console.log('widget deleted => ' + widgetKey);
+        setNumberWidgets(numberWidgets.filter((item) => item.id !== widgetKey));
+        // props.ok();
+        getClient()
+            .widget.deleteWidget(widgetKey)
+            .then((data) => {
+                console.log('response => ', data);
+            });
+    };
+
     return React.createElement(
         'div',
         null,
         <>
             <TopBar addWidget={addWidget} connectedServices={servicesList} />
-            <ShowcaseLayout widgetsAdded={numberWidgets} />
+            <ShowcaseLayout widgetsAdded={numberWidgets} deleteWidget={deleteWidget} />
         </>,
     );
 };

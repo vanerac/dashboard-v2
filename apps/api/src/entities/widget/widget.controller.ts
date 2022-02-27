@@ -60,30 +60,32 @@ export default class WidgetController {
     static async updateBulk(req: Request, res: Response, next: NextFunction) {
         // take x,height,y,width
         try {
-            const { widgets }: { widgets: Widget[] } = req.body;
+            const widgets = req.body;
+            console.log(req.body);
 
             // validate
-            try {
-                widgets.map((widget: Widget) => {
-                    Object.keys(widget).map((key) => {
-                        if (!['x', 'y', 'width', 'height'].includes(key))
-                            throw new Error(`Invalid property: ${key} in widget ${widget.id}`);
-                    });
-                });
-            } catch (e: any) {
-                return res.status(400).json({
-                    error: e.message,
-                });
-            }
+            // try {
+            //     widgets.map((widget: Widget) => {
+            //         Object.keys(widget).map((key) => {
+            //             if (!['x', 'y', 'width', 'height'].includes(key))
+            //                 throw new Error(`Invalid property: ${key} in widget ${widget.id}`);
+            //         });
+            //     });
+            // } catch (e: any) {
+            //     return res.status(400).json({
+            //         error: e.message,
+            //     });
+            // }
 
             const updateQuery = widgets.map((widget: Widget) => {
-                return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = ${widget.id}`;
+                return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = '${widget.id}' RETURNING *`; 
             });
 
-            const {
-                rows: [result],
-            } = await Pool.query(updateQuery.join(';'));
-            res.json(result);
+            // const {
+            //     rows: [result],
+            // } = 
+            await Pool.query(updateQuery.join(';'));
+            res.json();
         } catch (e) {
             next(e);
         }
@@ -120,15 +122,11 @@ export default class WidgetController {
         try {
             const { id } = req.params;
             const { user } = req.session;
-            const query = `DELETE FROM widgets WHERE id = ${id} AND userId = ${user?.id}`;
+            const query = `DELETE FROM widgets WHERE id = $1 AND userId = $2`;
             const {
                 rows: [widget],
-            } = await Pool.query(query);
-            if (!widget) {
-                return res.status(404).json({
-                    error: 'Widget not found',
-                });
-            }
+            } = await Pool.query(query, [id, user?.id]);
+            console.log("query => ", query, [id, user?.id]);
             res.json(widget);
         } catch (e) {
             next(e);

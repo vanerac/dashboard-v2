@@ -83,14 +83,20 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Button,
 } from "react-native";
 
-export const CardTest = () => {
+export const CardTest = ({ deleteWidget, widgetKey }) => {
+  const onClickDeleteWidget = () => {
+    deleteWidget(widgetKey);
+  };
+
   return (
     <>
       <SafeAreaView style={styles.middle}>
         <ScrollView>
-          <Text style={{color: 'white'}}>
+          <Button onPress={onClickDeleteWidget}>delete widget</Button>
+          <Text style={{ color: "white" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
