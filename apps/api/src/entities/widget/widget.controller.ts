@@ -65,27 +65,10 @@ export default class WidgetController {
             const widgets = req.body;
             console.log(req.body);
 
-            // validate
-            // try {
-            //     widgets.map((widget: Widget) => {
-            //         Object.keys(widget).map((key) => {
-            //             if (!['x', 'y', 'width', 'height'].includes(key))
-            //                 throw new Error(`Invalid property: ${key} in widget ${widget.id}`);
-            //         });
-            //     });
-            // } catch (e: any) {
-            //     return res.status(400).json({
-            //         error: e.message,
-            //     });
-            // }
-
             const updateQuery = widgets.map((widget: Widget) => {
-                return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = '${widget.id}' RETURNING *`; 
+                return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = '${widget.id}' RETURNING *`;
             });
 
-            // const {
-            //     rows: [result],
-            // } = 
             await Pool.query(updateQuery.join(';'));
             res.json();
         } catch (e) {
@@ -128,7 +111,7 @@ export default class WidgetController {
             const {
                 rows: [widget],
             } = await Pool.query(query, [id, user?.id]);
-            console.log("query => ", query, [id, user?.id]);
+            console.log('query => ', query, [id, user?.id]);
             res.json(widget);
         } catch (e) {
             next(e);

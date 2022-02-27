@@ -5,9 +5,7 @@ import { Key } from 'react';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import { CardTest } from '../../../packages/ui/CardTest';
-import { Widgets } from '@mui/icons-material';
 import { getClient } from '../utils/ApiClient';
-import { mdiConsoleLine } from '@mdi/js';
 
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 

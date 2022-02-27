@@ -443,7 +443,8 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             variant="h6"
                             component="h2"
                             style={{ marginBottom: '10%' }}>
-                            Choose a {selectedServiceWidget.charAt(0).toUpperCase() + selectedServiceWidget.slice(1)} Widget Type !
+                            Choose a {selectedServiceWidget.charAt(0).toUpperCase() + selectedServiceWidget.slice(1)}{' '}
+                            Widget Type !
                         </Typography>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>

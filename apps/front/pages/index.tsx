@@ -18,7 +18,6 @@ const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
 
     const [numberWidgets, setNumberWidgets] = useState([]);
-    const [widgetCount, setwidgetCount] = useState();
 
     // const spotifyService = servicesList.find((service: Service) => service.type === 'spotify');
     // @ts-ignore
@@ -31,11 +30,7 @@ const Dasboard = () => {
     const lastFMService = servicesList.find((service: { provider: string }) => service.provider === 'lastFM');
 
     const addWidget = (widgetServicetype: string) => {
-        // console.log('add Widget');
-        // console.log('ici => ', spotifyService);
-        // console.log('ici => ', googleService);
-        const widgetService = widgetServicetype.split(':')[0];
-        const typeService = widgetServicetype.split(':')[1];
+        const [widgetService, typeService] = widgetServicetype.split(':');
 
         const newWidget = {
             serviceId: undefined,
@@ -82,11 +77,7 @@ const Dasboard = () => {
     const deleteWidget = (widgetKey: string) => {
         console.log('widget deleted => ' + widgetKey);
         setNumberWidgets(numberWidgets.filter((item) => item.id !== widgetKey));
-        getClient()
-            .widget.deleteWidget(widgetKey)
-            .then((data) => {
-                // console.log('response => ', data);
-            });
+        getClient().widget.deleteWidget(widgetKey);
     };
 
     return React.createElement(
