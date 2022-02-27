@@ -6,7 +6,7 @@ export default class WidgetController {
     static async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const { user } = req.session;
-            const query = `SELECT * FROM widgets WHERE userId = $1`;
+            const query = `SELECT serviceid as "serviceId", * FROM widgets WHERE userId = $1`;
             const { rows: widgets } = await Pool.query(query, [user?.id]);
             res.json(widgets);
         } catch (e) {
@@ -46,7 +46,9 @@ export default class WidgetController {
             }
             const query = `INSERT INTO widgets(${Object.keys(req.body).join(',')}, userId) VALUES(${Object.values(
                 req.body,
-            ).map(($value, index) => `$${index + 1}`)}, $${Object.values(req.body).length + 1})`;
+            ).map(($value, index) => `$${index + 1}`)}, $${
+                Object.values(req.body).length + 1
+            }) RETURNING serviceid as "serviceId", *`;
             console.log(query, [...Object.values(req.body), user?.id]);
             const {
                 rows: [widget],

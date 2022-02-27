@@ -18,7 +18,9 @@ const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
 
     const [numberWidgets, setNumberWidgets] = useState([]);
+    const [widgetCount, setwidgetCount] = useState();
 
+    // const spotifyService = servicesList.find((service: Service) => service.type === 'spotify');
     // @ts-ignore
     const spotifyService = servicesList.find((service: { provider: string }) => service.provider === 'spotify');
     // @ts-ignore
@@ -29,14 +31,15 @@ const Dasboard = () => {
     const lastFMService = servicesList.find((service: { provider: string }) => service.provider === 'lastFM');
 
     const addWidget = (widgetServicetype: string) => {
-        console.log('add Widget');
-        console.log('ici => ', spotifyService);
-        console.log('ici => ', googleService);
+        // console.log('add Widget');
+        // console.log('ici => ', spotifyService);
+        // console.log('ici => ', googleService);
         const widgetService = widgetServicetype.split(':')[0];
         const typeService = widgetServicetype.split(':')[1];
 
         const newWidget = {
             serviceId: undefined,
+            id: undefined,
             x: 0,
             y: 0,
             width: 2,
@@ -59,16 +62,14 @@ const Dasboard = () => {
                 newWidget.serviceId = googleService.id;
                 break;
             default:
-                console.log('ERROR CRETING NEW WIDGET');
+                console.log('ERROR CREATING NEW WIDGET');
         }
 
-        setNumberWidgets((numberWidgets) => [...numberWidgets, newWidget]);
         getClient()
             // @ts-ignore
             .widget.createWidget(newWidget)
-            .then((data) => {
-                console.log('ici => ', data);
-            });
+            .then(() => getClient().widget.getAllWidgets())
+            .then((data) => setNumberWidgets(data));
     };
 
     useEffect(() => {
@@ -81,11 +82,10 @@ const Dasboard = () => {
     const deleteWidget = (widgetKey: string) => {
         console.log('widget deleted => ' + widgetKey);
         setNumberWidgets(numberWidgets.filter((item) => item.id !== widgetKey));
-        // props.ok();
         getClient()
             .widget.deleteWidget(widgetKey)
             .then((data) => {
-                console.log('response => ', data);
+                // console.log('response => ', data);
             });
     };
 

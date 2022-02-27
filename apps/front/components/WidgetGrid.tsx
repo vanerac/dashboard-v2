@@ -12,6 +12,7 @@ import { mdiConsoleLine } from '@mdi/js';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
+    console.log('printing at the begginiing => ', props.widgetsAdded);
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
@@ -33,7 +34,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                 w: props.widgetsAdded[i].width,
                 h: props.widgetsAdded[i].height,
                 widgetType: props.widgetsAdded[i].type,
-                widgetService: props.widgetsAdded[i].serviceid,
+                widgetService: props.widgetsAdded[i].serviceId,
                 widgetKey: props.widgetsAdded[i].id,
                 i: i.toString(),
             };
@@ -47,10 +48,12 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
             props.widgetsAdded[index].height = item.h;
             props.widgetsAdded[index].width = item.w;
         });
-        console.log(props.widgetsAdded);
-        getClient()
-            .widget.updateBulk(props.widgetsAdded)
-            .then((data) => console.log(data));
+        // console.log('props.widgetsAdded => ', props.widgetsAdded);
+        // console.log('layout => ', layout);
+
+        // if (props.widgetsAdded.length === layout.length) {
+        getClient().widget.updateBulk(props.widgetsAdded).then();
+        // }
     };
 
     return (
