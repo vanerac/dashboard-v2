@@ -159,7 +159,7 @@ export default class PlaybackController {
     public static async registerDevice(req: Request, res: Response) {
         // Todo: see if there isnt a better way of doing this
         const { user } = req.session;
-        const url = await playerManager.registerDevice(user?.id as string);
-        return res.json({ url });
+        const { data_url, state_url } = await playerManager.registerDevice(user?.id as string);
+        return res.json({ data_url, state_url });
     }
 }

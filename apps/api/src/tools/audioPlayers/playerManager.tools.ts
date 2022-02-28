@@ -8,6 +8,7 @@ import { AddressInfo } from 'net';
 import { v4 as uuidv4 } from 'uuid';
 import { createWebSocketStream, WebSocketServer } from 'ws';
 import { Duplex, pipeline } from 'stream';
+import { EventEmitter } from 'events';
 
 export default class PlayerManager {
     /* Notes:
@@ -24,21 +25,34 @@ export default class PlayerManager {
     }[] = [];
     // Device becomes ws
     // private devices: Map<UUID, { deviceId: UUID; ref: Socket; isActive: boolean }[]> = new Map();
-    private devices: {
+    private playbackDevices: {
         deviceId: UUID;
         userId: UUID;
         ref: Duplex;
         isActive: boolean;
     }[] = [];
     // private queue: Map<UUID, Track[]> = new Map();
-    private servers = new Map<UUID, { server: WebSocketServer; port: number; url: string }>();
+    private playbackServer = new Map<UUID, { server: WebSocketServer; port: number; url: string }>();
+    private stateServer = new Map<UUID, { server: WebSocketServer; port: number; url: string }>();
 
-    constructor() {}
+    private stateDevices: {
+        deviceId: UUID;
+        userId: UUID;
+        ref: Duplex;
+        isActive: boolean;
+    }[] = [];
+
+    private stateListener: EventEmitter;
+
+    constructor() {
+        this.stateListener = new EventEmitter();
+    }
 
     private async getPlayer(userId: UUID, provider: string, serviceId: UUID): Promise<AudioPlayer> {
         const player = this.audioPlayers.find(
             (player) => player.userId === userId && player.provider === provider && player.serviceId === serviceId,
         );
+        let musicPlayer: AudioPlayer;
         if (!player) {
             // Todo replace this by wrapper function that refreshes token
             const query = `SELECT accessToken FROM services WHERE id = $1`;
@@ -66,10 +80,17 @@ export default class PlayerManager {
                 console.log('[playerManager] error', err);
             });
             this.audioPlayers.push({ userId, provider, player: audioPlayer, isActive: false, serviceId: serviceId });
-            return audioPlayer;
+            musicPlayer = audioPlayer;
         } else {
-            return player.player;
+            musicPlayer = player.player;
         }
+
+        // evelate events
+        musicPlayer.on('update', (data) => {
+            console.log('[playerManager] update', data);
+            this.stateListener.emit('update', data);
+        });
+        return musicPlayer;
     }
 
     // Queue control
@@ -136,7 +157,7 @@ export default class PlayerManager {
         // Todo Play track
         // get player linked tu user and from track provider
         // play track
-        const device = this.devices.find((device) => device.userId === userId && device.isActive);
+        const device = this.playbackDevices.find((device) => device.userId === userId && device.isActive);
         if (!device) {
             throw new Error('No active device');
         }
@@ -261,20 +282,20 @@ export default class PlayerManager {
     // Device control
 
     public getAvailableDevices(userId: UUID) {
-        return this.devices
+        return this.playbackDevices
             .filter((device) => device.userId === userId)
             .map((device) => ({ deviceId: device.deviceId, isActive: device.isActive }));
     }
 
     public getCurrentDevice(userId: UUID) {
-        const device = this.devices.find((device) => device.userId === userId && device.isActive);
+        const device = this.playbackDevices.find((device) => device.userId === userId && device.isActive);
         return device ? { deviceId: device.deviceId, isActive: device.isActive } : null;
     }
 
     public async changeDevice(userId: UUID, deviceId: UUID) {
         // if active player, redirect audio to new device
         const index = this.audioPlayers.findIndex((player) => player.userId === userId && player.isActive);
-        const device = this.devices.find((device) => device.userId === userId && device.deviceId === deviceId);
+        const device = this.playbackDevices.find((device) => device.userId === userId && device.deviceId === deviceId);
         if (!device) {
             throw new Error('Device not found');
         }
@@ -286,29 +307,90 @@ export default class PlayerManager {
                 player.pause();
             });
 
-            this.devices.forEach((device, index) => {
-                this.devices[index].isActive = device.deviceId === deviceId;
+            this.playbackDevices.forEach((device, index) => {
+                this.playbackDevices[index].isActive = device.deviceId === deviceId;
             });
 
-            // emit global event
+            // TODO emit global event
         }
     }
 
-    private handleDevice(userId: UUID, stream: Duplex) {
+    private handlePlaybackDevice(userId: UUID, stream: Duplex) {
         const deviceId = uuidv4();
-        this.devices.push({
+        this.playbackDevices.push({
             userId,
             ref: stream,
             deviceId: deviceId,
             isActive: true,
         });
+        // listen to all events linked to
         console.log(`Device connected: ${deviceId}`);
     }
 
+    private handleStateDevice(userId: UUID, stream: Duplex) {
+        const deviceId = uuidv4();
+        this.stateDevices.push({
+            userId,
+            ref: stream,
+            deviceId: deviceId,
+            isActive: true,
+        });
+
+        this.stateListener.on('update', (state) => {
+            console.log('[state] update state hook', state);
+            stream.write(JSON.stringify(state)); // fails silently
+        });
+    }
+
     // Returns an url to let the player register a new device
-    public async registerDevice(userId: UUID): Promise<string> {
-        if (this.servers.has(userId)) {
-            const server = this.servers.get(userId);
+    public async registerDevice(userId: UUID): Promise<{ data_url: string; state_url: string }> {
+        if (this.playbackServer.has(userId)) {
+            const server = this.playbackServer.get(userId);
+            if (server)
+                return {
+                    data_url: server?.url,
+                    state_url: await this.listenStateUpdate(userId),
+                };
+            throw new Error('Server not found');
+        } else {
+            let wss;
+            await new Promise((resolve) => {
+                wss = new WebSocketServer({ port: 0 }, resolve as any);
+            });
+
+            if (!wss) throw new Error('Server not found');
+            wss = wss as WebSocketServer;
+
+            wss.on('connection', (ws) => {
+                const duplex = createWebSocketStream(ws);
+                this.handlePlaybackDevice(userId, duplex);
+            });
+
+            wss.on('error', (err) => {
+                console.log(err);
+            });
+            const serverConfig = {
+                port: (wss.address() as AddressInfo)?.port,
+                server: wss,
+                url: `ws://localhost:${(wss.address() as AddressInfo)?.port}`,
+            };
+
+            this.playbackServer.set(userId, serverConfig);
+            this.playbackServer.get(userId)?.server.on('close', () => {
+                this.playbackServer.delete(userId);
+                this.playbackDevices = this.playbackDevices.filter((device) => device.userId !== userId);
+            });
+
+            return {
+                data_url: serverConfig.url,
+                state_url: serverConfig.url,
+            };
+        }
+    }
+
+    public async listenStateUpdate(userId: UUID): Promise<string> {
+        if (this.stateServer.has(userId)) {
+            const server = this.stateServer.get(userId);
             if (server) return server?.url;
             throw new Error('Server not found');
         } else {
@@ -322,7 +404,7 @@ export default class PlayerManager {
 
             wss.on('connection', (ws) => {
                 const duplex = createWebSocketStream(ws);
-                this.handleDevice(userId, duplex);
+                this.handleStateDevice(userId, duplex);
             });
 
             wss.on('error', (err) => {
@@ -334,10 +416,10 @@ export default class PlayerManager {
                 url: `ws://localhost:${(wss.address() as AddressInfo)?.port}`,
             };
 
-            this.servers.set(userId, serverConfig);
-            this.servers.get(userId)?.server.on('close', () => {
-                this.servers.delete(userId);
-                this.devices = this.devices.filter((device) => device.userId !== userId);
+            this.stateServer.set(userId, serverConfig);
+            this.stateServer.get(userId)?.server.on('close', () => {
+                this.playbackServer.delete(userId);
+                this.playbackDevices = this.playbackDevices.filter((device) => device.userId !== userId);
             });
             return serverConfig.url;
         }

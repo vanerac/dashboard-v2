@@ -29,10 +29,10 @@ const PlayerComponent = ({device}: {device: any}) => {
         }).then(({data_url, state_url}) => {
 
 
-            new WebSocket(data_url).onmessage = (message: any) => {
-                device.send(message);
+            new WebSocket(data_url).onmessage = (message) => {
+                device.send(message.data);
             };
-            new WebSocket(state_url).onmessage = (event) => {
+            new WebSocket(state_url).onmessage = (event ) => {
                 setPlaybackState(JSON.parse(event.data));
             };
         })
