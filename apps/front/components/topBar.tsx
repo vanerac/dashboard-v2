@@ -24,6 +24,8 @@ import Backdrop from '@mui/material/Backdrop';
 import { Button, Grid, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SvgIcon from '@mui/material/SvgIcon';
 import { mdiRadioFm, mdiSpotify } from '@mdi/js';
 import { getClient } from '../utils/ApiClient';
@@ -84,6 +86,13 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
     const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+    let userName = undefined;
+
+    if (typeof connectedServices !== 'undefined' && connectedServices.length > 0) {
+        userName = connectedServices[0].accountname;
+    }
+
+    console.log('connectedServices => ', connectedServices);
 
     const [openServiceModal, setOpenServiceModal] = React.useState(false);
     const handleOpenServiceModal = () => {
@@ -121,6 +130,12 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+    };
+
+    const goBackToSelection = () => {
+        console.log('closing modal widget type');
+        handleCloseWidgetTypeModal();
+        handleOpenWidgetModal();
     };
 
     const svgSpotify = (
@@ -203,10 +218,12 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}>
-            <ListItem onClick={handleOpenServiceModal} button key={'Profile'}>
-                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Profile'} />
+            <ListItem>
+                {/* <ListItemIcon>{<InboxIcon />}</ListItemIcon> */}
+                {/* <ListItemText primary={'Hi ' + userName + ' !'} /> */}
+                <Typography style={{ fontWeight: 600 }}>{'Hi ' + userName + ' !'}</Typography>
             </ListItem>
+            <Divider />
             <ListItem onClick={handleOpenServiceModal} button key={'Settings'}>
                 <ListItemIcon>{<InboxIcon />}</ListItemIcon>
                 <ListItemText primary={'Settings'} />
@@ -272,13 +289,11 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                     </Toolbar>
                 </AppBar>
             </Box>
-            {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
             <React.Fragment>
                 <Drawer anchor="left" open={state['left']} onClose={toggleDrawer('left', false)}>
                     {list('left')}
                 </Drawer>
             </React.Fragment>
-            {/* ))} */}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -298,9 +313,6 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             style={{ marginBottom: '10%' }}>
                             Choose a service to connect :
                         </Typography>
-                        {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            ca arraive mon reuf
-                        </Typography> */}
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
                                 <Button
@@ -446,56 +458,67 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             Choose a {selectedServiceWidget.charAt(0).toUpperCase() + selectedServiceWidget.slice(1)}{' '}
                             Widget Type !
                         </Typography>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
+                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            <Grid item xs={6}>
                                 <Button
                                     color="info"
                                     fullWidth
-                                    // startIcon={svgLastFM}
+                                    startIcon={<WidgetsIcon />}
                                     onClick={() => addWidget(selectedServiceWidget.concat(':', 'search'))}
                                     size="large"
                                     variant="contained">
                                     Search Widget
                                 </Button>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={6}>
                                 <Button
                                     fullWidth
                                     color="error"
-                                    // startIcon={<GoogleIcon />}
+                                    startIcon={<WidgetsIcon />}
                                     onClick={() => addWidget(selectedServiceWidget.concat(':', 'stat'))}
                                     size="large"
                                     variant="contained">
                                     Statistics Widget
                                 </Button>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={6}>
                                 <Button
                                     fullWidth
                                     color="secondary"
-                                    // startIcon={svgSpotify}
+                                    startIcon={<WidgetsIcon />}
                                     onClick={() => addWidget(selectedServiceWidget.concat(':', 'album'))}
                                     size="large"
                                     variant="contained">
-                                    Albums Widget
+                                    Album Widget
                                 </Button>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={6}>
                                 <Button
                                     fullWidth
                                     color="primary"
-                                    // startIcon={<AppleIcon />}
+                                    startIcon={<WidgetsIcon />}
                                     onClick={() => addWidget(selectedServiceWidget.concat(':', 'playlist'))}
                                     size="large"
                                     variant="contained">
                                     Playlist Widget
                                 </Button>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={6}>
+                                <Button
+                                    fullWidth
+                                    color="text"
+                                    startIcon={<ArrowBackIosNewIcon />}
+                                    onClick={goBackToSelection}
+                                    size="large"
+                                    variant="contained">
+                                    Go back to selection
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
                                 <Button
                                     fullWidth
                                     color="warning"
-                                    // startIcon={<AppleIcon />}
+                                    startIcon={<WidgetsIcon />}
                                     onClick={() => addWidget(selectedServiceWidget.concat(':', 'artist'))}
                                     size="large"
                                     variant="contained">
