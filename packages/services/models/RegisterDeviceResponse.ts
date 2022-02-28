@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Device } from './Device';
-
 export type RegisterDeviceResponse = {
-    device?: Device;
+    data_url: string;
+    state_url: string;
 };

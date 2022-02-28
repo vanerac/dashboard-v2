@@ -147,10 +147,19 @@
     "RegisterDeviceResponse": {
       "type": "object",
       "properties": {
-        "device": {
-          "$ref": "../openapi.index.json#/components/schemas/Device"
+        "data_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "state_url": {
+          "type": "string",
+          "format": "uri"
         }
-      }
+      },
+      "required": [
+        "data_url",
+        "state_url"
+      ]
     },
     "PlayTrackRequest": {
       "type": "object",

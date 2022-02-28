@@ -5655,10 +5655,19 @@
       "RegisterDeviceResponse": {
         "type": "object",
         "properties": {
-          "device": {
-            "$ref": "#/components/schemas/Device"
+          "data_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "state_url": {
+            "type": "string",
+            "format": "uri"
           }
-        }
+        },
+        "required": [
+          "data_url",
+          "state_url"
+        ]
       },
       "loginRequest": {
         "type": "object",

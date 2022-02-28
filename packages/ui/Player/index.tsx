@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {getClient} from "@area/front/pages";
+import {View} from 'react-native';
 
 const deviceList = () => {
     const [devices, setDevices] = useState<any>([]);
@@ -16,33 +17,48 @@ const deviceList = () => {
   );
 };
 
-const playerState = () => {
-    const [playbackState, setPlaybackState] = useState<any>([]);
-    useEffect(() => {
-    getClient().player.listenState().then(({url}: {url: string}) => {
-        setPlaybackState(url); // TODO fix type
-        Websocket(url).on('message', (message: any) => {
-            setPlaybackState(message); // TODO fix type
-        });
-    });
-    }, []);
-
-  return (
-    <div>
-      <h1>playerState</h1>
-    </div>
-  );
-};
-
-
 const PlayerComponent = ({device}: {device: any}) => {
+
+    const [playbackState, setPlaybackState] = useState<any>({});
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
     useEffect(() => {
         // register component
         getClient().devices.registerDevice({
             name: 'AREA Player',
-        }).then(({url}: {url: string}) => {
-            const socket = Websocket(url);
-            socket.pipe(device)
+        }).then(({data_url, state_url}) => {
+
+
+            new WebSocket(data_url).onmessage = (message: any) => {
+                device.send(message);
+            };
+            new WebSocket(state_url).onmessage = (event) => {
+                setPlaybackState(JSON.parse(event.data));
+            };
         })
     }, []);
+
+
+    const togglePlayback = async () => {
+        if (isPlaying) {
+            getClient().playback.pause()
+            setIsPlaying(false);
+        } else {
+            getClient().playback.resume()
+            setIsPlaying(true);
+        }
+    }
+
+
+    return (
+        <View>
+            <h1>Player</h1>
+            <button onClick={togglePlayback}>{isPlaying ? 'Pause' : 'Play'}</button>
+            <div>
+                <h2>Playback State</h2>
+                <pre>{JSON.stringify(playbackState, null, 2)}</pre>
+            </div>
+        </View>
+    );
+
 }
