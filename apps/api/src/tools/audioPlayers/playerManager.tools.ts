@@ -1,6 +1,5 @@
 import { Track } from '../../../../../packages/services';
 import { AudioPlayer } from './AudioPlayer';
-import { Response } from 'express';
 import { Providers, UUID } from '../types';
 import Pool from '../database.tools';
 import SpotifyAudioPlayer from './spotifyPlayer';
@@ -9,6 +8,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { createWebSocketStream, WebSocketServer } from 'ws';
 import { Duplex, pipeline } from 'stream';
 import { EventEmitter } from 'events';
+
+export interface PlaybackState {
+    track: Track;
+    position: number;
+    duration: number;
+    paused: boolean;
+    volume: number;
+    reason: string;
+}
 
 export default class PlayerManager {
     /* Notes:
@@ -43,6 +51,7 @@ export default class PlayerManager {
     }[] = [];
 
     private stateListener: EventEmitter;
+    private playbackState: Map<UUID, PlaybackState> = new Map();
 
     constructor() {
         this.stateListener = new EventEmitter();
@@ -140,15 +149,6 @@ export default class PlayerManager {
         //     const tracks = this.queue.get(userId);
         //     tracks?.splice(index, 0, track);
         // }
-    }
-
-    // Update Controls
-
-    public listenForUpdates($userId: UUID, $res: Response) {
-        // Stream updates data from users player manager
-        // Includes:
-        // - Playback status
-        // - device updates (change isActive)
     }
 
     // Playback control
@@ -299,6 +299,27 @@ export default class PlayerManager {
         if (!device) {
             throw new Error('Device not found');
         }
+        const currentState = this.playbackState.get(userId);
+        const playbackState: PlaybackState = {
+            duration: currentState?.duration || 0,
+            paused: currentState?.paused || false,
+            position: currentState?.position || 0,
+            reason: 'device_changed',
+            track: currentState?.track || {
+                type: currentState?.track?.type || 'track',
+                id: currentState?.track?.id || '',
+                name: currentState?.track?.name || '',
+                artist: currentState?.track?.artist || '',
+                album: currentState?.track?.album || '',
+                duration: currentState?.track?.duration || 0,
+                image: currentState?.track?.image || '',
+                provider: currentState?.track?.provider || '',
+                playable: currentState?.track?.playable || false,
+                uri: currentState?.track?.uri || '',
+            },
+            volume: 0,
+        };
+        this.playbackState.set(userId, playbackState);
         if (index !== -1) {
             const { player } = this.audioPlayers[index];
             const stream = await player.getStream();
@@ -309,6 +330,10 @@ export default class PlayerManager {
 
             this.playbackDevices.forEach((device, index) => {
                 this.playbackDevices[index].isActive = device.deviceId === deviceId;
+            });
+            this.stateDevices.forEach((device) => {
+                // write playback update to state
+                device.ref.write(JSON.stringify(playbackState));
             });
 
             // TODO emit global event
@@ -383,13 +408,14 @@ export default class PlayerManager {
 
             return {
                 data_url: serverConfig.url,
-                state_url: serverConfig.url,
+                state_url: await this.listenStateUpdate(userId),
             };
         }
     }
 
     public async listenStateUpdate(userId: UUID): Promise<string> {
         if (this.stateServer.has(userId)) {
+            console.log('got state server');
             const server = this.stateServer.get(userId);
             if (server) return server?.url;
             throw new Error('Server not found');
@@ -418,8 +444,8 @@ export default class PlayerManager {
 
             this.stateServer.set(userId, serverConfig);
             this.stateServer.get(userId)?.server.on('close', () => {
-                this.playbackServer.delete(userId);
-                this.playbackDevices = this.playbackDevices.filter((device) => device.userId !== userId);
+                this.stateServer.delete(userId);
+                this.stateDevices = this.stateDevices.filter((device) => device.userId !== userId);
             });
             return serverConfig.url;
         }

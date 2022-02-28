@@ -7,6 +7,7 @@ import { getStream, launch, Stream } from 'puppeteer-stream';
 import axios from 'axios';
 import { AudioPlayer } from './AudioPlayer';
 import { Browser, Page } from 'puppeteer';
+import { PlaybackState } from './playerManager.tools';
 
 const domFile = `file://${path.join(__dirname, 'playerDOM', 'spotify.html')}`;
 
@@ -123,7 +124,26 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         eventManager.on('not_ready', () => (this.state = 'not_ready'));
         eventManager.on('player_state_changed', (data: any) => {
             console.log('[elevateEvents] player_state_changed', data);
-            this.emit('update', data);
+            //
+            const state: PlaybackState = {
+                track: {
+                    name: data.track_window.current_track.name,
+                    artist: data.track_window.current_track.artists[0].name,
+                    album: data.track_window.current_track.album.name,
+                    albumArt: data.track_window.current_track.album.images[0].url,
+                    duration: data.track_window.current_track.duration_ms,
+                    position: data.position,
+                    uri: data.track_window.current_track.uri,
+                },
+                paused: data.paused,
+                position: data.position,
+                duration: data.duration,
+                shuffle: data.shuffle_state,
+                repeat: data.repeat_state,
+                volume: data.volume_percent,
+                reason: 'refresh',
+            };
+            this.emit('update', state);
         });
         console.log('[elevateEvents] Done');
     }
