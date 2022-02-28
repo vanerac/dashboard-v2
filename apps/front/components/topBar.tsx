@@ -12,8 +12,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import PersonIcon from '@mui/icons-material/Person';
 import Cookies from 'universal-cookie';
 import Router from 'next/router';
 import { useDarkMode } from 'next-dark-mode';
@@ -87,12 +87,17 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
     const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
     let userName = undefined;
+    let $val = undefined;
+    let isAnyServicesConnected = undefined;
 
     if (typeof connectedServices !== 'undefined' && connectedServices.length > 0) {
         userName = connectedServices[0].accountname;
+        [userName, $val] = userName.split(' ');
+        isAnyServicesConnected = 'Choose a Service type :';
+    } else {
+        userName = 'there';
+        isAnyServicesConnected = 'You must connect a service first !';
     }
-
-    console.log('connectedServices => ', connectedServices);
 
     const [openServiceModal, setOpenServiceModal] = React.useState(false);
     const handleOpenServiceModal = () => {
@@ -112,9 +117,8 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const handleCloseWidgetModal = () => setOpenWidgetModal(false);
 
     const [openWidgetTypeModal, setOpenWidgetTypeModal] = React.useState(false);
-    const handleOpenWidgetTypeModal = (serviceSelected) => {
+    const handleOpenWidgetTypeModal = (serviceSelected: React.SetStateAction<string>) => {
         setSelectedServiceWidget(serviceSelected);
-        console.log('serviceSelected => ', serviceSelected);
         handleCloseWidgetModal();
         setOpenWidgetTypeModal(true);
     };
@@ -219,39 +223,26 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}>
             <ListItem>
-                {/* <ListItemIcon>{<InboxIcon />}</ListItemIcon> */}
-                {/* <ListItemText primary={'Hi ' + userName + ' !'} /> */}
+                <ListItemIcon>{<PersonIcon />}</ListItemIcon>
                 <Typography style={{ fontWeight: 600 }}>{'Hi ' + userName + ' !'}</Typography>
             </ListItem>
             <Divider />
-            <ListItem onClick={handleOpenServiceModal} button key={'Settings'}>
-                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Settings'} />
-            </ListItem>
             <ListItem onClick={handleOpenServiceModal} button key={'Services'}>
                 <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Services'} />
+                <ListItemText primary={'Add Services'} />
             </ListItem>
-            <ListItem onClick={handleOpenServiceModal} button key={'Widgets'}>
+            <ListItem onClick={handleOpenWidgetModal} button key={'add_widget'}>
                 <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Widgets'} />
+                <ListItemText primary={'Add Widgets'} />
             </ListItem>
-            <Divider />
-            <List>
-                <ListItem onClick={logout} button key={'logout'}>
-                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                    <ListItemText primary={'Logout'} />
-                </ListItem>
-                <ListItem onClick={handleOpenWidgetModal} button key={'add_widget'}>
-                    {/* <ListItem onClick={addWidget} button key={'add_widget'}> */}
-                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                    <ListItemText primary={'Add Widget'} />
-                </ListItem>
-                <ListItem onClick={handleChangeMode} button key={'darkode'}>
-                    <ListItemIcon>{<Icon />}</ListItemIcon>
-                    <ListItemText primary={'Use ' + nextMode + 'Mode'} />
-                </ListItem>
-            </List>
+            <ListItem onClick={handleChangeMode} button key={'darkode'}>
+                <ListItemIcon>{<Icon />}</ListItemIcon>
+                <ListItemText primary={'Use ' + nextMode + 'Mode'} />
+            </ListItem>
+            <ListItem onClick={logout} button key={'logout'}>
+                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                <ListItemText primary={'Logout'} />
+            </ListItem>
         </Box>
     );
 
@@ -383,7 +374,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             variant="h6"
                             component="h2"
                             style={{ marginBottom: '10%' }}>
-                            Choose a new Widget !
+                            {isAnyServicesConnected}
                         </Typography>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
@@ -506,6 +497,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             <Grid item xs={6}>
                                 <Button
                                     fullWidth
+                                    // @ts-ignore
                                     color="text"
                                     startIcon={<ArrowBackIosNewIcon />}
                                     onClick={goBackToSelection}

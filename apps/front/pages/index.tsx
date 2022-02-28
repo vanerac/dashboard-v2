@@ -19,19 +19,18 @@ const Dasboard = () => {
 
     const [numberWidgets, setNumberWidgets] = useState([]);
 
-    // const spotifyService = servicesList.find((service: Service) => service.type === 'spotify');
-    // @ts-ignore
-    const spotifyService = servicesList.find((service: { provider: string }) => service.provider === 'spotify');
-    // @ts-ignore
-    const googleService = servicesList.find((service: { provider: string }) => service.provider === 'google');
-    // @ts-ignore
-    const appleService = servicesList.find((service: { provider: string }) => service.provider === 'apple');
-    // @ts-ignore
-    const lastFMService = servicesList.find((service: { provider: string }) => service.provider === 'lastFM');
+    const spotifyService = servicesList.find((service: Service) => service.provider === 'spotify');
+    const googleService = servicesList.find((service: Service) => service.provider === 'google');
+    const appleService = servicesList.find((service: Service) => service.provider === 'apple');
+    const lastFMService = servicesList.find((service: Service) => service.provider === 'lastFM');
 
     const addWidget = (widgetServicetype: string) => {
         const [widgetService, typeService] = widgetServicetype.split(':');
         console.log('You just created a ' + widgetService + ' - ' + typeService + ' widget !');
+
+        console.log('la spotidy => ', spotifyService);
+        console.log(servicesList);
+        console.log('la youtube => ', googleService);
 
         const newWidget = {
             serviceId: undefined,
