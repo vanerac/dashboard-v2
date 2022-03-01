@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react';
 import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
-import { Client } from '../../../../packages/global';
+// import { Client } from '../../../../packages/global';
+import { getClient } from '../../utils/ApiClient';
 import { RootStackParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ssoUrl } from '@area/services';
+import { ssoUrl } from '../../../../packages/services';
 import Icon from 'react-native-vector-icons/Entypo';
 import Constants from 'expo-constants';
+import localStorage from 'react-native-sync-localstorage';
 
 const SCHEME = Constants.manifest?.scheme;
 const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
@@ -24,10 +26,11 @@ function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props)
         }).then(({ type, params }: any) => {
             if (type === 'success') {
                 const { code } = params;
-                Client.sso
-                    .spotifyAuthCodeSso(code, redirect_uri)
+                getClient()
+                    .sso.spotifyAuthCodeSso(code, redirect_uri)
                     .then((data) => {
                         console.log(data);
+                        localStorage.setItem('API_TOKEN', data.token);
                         Alert.alert('Success', 'You are now logged in!');
                         navigation.navigate('HomePage');
                     })
@@ -58,7 +61,7 @@ export default function LoginScreen({ navigation, route }: Props) {
 
     async function makeRequest() {
         try {
-            const res = await Client.authentication.login({ email: email, password: password });
+            const res = await getClient().authentication.login({ email: email, password: password });
             console.log(res);
             navigation.navigate('HomePage');
         } catch (e) {
@@ -82,9 +85,11 @@ export default function LoginScreen({ navigation, route }: Props) {
         useProxy,
     });
 
-    Client.sso.spotifyConsentSso(redirectURI).then((data: ssoUrl) => {
-        setSSOData(data);
-    });
+    getClient()
+        .sso.spotifyConsentSso(redirectURI)
+        .then((data: ssoUrl) => {
+            setSSOData(data);
+        });
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
