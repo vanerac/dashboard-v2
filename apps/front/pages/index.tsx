@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
 import { Service } from '../../../packages/services/models/Service';
+
 const cookies = new Cookies();
 
 export function getClient() {
@@ -17,42 +18,74 @@ export function getClient() {
 const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
 
-    const test_data = [
-        { x: 0, y: 0, w: 2, h: 2, serviceType: 'spotify', widgetType: 2 },
-        { x: 0, y: 0, w: 7, h: 3, serviceType: 'google', widgetType: 3 },
-    ];
+    const [numberWidgets, setNumberWidgets] = useState([]);
 
-    const [numberWidgets, setNumberWidgets] = useState(test_data);
+    const spotifyService = servicesList.find((service: Service) => service.provider === 'spotify');
+    const googleService = servicesList.find((service: Service) => service.provider === 'google');
+    const appleService = servicesList.find((service: Service) => service.provider === 'apple');
+    const lastFMService = servicesList.find((service: Service) => service.provider === 'lastfm');
 
-    const addWidget = () => {
-        // TODO : api call => balancer un widget en db
-        console.log('add Widget');
-        setNumberWidgets((numberWidgets) => [
-            ...numberWidgets,
-            { x: 0, y: 0, w: 1, h: 1, serviceType: 'spotify', widgetType: 2 },
-        ]);
-        console.log(numberWidgets);
+    const addWidget = (widgetServicetype: string) => {
+        const [widgetService, typeService] = widgetServicetype.split(':');
+        console.log('You just created a ' + widgetService + ' - ' + typeService + ' widget !');
+
+        console.log('la spotidy => ', spotifyService);
+        console.log(servicesList);
+        console.log('la youtube => ', googleService);
+
+        const newWidget = {
+            serviceId: undefined,
+            x: 0,
+            y: 0,
+            width: 2,
+            height: 2,
+            type: typeService,
+            data: 'string',
+        };
+
+        switch (widgetService) {
+            case 'spotify':
+                newWidget.serviceId = spotifyService.id;
+                break;
+            case 'apple':
+                newWidget.serviceId = appleService.id;
+                break;
+            case 'lastFM':
+                newWidget.serviceId = lastFMService.id;
+                break;
+            case 'youtube':
+                newWidget.serviceId = googleService.id;
+                break;
+            default:
+                console.log('ERROR CREATING NEW WIDGET');
+        }
+
+        getClient()
+            // @ts-ignore
+            .widget.createWidget(newWidget)
+            .then(() => getClient().widget.getAllWidgets())
+            .then((data) => setNumberWidgets(data));
     };
 
-    // console.log('ici => ', Client.request.config.TOKEN);
     useEffect(() => {
-        getClient()
-            .services.getAllUserServices()
-            .then((data) => {
-                setServicesList(data.services);
-                console.log(data);
-            });
+        Promise.all([getClient().services.getAllUserServices(), getClient().widget.getAllWidgets()]).then((data) => {
+            setServicesList(data[0].services);
+            setNumberWidgets(data[1]);
+        });
     }, []);
 
-    // console.log('data => ', test_data.w);
+    const deleteWidget = (widgetKey: string) => {
+        console.log('widget deleted => ' + widgetKey);
+        setNumberWidgets(numberWidgets.filter((item) => item.id !== widgetKey));
+        getClient().widget.deleteWidget(widgetKey);
+    };
 
-    console.log(servicesList);
     return React.createElement(
         'div',
         null,
         <>
             <TopBar addWidget={addWidget} connectedServices={servicesList} />
-            <ShowcaseLayout widgetsAdded={numberWidgets} />
+            <ShowcaseLayout widgetsAdded={numberWidgets} deleteWidget={deleteWidget} />
         </>,
     );
 };

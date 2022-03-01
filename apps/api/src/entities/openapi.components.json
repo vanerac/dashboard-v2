@@ -39,7 +39,7 @@
         "id": {
           "type": "string"
         },
-        "type": {
+        "provider": {
           "type": "string",
           "enum": [
             "google",
@@ -58,7 +58,7 @@
       },
       "required": [
         "id",
-        "type",
+        "provider",
         "enabled",
         "accountName"
       ]

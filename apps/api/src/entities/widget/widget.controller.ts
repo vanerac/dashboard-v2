@@ -6,8 +6,8 @@ export default class WidgetController {
     static async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const { user } = req.session;
-            const query = `SELECT * FROM widgets WHERE userId = ${user?.id}`;
-            const { rows: widgets } = await Pool.query(query);
+            const query = `SELECT serviceid as "serviceId", * FROM widgets WHERE userId = $1`;
+            const { rows: widgets } = await Pool.query(query, [user?.id]);
             res.json(widgets);
         } catch (e) {
             next(e);
@@ -46,7 +46,9 @@ export default class WidgetController {
             }
             const query = `INSERT INTO widgets(${Object.keys(req.body).join(',')}, userId) VALUES(${Object.values(
                 req.body,
-            ).map(($value, index) => `$${index + 1}`)}, $${Object.values(req.body).length + 1})`;
+            ).map(($value, index) => `$${index + 1}`)}, $${
+                Object.values(req.body).length + 1
+            }) RETURNING serviceid as "serviceId", *`;
             console.log(query, [...Object.values(req.body), user?.id]);
             const {
                 rows: [widget],
@@ -60,30 +62,15 @@ export default class WidgetController {
     static async updateBulk(req: Request, res: Response, next: NextFunction) {
         // take x,height,y,width
         try {
-            const { widgets }: { widgets: Widget[] } = req.body;
-
-            // validate
-            try {
-                widgets.map((widget: Widget) => {
-                    Object.keys(widget).map((key) => {
-                        if (!['x', 'y', 'width', 'height'].includes(key))
-                            throw new Error(`Invalid property: ${key} in widget ${widget.id}`);
-                    });
-                });
-            } catch (e: any) {
-                return res.status(400).json({
-                    error: e.message,
-                });
-            }
+            const widgets = req.body;
+            console.log(req.body);
 
             const updateQuery = widgets.map((widget: Widget) => {
-                return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = ${widget.id}`;
+                return `UPDATE widgets SET x = ${widget.x}, y = ${widget.y}, width = ${widget.width}, height = ${widget.height} WHERE id = '${widget.id}' RETURNING *`;
             });
 
-            const {
-                rows: [result],
-            } = await Pool.query(updateQuery.join(';'));
-            res.json(result);
+            await Pool.query(updateQuery.join(';'));
+            res.json();
         } catch (e) {
             next(e);
         }
@@ -120,15 +107,11 @@ export default class WidgetController {
         try {
             const { id } = req.params;
             const { user } = req.session;
-            const query = `DELETE FROM widgets WHERE id = ${id} AND userId = ${user?.id}`;
+            const query = `DELETE FROM widgets WHERE id = $1 AND userId = $2`;
             const {
                 rows: [widget],
-            } = await Pool.query(query);
-            if (!widget) {
-                return res.status(404).json({
-                    error: 'Widget not found',
-                });
-            }
+            } = await Pool.query(query, [id, user?.id]);
+            console.log('query => ', query, [id, user?.id]);
             res.json(widget);
         } catch (e) {
             next(e);

@@ -1021,7 +1021,7 @@
         }
       }
     },
-    "/widget/{widgetId}/delete": {
+    "/widget/delete/{widgetId}": {
       "delete": {
         "tags": [
           "widget"
@@ -1086,7 +1086,7 @@
         }
       }
     },
-    "/widget/{widgetId}/update": {
+    "/widget/update/{widgetId}": {
       "put": {
         "tags": [
           "widget"
@@ -5051,7 +5051,7 @@
           "id": {
             "type": "string"
           },
-          "type": {
+          "provider": {
             "type": "string",
             "enum": [
               "google",
@@ -5070,7 +5070,7 @@
         },
         "required": [
           "id",
-          "type",
+          "provider",
           "enabled",
           "accountName"
         ]

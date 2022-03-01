@@ -12,8 +12,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import PersonIcon from '@mui/icons-material/Person';
 import Cookies from 'universal-cookie';
 import Router from 'next/router';
 import { useDarkMode } from 'next-dark-mode';
@@ -24,6 +24,8 @@ import Backdrop from '@mui/material/Backdrop';
 import { Button, Grid, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SvgIcon from '@mui/material/SvgIcon';
 import { mdiRadioFm, mdiSpotify } from '@mdi/js';
 import { getClient } from '../utils/ApiClient';
@@ -79,24 +81,48 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     const nextMode = darkModeActive ? 'Light' : 'Dark';
     const Icon = darkModeActive ? LightIcon : DarkIcon;
-    // console.log(connectedServices);
+    const [selectedServiceWidget, setSelectedServiceWidget] = React.useState('');
     const spotifyService = connectedServices.find((service: { provider: string }) => service.provider === 'spotify');
     const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
     const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+    let userName = undefined;
+    let $val = undefined;
+    let isAnyServicesConnected = undefined;
 
-    // console.log('here => ', spotifyService);
+    if (typeof connectedServices !== 'undefined' && connectedServices.length > 0) {
+        userName = connectedServices[0].accountname;
+        [userName, $val] = userName.split(' ');
+        isAnyServicesConnected = 'Choose a Service type :';
+    } else {
+        userName = 'there';
+        isAnyServicesConnected = 'You must connect a service first !';
+    }
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
+    const [openServiceModal, setOpenServiceModal] = React.useState(false);
+    const handleOpenServiceModal = () => {
+        setOpenServiceModal(true);
         getClient()
             .services.getAllUserServices()
             .then((data) => {
                 console.log(data);
             });
     };
-    const handleClose = () => setOpen(false);
+    const handleCloseServiceModal = () => setOpenServiceModal(false);
+
+    const [openWidgetModal, setOpenWidgetModal] = React.useState(false);
+    const handleOpenWidgetModal = () => {
+        setOpenWidgetModal(true);
+    };
+    const handleCloseWidgetModal = () => setOpenWidgetModal(false);
+
+    const [openWidgetTypeModal, setOpenWidgetTypeModal] = React.useState(false);
+    const handleOpenWidgetTypeModal = (serviceSelected: React.SetStateAction<string>) => {
+        setSelectedServiceWidget(serviceSelected);
+        handleCloseWidgetModal();
+        setOpenWidgetTypeModal(true);
+    };
+    const handleCloseWidgetTypeModal = () => setOpenWidgetTypeModal(false);
 
     const style = {
         position: 'absolute',
@@ -108,6 +134,12 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+    };
+
+    const goBackToSelection = () => {
+        console.log('closing modal widget type');
+        handleCloseWidgetTypeModal();
+        handleOpenWidgetModal();
     };
 
     const svgSpotify = (
@@ -190,45 +222,27 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}>
-            {/* <List>
-                {['Profile', 'Settings', 'Services', 'Widgets'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List> */}
-            <ListItem onClick={handleOpen} button key={'Profile'}>
-                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Profile'} />
-            </ListItem>
-            <ListItem onClick={handleOpen} button key={'Settings'}>
-                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Settings'} />
-            </ListItem>
-            <ListItem onClick={handleOpen} button key={'Services'}>
-                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Services'} />
-            </ListItem>
-            <ListItem onClick={handleOpen} button key={'Widgets'}>
-                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                <ListItemText primary={'Widgets'} />
+            <ListItem>
+                <ListItemIcon>{<PersonIcon />}</ListItemIcon>
+                <Typography style={{ fontWeight: 600 }}>{'Hi ' + userName + ' !'}</Typography>
             </ListItem>
             <Divider />
-            <List>
-                <ListItem onClick={logout} button key={'logout'}>
-                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                    <ListItemText primary={'Logout'} />
-                </ListItem>
-                <ListItem onClick={addWidget} button key={'add_widget'}>
-                    <ListItemIcon>{<InboxIcon />}</ListItemIcon>
-                    <ListItemText primary={'Add Widget'} />
-                </ListItem>
-                <ListItem onClick={handleChangeMode} button key={'darkode'}>
-                    <ListItemIcon>{<Icon />}</ListItemIcon>
-                    <ListItemText primary={'Use ' + nextMode + 'Mode'} />
-                </ListItem>
-            </List>
+            <ListItem onClick={handleOpenServiceModal} button key={'Services'}>
+                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                <ListItemText primary={'Add Services'} />
+            </ListItem>
+            <ListItem onClick={handleOpenWidgetModal} button key={'add_widget'}>
+                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                <ListItemText primary={'Add Widgets'} />
+            </ListItem>
+            <ListItem onClick={handleChangeMode} button key={'darkode'}>
+                <ListItemIcon>{<Icon />}</ListItemIcon>
+                <ListItemText primary={'Use ' + nextMode + 'Mode'} />
+            </ListItem>
+            <ListItem onClick={logout} button key={'logout'}>
+                <ListItemIcon>{<InboxIcon />}</ListItemIcon>
+                <ListItemText primary={'Logout'} />
+            </ListItem>
         </Box>
     );
 
@@ -266,24 +280,22 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                     </Toolbar>
                 </AppBar>
             </Box>
-            {/* {['left', 'right', 'top', 'bottom'].map((anchor) => ( */}
             <React.Fragment>
                 <Drawer anchor="left" open={state['left']} onClose={toggleDrawer('left', false)}>
                     {list('left')}
                 </Drawer>
             </React.Fragment>
-            {/* ))} */}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
+                open={openServiceModal}
+                onClose={handleCloseServiceModal}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{
                     timeout: 500,
                 }}>
-                <Fade in={open}>
+                <Fade in={openServiceModal}>
                     <Box sx={style}>
                         <Typography
                             id="transition-modal-title"
@@ -292,9 +304,6 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             style={{ marginBottom: '10%' }}>
                             Choose a service to connect :
                         </Typography>
-                        {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            ca arraive mon reuf
-                        </Typography> */}
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
                                 <Button
@@ -342,6 +351,170 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                                     size="large"
                                     variant="contained">
                                     Apple
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Fade>
+            </Modal>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={openWidgetModal}
+                onClose={handleCloseWidgetModal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}>
+                <Fade in={openWidgetModal}>
+                    <Box sx={style}>
+                        <Typography
+                            id="transition-modal-title"
+                            variant="h6"
+                            component="h2"
+                            style={{ marginBottom: '10%' }}>
+                            {isAnyServicesConnected}
+                        </Typography>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    disabled={!lastFMService}
+                                    color="info"
+                                    fullWidth
+                                    startIcon={svgLastFM}
+                                    onClick={() => handleOpenWidgetTypeModal('lastFM')}
+                                    size="large"
+                                    variant="contained">
+                                    LastFM Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    disabled={!googleService}
+                                    fullWidth
+                                    color="error"
+                                    startIcon={<GoogleIcon />}
+                                    onClick={() => handleOpenWidgetTypeModal('youtube')}
+                                    size="large"
+                                    variant="contained">
+                                    Google Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    disabled={!spotifyService}
+                                    fullWidth
+                                    color="secondary"
+                                    startIcon={svgSpotify}
+                                    onClick={() => handleOpenWidgetTypeModal('spotify')}
+                                    size="large"
+                                    variant="contained">
+                                    Spotify Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    disabled={!appleService}
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={<AppleIcon />}
+                                    onClick={() => handleOpenWidgetTypeModal('apple')}
+                                    size="large"
+                                    variant="contained">
+                                    Apple Widget
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Fade>
+            </Modal>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={openWidgetTypeModal}
+                onClose={handleCloseWidgetTypeModal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}>
+                <Fade in={openWidgetTypeModal}>
+                    <Box sx={style}>
+                        <Typography
+                            id="transition-modal-title"
+                            variant="h6"
+                            component="h2"
+                            style={{ marginBottom: '10%' }}>
+                            Choose a {selectedServiceWidget.charAt(0).toUpperCase() + selectedServiceWidget.slice(1)}{' '}
+                            Widget Type !
+                        </Typography>
+                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            <Grid item xs={6}>
+                                <Button
+                                    color="info"
+                                    fullWidth
+                                    startIcon={<WidgetsIcon />}
+                                    onClick={() => addWidget(selectedServiceWidget.concat(':', 'search'))}
+                                    size="large"
+                                    variant="contained">
+                                    Search Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    fullWidth
+                                    color="error"
+                                    startIcon={<WidgetsIcon />}
+                                    onClick={() => addWidget(selectedServiceWidget.concat(':', 'stat'))}
+                                    size="large"
+                                    variant="contained">
+                                    Statistics Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    fullWidth
+                                    color="secondary"
+                                    startIcon={<WidgetsIcon />}
+                                    onClick={() => addWidget(selectedServiceWidget.concat(':', 'album'))}
+                                    size="large"
+                                    variant="contained">
+                                    Album Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={<WidgetsIcon />}
+                                    onClick={() => addWidget(selectedServiceWidget.concat(':', 'playlist'))}
+                                    size="large"
+                                    variant="contained">
+                                    Playlist Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    fullWidth
+                                    // @ts-ignore
+                                    color="text"
+                                    startIcon={<ArrowBackIosNewIcon />}
+                                    onClick={goBackToSelection}
+                                    size="large"
+                                    variant="contained">
+                                    Go back to selection
+                                </Button>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    fullWidth
+                                    color="warning"
+                                    startIcon={<WidgetsIcon />}
+                                    onClick={() => addWidget(selectedServiceWidget.concat(':', 'artist'))}
+                                    size="large"
+                                    variant="contained">
+                                    Artist Widget
                                 </Button>
                             </Grid>
                         </Grid>
