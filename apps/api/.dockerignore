@@ -1,0 +1,9 @@
+node_modules
+.env
+.gitignore
+.dockerignore
+.env.example
+test
+db
+build
+.turbo

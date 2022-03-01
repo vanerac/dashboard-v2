@@ -1,0 +1,20 @@
+# general
+node_modules
+.env
+.gitignore
+.dockerignore
+.env*
+# API
+test
+db
+build
+# Frontend
+.turbo
+logs
+data
+
+# packages
+packages/**/*.js
+*.map*
+*.d*
+.*
