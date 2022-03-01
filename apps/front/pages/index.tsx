@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
 import { Service } from '../../../packages/services/models/Service';
+
 const cookies = new Cookies();
 
 export function getClient() {
@@ -22,7 +23,7 @@ const Dasboard = () => {
     const spotifyService = servicesList.find((service: Service) => service.provider === 'spotify');
     const googleService = servicesList.find((service: Service) => service.provider === 'google');
     const appleService = servicesList.find((service: Service) => service.provider === 'apple');
-    const lastFMService = servicesList.find((service: Service) => service.provider === 'lastFM');
+    const lastFMService = servicesList.find((service: Service) => service.provider === 'lastfm');
 
     const addWidget = (widgetServicetype: string) => {
         const [widgetService, typeService] = widgetServicetype.split(':');
