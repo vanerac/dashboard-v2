@@ -17,20 +17,20 @@ type TrackDisplayConfig = {
 };
 
 export default function TrackList(props: TrackListProps) {
-
-  return (
-        props.tracks.map((track: Track, index: number) => {
-          return (
-              <View key={index}>
-                <TrackListItem track={track} onClick={props.onClick}/>
-              </View>
-          )
-        })
-  )
+  //
+  // return (
+  //       props.tracks.map((track: Track, index: number) => {
+  //         return (
+  //             <View key={index}>
+  //               <TrackListItem track={track} onClick={props.onClick}/>
+  //             </View>
+  //         )
+  //       })
+  // )
 }
 
 
-export function TrackListItem(props: {track: Track, onClick: onClick, config?: Partial<TrackDisplayConfig>}) {
+export function TrackListItem(props: {track: Track, serviceId: string, onClick: onClick, config?: Partial<TrackDisplayConfig>}) {
 
     /* Todo:
      *  - Like
@@ -41,9 +41,9 @@ export function TrackListItem(props: {track: Track, onClick: onClick, config?: P
      *  - Play Track
      */
 
-    const playTrack = (track: Track) => {
-        Client.playback.playTrack({track});
-    }
+    // const playTrack = (track: Track) => {
+    //     Client.playback.playTrack({track, serviceId: serviceId });
+    // }
 
     const likeTrack = (service: Service, track: Track) => {
         Client.track.likeTrack(
