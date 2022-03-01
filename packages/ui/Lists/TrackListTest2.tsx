@@ -1,10 +1,31 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, Switch } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Switch,
+  TouchableOpacity,
+} from "react-native";
+import { CheckBox } from "react-native-elements";
+import Icon from "react-native-vector-icons/Entypo";
 
-export const TrackListTest2 = () => {
-  // const [isEnabled, setIsEnabled] = useState(false);
-  // const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const [isSelected, setSelection] = useState(false);
+export enum TrackListType {
+  CHECKBOX,
+  TOGGLE,
+  OPTIONS,
+}
+
+export type TrackDisplayConfig = {
+  title?: boolean;
+  artist_album?: boolean;
+  type: TrackListType;
+};
+
+export const TrackListTest2 = ({ config }: { config: TrackDisplayConfig }) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <View style={stylesheet.horizontalContainer}>
@@ -15,7 +36,36 @@ export const TrackListTest2 = () => {
           <Text style={stylesheet.text}>song album title</Text>
         </View>
       </View>
-      <Switch style={stylesheet.checkbox} />
+      {config.type === TrackListType.TOGGLE ? (
+        <Switch
+          style={stylesheet.toggle}
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      ) : (
+        <></>
+      )}
+      {config.type === TrackListType.CHECKBOX ? (
+        <CheckBox
+          style={stylesheet.checkbox}
+          checked={isChecked}
+          onPress={() => setIsChecked(!isChecked)}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          center
+        />
+      ) : (
+        <></>
+      )}
+      {config.type === TrackListType.OPTIONS ? (
+        <TouchableOpacity style={stylesheet.options}>
+          <Text>
+            <Icon name="dots-three-horizontal" size={25} color="#FFFFFF" />
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
@@ -52,7 +102,17 @@ const stylesheet = StyleSheet.create({
     color: "#FFFFFF",
   },
 
+  toggle: {
+    margin: 20,
+    alignSelf: "flex-end",
+  },
+
   checkbox: {
+    margin: 20,
+    alignSelf: "flex-end",
+  },
+
+  options: {
     margin: 20,
     alignSelf: "flex-end",
   },
