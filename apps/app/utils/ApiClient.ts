@@ -1,4 +1,6 @@
 import { ApiClient } from '../../../packages/services';
+
+// @ts-ignore
 import localStorage from 'react-native-sync-localstorage';
 
 export function getClient() {

@@ -2,13 +2,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
-// import { Client } from '../../../../packages/global';
 import { getClient } from '../../utils/ApiClient';
 import { RootStackParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ssoUrl } from '../../../../packages/services';
+import { loginResponse, ssoUrl } from '../../../../packages/services';
 import Icon from 'react-native-vector-icons/Entypo';
 import Constants from 'expo-constants';
+
+// @ts-ignore
 import localStorage from 'react-native-sync-localstorage';
 
 const SCHEME = Constants.manifest?.scheme;
@@ -27,12 +28,12 @@ function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props)
                 const { code } = params;
                 getClient()
                     .sso.spotifyAuthCodeSso(code, redirect_uri)
-                    .then((data) => {
+                    .then((data: loginResponse) => {
                         localStorage.setItem('API_TOKEN', data.token);
                         Alert.alert('Success', 'You are now logged in!');
                         navigation.navigate('HomePage');
                     })
-                    .catch((err) => {
+                    .catch((err: any) => {
                         Alert.alert('Error', err.message);
                     });
             } else {
