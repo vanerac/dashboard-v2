@@ -59,7 +59,7 @@ export default function LoginScreen({ navigation, route }: Props) {
 
     async function makeRequest() {
         try {
-            const res = await getClient().authentication.login({ email: email, password: password });
+            await getClient().authentication.login({ email: email, password: password });
             navigation.navigate('HomePage');
         } catch (e) {
             Alert.alert('Wrong email or wrong password');
