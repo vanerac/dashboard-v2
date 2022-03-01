@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
@@ -17,10 +17,9 @@ const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props) {
-    // console.log('SSOData', SSOData);
     const { url, redirect_uri } = SSOData;
 
-    const triggerSSO = async () => {
+    const triggerSSO = () => {
         startAsync({
             authUrl: url,
         }).then(({ type, params }: any) => {
@@ -29,7 +28,6 @@ function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props)
                 getClient()
                     .sso.spotifyAuthCodeSso(code, redirect_uri)
                     .then((data) => {
-                        console.log(data);
                         localStorage.setItem('API_TOKEN', data.token);
                         Alert.alert('Success', 'You are now logged in!');
                         navigation.navigate('HomePage');
@@ -62,11 +60,9 @@ export default function LoginScreen({ navigation, route }: Props) {
     async function makeRequest() {
         try {
             const res = await getClient().authentication.login({ email: email, password: password });
-            console.log(res);
             navigation.navigate('HomePage');
         } catch (e) {
             Alert.alert('Wrong email or wrong password');
-            console.log(e);
         }
     }
 
@@ -85,11 +81,13 @@ export default function LoginScreen({ navigation, route }: Props) {
         useProxy,
     });
 
-    getClient()
-        .sso.spotifyConsentSso(redirectURI)
-        .then((data: ssoUrl) => {
-            setSSOData(data);
-        });
+    useEffect(() => {
+        getClient()
+            .sso.spotifyConsentSso(redirectURI)
+            .then((data: ssoUrl) => {
+                setSSOData(data);
+            });
+    }, []);
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
@@ -129,19 +127,17 @@ export default function LoginScreen({ navigation, route }: Props) {
                 </View>
             </View>
 
-            <TouchableOpacity
-                style={[styles.loginBtn, { backgroundColor: theme.accent }]}
-                onPress={() => makeRequest()}>
+            <TouchableOpacity style={[styles.loginBtn, { backgroundColor: theme.accent }]} onPress={makeRequest}>
                 <Text style={{ color: theme.text }}>LOGIN</Text>
             </TouchableOpacity>
 
             <View style={styles.signInButton}>
-                <Text style={{ color: theme.text }}>Already registered? </Text>
+                <Text style={{ color: theme.text }}>Don't have an account? </Text>
                 <TouchableOpacity>
                     <Text
                         style={[styles.signIn, { color: theme.accent }]}
                         onPress={() => navigation.navigate('RegisterScreen')}>
-                        Sign In
+                        Sign Up
                     </Text>
                 </TouchableOpacity>
             </View>
