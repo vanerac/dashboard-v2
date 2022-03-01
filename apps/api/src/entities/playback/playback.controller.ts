@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import PlayerManager from '../../tools/audioPlayers/playerManager.tools';
 import { UUID } from '../../tools/types';
+import { Track } from '../../../../../packages/services';
 
 const playerManager = new PlayerManager();
 
@@ -52,11 +53,21 @@ export default class PlaybackController {
 
     // Playback Control
 
-    public static async playTrack(req: Request, res: Response) {
-        const { user } = req.session;
-        const { track } = req.body;
-        await playerManager.play(user?.id as string, track);
-        return res.json({});
+    public static async playTrack(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { user } = req.session;
+            const { track }: { track: Track } = req.body;
+            if (!req.session.service) {
+                return res.status(400).json({ error: 'No service is set' });
+            }
+            const {
+                service: { id: serviceId },
+            } = req.session;
+            await playerManager.play(user?.id as string, track, serviceId);
+            return res.json({});
+        } catch (e) {
+            next(e);
+        }
     }
 
     public static async resumeSong(req: Request, res: Response) {
@@ -141,14 +152,14 @@ export default class PlaybackController {
     public static async changeDevice(req: Request, res: Response) {
         const { user } = req.session;
         const { device } = req.body;
-        await playerManager.changeDevice(user?.id as string, device as UUID);
+        await playerManager.changeDevice(user?.id as string, device.id as UUID);
         return res.json({});
     }
 
     public static async registerDevice(req: Request, res: Response) {
         // Todo: see if there isnt a better way of doing this
         const { user } = req.session;
-        await playerManager.registerDevice(user?.id as string, res);
-        return res.json({});
+        const url = await playerManager.registerDevice(user?.id as string);
+        return res.json({ url });
     }
 }

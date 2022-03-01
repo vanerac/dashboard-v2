@@ -7,14 +7,14 @@ CREATE TYPE widgetType AS ENUM ('stat', 'album', 'playlist', 'artist', 'search')
 
 CREATE TABLE IF NOT EXISTS Users
 (
-    id          uuid PRIMARY KEY             DEFAULT uuid_generate_v4(),
-    email       VARCHAR(256) UNIQUE NULL,
-    displayName TEXT                NOT NULL,
-    password    VARCHAR(256)        NULL,
-    createdAt   DATE                NOT NULL DEFAULT NOW(),
-    lastLogin   DATE                NULL,
-    editedAt    DATE                NOT NULL DEFAULT NOW(),
-    loginType   loginType           NOT NULL DEFAULT 'classic',
+    id          uuid PRIMARY KEY     DEFAULT uuid_generate_v4(),
+    email       TEXT UNIQUE NULL,
+    displayName TEXT        NOT NULL,
+    password    TEXT        NULL,
+    createdAt   DATE        NOT NULL DEFAULT NOW(),
+    lastLogin   DATE        NULL,
+    editedAt    DATE        NOT NULL DEFAULT NOW(),
+    loginType   loginType   NOT NULL DEFAULT 'classic',
     CONSTRAINT unique_email CHECK (loginType = 'classic' AND email IS NOT NULL OR loginType = 'SSO' AND email IS NULL)
 
 );
@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS Services
     clientId     VARCHAR(256)    NOT NULL,
     enabled      BOOLEAN         NOT NULL DEFAULT TRUE,
     userId       uuid            NOT NULL,
-    accessToken  VARCHAR(256)    NOT NULL,
+    accessToken  TEXT            NOT NULL,
     tokenExpires TIMESTAMP       NULL,
-    refreshToken VARCHAR(256)    NULL,
+    refreshToken TEXT            NULL,
     accountName  VARCHAR(256)    NULL,
     status       serviceStatus   NOT NULL DEFAULT 'OK',
     createdAt    DATE            NOT NULL DEFAULT NOW(),

@@ -4991,6 +4991,9 @@
           },
           "playable": {
             "type": "boolean"
+          },
+          "uri": {
+            "type": "string"
           }
         },
         "required": [
@@ -5002,7 +5005,8 @@
           "duration",
           "image",
           "provider",
-          "playable"
+          "playable",
+          "uri"
         ]
       },
       "Playlist": {
@@ -5773,8 +5777,16 @@
         "properties": {
           "track": {
             "$ref": "#/components/schemas/Track"
+          },
+          "serviceId": {
+            "type": "string",
+            "format": "uuid"
           }
-        }
+        },
+        "required": [
+          "track",
+          "serviceId"
+        ]
       },
       "ArtistStats": {
         "type": "object",
@@ -5855,6 +5867,9 @@
           },
           "playable": {
             "type": "boolean"
+          },
+          "uri": {
+            "type": "string"
           }
         },
         "required": [
@@ -5866,7 +5881,8 @@
           "duration",
           "image",
           "provider",
-          "playable"
+          "playable",
+          "uri"
         ]
       },
       "getTrackAlbumResponse": {

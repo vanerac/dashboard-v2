@@ -14,7 +14,7 @@ export function parseServiceId(req: Request, res: Response, next: NextFunction) 
         if (!serviceId) {
             return res.status(400).send('Missing service id');
         }
-        const query = 'SELECT accesstoken as "accessToken", provider FROM services WHERE id = $1 AND userid = $2';
+        const query = 'SELECT accesstoken as "accessToken", provider, id FROM services WHERE id = $1 AND userid = $2';
         const {
             rows: [service],
         } = await Pool.query(query, [serviceId, userId]);

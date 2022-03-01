@@ -12,4 +12,5 @@ export type Track = {
     image: string;
     provider: string;
     playable: boolean;
+    uri: string;
 };

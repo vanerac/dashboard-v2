@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import PlaybackController from './playback.controller';
+import { parseServiceId } from '../../tools/service.tools';
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.delete('/queue/clear', PlaybackController.clearQueue);
 router.get('/listen', PlaybackController.subscribeToUpdates);
 
 // Playback control
-router.post('/play', PlaybackController.playTrack);
+router.post('/play/:serviceId', parseServiceId, PlaybackController.playTrack);
 router.get('/resume', PlaybackController.resumeSong);
 router.get('/pause', PlaybackController.pausePlayback);
 router.get('/skip', PlaybackController.skipTrack);
@@ -29,7 +30,7 @@ router.put('/seek', PlaybackController.seekTrack);
 
 // Device control
 router.get('/devices', PlaybackController.getAvailableDevices); // All connected devices linked to a user
-router.get('/device/current', PlaybackController.getCurrentDevice); // Current active playback device
+router.get('/device/current', PlaybackController.getCurrentDevice); // Current isActive playback device
 router.put('/device/change', PlaybackController.changeDevice); // set the device that should receive the playback stream
 router.post('/device/register', PlaybackController.registerDevice); // Connect to API and recieve stream
 
