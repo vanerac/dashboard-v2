@@ -7,6 +7,8 @@ import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
 import { Service } from '../../../packages/services/models/Service';
 import Script from 'next/script';
+import { AudioPCMPlayer, PlayerComponent } from '@area/ui/Player/index';
+import AudioPlayer from '../utils/AudioPlayer';
 
 const cookies = new Cookies();
 
@@ -18,6 +20,7 @@ export function getClient() {
 
 const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
+    const [playbackDevice, setPlaybackDevice] = useState<AudioPCMPlayer>(null);
 
     const test_data = [
         { x: 0, y: 0, w: 2, h: 2, serviceType: 'spotify', widgetType: 2 },
@@ -25,6 +28,22 @@ const Dasboard = () => {
     ];
 
     const [numberWidgets, setNumberWidgets] = useState(test_data);
+
+    const onPCMLoad = () => {
+        if ('PCMPlayer' in window) {
+            setPlaybackDevice(
+                new AudioPlayer(
+                    // @ts-ignore
+                    new (PCMPlayer as any)({
+                        encoding: '16bitInt', // Todo verify this
+                        channels: 2,
+                        sampleRate: 8000,
+                        flushingTime: 2000,
+                    }),
+                ),
+            );
+        }
+    };
 
     const addWidget = () => {
         // TODO : api call => balancer un widget en db
@@ -36,7 +55,6 @@ const Dasboard = () => {
         console.log(numberWidgets);
     };
 
-    // console.log('ici => ', Client.request.config.TOKEN);
     useEffect(() => {
         getClient()
             .services.getAllUserServices()
@@ -46,18 +64,19 @@ const Dasboard = () => {
             });
     }, []);
 
-    // console.log('data => ', test_data.w);
-
     console.log(servicesList);
     return React.createElement(
         'div',
         null,
         <>
+            <Script
+                src={'https://raw.githubusercontent.com/samirkumardas/pcm-player/master/pcm-player.min.js'}
+                strategy={'beforeInteractive'}
+                onLoad={onPCMLoad}
+            />
             <TopBar addWidget={addWidget} connectedServices={servicesList} />
             <ShowcaseLayout widgetsAdded={numberWidgets} />
-            <div>
-                <Script src={'https://unpkg.com/pcm-player'} />
-            </div>
+            <PlayerComponent device={playbackDevice} />
         </>,
     );
 };

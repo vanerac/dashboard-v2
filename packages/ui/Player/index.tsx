@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {getClient} from "@area/front/pages";
 import {Text, View} from 'react-native';
 
-export abstract class PCMPlayer {
+export abstract class AudioPCMPlayer {
     abstract play(pcm: Uint8Array): void;
     abstract stop(): void;
 }
@@ -24,7 +24,7 @@ const deviceList = () => {
 };
 
 
-const PlayerComponent = ({device}: {device: PCMPlayer}) => {
+export const PlayerComponent = ({device}: {device: AudioPCMPlayer}) => {
 
     const [playbackState, setPlaybackState] = useState<any>({});
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
