@@ -7,7 +7,6 @@ import { parseServiceId } from '../tools/service.tools';
 import playbackRoutes from './playback/playback.routes';
 import widgetRoutes from './widget/widget.routes';
 
-
 const router = Router();
 
 router.use('/auth', parseToken, AuthRoutes);

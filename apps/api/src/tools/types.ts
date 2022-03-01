@@ -63,7 +63,3 @@ export interface Service {
     createdAt: Date;
     editedAt: Date;
 }
-
-// export abstract class SSOAudioManager {
-//     static play
-// }
