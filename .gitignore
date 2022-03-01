@@ -41,7 +41,7 @@ logs
 # expo
 yarn.lock
 
-*.js
-*.js.map
 
-packages/**/*.d.ts*
+*.js*
+*.map
+packages/**/*.d.ts

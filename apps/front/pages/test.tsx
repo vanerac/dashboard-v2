@@ -1,7 +1,5 @@
-import { CardTest } from '@area/ui';
-
 function test() {
-    return <CardTest />;
+    return <>This is my Test route !</>;
 }
 
 export default test;
