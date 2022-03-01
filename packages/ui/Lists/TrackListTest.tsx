@@ -171,6 +171,7 @@ const stylesheet = StyleSheet.create({
     position: "relative",
     width: 49,
     height: 8,
+    minHeight: 8,
     minWidth: 0,
     transform: [{ translateX: 0 }, { translateY: 0 }],
     textDecorationLine: "none",
