@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
 import { Service } from '../../../packages/services/models/Service';
+import Script from 'next/script';
+
 const cookies = new Cookies();
 
 export function getClient() {
@@ -53,6 +55,9 @@ const Dasboard = () => {
         <>
             <TopBar addWidget={addWidget} connectedServices={servicesList} />
             <ShowcaseLayout widgetsAdded={numberWidgets} />
+            <div>
+                <Script src={'https://unpkg.com/pcm-player'} />
+            </div>
         </>,
     );
 };

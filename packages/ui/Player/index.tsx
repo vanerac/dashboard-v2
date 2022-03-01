@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {getClient} from "@area/front/pages";
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
+
+export abstract class PCMPlayer {
+    abstract play(pcm: Uint8Array): void;
+    abstract stop(): void;
+}
+
 
 const deviceList = () => {
     const [devices, setDevices] = useState<any>([]);
@@ -17,7 +23,8 @@ const deviceList = () => {
   );
 };
 
-const PlayerComponent = ({device}: {device: any}) => {
+
+const PlayerComponent = ({device}: {device: PCMPlayer}) => {
 
     const [playbackState, setPlaybackState] = useState<any>({});
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -30,7 +37,7 @@ const PlayerComponent = ({device}: {device: any}) => {
 
 
             new WebSocket(data_url).onmessage = (message) => {
-                device.send(message.data);
+                device.play(message.data);
             };
             new WebSocket(state_url).onmessage = (event ) => {
                 setPlaybackState(JSON.parse(event.data));
@@ -52,12 +59,7 @@ const PlayerComponent = ({device}: {device: any}) => {
 
     return (
         <View>
-            <h1>Player</h1>
-            <button onClick={togglePlayback}>{isPlaying ? 'Pause' : 'Play'}</button>
-            <div>
-                <h2>Playback State</h2>
-                <pre>{JSON.stringify(playbackState, null, 2)}</pre>
-            </div>
+           <Text>{playbackState.title}</Text>
         </View>
     );
 
