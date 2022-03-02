@@ -1,11 +1,11 @@
 import { SpinnerCircular } from 'spinners-react';
-import Cookies from 'universal-cookie';
-import Router from 'next/router';
-import { getClient } from '../../utils/ApiClient';
+// import Cookies from 'universal-cookie';
+// import Router from 'next/router';
+// import { getClient } from '../../utils/ApiClient';
 import loadingScreen from '../../components/wrapperLoadingScreen';
 import { useEffect } from 'react';
 
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
 function SsoLastfm() {
     useEffect(() => {
