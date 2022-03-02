@@ -6,12 +6,25 @@ import {
   ScrollView,
   Button,
 } from "react-native";
+import { getClient } from "../../apps/front/utils/ApiClient";
+import { useEffect, useState } from "react";
 
 // @ts-ignore
-export const CardTest = ({ deleteWidget, widgetKey }) => {
+export const CardTest = ({ deleteWidget, widgetKey, widgetService }) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
+
+  const [data_pour_koeck, setData_pour_koeck] = useState([]);
+
+  useEffect(() => {
+    getClient()
+      .playlist.getAllPlaylists(widgetService)
+      .then((data: any) => {
+        setData_pour_koeck(data);
+        console.log(data);
+      });
+  }, []);
 
   return (
     <>
