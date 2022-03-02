@@ -9,17 +9,18 @@ const cookies = new Cookies();
 
 function SsoLastfm() {
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            let params = new URL(window.location.href).searchParams;
-            let code = params.get('code');
-            getClient()
-                .sso.lastfmAuthCodeSso(code, '')
-                .then((data) => {
-                    const { token } = data;
-                    cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
-                    Router.push('/');
-                });
-        }
+        // USELESS - NO OAUTH2 - need to create a simple route to receive the token and return it
+        // if (typeof window !== 'undefined') {
+        //     let params = new URL(window.location.href).searchParams;
+        //     let code = params.get('code');
+        //     getClient()
+        //         .sso.lastfmAuthCodeSso(code, '')
+        //         .then((data) => {
+        //             const { token } = data;
+        //             cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
+        //             Router.push('/');
+        //         });
+        // }
     });
 
     return (

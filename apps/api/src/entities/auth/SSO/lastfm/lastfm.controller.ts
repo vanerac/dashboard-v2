@@ -19,10 +19,7 @@ export default class LastFmController extends SSOController {
         const { callbackURL } = req.query;
 
         const params = {
-            client_id: LastFmController.clientId,
-            response_type: 'code',
-            redirect_uri: callbackURL || LastFmController.callbackURL,
-            scope: LastFmController.scope,
+            api_key: LastFmController.clientId,
         };
         // @ts-ignore
         const url = `https://www.last.fm/api/auth/?${new URLSearchParams(params)}`;

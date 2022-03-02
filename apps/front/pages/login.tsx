@@ -112,11 +112,12 @@ const Login = () => {
 
     const authLastFM = () => {
         getClient()
-            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .sso.lastfmConsentSso('http://localhost:3000/lastFM')
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);
-            });
+            })
+            .catch((error) => console.log(error));
     };
 
     const authApple = () => {
