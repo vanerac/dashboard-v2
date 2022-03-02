@@ -4,25 +4,42 @@ import { TrackListTest2, TrackListType } from "./TrackListTest2";
 
 type DataTest = TrackListType[];
 
-const dataTest: DataTest = [
+export const dataTest: DataTest = [
   TrackListType.OPTIONS,
-  TrackListType.CHECKBOX,
+  TrackListType.OPTIONS,
   TrackListType.TOGGLE,
 ];
 
-const DataList = ({ type }: { type: TrackListType }) => (
+export interface ItemListProps<Item> {
+  itemDataList: Item[];
+  ItemComponent: React.FC<{ item: Item; type: TrackListType }>;
+  itemType: TrackListType;
+}
+
+const DataTrackList = ({ type }: { type: TrackListType }) => (
   <TrackListTest2 config={{ type: type }} />
 );
 
-export const ItemListTest = () => {
-  const _renderItem = ({ item }: { item: TrackListType }) => (
-    <DataList type={item} />
+export const ItemListTest = <Item extends any>({
+  itemDataList,
+  ItemComponent,
+  itemType,
+}: ItemListProps<Item>) => {
+  // const renderItem = ({ item }: { item: TrackListType }) => (
+  //   <DataTrackList type={item} />
+  // );
+
+  const renderItem = ({ item }: { item: Item }) => (
+    <ItemComponent item={item} type={itemType} />
   );
 
   return (
-    <ScrollView style={[stylesheet.container, {}]}>
-      <FlatList data={dataTest} renderItem={_renderItem} />
-    </ScrollView>
+    <FlatList
+      style={stylesheet.container}
+      data={itemDataList}
+      renderItem={renderItem}
+      keyExtractor={(_item, index) => index.toString()}
+    />
   );
 };
 
@@ -31,3 +48,7 @@ const stylesheet = StyleSheet.create({
     width: "100%",
   },
 });
+
+// parameter ItemList : ?maxHeight: string, Array<Item>, direction: boolean
+// Item being all types of card we are gonna put in ItemList (TrackCard, PlaylistCard, ServiceCard, etc)
+// flatlist props refreshing et onRefresh
