@@ -6,11 +6,11 @@ import {
   ScrollView,
   Button,
 } from "react-native";
-import { getClient } from "../../apps/front/utils/ApiClient";
+// import { getClient } from "../../apps/front/utils/ApiClient";
 import { useEffect, useState } from "react";
 
 // @ts-ignore
-export const CardTest = ({ deleteWidget, widgetKey, widgetService }) => {
+export const CardTest = ({ deleteWidget, widgetKey, widgetService, clientAPi }) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
@@ -18,7 +18,7 @@ export const CardTest = ({ deleteWidget, widgetKey, widgetService }) => {
   const [data_pour_koeck, setData_pour_koeck] = useState([]);
 
   useEffect(() => {
-    getClient()
+    clientAPi()
       .playlist.getAllPlaylists(widgetService)
       .then((data: any) => {
         setData_pour_koeck(data);
@@ -31,7 +31,7 @@ export const CardTest = ({ deleteWidget, widgetKey, widgetService }) => {
       <SafeAreaView style={styles.middle}>
         <ScrollView>
           {/* @ts-ignore */}
-          <Button onPress={onClickDeleteWidget}>delete widget</Button>
+          <Button onPress={onClickDeleteWidget} title="okok">delete widget</Button>
           <Text style={{ color: "white" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

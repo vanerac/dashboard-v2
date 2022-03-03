@@ -15,7 +15,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
             return (
                 <div key={i}>
                     {l.widgetType} + {l.widgetService} + {l.widgetKey}
-                    <CardTest deleteWidget={props.deleteWidget} widgetKey={l.widgetKey} widgetService={l.widgetService}/>
+                    <CardTest deleteWidget={props.deleteWidget} widgetKey={l.widgetKey} widgetService={l.widgetService} clientAPi={getClient}/>
                 </div>
             );
         });

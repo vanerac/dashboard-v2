@@ -7,7 +7,7 @@ import { Button, Container, Grid, Link, TextField, Typography } from '@mui/mater
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiRadioFm, mdiSpotify } from '@mdi/js';
+import { mdiRadioFm, mdiSpotify, mdiMusicNoteEighth } from '@mdi/js';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -63,6 +63,12 @@ const Login = () => {
         </SvgIcon>
     );
 
+    const svgTmpDeezer = (
+        <SvgIcon>
+            <path d={mdiMusicNoteEighth} />
+        </SvgIcon>
+    );
+
     const submit = () => {
         if (userPassword === '') {
             errorBool = true;
@@ -112,7 +118,7 @@ const Login = () => {
 
     const authLastFM = () => {
         getClient()
-            .sso.lastfmConsentSso('http://localhost:3000/lastFM')
+            .sso.lastfmConsentSso('http://localhost:3000/sso/lastFM')
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);
@@ -120,13 +126,23 @@ const Login = () => {
             .catch((error) => console.log(error));
     };
 
-    getClient().playlist.getAllPlaylists
+    getClient().playlist.getAllPlaylists;
 
     const authApple = () => {
         // Client.sso.appleConsentSso('http://localhost:3000/getAppleCode').then((data) => {
         //     console.log(data);
         //     Router.push(data.url);
         // });
+    };
+
+    const authDeezer = () => {
+        getClient()
+            .sso.deezerConsentSso('http://localhost:3000/sso/deezer')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            })
+            .catch((error) => console.log(error));
     };
 
     return (
@@ -197,6 +213,17 @@ const Login = () => {
                                     size="large"
                                     variant="contained">
                                     Login with Apple
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={svgTmpDeezer}
+                                    onClick={authDeezer}
+                                    size="large"
+                                    variant="contained">
+                                    Login with Deezer
                                 </Button>
                             </Grid>
                         </Grid>

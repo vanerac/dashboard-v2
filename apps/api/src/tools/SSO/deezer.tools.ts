@@ -16,7 +16,9 @@ export class DeezerTools implements SSOTools {
             code: code,
             output: 'json',
         };
+        console.log('casse ici')
         const response = await axios.get(url, { params });
+        console.log(response)
         return response.data;
     }
 
