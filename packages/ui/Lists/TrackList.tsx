@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, FlatList, ScrollView, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { TrackCard, TrackListType } from "../Cards/TrackCard";
+import { Track } from "../../services";
 
 // type DataTest = TrackListType[];
 //
@@ -12,21 +13,24 @@ import { TrackCard, TrackListType } from "../Cards/TrackCard";
 
 export interface ItemListProps<Item> {
   itemDataList: Item[];
-  ItemComponent: React.FC<{ item: Item; type: TrackListType }>;
-  itemType: TrackListType;
+  ItemComponent: React.FC<{ item: Item; track: Track }>;
+  // itemType: TrackListType;
 }
 
-const DataTrackList = ({ type }: { type: TrackListType }) => (
-  <TrackCard config={{ type: type }} />
+const DataTrackList = ({ track }: { track: Track }) => (
+  <TrackCard track={track} />
 );
 
 export const TrackList = <Item extends any>({
   itemDataList,
   ItemComponent,
-  itemType,
-}: ItemListProps<Item>) => {
-  const renderItem = ({ item }: { item: Item }) => (
-    <ItemComponent item={item} type={itemType} />
+}: // itemType,
+ItemListProps<Item>) => {
+  // const renderItem = ({ item }: { item: Item }) => (
+  //   <ItemComponent item={item} type={itemType} />
+  // );
+  const renderItem = ({ item }: { item: Track }) => (
+    <DataTrackList track={item} />
   );
 
   return (

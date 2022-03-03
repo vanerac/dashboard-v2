@@ -3,27 +3,18 @@ import React from 'react';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
-import { TrackCard, TrackListType } from '../../../packages/ui/Cards/TrackCard';
-import { TrackList } from '../../../packages/ui/Lists/TrackList';
+import { TrackList2 } from '../../../packages/ui/Lists/TrackList2';
+import { TrackDisplayConfig, TrackListType } from '../../../packages/ui/Cards/TrackCard';
+import { dataTest } from '../../../packages/ui/dataTest';
 
-// const TrackListWrapper = ({ item }: { item: TrackListType; type: TrackListType }) => (
-//     <TrackListTest2 config={{ type: item }} />
-// );
-//
-// const TestComponent = ({ item }: { item: TrackListType }) => {
-//     return (
-//         <View style={{ backgroundColor: 'red', width: '100%', height: 60 }}>
-//             <Text>{item}</Text>
-//         </View>
-//     );
-// };
+const testConfig: TrackDisplayConfig = {
+    type: TrackListType.TOGGLE,
+};
 
 export default function TabOneScreen({ navigation: $nav }: RootTabScreenProps<'TabOne'>) {
     return (
         <View style={styles.container}>
-            {/*<TrackListTest2 config={{ type: TrackListType.OPTIONS }} />*/}
-            <TrackList itemDataList={dataTest} ItemComponent={TrackCard} itemType={TrackListType.TOGGLE} />
-            <TrackList itemDataList={dataTest} ItemComponent={TrackCard} itemType={TrackListType.OPTIONS} />
+            <TrackList2 trackArray={dataTest} options={testConfig} />
             <Text style={styles.title}>Tab One</Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
             <EditScreenInfo path="/screens/TabOneScreen.tsx" />

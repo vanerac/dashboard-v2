@@ -37,10 +37,10 @@ export const TrackCard = ({
   return (
     <View style={stylesheet.horizontalContainer}>
       <View style={stylesheet.songIdentifiers}>
-        <Image style={stylesheet.imageAlbum} source={{ uri: albumTestUrl }} />
+        <Image style={stylesheet.imageAlbum} source={{ uri: track.image }} />
         <View style={stylesheet.textIdentifiers}>
-          <Text style={stylesheet.text}>song title</Text>
-          <Text style={stylesheet.text}>song album title</Text>
+          <Text style={stylesheet.text}>{track.name}</Text>
+          <Text style={stylesheet.text}>{track.album}</Text>
         </View>
       </View>
       {config.type === TrackListType.TOGGLE ? (
