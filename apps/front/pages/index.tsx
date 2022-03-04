@@ -69,6 +69,7 @@ const Dasboard = () => {
 
     useEffect(() => {
         Promise.all([getClient().services.getAllUserServices(), getClient().widget.getAllWidgets()]).then((data) => {
+            console.log(data[0]);
             setServicesList(data[0].services);
             setNumberWidgets(data[1]);
         });
