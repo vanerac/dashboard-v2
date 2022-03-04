@@ -1,34 +1,19 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { TrackCard, TrackListType } from "../Cards/TrackCard";
+import { TrackCard, TrackDisplayConfig } from "../Cards/TrackCard";
 import { Track } from "../../services";
 
-// type DataTest = TrackListType[];
-//
-// export const dataTest: DataTest = [
-//   TrackListType.OPTIONS,
-//   TrackListType.OPTIONS,
-//   TrackListType.TOGGLE,
-// ];
+export const TrackList = ({
+  trackArray,
+  options,
+}: {
+  trackArray: Array<Track>;
+  options: TrackDisplayConfig;
+}) => {
+  const DataTrackList = ({ track }: { track: Track }) => (
+    <TrackCard config={{ type: options.type }} track={track} />
+  );
 
-export interface ItemListProps<Item> {
-  itemDataList: Item[];
-  ItemComponent: React.FC<{ item: Item; track: Track }>;
-  // itemType: TrackListType;
-}
-
-const DataTrackList = ({ track }: { track: Track }) => (
-  <TrackCard track={track} />
-);
-
-export const TrackList = <Item extends any>({
-  itemDataList,
-  ItemComponent,
-}: // itemType,
-ItemListProps<Item>) => {
-  // const renderItem = ({ item }: { item: Item }) => (
-  //   <ItemComponent item={item} type={itemType} />
-  // );
   const renderItem = ({ item }: { item: Track }) => (
     <DataTrackList track={item} />
   );
@@ -36,7 +21,7 @@ ItemListProps<Item>) => {
   return (
     <FlatList
       style={stylesheet.container}
-      data={itemDataList}
+      data={trackArray}
       renderItem={renderItem}
       keyExtractor={(_item, index) => index.toString()}
     />
@@ -48,7 +33,3 @@ const stylesheet = StyleSheet.create({
     width: "100%",
   },
 });
-
-// parameter ItemList : ?maxHeight: string, Array<Item>, direction: boolean
-// Item being all types of card we are gonna put in ItemList (TrackCard, PlaylistCard, ServiceCard, etc)
-// flatlist props refreshing et onRefresh
