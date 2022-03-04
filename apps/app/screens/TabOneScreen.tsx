@@ -13,23 +13,30 @@ export default function TabOneScreen({ navigation: $nav }: RootTabScreenProps<'T
     };
 
     const [userServices, setUserServices] = useState<Service[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         getClient()
             .services.getAllUserServices()
-            .then((services: any) => setUserServices(services));
+            .then((services) => setUserServices(services.services as Service[]))
+            .then(() => setLoading(true));
     }, []);
 
     console.log('user', userServices);
+    console.log(loading);
 
     return (
         <View style={styles.container}>
-            <PlaylistWidget
-                deleteWidget={test}
-                widgetKey={1}
-                widgetService={userServices[0]?.id}
-                clientAPi={getClient}
-            />
+            {loading ? (
+                <PlaylistWidget
+                    deleteWidget={test}
+                    widgetKey={1}
+                    widgetService={userServices[0].id}
+                    clientAPi={getClient}
+                />
+            ) : (
+                <Text>sldfkjdfklj</Text>
+            )}
             <Text style={styles.title}>Tab One</Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
             <EditScreenInfo path="/screens/TabOneScreen.tsx" />

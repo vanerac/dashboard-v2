@@ -40,8 +40,9 @@ const stylesheet = StyleSheet.create({
   primaryContainer: {
     backgroundColor: "#212121",
     alignItems: "center",
-    width: 260,
+    width: "100%",
     height: 260,
+    minHeight: 260,
   },
 
   identifiersContainer: {

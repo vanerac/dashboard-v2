@@ -40,7 +40,7 @@ export const TrackCard = ({
         <Image style={stylesheet.imageAlbum} source={{ uri: track.image }} />
         <View style={stylesheet.textIdentifiers}>
           <Text style={stylesheet.text}>{track.name}</Text>
-          <Text style={stylesheet.text}>{track.album}</Text>
+          <Text style={stylesheet.text}>{track.artist}</Text>
         </View>
       </View>
       {config.type === TrackCardType.TOGGLE ? (

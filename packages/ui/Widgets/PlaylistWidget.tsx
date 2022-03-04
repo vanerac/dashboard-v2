@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { ScrollView, Text, StyleSheet } from "react-native";
 import { TrackList } from "../Lists/TrackList";
 import { TrackCardType } from "../Cards/TrackCard";
 import { PlaylistCard, PlaylistDisplayConfig } from "../Cards/PlaylistCard";
@@ -32,12 +32,12 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
         console.log(dataP);
         clientAPi()
           .playlist.getPlaylistTracks(widgetService, dataP[0].id)
-          .then((dataT: any) => console.log("dataT"));
+          .then((dataT: any) => setDataTracks(dataT));
       });
   }, []);
 
   return (
-    <View style={stylesheet.container}>
+    <ScrollView style={stylesheet.container}>
       {dataPlaylist.length ? (
         <>
           <PlaylistCard
@@ -52,12 +52,16 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
       ) : (
         <Text>flsdkjfdlskfjsdlkj</Text>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
 const stylesheet = StyleSheet.create({
   container: {
     width: "100%",
+  },
+
+  playlistCard: {
+    marginBottom: 20,
   },
 });
