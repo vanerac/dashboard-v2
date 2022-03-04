@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Playlist } from "../../services";
-import { TrackCardType } from "./TrackCard";
 
 export type PlaylistDisplayConfig = {
   provider: boolean;
@@ -67,6 +66,3 @@ const stylesheet = StyleSheet.create({
     borderRadius: 20,
   },
 });
-
-const playlistCoverUrl =
-  "https://sizze-figma-plugin-images-upload.s3.us-east-2.amazonaws.com/5d251502ed3d3a8171ad5bf5e224e99a";

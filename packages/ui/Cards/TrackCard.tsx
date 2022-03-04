@@ -7,8 +7,8 @@ import {
   Switch,
   TouchableOpacity,
 } from "react-native";
-import { CheckBox } from "react-native-elements";
-import Icon from "react-native-vector-icons/Entypo";
+// import { CheckBox } from "react-native-elements";
+// import Icon from "react-native-vector-icons/Entypo";
 import { Track } from "../../services";
 
 export enum TrackCardType {
@@ -52,27 +52,27 @@ export const TrackCard = ({
       ) : (
         <></>
       )}
-      {config.type === TrackCardType.CHECKBOX ? (
-        <CheckBox
-          style={stylesheet.checkbox}
-          checked={isChecked}
-          onPress={() => setIsChecked(!isChecked)}
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
-          center
-        />
-      ) : (
-        <></>
-      )}
-      {config.type === TrackCardType.OPTIONS ? (
-        <TouchableOpacity style={stylesheet.options}>
-          <Text>
-            <Icon name="dots-three-horizontal" size={25} color="#FFFFFF" />
-          </Text>
-        </TouchableOpacity>
-      ) : (
-        <></>
-      )}
+      {/*{config.type === TrackCardType.CHECKBOX ? (*/}
+      {/*  <CheckBox*/}
+      {/*    style={stylesheet.checkbox}*/}
+      {/*    checked={isChecked}*/}
+      {/*    onPress={() => setIsChecked(!isChecked)}*/}
+      {/*    checkedIcon="dot-circle-o"*/}
+      {/*    uncheckedIcon="circle-o"*/}
+      {/*    center*/}
+      {/*  />*/}
+      {/*) : (*/}
+      {/*  <></>*/}
+      {/*)}*/}
+      {/*{config.type === TrackCardType.OPTIONS ? (*/}
+      {/*  <TouchableOpacity style={stylesheet.options}>*/}
+      {/*    <Text>*/}
+      {/*      <Icon name="dots-three-horizontal" size={25} color="#FFFFFF" />*/}
+      {/*    </Text>*/}
+      {/*  </TouchableOpacity>*/}
+      {/*) : (*/}
+      {/*  <></>*/}
+      {/*)}*/}
     </View>
   );
 };

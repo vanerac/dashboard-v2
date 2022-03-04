@@ -46,7 +46,7 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
           />
           <TrackList
             trackArray={dataTracks}
-            options={{ type: TrackCardType.OPTIONS }}
+            options={{ type: TrackCardType.TOGGLE }}
           />
         </>
       ) : (
@@ -59,6 +59,7 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
 const stylesheet = StyleSheet.create({
   container: {
     width: "100%",
+    height: "100%",
   },
 
   playlistCard: {

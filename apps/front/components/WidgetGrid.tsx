@@ -4,8 +4,9 @@ import RGL, { WidthProvider } from 'react-grid-layout';
 import { Key } from 'react';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import { CardTest } from '../../../packages/ui/CardTest';
+// import { CardTest } from '../../../packages/ui/CardTest';
 import { getClient } from '../utils/ApiClient';
+import { PlaylistWidget } from '@area/ui/Widgets/PlaylistWidget';
 
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
@@ -14,8 +15,14 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
                 <div key={i}>
-                    {l.widgetType} + {l.widgetService} + {l.widgetKey}
-                    <CardTest deleteWidget={props.deleteWidget} widgetKey={l.widgetKey} />
+                    {/*{l.widgetType} + {l.widgetService} + {l.widgetKey}*/}
+                    {/*<CardTest deleteWidget={props.deleteWidget} widgetKey={l.widgetKey} />*/}
+                    <PlaylistWidget
+                        deleteWidget={props.deleteWidget}
+                        widgetKey={l.widgetKey}
+                        widgetService={l.widgetService}
+                        clientAPi={getClient}
+                    />
                 </div>
             );
         });
