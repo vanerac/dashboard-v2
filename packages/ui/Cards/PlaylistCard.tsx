@@ -1,39 +1,52 @@
-import {Playlist} from "../../services";
-import React, {useEffect, useState} from 'react'
-import {View} from "react-native";
-import {Client} from "../../global";
-import {onClick, ServiceProvider} from "../index";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { Playlist } from "../../services";
 
-type PlaylistFetchProps = {
-    id: string;
-    provider: ServiceProvider;
-}
+export const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
+  return (
+    <View style={stylesheet.primaryContainer}>
+      <Image
+        style={stylesheet.playlistCover}
+        source={{ uri: playlist.image }}
+      />
+      <View style={stylesheet.identifiersContainer}>
+        <Text style={stylesheet.playlistTitle}> {playlist.name} </Text>
+        <Text style={stylesheet.playlistOrAlbum}> -playlist- </Text>
+      </View>
+    </View>
+  );
+};
 
-type PlaylistProps = {
-    playlist: Playlist;
-    onClick: onClick;
-}
+const stylesheet = StyleSheet.create({
+  primaryContainer: {
+    backgroundColor: "#212121",
+    alignItems: "center",
+    width: 260,
+    height: 260,
+  },
 
-export function PlaylistCardFetch(props: PlaylistFetchProps & { onClick: onClick}) {
-    const [Playlist, setPlaylist] = useState<Playlist>();
+  identifiersContainer: {
+    alignItems: "center",
+    justifyContent: "space-around",
+    margin: 13,
+  },
 
-    useEffect(() => {
-        Client.playlist.getPlaylistById(props.id, props.provider).then((val )=>setPlaylist(val.playlist));
-    }, [props.id, props.provider]);
+  playlistTitle: {
+    color: "white",
+    fontSize: 17,
+    marginBottom: 6,
+  },
 
-    if (!Playlist) {
-        return <View/>;
-    }
-    return PlaylistCard({...props, playlist: Playlist});
-}
+  playlistOrAlbum: {
+    color: "white",
+  },
 
+  playlistCover: {
+    width: 200,
+    height: 200,
+    borderRadius: 20,
+  },
+});
 
-export default function PlaylistCard(props: PlaylistProps) {
-    // use React native syntax
-
-    return (
-        <View>
-            <View/>
-        </View>
-    );
-}
+const playlistCoverUrl =
+  "https://sizze-figma-plugin-images-upload.s3.us-east-2.amazonaws.com/5d251502ed3d3a8171ad5bf5e224e99a";
