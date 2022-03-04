@@ -14,8 +14,13 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
                 <div key={i}>
-                    {l.widgetType} + {l.widgetService} + {l.widgetKey}
-                    <CardTest deleteWidget={props.deleteWidget} widgetKey={l.widgetKey} widgetService={l.widgetService} clientAPi={getClient}/>
+                    {/* {l.widgetType} + {l.widgetService} + {l.widgetKey} */}
+                    <CardTest
+                        deleteWidget={props.deleteWidget}
+                        widgetKey={l.widgetKey}
+                        widgetService={l.widgetService}
+                        clientAPi={getClient}
+                    />
                 </div>
             );
         });
@@ -23,6 +28,10 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
 
     function generateLayout() {
         return _.map(_.range(0, props.widgetsAdded.length), function (i) {
+            // const minW = 3,
+            //     minH = 1;
+            // const maxW = 3,
+            //     maxH = 1;
             return {
                 x: props.widgetsAdded[i].x,
                 y: props.widgetsAdded[i].y,
@@ -32,6 +41,10 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                 widgetService: props.widgetsAdded[i].serviceId,
                 widgetKey: props.widgetsAdded[i].id,
                 i: i.toString(),
+                maxW: 5,
+                minW: 2,
+                minH: 2,
+                maxH: 5,
             };
         });
     }
