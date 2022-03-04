@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Playlist } from "../../services";
+import { TrackListType } from "./TrackCard";
 
-export const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
+export type PlaylistDisplayConfig = {
+  provider: boolean;
+};
+
+export const PlaylistCard = ({
+  playlist,
+  config,
+}: {
+  playlist: Playlist;
+  config: PlaylistDisplayConfig;
+}) => {
   return (
     <View style={stylesheet.primaryContainer}>
       <Image
@@ -11,7 +22,14 @@ export const PlaylistCard = ({ playlist }: { playlist: Playlist }) => {
       />
       <View style={stylesheet.identifiersContainer}>
         <Text style={stylesheet.playlistTitle}> {playlist.name} </Text>
-        <Text style={stylesheet.playlistOrAlbum}> -playlist- </Text>
+        {config.provider ? (
+          <Text style={stylesheet.playlistOrAlbum}>
+            {" "}
+            - playlist - {playlist.provider} -{" "}
+          </Text>
+        ) : (
+          <Text style={stylesheet.playlistOrAlbum}>- playlist -</Text>
+        )}
       </View>
     </View>
   );
