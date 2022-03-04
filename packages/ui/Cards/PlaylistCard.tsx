@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Playlist } from "../../services";
-import { TrackListType } from "./TrackCard";
+import { TrackCardType } from "./TrackCard";
 
 export type PlaylistDisplayConfig = {
   provider: boolean;
@@ -14,6 +14,7 @@ export const PlaylistCard = ({
   playlist: Playlist;
   config: PlaylistDisplayConfig;
 }) => {
+  console.log(playlist);
   return (
     <View style={stylesheet.primaryContainer}>
       <Image

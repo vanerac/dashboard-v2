@@ -11,7 +11,7 @@ import { CheckBox } from "react-native-elements";
 import Icon from "react-native-vector-icons/Entypo";
 import { Track } from "../../services";
 
-export enum TrackListType {
+export enum TrackCardType {
   CHECKBOX,
   TOGGLE,
   OPTIONS,
@@ -20,7 +20,7 @@ export enum TrackListType {
 export type TrackDisplayConfig = {
   title?: boolean;
   artist_album?: boolean;
-  type: TrackListType;
+  type: TrackCardType;
 };
 
 export const TrackCard = ({
@@ -43,7 +43,7 @@ export const TrackCard = ({
           <Text style={stylesheet.text}>{track.album}</Text>
         </View>
       </View>
-      {config.type === TrackListType.TOGGLE ? (
+      {config.type === TrackCardType.TOGGLE ? (
         <Switch
           style={stylesheet.toggle}
           onValueChange={toggleSwitch}
@@ -52,7 +52,7 @@ export const TrackCard = ({
       ) : (
         <></>
       )}
-      {config.type === TrackListType.CHECKBOX ? (
+      {config.type === TrackCardType.CHECKBOX ? (
         <CheckBox
           style={stylesheet.checkbox}
           checked={isChecked}
@@ -64,7 +64,7 @@ export const TrackCard = ({
       ) : (
         <></>
       )}
-      {config.type === TrackListType.OPTIONS ? (
+      {config.type === TrackCardType.OPTIONS ? (
         <TouchableOpacity style={stylesheet.options}>
           <Text>
             <Icon name="dots-three-horizontal" size={25} color="#FFFFFF" />
