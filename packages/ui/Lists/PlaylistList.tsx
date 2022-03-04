@@ -6,9 +6,11 @@ import { Playlist } from "../../services";
 export const PlaylistList = ({
   PlaylistArray,
   options,
+  direction,
 }: {
   PlaylistArray: Array<Playlist>;
   options: PlaylistDisplayConfig;
+  direction: boolean;
 }) => {
   const DataPlaylistList = ({ playlist }: { playlist: Playlist }) => (
     <PlaylistCard config={{ provider: options.provider }} playlist={playlist} />
@@ -24,6 +26,7 @@ export const PlaylistList = ({
       data={PlaylistArray}
       renderItem={renderItem}
       keyExtractor={(_item, index) => index.toString()}
+      horizontal={direction}
     />
   );
 };
