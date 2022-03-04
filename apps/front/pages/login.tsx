@@ -126,8 +126,6 @@ const Login = () => {
             .catch((error) => console.log(error));
     };
 
-    getClient().playlist.getAllPlaylists;
-
     const authApple = () => {
         // Client.sso.appleConsentSso('http://localhost:3000/getAppleCode').then((data) => {
         //     console.log(data);

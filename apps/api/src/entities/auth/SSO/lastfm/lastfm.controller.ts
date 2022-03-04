@@ -16,7 +16,7 @@ export default class LastFmController extends SSOController {
     static async getCode(req: Request, res: Response): Promise<void> {
         // redirect to lastFm for authentication
         // callback url sends to /api/auth/lastFm/callback
-        const { callbackURL } = req.query;
+        // const { callbackURL } = req.query;
 
         const params = {
             api_key: LastFmController.clientId,
