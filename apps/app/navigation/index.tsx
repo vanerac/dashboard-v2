@@ -17,6 +17,7 @@ import LibraryTabScreen from '../screens/tabs/LibTabScreen';
 import { ThemeContext } from '../constants/ThemeContext';
 import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import AccountsHandlingModalScreen from '../screens/modals/AccountsHandlingModalScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
@@ -63,6 +64,13 @@ function RootNavigator() {
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen name="Modal" component={ModalScreen} />
+                <Stack.Screen
+                    name="AccountsModal"
+                    component={AccountsHandlingModalScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
             </Stack.Group>
         </Stack.Navigator>
     );

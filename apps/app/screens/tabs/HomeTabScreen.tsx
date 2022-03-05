@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useContext } from 'react';
-import { RootTabScreenProps } from '../../types';
+import { RootStackParamList } from '../../types';
 import { ThemeContext } from '../../constants/ThemeContext';
 import Icon from 'react-native-vector-icons/Octicons';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function HomeTabScreen({ navigation: $nav }: RootTabScreenProps<'HomeTab'>) {
+type Props = NativeStackScreenProps<RootStackParamList, 'AccountsModal'>;
+
+export default function HomeTabScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
 
     return (
@@ -13,7 +16,7 @@ export default function HomeTabScreen({ navigation: $nav }: RootTabScreenProps<'
                 <View style={[styles.topView, { backgroundColor: theme.primary }]}>
                     <Text style={[styles.title, { color: theme.text }]}>Welcome</Text>
                     <View style={styles.iconView}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('AccountsModal')}>
                             <Icon style={styles.icons} name="person" size={25} color={theme.text} />
                         </TouchableOpacity>
                         <TouchableOpacity>
