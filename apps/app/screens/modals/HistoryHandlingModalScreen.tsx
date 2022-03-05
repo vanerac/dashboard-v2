@@ -3,7 +3,7 @@ import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { ThemeContext } from '../../constants/ThemeContext';
 import Icon from 'react-native-vector-icons/Entypo';
 
-export default function AccountsHandlingModalScreen() {
+export default function HistoryHandlingModalScreen() {
     const { theme } = useContext(ThemeContext);
 
     return (
@@ -13,16 +13,9 @@ export default function AccountsHandlingModalScreen() {
                     <Icon name="chevron-thin-down" size={25} color={theme.text} />
                 </View>
                 <View>
-                    <Text style={[styles.title, { color: theme.text }]}>Accounts</Text>
+                    <Text style={[styles.title, { color: theme.text }]}>History</Text>
                 </View>
                 <View style={[styles.line, { borderBottomColor: theme.text }]} />
-                <View style={styles.secondaryContainer}>
-                    <Text style={[styles.serviceText, { color: theme.text }]}>Spotify</Text>
-                    <Text style={[styles.serviceText, { color: theme.text }]}>Deezer</Text>
-                    <Text style={[styles.serviceText, { color: theme.text }]}>Apple Music</Text>
-                    <Text style={[styles.serviceText, { color: theme.text }]}>YouTube Music</Text>
-                    <Text style={[styles.serviceText, { color: theme.text }]}>LastFM</Text>
-                </View>
             </View>
         </ScrollView>
     );

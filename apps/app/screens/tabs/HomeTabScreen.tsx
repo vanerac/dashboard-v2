@@ -19,7 +19,7 @@ export default function HomeTabScreen({ navigation }: Props) {
                         <TouchableOpacity onPress={() => navigation.navigate('AccountsModal')}>
                             <Icon style={styles.icons} name="person" size={25} color={theme.text} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('HistoryModal')}>
                             <Icon style={styles.icons} name="clock" size={25} color={theme.text} />
                         </TouchableOpacity>
                         <TouchableOpacity>
