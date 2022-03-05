@@ -55,10 +55,9 @@ export class LastFmTools implements SSOTools {
         const response = await axios.get('https://ws.audioscrobbler.com/2.0/', {
             params: {
                 method: 'user.getinfo',
-                user: '',
-                api_key: LastFmTools.clientId,
+                // user: '',
+                api_key: token,
                 format: 'json',
-                token,
             },
         });
         return {
