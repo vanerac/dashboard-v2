@@ -13,7 +13,7 @@ import RegisterScreen from '../screens/login/RegisterScreen';
 import LoginScreen from '../screens/login/LoginScreen';
 import HomeTabScreen from '../screens/tabs/HomeTabScreen';
 import SearchTabScreen from '../screens/tabs/SearchTabScreen';
-import LibraryTabScreen from '../screens/tabs/LibraryTabScreen';
+import LibraryTabScreen from '../screens/tabs/LibTabScreen';
 import { ThemeContext } from '../constants/ThemeContext';
 import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -75,7 +75,7 @@ export function BottomTabNavigator() {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="TabOne"
+            initialRouteName="HomeTab"
             screenOptions={{
                 tabBarActiveTintColor: '#FFFFFF',
                 tabBarInactiveBackgroundColor: theme.primary,

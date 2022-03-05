@@ -1,16 +1,17 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
+import { Text, View } from '../../components/Themed';
 import { RootTabScreenProps } from '../../types';
 import { ThemeContext } from '../../constants/ThemeContext';
 
-export default function HomeTabScreen({ navigation: $nav }: RootTabScreenProps<'HomeTab'>) {
+export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProps<'LibraryTab'>) {
     const { theme } = useContext(ThemeContext);
 
     return (
         <ScrollView style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
                 <View style={[styles.topView, { backgroundColor: theme.primary }]}>
-                    <Text style={[styles.title, { color: theme.text }]}>Welcome</Text>
+                    <Text style={[styles.title, { color: theme.text }]}>Library</Text>
                 </View>
             </View>
         </ScrollView>
