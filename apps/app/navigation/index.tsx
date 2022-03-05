@@ -1,26 +1,21 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { useContext } from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName } from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo';
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
 import RegisterScreen from '../screens/login/RegisterScreen';
 import LoginScreen from '../screens/login/LoginScreen';
+import HomeTabScreen from '../screens/tabs/HomeTabScreen';
+import SearchTabScreen from '../screens/tabs/SearchTabScreen';
+import LibraryTabScreen from '../screens/tabs/LibraryTabScreen';
 import { ThemeContext } from '../constants/ThemeContext';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -31,10 +26,6 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -59,7 +50,16 @@ function RootNavigator() {
                     headerTintColor: theme.text,
                 }}
             />
-            <Stack.Screen name="HomePage" component={BottomTabNavigator} />
+            <Stack.Screen
+                name="HomePage"
+                component={BottomTabNavigator}
+                options={{
+                    title: 'Home',
+                    headerStyle: { backgroundColor: theme.primary },
+                    headerTintColor: theme.text,
+                    headerShown: false,
+                }}
+            />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Group screenOptions={{ presentation: 'modal' }}>
                 <Stack.Screen name="Modal" component={ModalScreen} />
@@ -68,49 +68,55 @@ function RootNavigator() {
     );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 export function BottomTabNavigator() {
-    const colorScheme = useColorScheme();
+    const { theme } = useContext(ThemeContext);
 
     return (
         <BottomTab.Navigator
             initialRouteName="TabOne"
             screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme].tint,
+                tabBarActiveTintColor: '#FFFFFF',
+                tabBarInactiveBackgroundColor: theme.primary,
+                tabBarActiveBackgroundColor: theme.primary,
+                tabBarHideOnKeyboard: true,
+                tabBarItemStyle: {
+                    marginBottom: -30,
+                    marginTop: -10,
+                },
+                tabBarLabelStyle: {
+                    marginBottom: 20,
+                },
             }}>
             <BottomTab.Screen
-                name="TabOne"
-                component={TabOneScreen}
-                options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-                    title: 'Tab One',
-                    tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-                    headerRight: () => (
-                        <Pressable
-                            onPress={() => navigation.navigate('Modal')}
-                            style={({ pressed }) => ({
-                                opacity: pressed ? 0.5 : 1,
-                            })}>
-                            <FontAwesome
-                                name="info-circle"
-                                size={25}
-                                color={Colors[colorScheme].text}
-                                style={{ marginRight: 15 }}
-                            />
-                        </Pressable>
-                    ),
-                })}
+                name="HomeTab"
+                component={HomeTabScreen}
+                options={{
+                    title: 'Home',
+                    headerStyle: { backgroundColor: theme.primary },
+                    tabBarIcon: ({ color }) => <Icon name={'home'} color={color} size={35} />,
+                    headerShown: false,
+                }}
             />
             <BottomTab.Screen
-                name="TabTwo"
-                component={TabTwoScreen}
+                name="SearchTab"
+                component={SearchTabScreen}
                 options={{
-                    title: 'Tab Two',
-                    tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+                    title: 'Search',
+                    headerStyle: { backgroundColor: theme.primary },
+                    tabBarIcon: ({ color }) => <Icon name={'magnifying-glass'} color={color} size={35} />,
+                    headerShown: false,
+                }}
+            />
+            <BottomTab.Screen
+                name="LibraryTab"
+                component={LibraryTabScreen}
+                options={{
+                    title: 'Library',
+                    headerStyle: { backgroundColor: theme.primary },
+                    tabBarIcon: ({ color }) => <Icon name={'menu'} color={color} size={35} />,
+                    headerShown: false,
                 }}
             />
         </BottomTab.Navigator>
