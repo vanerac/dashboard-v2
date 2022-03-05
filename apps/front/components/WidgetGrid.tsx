@@ -27,11 +27,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
     };
 
     function generateLayout() {
-        return _.map(_.range(0, props.widgetsAdded.length), function (i) {
-            // const minW = 3,
-            //     minH = 1;
-            // const maxW = 3,
-            //     maxH = 1;
+        return _.map(_.range(0, props.widgetsAdded.length), function (i: string | number) {
             return {
                 x: props.widgetsAdded[i].x,
                 y: props.widgetsAdded[i].y,

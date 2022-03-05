@@ -24,14 +24,11 @@ const Dasboard = () => {
     const googleService = servicesList.find((service: Service) => service.provider === 'google');
     const appleService = servicesList.find((service: Service) => service.provider === 'apple');
     const lastFMService = servicesList.find((service: Service) => service.provider === 'lastfm');
+    const deezerService = servicesList.find((service: Service) => service.provider === 'lastfm');
 
     const addWidget = (widgetServicetype: string) => {
         const [widgetService, typeService] = widgetServicetype.split(':');
         console.log('You just created a ' + widgetService + ' - ' + typeService + ' widget !');
-
-        console.log('la spotidy => ', spotifyService);
-        console.log(servicesList);
-        console.log('la youtube => ', googleService);
 
         const newWidget = {
             serviceId: undefined,
@@ -55,6 +52,9 @@ const Dasboard = () => {
                 break;
             case 'youtube':
                 newWidget.serviceId = googleService.id;
+                break;
+            case 'deezer':
+                newWidget.serviceId = deezerService.id;
                 break;
             default:
                 console.log('ERROR CREATING NEW WIDGET');
