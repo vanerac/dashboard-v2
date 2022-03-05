@@ -96,7 +96,7 @@ export default class PlayerManager {
 
         // evelate events
         musicPlayer.on('update', (data) => {
-            console.log('[playerManager] update', data);
+            // console.log('[playerManager] update', data);
             this.stateListener.emit('update', data);
         });
         return musicPlayer;
@@ -182,10 +182,20 @@ export default class PlayerManager {
         }
         await player.play(track);
         const stream = await player.getStream();
-        pipeline(stream, device.ref, () => {
-            console.log('[playerManager] pipe closed, stopping player');
-            player.pause();
+
+        stream.on('data', (data) => {
+            // make data.length a multiple of 2
+            const { length } = data;
+            const newLength = length + (length % 2);
+            const newData = Buffer.alloc(newLength);
+            data.copy(newData);
+            device.ref.write(newData);
         });
+
+        // pipeline(stream, device.ref, () => {
+        //     console.log('[playerManager] pipe closed, stopping player');
+        //     player.pause();
+        // });
     }
 
     public async pause($userId: UUID) {
@@ -362,7 +372,7 @@ export default class PlayerManager {
         });
 
         this.stateListener.on('update', (state) => {
-            console.log('[state] update state hook', state);
+            // console.log('[state] update state hook', state);
             stream.write(JSON.stringify(state)); // fails silently
         });
     }

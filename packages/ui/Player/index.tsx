@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getClient} from "@area/front/pages";
-import {Text, View} from 'react-native';
+import {Button, Text, View} from 'react-native';
+
 
 export abstract class AudioPCMPlayer {
     abstract play(pcm: Uint8Array): void;
@@ -28,19 +29,23 @@ export const PlayerComponent = ({device}: {device: AudioPCMPlayer}) => {
 
     const [playbackState, setPlaybackState] = useState<any>({});
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
     useEffect(() => {
-        // register component
+        console.log('useEffect');
         getClient().devices.registerDevice({
             name: 'AREA Player',
         }).then(({data_url, state_url}) => {
-
-
-            new WebSocket(data_url).onmessage = (message) => {
-                device.play(message.data);
-            };
+            console.log('data_url', data_url, state_url);
+            new WebSocket(data_url).addEventListener ('message', async message =>{
+                console.log(await message.data.arrayBuffer());
+                device.play(await message.data.arrayBuffer());
+            });
             new WebSocket(state_url).onmessage = (event ) => {
-                setPlaybackState(JSON.parse(event.data));
+                event.data.text().then((text: string) => {
+                    const state = JSON.parse(text);
+                    console.log('state', state);
+                    setPlaybackState(state);
+                })
+
             };
         })
     }, []);
@@ -59,6 +64,7 @@ export const PlayerComponent = ({device}: {device: AudioPCMPlayer}) => {
 
     return (
         <View>
+            <Button onPress={console.log} title={'BITe'}>BITE</Button >
            <Text>{playbackState.title}</Text>
         </View>
     );

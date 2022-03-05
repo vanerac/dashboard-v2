@@ -123,7 +123,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         eventManager.on('ready', () => (this.state = 'ready'));
         eventManager.on('not_ready', () => (this.state = 'not_ready'));
         eventManager.on('player_state_changed', (data: any) => {
-            console.log('[elevateEvents] player_state_changed', data);
+            // console.log('[elevateEvents] player_state_changed', data);
             //
             const state: PlaybackState = {
                 track: {
@@ -182,8 +182,7 @@ export default class SpotifyAudioPlayer extends AudioPlayer {
         return getStream(this.page, {
             audio: true,
             video: false,
-            frameSize: 20,
-            mimeType: 'audio/webm',
+            mimeType: 'audio/webm;codecs=pcm',
         });
     }
 

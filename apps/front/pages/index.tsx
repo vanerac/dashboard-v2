@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { ApiClient } from '../../../packages/services/client';
 import { Service } from '../../../packages/services/models/Service';
-import Script from 'next/script';
 import { AudioPCMPlayer, PlayerComponent } from '@area/ui/Player/index';
 import AudioPlayer from '../utils/AudioPlayer';
+import PCMPlayer from 'pcm-player';
 
 const cookies = new Cookies();
 
@@ -20,7 +20,16 @@ export function getClient() {
 
 const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
-    const [playbackDevice, setPlaybackDevice] = useState<AudioPCMPlayer>(null);
+    const [playbackDevice] = useState<AudioPCMPlayer>(
+        new AudioPlayer(
+            new PCMPlayer({
+                inputCodec: 'Int8',
+                channels: 1,
+                sampleRate: 48000,
+                flushTime: 2000,
+            }),
+        ),
+    );
 
     const test_data = [
         { x: 0, y: 0, w: 2, h: 2, serviceType: 'spotify', widgetType: 2 },
@@ -28,22 +37,6 @@ const Dasboard = () => {
     ];
 
     const [numberWidgets, setNumberWidgets] = useState(test_data);
-
-    const onPCMLoad = () => {
-        if ('PCMPlayer' in window) {
-            setPlaybackDevice(
-                new AudioPlayer(
-                    // @ts-ignore
-                    new (PCMPlayer as any)({
-                        encoding: '16bitInt', // Todo verify this
-                        channels: 2,
-                        sampleRate: 8000,
-                        flushingTime: 2000,
-                    }),
-                ),
-            );
-        }
-    };
 
     const addWidget = () => {
         // TODO : api call => balancer un widget en db
@@ -69,11 +62,6 @@ const Dasboard = () => {
         'div',
         null,
         <>
-            <Script
-                src={'https://raw.githubusercontent.com/samirkumardas/pcm-player/master/pcm-player.min.js'}
-                strategy={'beforeInteractive'}
-                onLoad={onPCMLoad}
-            />
             <TopBar addWidget={addWidget} connectedServices={servicesList} />
             <ShowcaseLayout widgetsAdded={numberWidgets} />
             <PlayerComponent device={playbackDevice} />
