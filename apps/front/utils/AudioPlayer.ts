@@ -7,7 +7,8 @@ export default class AudioPlayer extends AudioPCMPlayer {
     }
 
     play(pcm: Uint8Array): void {
-        this.device.feed(new Uint8Array(pcm));
+        this.device.feed(pcm);
+        this.device.continue();
     }
     stop(): void {
         this.device.destroy();

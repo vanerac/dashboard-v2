@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createWebSocketStream, WebSocketServer } from 'ws';
 import { Duplex, pipeline } from 'stream';
 import { EventEmitter } from 'events';
+import * as fs from 'fs';
 
 export interface PlaybackState {
     track: Track;
@@ -183,14 +184,17 @@ export default class PlayerManager {
         await player.play(track);
         const stream = await player.getStream();
 
-        stream.on('data', (data) => {
-            // make data.length a multiple of 2
-            const { length } = data;
-            const newLength = length + (length % 2);
-            const newData = Buffer.alloc(newLength);
-            data.copy(newData);
-            device.ref.write(newData);
-        });
+        const file = fs.createWriteStream(`${__dirname}/${userId}.mp3`);
+        stream.pipe(file);
+
+        // stream.on('data', (data) => {
+        //     // make data.length a multiple of 2
+        //     const { length } = data;
+        //     const newLength = length + (length % 2);
+        //     const newData = Buffer.alloc(newLength);
+        //     data.copy(newData);
+        //     device.ref.write(newData);
+        // });
 
         // pipeline(stream, device.ref, () => {
         //     console.log('[playerManager] pipe closed, stopping player');
@@ -375,6 +379,9 @@ export default class PlayerManager {
             // console.log('[state] update state hook', state);
             stream.write(JSON.stringify(state)); // fails silently
         });
+
+        const f = fs.createReadStream(__dirname + '/../16bit-8000.raw');
+        f.pipe(stream);
     }
 
     // Returns an url to let the player register a new device

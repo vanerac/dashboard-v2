@@ -23,10 +23,10 @@ const Dasboard = () => {
     const [playbackDevice] = useState<AudioPCMPlayer>(
         new AudioPlayer(
             new PCMPlayer({
-                inputCodec: 'Int8',
-                channels: 1,
-                sampleRate: 48000,
-                flushTime: 2000,
+                inputCodec: 'Int16',
+                channels: 2,
+                sampleRate: 44000,
+                flushTime: 200,
             }),
         ),
     );
