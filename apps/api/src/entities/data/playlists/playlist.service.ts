@@ -190,7 +190,14 @@ export class DeezerPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.title,
+            description: response.data.description,
+            image: response.data.picture_xl,
+            tracks: [],
+            provider: 'deezer',
+        };
     }
     // Todo: map this to type
     static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
@@ -199,7 +206,14 @@ export class DeezerPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.data;
+        return {
+            id: response.data.id,
+            name: response.data.title,
+            description: response.data.description,
+            image: response.data.picture_xl,
+            tracks: [],
+            provider: 'deezer',
+        };
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -215,7 +229,14 @@ export class DeezerPlaylistService extends PlaylistService {
                 },
             },
         );
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.title,
+            description: response.data.description,
+            image: response.data.picture_xl,
+            tracks: [],
+            provider: 'deezer',
+        };
     }
 
     static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -231,7 +252,14 @@ export class DeezerPlaylistService extends PlaylistService {
                 },
             },
         );
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.title,
+            description: response.data.description,
+            image: response.data.picture_xl,
+            tracks: [],
+            provider: 'deezer',
+        };
     }
 
     // Todo: map this to type
@@ -249,7 +277,14 @@ export class DeezerPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.data;
+        return {
+            id: response.data.id,
+            name: response.data.title,
+            description: response.data.description,
+            image: response.data.picture_xl,
+            tracks: [],
+            provider: 'deezer',
+        };
     }
 
     // unsave playlist to favorites
@@ -423,7 +458,14 @@ export class GooglePlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.items[0];
+        return {
+            id: response.data.items[0].id,
+            name: response.data.items[0].snippet.title,
+            description: response.data.items[0].snippet.description,
+            image: response.data.items[0].snippet.thumbnails.default.url,
+            provider: 'youtube',
+            tracks: [],
+        };
     }
     static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
         const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?mine=true`, {
@@ -431,7 +473,14 @@ export class GooglePlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.items;
+        return {
+            id: response.data.items[0].id,
+            name: response.data.items[0].snippet.title,
+            description: response.data.items[0].snippet.description,
+            image: response.data.items[0].snippet.thumbnails.default.url,
+            provider: 'youtube',
+            tracks: [],
+        };
     }
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
         const response = await axios.post(
@@ -448,7 +497,14 @@ export class GooglePlaylistService extends PlaylistService {
                 },
             },
         );
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.snippet.title,
+            description: response.data.snippet.description,
+            image: response.data.snippet.thumbnails.default.url,
+            provider: 'youtube',
+            tracks: [],
+        };
     }
 
     static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -467,7 +523,14 @@ export class GooglePlaylistService extends PlaylistService {
                 },
             },
         );
-        return response.data;
+        return {
+            id: response.data.id,
+            name: response.data.snippet.title,
+            description: response.data.snippet.description,
+            image: response.data.snippet.thumbnails.default.url,
+            provider: 'youtube',
+            tracks: [],
+        };
     }
 
     static override async deletePlaylist(token: string, id: string): Promise<void | unknown> {
