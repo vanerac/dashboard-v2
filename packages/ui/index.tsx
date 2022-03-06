@@ -23,5 +23,5 @@ export * from "./Buttons/SSO/SpotifySSO";
 // Widget
 export * from "./Widgets/PlaylistWidget";
 
-export type ServiceProvider = "spotify" | "youtube" | "apple" | "deezer";
+export type ServiceProvider = "spotify" | "google" | "apple" | "deezer";
 export type onClick = (value: any) => void;
