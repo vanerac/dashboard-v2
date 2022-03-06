@@ -38,8 +38,8 @@ const Login = () => {
     };
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpenErrorModal = () => setOpen(true);
+    const handleCloseErrorModal = () => setOpen(false);
 
     const updatePassword = (event: any) => {
         setErrorEmptyFieldPassword('');
@@ -94,7 +94,7 @@ const Login = () => {
                     Router.push('/');
                 })
                 // Todo: Handle 401: Token expired
-                .catch(handleOpen);
+                .catch(handleOpenErrorModal);
         }
     };
 
@@ -131,6 +131,7 @@ const Login = () => {
         //     console.log(data);
         //     Router.push(data.url);
         // });
+        handleOpenErrorModal();
     };
 
     const authDeezer = () => {
@@ -284,7 +285,7 @@ const Login = () => {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}
-                onClose={handleClose}
+                onClose={handleCloseErrorModal}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{

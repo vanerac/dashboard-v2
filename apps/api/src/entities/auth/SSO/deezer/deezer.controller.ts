@@ -40,20 +40,15 @@ export default class DeezerController extends SSOController {
             const SSOToken = await DeezerTools.getToken(code, (callbackURL as string) || DeezerController.callbackURL);
             const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('deezer', user.id);
-            console.log('ici :>', userData)
 
             if (userData) {
                 await updateToken(userData, user, SSOToken);
-                console.log("1")
             } else if (sessionUser) {
                 await linkService(sessionUser, user, SSOToken);
-                console.log("2")
                 userData = sessionUser;
             } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
-                console.log("3")
                 await linkService(userData, user, SSOToken);
-                console.log("4")
             }
 
             delete userData.password;
@@ -62,7 +57,7 @@ export default class DeezerController extends SSOController {
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
-            console.log(e)
+            console.log(e);
             if ((e as any).code === '23505') {
                 res.status(409).json({
                     message: 'Account already assigned to another user',

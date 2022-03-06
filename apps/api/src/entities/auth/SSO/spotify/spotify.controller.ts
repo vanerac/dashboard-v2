@@ -45,16 +45,12 @@ export default class SpotifyController extends SSOController {
 
             if (userData) {
                 await updateToken(userData, user, SSOToken);
-                console.log("1")
             } else if (sessionUser) {
                 await linkService(sessionUser, user, SSOToken);
-                console.log("2")
                 userData = sessionUser;
             } else {
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
-                console.log("3")
                 await linkService(userData, user, SSOToken);
-                console.log("4")
             }
 
             delete userData.password;

@@ -19,12 +19,12 @@ const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
 
     const [numberWidgets, setNumberWidgets] = useState([]);
-
+    console.log(servicesList);
     const spotifyService = servicesList.find((service: Service) => service.provider === 'spotify');
     const googleService = servicesList.find((service: Service) => service.provider === 'google');
     const appleService = servicesList.find((service: Service) => service.provider === 'apple');
     const lastFMService = servicesList.find((service: Service) => service.provider === 'lastfm');
-    const deezerService = servicesList.find((service: Service) => service.provider === 'lastfm');
+    const deezerService = servicesList.find((service: Service) => service.provider === 'deezer');
 
     const addWidget = (widgetServicetype: string) => {
         const [widgetService, typeService] = widgetServicetype.split(':');
