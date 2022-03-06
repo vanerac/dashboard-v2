@@ -1,4 +1,4 @@
-FROM node:17-alpine as install
+FROM node:lts-alpine as install
 
 # Environment variables
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
@@ -23,7 +23,7 @@ WORKDIR /area/apps/api
 RUN npm run build
 
 
-FROM node:17-alpine as worker
+FROM node:lts-alpine as worker
 
 WORKDIR /area
 

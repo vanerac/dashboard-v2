@@ -85,7 +85,8 @@ export async function parseToken(req: Request, res: Response, next: NextFunction
         if (typeof decoded != 'string' && decoded.id) {
             req.session.user = decoded;
         }
-    } finally {
         next();
+    } catch (e) {
+        console.error(e);
     }
 }

@@ -12,10 +12,18 @@ services:
             - "POSTGRES_HOST=db"
         env_file:
             -   apps/api/.env
+        depends_on:
+            -   db
+        restart: on-failure
+        networks:
+            - default
+            - backend
+            - database
+
     db:
         build:
-            context: apps/api
-            dockerfile: Dockerfile.postgres
+            context: .
+            dockerfile: postgres.dockerfile
         ports:
             - "5432:5432"
         volumes:
@@ -24,14 +32,29 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=postgres
-        restart: always
+        restart: on-failure
+        networks:
+            - default
+            - backend
+            - database
 
     front:
         build:
-            context: apps/front
-            dockerfile: Dockerfile.front
+            context: .
+            dockerfile: front.dockerfile
         ports:
             - "3000:3000"
+        restart: on-failure
         depends_on:
-            - db
-        restart: always
+            - api
+        networks:
+            - default
+            - backend
+
+networks:
+    default:
+        external: false
+    backend:
+        external: false
+    database:
+        external: false
