@@ -33,7 +33,7 @@ export const CardTest: React.FC<Props> = ({
       .playlist.getAllPlaylists(widgetService)
       .then((data: any) => {
         setData_pour_koeck(data);
-        console.log("all playlist => ", data);
+        console.log(data);
       });
   }, []);
 
