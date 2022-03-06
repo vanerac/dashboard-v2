@@ -17,7 +17,12 @@ export class DeezerTools implements SSOTools {
             output: 'json',
         };
         const response = await axios.get(url, { params });
-        return response.data;
+        return {
+            access_token: response.data.access_token,
+            expires_in: response.data.expires || 0,
+            provider: 'deezer',
+            refresh_token: response.data.refresh_token,
+        };
     }
 
     static async refreshToken(refreshToken: string): Promise<Token> {
@@ -38,6 +43,11 @@ export class DeezerTools implements SSOTools {
             access_token: token,
         };
         const response = await axios.get(url, { params });
-        return response.data;
+        return {
+            displayName: response.data.name,
+            email: response.data.email,
+            id: response.data.id,
+            password: '',
+        };
     }
 }

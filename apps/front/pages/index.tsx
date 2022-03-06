@@ -19,19 +19,16 @@ const Dasboard = () => {
     const [servicesList, setServicesList] = useState<Service[]>([]);
 
     const [numberWidgets, setNumberWidgets] = useState([]);
-
+    console.log(servicesList);
     const spotifyService = servicesList.find((service: Service) => service.provider === 'spotify');
     const googleService = servicesList.find((service: Service) => service.provider === 'google');
     const appleService = servicesList.find((service: Service) => service.provider === 'apple');
     const lastFMService = servicesList.find((service: Service) => service.provider === 'lastfm');
+    const deezerService = servicesList.find((service: Service) => service.provider === 'deezer');
 
     const addWidget = (widgetServicetype: string) => {
         const [widgetService, typeService] = widgetServicetype.split(':');
         console.log('You just created a ' + widgetService + ' - ' + typeService + ' widget !');
-
-        console.log('la spotidy => ', spotifyService);
-        console.log(servicesList);
-        console.log('la youtube => ', googleService);
 
         const newWidget = {
             serviceId: undefined,
@@ -56,6 +53,9 @@ const Dasboard = () => {
             case 'youtube':
                 newWidget.serviceId = googleService.id;
                 break;
+            case 'deezer':
+                newWidget.serviceId = deezerService.id;
+                break;
             default:
                 console.log('ERROR CREATING NEW WIDGET');
         }
@@ -69,6 +69,7 @@ const Dasboard = () => {
 
     useEffect(() => {
         Promise.all([getClient().services.getAllUserServices(), getClient().widget.getAllWidgets()]).then((data) => {
+            console.log(data[0]);
             setServicesList(data[0].services);
             setNumberWidgets(data[1]);
         });

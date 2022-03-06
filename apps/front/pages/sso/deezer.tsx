@@ -7,16 +7,17 @@ import { useEffect } from 'react';
 
 const cookies = new Cookies();
 
-function SsoLastfm() {
+function SsoDeezer() {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             let params = new URL(window.location.href).searchParams;
-            let token = params.get('token');
+            let code = params.get('code');
+            // console.log('ici => ', params);
             getClient()
-                .sso.lastfmAuthCodeSso(token, '')
+                .sso.deezerAuthCodeSso(code, 'http://localhost:3000/sso/deezer')
                 .then((data) => {
-                    const { token: api_token } = data;
-                    cookies.set('API_TOKEN', api_token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
+                    const { token } = data;
+                    cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });
                     Router.push('/');
                 });
         }
@@ -36,4 +37,4 @@ function SsoLastfm() {
     );
 }
 
-export default loadingScreen(SsoLastfm);
+export default loadingScreen(SsoDeezer);

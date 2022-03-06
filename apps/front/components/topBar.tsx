@@ -27,7 +27,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiRadioFm, mdiSpotify } from '@mdi/js';
+import { mdiRadioFm, mdiSpotify, mdiMusicNoteEighth } from '@mdi/js';
 import { getClient } from '../utils/ApiClient';
 import { UrlObject } from 'url';
 
@@ -86,6 +86,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
     const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+    const deezerService = connectedServices.find((service: { provider: string }) => service.provider === 'deezer');
     let userName = undefined;
     let $val = undefined;
     let isAnyServicesConnected = undefined;
@@ -124,6 +125,10 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     };
     const handleCloseWidgetTypeModal = () => setOpenWidgetTypeModal(false);
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpenErrorModal = () => setOpen(true);
+    const handleCloseErrorModal = () => setOpen(false);
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -151,6 +156,12 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const svgLastFM = (
         <SvgIcon>
             <path d={mdiRadioFm} />
+        </SvgIcon>
+    );
+
+    const svgTmpDeezer = (
+        <SvgIcon>
+            <path d={mdiMusicNoteEighth} />
         </SvgIcon>
     );
 
@@ -186,6 +197,18 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
         //     console.log(data);
         //     Router.push(data.url);
         // });
+        handleCloseServiceModal();
+        handleOpenErrorModal();
+    };
+
+    const authDeezer = () => {
+        getClient()
+            .sso.deezerConsentSso('http://localhost:3000/sso/deezer')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            })
+            .catch((error) => console.log(error));
     };
 
     const [state, setState] = React.useState({
@@ -353,6 +376,18 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                                     Apple
                                 </Button>
                             </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    disabled={deezerService}
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={svgTmpDeezer}
+                                    onClick={authDeezer}
+                                    size="large"
+                                    variant="contained">
+                                    Deezer
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Box>
                 </Fade>
@@ -423,6 +458,18 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                                     size="large"
                                     variant="contained">
                                     Apple Widget
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    disabled={!deezerService}
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={svgTmpDeezer}
+                                    onClick={() => handleOpenWidgetTypeModal('deezer')}
+                                    size="large"
+                                    variant="contained">
+                                    Deezer Widget
                                 </Button>
                             </Grid>
                         </Grid>
@@ -518,6 +565,27 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                                 </Button>
                             </Grid>
                         </Grid>
+                    </Box>
+                </Fade>
+            </Modal>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleCloseErrorModal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}>
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            An error has occurred.
+                        </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                            Please try again.
+                        </Typography>
                     </Box>
                 </Fade>
             </Modal>
