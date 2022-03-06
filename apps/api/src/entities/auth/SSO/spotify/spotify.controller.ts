@@ -49,7 +49,6 @@ export default class SpotifyController extends SSOController {
                 await linkService(sessionUser, user, SSOToken);
                 userData = sessionUser;
             } else {
-                console.log('Not loggedm creating user');
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
             }
