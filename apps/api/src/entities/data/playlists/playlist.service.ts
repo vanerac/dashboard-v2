@@ -184,6 +184,9 @@ export class DeezerPlaylistService extends PlaylistService {
     // Todo: map this to type
     static override async getPlaylist(token: string, id: string): Promise<Playlist | unknown> {
         const response = await axios.get(`https://api.deezer.com/playlist/${id}`, {
+            params: {
+                access_token: token,
+            },
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -199,11 +202,14 @@ export class DeezerPlaylistService extends PlaylistService {
     }
     static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
         const response = await axios.get(`https://api.deezer.com/user/me/playlists`, {
+            params: {
+                access_token: token,
+            },
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.map((item: any) => {
+        return response.data.data.map((item: any) => {
             return {
                 id: item.id,
                 name: item.title,
@@ -223,6 +229,9 @@ export class DeezerPlaylistService extends PlaylistService {
                 description: playlist.description,
             },
             {
+                params: {
+                    access_token: token,
+                },
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -246,6 +255,9 @@ export class DeezerPlaylistService extends PlaylistService {
                 description: playlist.description,
             },
             {
+                params: {
+                    access_token: token,
+                },
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -264,6 +276,9 @@ export class DeezerPlaylistService extends PlaylistService {
     // Todo: map this to type
     static override async deletePlaylist(token: string, id: string): Promise<void | unknown> {
         await axios.delete(`https://api.deezer.com/playlist/${id}`, {
+            params: {
+                access_token: token,
+            },
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -272,11 +287,14 @@ export class DeezerPlaylistService extends PlaylistService {
     }
     static override async getPlaylistTracks(token: string, id: string): Promise<Track[] | unknown> {
         const response = await axios.get(`https://api.deezer.com/playlist/${id}/tracks`, {
+            params: {
+                access_token: token,
+            },
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.map((item: any) => {
+        return response.data.data.map((item: any) => {
             return {
                 id: item.id,
                 name: item.title,
@@ -291,6 +309,9 @@ export class DeezerPlaylistService extends PlaylistService {
     // unsave playlist to favorites
     static override async unsavePlaylist(token: string, id: string): Promise<void | unknown> {
         await axios.delete(`https://api.deezer.com/user/me/playlists/${id}/followers`, {
+            params: {
+                access_token: token,
+            },
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -304,6 +325,9 @@ export class DeezerPlaylistService extends PlaylistService {
             `https://api.deezer.com/user/me/playlists/${id}/followers`,
             {},
             {
+                params: {
+                    access_token: token,
+                },
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
