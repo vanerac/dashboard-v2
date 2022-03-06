@@ -1,8 +1,16 @@
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import PlaybackController from './playback.controller';
 import { parseServiceId } from '../../tools/service.tools';
+import configuration from '../../../configuration';
 
 const router = Router();
+
+const playerIsEnabled = (req: Request, res: Response, next: NextFunction) => {
+    if (configuration.playerEnabled) next();
+    else res.status(403).send('Player is disabled');
+};
+
+router.use(playerIsEnabled);
 
 // Queue Control
 router.get('/currentState', PlaybackController.getCurrentSong);
