@@ -76,18 +76,16 @@ export class SpotifyPlaylistService extends PlaylistService {
             },
         });
 
-        return Promise.all(
-            response.data.items.map(async (item: any) => {
-                return {
-                    id: item.id,
-                    name: item.name,
-                    description: item.description,
-                    image: item.images[0].url,
-                    tracks: [],
-                    provider: 'spotify',
-                };
-            }),
-        );
+        return response.data.items.map(async (item: any) => {
+            return {
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                image: item.images[0].url,
+                tracks: [],
+                provider: 'spotify',
+            };
+        });
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -199,21 +197,22 @@ export class DeezerPlaylistService extends PlaylistService {
             provider: 'deezer',
         };
     }
-    // Todo: map this to type
     static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
         const response = await axios.get(`https://api.deezer.com/user/me/playlists`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return {
-            id: response.data.id,
-            name: response.data.title,
-            description: response.data.description,
-            image: response.data.picture_xl,
-            tracks: [],
-            provider: 'deezer',
-        };
+        return response.data.data.map((item: any) => {
+            return {
+                id: item.id,
+                name: item.title,
+                description: item.description,
+                image: item.picture_xl,
+                tracks: [],
+                provider: 'deezer',
+            };
+        });
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
@@ -277,14 +276,16 @@ export class DeezerPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return {
-            id: response.data.id,
-            name: response.data.title,
-            description: response.data.description,
-            image: response.data.picture_xl,
-            tracks: [],
-            provider: 'deezer',
-        };
+        return response.data.data.map((item: any) => {
+            return {
+                id: item.id,
+                name: item.title,
+                artist: item.artist.name,
+                album: item.album.title,
+                duration: item.duration,
+                provider: 'deezer',
+            };
+        });
     }
 
     // unsave playlist to favorites
