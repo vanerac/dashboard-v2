@@ -76,16 +76,18 @@ export class SpotifyPlaylistService extends PlaylistService {
             },
         });
 
-        return response.data.items.map(async (item: any) => {
-            return {
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                image: item.images[0].url,
-                tracks: [],
-                provider: 'spotify',
-            };
-        });
+        return Promise.all(
+            response.data.items.map(async (item: any) => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    description: item.description,
+                    image: item.images[0].url,
+                    tracks: [],
+                    provider: 'spotify',
+                };
+            }),
+        );
     }
     // Todo: map this to type
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
