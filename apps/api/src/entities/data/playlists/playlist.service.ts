@@ -203,7 +203,7 @@ export class DeezerPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.data.map((item: any) => {
+        return response.data.map((item: any) => {
             return {
                 id: item.id,
                 name: item.title,
@@ -276,7 +276,7 @@ export class DeezerPlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return response.data.data.map((item: any) => {
+        return response.data.map((item: any) => {
             return {
                 id: item.id,
                 name: item.title,
