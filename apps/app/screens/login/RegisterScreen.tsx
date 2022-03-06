@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { ThemeContext } from '../../constants/ThemeContext';
-import { Client } from '../../../../packages/global';
 import { RootStackParamList } from '../../types';
+import { getClient } from '../../utils/ApiClient';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -16,20 +16,20 @@ export default function RegisterScreen({ navigation }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    async function makeRequestRegistration() {
-        try {
-            const res = await Client.authentication.register({
+
+    function makeRequestRegistration() {
+        getClient()
+            .authentication.register({
                 email: email,
                 password: password,
                 displayName: username,
+            })
+            .then(() => {
+                navigation.navigate('LoginScreen');
+            })
+            .catch((error) => {
+                Alert.alert(error.message);
             });
-            console.log(res);
-            Alert.alert('Success');
-            navigation.navigate('LoginScreen');
-        } catch (e) {
-            Alert.alert('Error');
-            console.log(e);
-        }
     }
 
     return (

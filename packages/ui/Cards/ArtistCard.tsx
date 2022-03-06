@@ -1,38 +1,65 @@
-import {Artist} from "../../services";
-import React, {useEffect, useState} from 'react'
-import {View} from "react-native";
-import {Client} from "../../global";
-import {onClick, ServiceProvider} from "../index";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { Artist } from "../../services";
 
-type ArtistFetchProps = {
-    id: string;
-    provider: ServiceProvider;
-}
+export type ArtistDisplayConfig = {
+  provider: boolean;
+};
 
-type ArtistCardProps = {
-    artist: Artist;
-    onClick: onClick
-}
+export const ArtistCard = ({
+  artist,
+  config,
+}: {
+  artist: Artist;
+  config: ArtistDisplayConfig;
+}) => {
+  console.log(artist);
+  return (
+    <View style={stylesheet.primaryContainer}>
+      <Image style={stylesheet.artistCover} source={{ uri: artist.image }} />
+      <View style={stylesheet.identifiersContainer}>
+        <Text style={stylesheet.artistName}> {artist.name} </Text>
+        {config.provider ? (
+          <Text style={stylesheet.artistOrAlbum}>
+            {" "}
+            - artist - {artist.provider} -{" "}
+          </Text>
+        ) : (
+          <Text style={stylesheet.artistOrAlbum}>- artist -</Text>
+        )}
+      </View>
+    </View>
+  );
+};
 
-export function ArtistCardFetch(props: ArtistFetchProps & { onClick: onClick }) {
-    const [Artist, setArtist] = useState<Artist>();
+const stylesheet = StyleSheet.create({
+  primaryContainer: {
+    backgroundColor: "#212121",
+    alignItems: "center",
+    width: "100%",
+    height: 260,
+    minHeight: 260,
+  },
 
-    useEffect(() => {
-        Client.artist.getArtistById(props.id, props.provider).then(setArtist);
-    }, [props.id, props.provider]);
+  identifiersContainer: {
+    alignItems: "center",
+    justifyContent: "space-around",
+    margin: 13,
+  },
 
-    if (!Artist) {
-        return <View/>;
-    }
-    return ArtistCard({artist: Artist, onClick: props.onClick});
-}
+  artistName: {
+    color: "white",
+    fontSize: 17,
+    marginBottom: 6,
+  },
 
+  artistOrAlbum: {
+    color: "white",
+  },
 
-export default function ArtistCard(props: ArtistCardProps) {
-    // use React native syntax
-
-    return (
-        <View />
-    )
-
-}
+  artistCover: {
+    width: 200,
+    height: 200,
+    borderRadius: 20,
+  },
+});
