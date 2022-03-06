@@ -15,5 +15,7 @@
     "dev": {
       "cache": false
     }
-  }
+  },
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/master"
 }

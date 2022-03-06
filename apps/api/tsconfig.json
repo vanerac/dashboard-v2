@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./build",
     "resolveJsonModule": true,
+    "module": "commonjs",
   },
   "include": [
     "index.ts",

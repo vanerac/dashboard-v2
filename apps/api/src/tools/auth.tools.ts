@@ -22,20 +22,6 @@ export function checkPassword(password: string, hash: string) {
     return bcrypt.compareSync(password, hash);
 }
 
-export const parseCookieSession = (req: Request, $res: Response, next: NextFunction) => {
-    const cookie = req.cookies['API_TOKEN'];
-    try {
-        if (cookie) {
-            const decoded: User & any = jwt.verify(JSON.parse(cookie), configuration.JWT_SECRET || 'secret');
-            if (typeof decoded != 'string' && decoded.id) req.session.user = decoded;
-        }
-    } catch (e) {
-        req.session.user = undefined;
-        console.log(e);
-    }
-    next();
-};
-
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const bearerHeader = req.headers['authorization'] || req.headers['Authorization'] || req.cookies['API_TOKEN'];
     if (!bearerHeader) {
@@ -82,21 +68,24 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
 
 export async function parseToken(req: Request, res: Response, next: NextFunction) {
     // Parse token, decode it and set req.session.user
-    const bearerHeader = req.headers['Authorization'] || req.headers['authorization'] || req.cookies['API_TOKEN'];
-    if (!bearerHeader) {
-        return next();
-    }
-    let access_token: string;
+    try {
+        const bearerHeader = req.headers['Authorization'] || req.headers['authorization'] || req.cookies['API_TOKEN'];
+        if (!bearerHeader) {
+            return next();
+        }
+        let access_token: string;
 
-    if (bearerHeader.startsWith('Bearer ')) {
-        const [$bearer, token] = bearerHeader.split(' ');
-        access_token = token;
-    } else {
-        access_token = bearerHeader;
+        if (bearerHeader.startsWith('Bearer ')) {
+            const [$bearer, token] = bearerHeader.split(' ');
+            access_token = token;
+        } else {
+            access_token = bearerHeader;
+        }
+        const decoded: User & any = jwt.verify(access_token, configuration.JWT_SECRET || 'secret');
+        if (typeof decoded != 'string' && decoded.id) {
+            req.session.user = decoded;
+        }
+    } finally {
+        next();
     }
-    const decoded: User & any = jwt.verify(access_token, configuration.JWT_SECRET || 'secret');
-    if (typeof decoded != 'string' && decoded.id) {
-        req.session.user = decoded;
-    }
-    next();
 }

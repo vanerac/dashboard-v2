@@ -1,13 +1,14 @@
 # general
-node_modules
+**/node_modules
 .env
 .gitignore
 .dockerignore
 .env*
 # API
 test
-db
-build
+**/db
+**/build
+**/.turbo
 # Frontend
 .turbo
 logs

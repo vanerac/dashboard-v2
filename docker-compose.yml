@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+    api:
+        build:
+            context: .
+            dockerfile: api.dockerfile
+        ports:
+            - "8080:8080"
+        environment:
+            - "SERVER_PORT=8080"
+            - "POSTGRES_HOST=db"
+        env_file:
+            -   apps/api/.env
     db:
         build:
             context: apps/api
