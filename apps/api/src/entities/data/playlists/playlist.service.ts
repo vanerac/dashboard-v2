@@ -473,14 +473,16 @@ export class GooglePlaylistService extends PlaylistService {
                 Authorization: `Bearer ${token}`,
             },
         });
-        return {
-            id: response.data.items[0].id,
-            name: response.data.items[0].snippet.title,
-            description: response.data.items[0].snippet.description,
-            image: response.data.items[0].snippet.thumbnails.default.url,
-            provider: 'youtube',
-            tracks: [],
-        };
+        return response.data.items.map((playlist: any) => {
+            return {
+                id: playlist.id,
+                name: playlist.snippet.title,
+                description: playlist.snippet.description,
+                image: playlist.snippet.thumbnails.default.url,
+                provider: 'youtube',
+                tracks: [],
+            };
+        });
     }
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
         const response = await axios.post(
