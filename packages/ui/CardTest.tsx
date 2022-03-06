@@ -6,19 +6,45 @@ import {
   ScrollView,
   Button,
 } from "react-native";
+// import { getClient } from "../../apps/front/utils/ApiClient";
+import { useEffect, useState } from "react";
 
-// @ts-ignore
-export const CardTest = ({ deleteWidget, widgetKey }) => {
+interface Props {
+  deleteWidget: Function;
+  widgetKey: number;
+  widgetService: string;
+  clientAPi: Function;
+}
+
+export const CardTest: React.FC<Props> = ({
+  deleteWidget,
+  widgetKey,
+  widgetService,
+  clientAPi,
+}) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
+
+  const [data_pour_koeck, setData_pour_koeck] = useState([]);
+
+  useEffect(() => {
+    clientAPi()
+      .playlist.getAllPlaylists(widgetService)
+      .then((data: any) => {
+        setData_pour_koeck(data);
+        console.log(data);
+      });
+  }, []);
 
   return (
     <>
       <SafeAreaView style={styles.middle}>
         <ScrollView>
           {/* @ts-ignore */}
-          <Button onPress={onClickDeleteWidget}>delete widget</Button>
+          <Button onPress={onClickDeleteWidget} title="okok">
+            delete widget
+          </Button>
           <Text style={{ color: "white" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
