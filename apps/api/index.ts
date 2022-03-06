@@ -89,6 +89,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
+console.log(process.env.SERVER_PORT);
+
 app.listen(configuration.serverPort, () => {
     console.log('Server is running on port ', configuration.serverPort);
 });

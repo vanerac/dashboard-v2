@@ -50,4 +50,7 @@ export default {
 
     // Security configuration
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
+
+    // Player configuration
+    playerEnabled: process.env.PLAYER_ENABLED || false,
 };
