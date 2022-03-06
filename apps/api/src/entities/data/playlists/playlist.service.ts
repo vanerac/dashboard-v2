@@ -453,7 +453,7 @@ export class ApplePlaylistService extends PlaylistService {
 export class GooglePlaylistService extends PlaylistService {
     // Make queries to Youtube API
     static override async getPlaylist(token: string, id: string): Promise<Playlist | unknown> {
-        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?id=${id}`, {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -468,7 +468,7 @@ export class GooglePlaylistService extends PlaylistService {
         };
     }
     static override async getPlaylists(token: string): Promise<Playlist[] | unknown> {
-        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?mine=true`, {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -484,7 +484,7 @@ export class GooglePlaylistService extends PlaylistService {
     }
     static override async createPlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
         const response = await axios.post(
-            `https://www.googleapis.com/youtube/v3/playlists`,
+            `https://www.googleapis.com/youtube/v3/playlists?part=snippet`,
             {
                 snippet: {
                     title: playlist.name,
@@ -509,7 +509,7 @@ export class GooglePlaylistService extends PlaylistService {
 
     static override async updatePlaylist(token: string, playlist: Playlist): Promise<Playlist | unknown> {
         const response = await axios.put(
-            `https://www.googleapis.com/youtube/v3/playlists`,
+            `https://www.googleapis.com/youtube/v3/playlists?part=snippet`,
             {
                 id: playlist.id,
                 snippet: {
@@ -543,11 +543,14 @@ export class GooglePlaylistService extends PlaylistService {
     }
 
     static override async getPlaylistTracks(token: string, id: string): Promise<Track[] | unknown> {
-        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
+        const response = await axios.get(
+            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             },
-        });
+        );
 
         return response.data.items.map((item: any) => {
             return {
