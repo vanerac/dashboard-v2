@@ -382,8 +382,7 @@
             "required": false,
             "schema": {
               "type": "boolean"
-            },
-            "default": false
+            }
           },
           {
             "name": "callbackURL",
@@ -392,8 +391,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "default": ""
+            }
           }
         ],
         "responses": {
@@ -436,8 +434,7 @@
             "required": false,
             "schema": {
               "type": "boolean"
-            },
-            "default": false
+            }
           }
         ],
         "responses": {
