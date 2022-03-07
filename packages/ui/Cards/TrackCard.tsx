@@ -26,16 +26,21 @@ export type TrackDisplayConfig = {
 export const TrackCard = ({
   config,
   track,
+  handleTrackCardClick,
 }: {
   config: TrackDisplayConfig;
   track: Track;
+  handleTrackCardClick: any;
 }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <View style={stylesheet.horizontalContainer}>
+    <TouchableOpacity
+      style={stylesheet.horizontalContainer}
+      onPress={handleTrackCardClick}
+    >
       <View style={stylesheet.songIdentifiers}>
         <Image style={stylesheet.imageAlbum} source={{ uri: track.image }} />
         <View style={stylesheet.textIdentifiers}>
@@ -52,28 +57,7 @@ export const TrackCard = ({
       ) : (
         <></>
       )}
-      {/*{config.type === TrackCardType.CHECKBOX ? (*/}
-      {/*  <CheckBox*/}
-      {/*    style={stylesheet.checkbox}*/}
-      {/*    checked={isChecked}*/}
-      {/*    onPress={() => setIsChecked(!isChecked)}*/}
-      {/*    checkedIcon="dot-circle-o"*/}
-      {/*    uncheckedIcon="circle-o"*/}
-      {/*    center*/}
-      {/*  />*/}
-      {/*) : (*/}
-      {/*  <></>*/}
-      {/*)}*/}
-      {/*{config.type === TrackCardType.OPTIONS ? (*/}
-      {/*  <TouchableOpacity style={stylesheet.options}>*/}
-      {/*    <Text>*/}
-      {/*      <Icon name="dots-three-horizontal" size={25} color="#FFFFFF" />*/}
-      {/*    </Text>*/}
-      {/*  </TouchableOpacity>*/}
-      {/*) : (*/}
-      {/*  <></>*/}
-      {/*)}*/}
-    </View>
+    </TouchableOpacity>
   );
 };
 

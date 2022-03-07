@@ -8,14 +8,20 @@ export const PlaylistList = ({
   options,
   direction,
   column,
+  handlePlaylistCardClick,
 }: {
   PlaylistArray: Array<Playlist>;
   options: PlaylistDisplayConfig;
   direction: boolean;
   column: number;
+  handlePlaylistCardClick: any;
 }) => {
   const DataPlaylistList = ({ playlist }: { playlist: Playlist }) => (
-    <PlaylistCard config={{ provider: options.provider }} playlist={playlist} />
+    <PlaylistCard
+      config={{ provider: options.provider }}
+      playlist={playlist}
+      handlePlaylistCardClick={handlePlaylistCardClick}
+    />
   );
 
   const renderItem = ({ item }: { item: Playlist }) => (
@@ -30,7 +36,6 @@ export const PlaylistList = ({
       numColumns={column}
       keyExtractor={(_item, index) => index.toString()}
       horizontal={direction}
-      scrollEnabled={false}
     />
   );
 };

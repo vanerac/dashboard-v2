@@ -1,14 +1,51 @@
-import React, { useContext } from 'react';
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
 import { ThemeContext } from '../../constants/ThemeContext';
-import Icon from 'react-native-vector-icons/Entypo';
+import { getClient } from '../../utils/ApiClient';
+import { PlaylistWidget } from '../../../../packages/ui/Widgets/PlaylistWidget';
+import { Service } from '../../../../packages/services';
 
 export default function PlaylistModalScreen() {
     const { theme } = useContext(ThemeContext);
 
+    const test = () => {
+        console.log('oui oui baguette');
+    };
+
+    const handlePlaylistCardClick = () => {
+        console.log('PlaylistCardPressed');
+    };
+
+    const handleTrackCardClick = () => {
+        console.log('TrackCardPressed');
+    };
+
+    const [userServices, setUserServices] = useState<Service[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        getClient()
+            .services.getAllUserServices()
+            .then((services) => setUserServices(services.services as Service[]))
+            .then(() => setLoading(true));
+    }, []);
+
     return (
         <ScrollView style={{ backgroundColor: theme.primary }}>
-            <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}></View>
+            <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
+                {loading ? (
+                    <PlaylistWidget
+                        deleteWidget={test}
+                        widgetKey={1}
+                        widgetService={userServices[0].id}
+                        clientAPi={getClient}
+                        handlePlaylistCardClick={handlePlaylistCardClick}
+                        handleTrackCardClick={handleTrackCardClick}
+                    />
+                ) : (
+                    <ActivityIndicator />
+                )}
+            </View>
         </ScrollView>
     );
 }

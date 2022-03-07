@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { PlaylistList } from "../Lists/PlaylistList";
 
 interface WidgetProps {
@@ -7,6 +7,7 @@ interface WidgetProps {
   widgetKey: number;
   widgetService: string;
   clientAPi: Function;
+  handlePlaylistCardClick: any;
 }
 
 export const LibWidget: React.FC<WidgetProps> = ({
@@ -14,6 +15,7 @@ export const LibWidget: React.FC<WidgetProps> = ({
   widgetKey,
   widgetService,
   clientAPi,
+  handlePlaylistCardClick,
 }) => {
   const $onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
@@ -31,18 +33,19 @@ export const LibWidget: React.FC<WidgetProps> = ({
   }, []);
 
   return (
-    <ScrollView style={stylesheet.container}>
+    <View style={stylesheet.container}>
       {dataPlaylist.length ? (
         <PlaylistList
           options={{ provider: false }}
           PlaylistArray={dataPlaylist}
           direction={false}
           column={2}
+          handlePlaylistCardClick={handlePlaylistCardClick}
         />
       ) : (
         <ActivityIndicator />
       )}
-    </ScrollView>
+    </View>
   );
 };
 

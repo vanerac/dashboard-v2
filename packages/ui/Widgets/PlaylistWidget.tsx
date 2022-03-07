@@ -9,6 +9,8 @@ interface WidgetProps {
   widgetKey: number;
   widgetService: string;
   clientAPi: Function;
+  handleTrackCardClick: any;
+  handlePlaylistCardClick: any;
 }
 
 export const PlaylistWidget: React.FC<WidgetProps> = ({
@@ -16,6 +18,8 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
   widgetKey,
   widgetService,
   clientAPi,
+  handleTrackCardClick,
+  handlePlaylistCardClick,
 }) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
@@ -27,12 +31,12 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
   useEffect(() => {
     clientAPi()
       .playlist.getAllPlaylists(widgetService)
-      .then((dataP: any) => {
-        setDataPlaylist(dataP);
-        console.log(dataP);
+      .then((dataPlaylist: any) => {
+        setDataPlaylist(dataPlaylist);
+        console.log(dataPlaylist);
         clientAPi()
-          .playlist.getPlaylistTracks(widgetService, dataP[0].id)
-          .then((dataT: any) => setDataTracks(dataT));
+          .playlist.getPlaylistTracks(widgetService, dataPlaylist[0].id)
+          .then((dataTrack: any) => setDataTracks(dataTrack));
       });
   }, []);
 
@@ -43,10 +47,12 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
           <PlaylistCard
             playlist={dataPlaylist[0]}
             config={{ provider: true }}
+            handlePlaylistCardClick={handlePlaylistCardClick}
           />
           <TrackList
             trackArray={dataTracks}
             options={{ type: TrackCardType.TOGGLE }}
+            handleTrackCardClick={handleTrackCardClick}
           />
         </>
       ) : (

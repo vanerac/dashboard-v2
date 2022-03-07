@@ -25,6 +25,10 @@ export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProp
             .then(() => setLoading(true));
     }, []);
 
+    const handlePlaylistCardClick = () => {
+        console.log('PlaylistListCard pressed');
+    };
+
     return (
         <View style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
@@ -37,6 +41,7 @@ export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProp
                         widgetKey={1}
                         widgetService={userServices[0].id}
                         clientAPi={getClient}
+                        handlePlaylistCardClick={handlePlaylistCardClick}
                     />
                 ) : (
                     <ActivityIndicator />

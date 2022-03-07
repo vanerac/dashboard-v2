@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
 import { Playlist } from "../../services";
 
 export type PlaylistDisplayConfig = {
@@ -9,13 +9,18 @@ export type PlaylistDisplayConfig = {
 export const PlaylistCard = ({
   playlist,
   config,
+  handlePlaylistCardClick,
 }: {
   playlist: Playlist;
   config: PlaylistDisplayConfig;
+  handlePlaylistCardClick: any;
 }) => {
   console.log(playlist);
   return (
-    <View style={stylesheet.primaryContainer}>
+    <TouchableOpacity
+      style={stylesheet.primaryContainer}
+      onPress={handlePlaylistCardClick}
+    >
       <Image
         style={stylesheet.playlistCover}
         source={{ uri: playlist.image }}
@@ -31,7 +36,7 @@ export const PlaylistCard = ({
           <Text style={stylesheet.playlistOrAlbum}>- playlist -</Text>
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
