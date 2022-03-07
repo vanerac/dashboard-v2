@@ -1,17 +1,35 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { RootStackParamList } from '../../types';
 import { ThemeContext } from '../../constants/ThemeContext';
 import Icon from 'react-native-vector-icons/Octicons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+// import { PlaylistWidget } from '../../../../packages/ui/Widgets/PlaylistWidget';
+// import { Service } from '../../../../packages/services';
+// import { getClient } from '../../utils/ApiClient';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AccountsModal'>;
 
 export default function HomeTabScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
 
+    // const test = () => {
+    //     console.log('oui oui baguette');
+    // };
+    //
+    // const [userServices, setUserServices] = useState<Service[]>([]);
+    // const [loading, setLoading] = useState(false);
+
+    // useEffect(() => {
+    //     getClient()
+    //         .services.getAllUserServices()
+    //         .then((services) => setUserServices(services.services as Service[]))
+    //         .then(() => setLoading(true));
+    // }, []);
+
     return (
-        <ScrollView style={{ backgroundColor: theme.primary }}>
+        <View style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
                 <View style={[styles.topView, { backgroundColor: theme.primary }]}>
                     <Text style={[styles.title, { color: theme.text }]}>Welcome</Text>
@@ -27,14 +45,25 @@ export default function HomeTabScreen({ navigation }: Props) {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {/*{loading ? (*/}
+                {/*    <PlaylistWidget*/}
+                {/*        deleteWidget={test}*/}
+                {/*        widgetKey={1}*/}
+                {/*        widgetService={userServices[0].id}*/}
+                {/*        clientAPi={getClient}*/}
+                {/*    />*/}
+                {/*) : (*/}
+                {/*    <Text>sldfkjdfklj</Text>*/}
+                {/*)}*/}
             </View>
-        </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     primaryContainer: {
         justifyContent: 'flex-start',
+        alignSelf: 'flex-start',
         paddingTop: 70,
         height: '100%',
     },

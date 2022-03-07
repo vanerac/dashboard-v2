@@ -7,10 +7,12 @@ export const PlaylistList = ({
   PlaylistArray,
   options,
   direction,
+  column,
 }: {
   PlaylistArray: Array<Playlist>;
   options: PlaylistDisplayConfig;
   direction: boolean;
+  column: number;
 }) => {
   const DataPlaylistList = ({ playlist }: { playlist: Playlist }) => (
     <PlaylistCard config={{ provider: options.provider }} playlist={playlist} />
@@ -25,8 +27,10 @@ export const PlaylistList = ({
       style={stylesheet.container}
       data={PlaylistArray}
       renderItem={renderItem}
+      numColumns={column}
       keyExtractor={(_item, index) => index.toString()}
       horizontal={direction}
+      scrollEnabled={false}
     />
   );
 };

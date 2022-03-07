@@ -1,20 +1,48 @@
-import { ScrollView, StyleSheet } from 'react-native';
-import React, { useContext } from 'react';
-import { Text, View } from '../../components/Themed';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
 import { RootTabScreenProps } from '../../types';
 import { ThemeContext } from '../../constants/ThemeContext';
+
+import { Service } from '../../../../packages/services';
+import { getClient } from '../../utils/ApiClient';
+
+import { LibWidget } from '../../../../packages/ui/Widgets/LibWidget';
 
 export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProps<'LibraryTab'>) {
     const { theme } = useContext(ThemeContext);
 
+    const test = () => {
+        console.log('oui oui baguette');
+    };
+
+    const [userServices, setUserServices] = useState<Service[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        getClient()
+            .services.getAllUserServices()
+            .then((services) => setUserServices(services.services as Service[]))
+            .then(() => setLoading(true));
+    }, []);
+
     return (
-        <ScrollView style={{ backgroundColor: theme.primary }}>
+        <View style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
                 <View style={[styles.topView, { backgroundColor: theme.primary }]}>
                     <Text style={[styles.title, { color: theme.text }]}>Library</Text>
                 </View>
+                {loading ? (
+                    <LibWidget
+                        deleteWidget={test}
+                        widgetKey={1}
+                        widgetService={userServices[0].id}
+                        clientAPi={getClient}
+                    />
+                ) : (
+                    <ActivityIndicator />
+                )}
             </View>
-        </ScrollView>
+        </View>
     );
 }
 

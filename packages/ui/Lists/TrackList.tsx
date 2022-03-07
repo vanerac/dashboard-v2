@@ -24,6 +24,7 @@ export const TrackList = ({
       data={trackArray}
       renderItem={renderItem}
       keyExtractor={(_item, index) => index.toString()}
+      scrollEnabled={false}
     />
   );
 };

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
-import { TrackList } from "../Lists/TrackList";
-import { TrackCardType } from "../Cards/TrackCard";
-import { PlaylistCard } from "../Cards/PlaylistCard";
+import { PlaylistList } from "../Lists/PlaylistList";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -11,18 +9,17 @@ interface WidgetProps {
   clientAPi: Function;
 }
 
-export const PlaylistWidget: React.FC<WidgetProps> = ({
+export const LibWidget: React.FC<WidgetProps> = ({
   deleteWidget,
   widgetKey,
   widgetService,
   clientAPi,
 }) => {
-  const onClickDeleteWidget = () => {
+  const $onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
 
   const [dataPlaylist, setDataPlaylist] = useState([]);
-  const [dataTracks, setDataTracks] = useState([]);
 
   useEffect(() => {
     clientAPi()
@@ -30,25 +27,18 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
       .then((dataP: any) => {
         setDataPlaylist(dataP);
         console.log(dataP);
-        clientAPi()
-          .playlist.getPlaylistTracks(widgetService, dataP[0].id)
-          .then((dataT: any) => setDataTracks(dataT));
       });
   }, []);
 
   return (
     <ScrollView style={stylesheet.container}>
       {dataPlaylist.length ? (
-        <>
-          <PlaylistCard
-            playlist={dataPlaylist[0]}
-            config={{ provider: true }}
-          />
-          <TrackList
-            trackArray={dataTracks}
-            options={{ type: TrackCardType.TOGGLE }}
-          />
-        </>
+        <PlaylistList
+          options={{ provider: false }}
+          PlaylistArray={dataPlaylist}
+          direction={false}
+          column={2}
+        />
       ) : (
         <ActivityIndicator />
       )}
@@ -58,6 +48,7 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
 
 const stylesheet = StyleSheet.create({
   container: {
+    marginTop: 30,
     width: "100%",
     height: "100%",
   },

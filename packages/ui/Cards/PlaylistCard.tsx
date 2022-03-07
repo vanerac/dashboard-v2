@@ -42,6 +42,7 @@ const stylesheet = StyleSheet.create({
     width: "100%",
     height: 260,
     minHeight: 260,
+    marginTop: 30,
   },
 
   identifiersContainer: {
@@ -63,6 +64,6 @@ const stylesheet = StyleSheet.create({
   playlistCover: {
     width: 200,
     height: 200,
-    borderRadius: 20,
+    borderRadius: 7,
   },
 });
