@@ -588,7 +588,9 @@ export class GooglePlaylistService extends PlaylistService {
                 artist: item.snippet.channelTitle,
                 album: item.snippet.channelTitle,
                 duration: item.contentDetails.duration,
-                image: item.snippet.thumbnails.default.url,
+                image:
+                    item.snippet.thumbnails?.default?.url ||
+                    `https://img.youtube.com/vi/${item.snippet.resourceId.videoId}/default.jpg`,
             };
         });
     }
