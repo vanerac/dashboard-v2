@@ -60,6 +60,7 @@ export interface Service {
     userId: string;
     accessToken: string;
     refreshToken: string;
+    sessionkey: string;
     status: string;
     createdAt: Date;
     editedAt: Date;

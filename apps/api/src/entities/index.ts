@@ -6,6 +6,7 @@ import dataRoutes from './data/data.routes';
 import { parseServiceId } from '../tools/service.tools';
 import playbackRoutes from './playback/playback.routes';
 import widgetRoutes from './widget/widget.routes';
+import statsRoutes from './stats/stats.routes';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/service', verifyToken, ServiceRoutes);
 router.use('/playback', verifyToken, playbackRoutes);
 router.use('/data/:serviceId', [verifyToken, parseServiceId], dataRoutes);
 router.use('/widget', verifyToken, widgetRoutes);
+router.use('/stats', verifyToken, statsRoutes);
 
 export default router;
