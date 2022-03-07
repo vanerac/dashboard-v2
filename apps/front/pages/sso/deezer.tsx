@@ -14,7 +14,7 @@ function SsoDeezer() {
             let code = params.get('code');
             // console.log('ici => ', params);
             getClient()
-                .sso.deezerAuthCodeSso(code, 'http://localhost:3000/sso/deezer')
+                .sso.deezerAuthCodeSso(code, false)
                 .then((data) => {
                     const { token } = data;
                     cookies.set('API_TOKEN', token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });

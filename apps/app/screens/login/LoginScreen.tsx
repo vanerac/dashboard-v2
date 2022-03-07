@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
 import { getClient } from '../../utils/ApiClient';
@@ -7,13 +7,12 @@ import { RootStackParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { loginResponse, ssoUrl } from '../../../../packages/services';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Constants from 'expo-constants';
 
 // @ts-ignore
 import localStorage from 'react-native-sync-localstorage';
 
-const SCHEME = Constants.manifest?.scheme;
-const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
+// const SCHEME = Constants.manifest?.scheme;
+// const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
