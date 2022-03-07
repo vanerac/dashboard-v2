@@ -223,8 +223,8 @@ export default function LoginScreen({ navigation, route }: Props) {
     // console.log({ SCHEME });
     // create redirect uri
     const redirectURI = makeRedirectUri({
-        native: `${SCHEME}://redirect`,
-        useProxy,
+        // native: `${SCHEME}://redirect`,
+        useProxy: true,
     });
 
     useEffect(() => {
