@@ -13,7 +13,7 @@ function SsoLastfm() {
             let params = new URL(window.location.href).searchParams;
             let token = params.get('token');
             getClient()
-                .sso.lastfmAuthCodeSso(token, '')
+                .sso.lastfmAuthCodeSso(token, false)
                 .then((data) => {
                     const { token: api_token } = data;
                     cookies.set('API_TOKEN', api_token, { expires: new Date(Date.now() + 1000 * 3600), path: '/' });

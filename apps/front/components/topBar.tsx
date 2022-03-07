@@ -185,7 +185,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
 
     const authLastFM = () => {
         getClient()
-            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .sso.lastfmConsentSso(false)
             .then((data: { url: string | UrlObject }) => {
                 console.log(data);
                 Router.push(data.url);

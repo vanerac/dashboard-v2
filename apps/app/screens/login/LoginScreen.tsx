@@ -136,23 +136,22 @@ function LastfmTriggerSSO({ SSODataLastfm, navigation }: { SSODataLastfm: ssoUrl
     console.log(url);
 
     const triggerSSO = () => {
-        console.log('triggerring google');
         startAsync({
             authUrl: url,
         }).then(({ type, params }: any) => {
             if (type === 'success') {
-                const { code } = params;
-                console.log('code => ', code);
-                // getClient()
-                //     .sso.googleAuthCodeSso(code, redirect_uri)
-                //     .then((data: loginResponse) => {
-                //         localStorage.setItem('API_TOKEN', data.token);
-                //         Alert.alert('Success', 'You are now logged in!');
-                //         navigation.navigate('HomePage');
-                //     })
-                //     .catch((err: any) => {
-                //         Alert.alert('Error', err.message);
-                //     });
+                const { token } = params;
+                console.log('token => ', token);
+                getClient()
+                    .sso.lastfmAuthCodeSso(token, true)
+                    .then((data: loginResponse) => {
+                        localStorage.setItem('API_TOKEN', data.token);
+                        Alert.alert('Success', 'You are now logged in!');
+                        navigation.navigate('HomePage');
+                    })
+                    .catch((err: any) => {
+                        Alert.alert('Error', err.message);
+                    });
             } else {
                 Alert.alert('Error', 'Something went wrong');
             }
@@ -246,7 +245,7 @@ export default function LoginScreen({ navigation, route }: Props) {
                 setSSODataGoogle(data);
             });
         getClient()
-            .sso.lastfmConsentSso(redirectURI)
+            .sso.lastfmConsentSso(true)
             .then((data: ssoUrl) => {
                 console.log(data);
                 setSSODataLastfm(data);

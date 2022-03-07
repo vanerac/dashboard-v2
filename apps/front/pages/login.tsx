@@ -118,7 +118,7 @@ const Login = () => {
 
     const authLastFM = () => {
         getClient()
-            .sso.lastfmConsentSso('http://localhost:3000/sso/lastFM')
+            .sso.lastfmConsentSso(false)
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);
