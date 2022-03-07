@@ -38,6 +38,7 @@ export interface Token {
     refresh_token: string;
     expires_in: number;
     provider: string;
+    sessionKey?: string;
 }
 
 export enum Providers {
@@ -59,6 +60,7 @@ export interface Service {
     userId: string;
     accessToken: string;
     refreshToken: string;
+    sessionkey: string;
     status: string;
     createdAt: Date;
     editedAt: Date;

@@ -223,9 +223,6 @@
     },
     "/stats/charts/top/tracks/weekly": {
       "$ref": "stats/stats.path.json#/globalWeeklyTopTracks"
-    },
-    "/stats/charts/top/albums/weekly": {
-      "$ref": "stats/stats.path.json#/globalWeeklyTopAlbums"
     }
   },
   "components": {
