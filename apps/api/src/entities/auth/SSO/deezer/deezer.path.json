@@ -5,6 +5,28 @@
       "tags": ["SSO"],
       "summary": "Redirects to SSO Auth screen",
       "description": "Redirects to SSO Auth screen",
+      "parameters": [
+        {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          },
+          "default": false
+        },
+        {
+          "name": "callbackURL",
+          "in": "query",
+          "description": "redirect URL to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "string"
+          },
+          "default": ""
+        }
+      ],
       "responses": {
         "200": {
           "description": "Success",
