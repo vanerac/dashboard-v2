@@ -124,6 +124,3 @@ const stylesheet = StyleSheet.create({
     alignSelf: "flex-end",
   },
 });
-
-const albumTestUrl =
-  "https://sizze-figma-plugin-images-upload.s3.us-east-2.amazonaws.com/5d251502ed3d3a8171ad5bf5e224e99a";
