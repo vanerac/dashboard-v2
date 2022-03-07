@@ -6,7 +6,7 @@ import { getClient } from '../../utils/ApiClient';
 import { RootStackParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { loginResponse, ssoUrl } from '../../../../packages/services';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import Constants from 'expo-constants';
 
 // @ts-ignore
@@ -83,7 +83,7 @@ function DeezerTriggerSSO({ SSODataDeezzer, navigation }: { SSODataDeezzer: ssoU
         <View>
             <TouchableOpacity onPress={triggerSSO}>
                 <Text>
-                    <Icon name="deezer" size={40} color="#1DB954" />
+                    <Icon name="grip-horizontal" size={40} color="#00c7f2" />
                 </Text>
             </TouchableOpacity>
         </View>
@@ -121,7 +121,7 @@ function GoogleTriggerSSO({ SSODataGoogle, navigation }: { SSODataGoogle: ssoUrl
         <View>
             <TouchableOpacity onPress={triggerSSO}>
                 <Text>
-                    <Icon name="youtube" size={40} color="#1DB954" />
+                    <Icon name="youtube" size={40} color="#DB4437" />
                 </Text>
             </TouchableOpacity>
         </View>
@@ -307,8 +307,9 @@ const styles = StyleSheet.create({
 
     ssoIcons: {
         width: '67%',
-        alignItems: 'flex-start',
         marginTop: 20,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
     },
 
     loginBtn: {
