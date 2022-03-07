@@ -5,18 +5,6 @@
       "tags": ["SSO"],
       "summary": "Redirects to SSO Auth screen",
       "description": "Redirects to SSO Auth screen",
-      "parameters": [
-        {
-          "name": "secondaryClientId",
-          "in": "query",
-          "description": "use the secondary client ID to use for SSO authentication",
-          "required": false,
-          "schema": {
-            "type": "boolean"
-          },
-          "default": false
-        }
-      ],
       "responses": {
         "200": {
           "description": "Success",
@@ -47,6 +35,16 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          },
+          "default": false
         }
       ],
       "responses": {
