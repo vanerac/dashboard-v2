@@ -11,7 +11,6 @@ router.get('/me/top/tags', hasService('lastfm'), StatsController.myTopTags);
 
 router.get('/charts/top/artists/weekly', hasService('lastfm'), StatsController.chartsWeeklyTopArtists);
 router.get('/charts/top/tracks/weekly', hasService('lastfm'), StatsController.chartsWeeklyTopTracks);
-router.get('/charts/top/albums/weekly', hasService('lastfm'), StatsController.chartsWeeklyTopAlbums);
 
 // user radio
 // get similar artists

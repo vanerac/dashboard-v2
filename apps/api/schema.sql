@@ -1,6 +1,6 @@
 CREATE TYPE loginType AS ENUM ('classic', 'SSO');
 CREATE TYPE serviceStatus AS ENUM ('OK', 'KO');
-CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple');
+CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple', 'lastfm');
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE widgetType AS ENUM ('stat', 'album', 'playlist', 'artist', 'search');
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS Services
     accessToken  TEXT            NOT NULL,
     tokenExpires TIMESTAMP       NULL,
     refreshToken TEXT            NULL,
+    sessionKey   TEXT            NULL,
     accountName  VARCHAR(256)    NULL,
     status       serviceStatus   NOT NULL DEFAULT 'OK',
     createdAt    DATE            NOT NULL DEFAULT NOW(),
