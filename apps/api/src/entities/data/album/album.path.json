@@ -1,0 +1,267 @@
+{
+  "getAllSavedAlbums": {
+    "get": {
+      "tags": [
+        "Album"
+      ],
+      "summary": "Get all saved albums",
+      "description": "Get all saved albums",
+      "operationId": "getAllSavedAlbums",
+      "responses": {
+        "200": {
+          "description": "Artist found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "../../openapi.components.json#/schemas/Album"
+                }
+
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "getById": {
+    "get": {
+      "tags": [
+        "Album"
+      ],
+      "summary": "Get album by id",
+      "description": "Get album by id",
+      "operationId": "getById",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Album id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Album found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Album"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "save": {
+    "post": {
+      "tags": [
+        "Album"
+      ],
+      "summary": "Save album",
+      "description": "Save album",
+      "operationId": "save",
+      "parameters": [
+        {
+          "name": "album",
+          "in": "body",
+          "description": "Album to save",
+          "required": true,
+          "schema": {
+            "$ref": "../../openapi.components.json#/schemas/Album"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Album saved",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Album"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "unsave": {
+    "delete": {
+      "tags": [
+        "Album"
+      ],
+      "summary": "Unsave album",
+      "description": "Unsave album",
+      "operationId": "unsave",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Album id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Album unsaved",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Album"
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad Request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not Found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../openapi.components.json#/schemas/Error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

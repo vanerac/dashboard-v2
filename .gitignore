@@ -45,3 +45,5 @@ yarn.lock
 *.js*
 *.map
 packages/**/*.d.ts
+!*.path.json
+!*.components.json

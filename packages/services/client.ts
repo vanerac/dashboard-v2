@@ -5,6 +5,7 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { AxiosHttpRequest } from './core/AxiosHttpRequest';
 
+import { AlbumService } from './services/AlbumService';
 import { ArtistService } from './services/ArtistService';
 import { AuthenticationService } from './services/AuthenticationService';
 import { DevicesService } from './services/DevicesService';
@@ -21,6 +22,7 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
 export class ApiClient {
 
+    public readonly album: AlbumService;
     public readonly artist: ArtistService;
     public readonly authentication: AuthenticationService;
     public readonly devices: DevicesService;
@@ -48,6 +50,7 @@ export class ApiClient {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
 
+        this.album = new AlbumService(this.request);
         this.artist = new ArtistService(this.request);
         this.authentication = new AuthenticationService(this.request);
         this.devices = new DevicesService(this.request);
