@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { makeRedirectUri, startAsync } from 'expo-auth-session';
 import { ThemeContext } from '../../constants/ThemeContext';
 import { getClient } from '../../utils/ApiClient';
@@ -7,13 +7,12 @@ import { RootStackParamList } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { loginResponse, ssoUrl } from '../../../../packages/services';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Constants from 'expo-constants';
 
 // @ts-ignore
 import localStorage from 'react-native-sync-localstorage';
 
-const SCHEME = Constants.manifest?.scheme;
-const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
+// const SCHEME = Constants.manifest?.scheme;
+// const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
@@ -54,32 +53,31 @@ function SpotifyTriggerSSO({ SSODataSpotify, navigation }: { SSODataSpotify: sso
 }
 
 function DeezerTriggerSSO({ SSODataDeezzer, navigation }: { SSODataDeezzer: ssoUrl } & Props) {
-    const { url, redirect_uri } = SSODataDeezzer;
-    console.log(redirect_uri);
-    console.log(navigation);
-    console.log(url);
+    const { url } = SSODataDeezzer;
 
     const triggerSSO = () => {
         console.log('triggerring deezer');
-        // startAsync({
-        //     authUrl: url,
-        // }).then(({ type, params }: any) => {
-        //     if (type === 'success') {
-        //         const { code } = params;
-        //         getClient()
-        //             .sso.spotifyAuthCodeSso(code, redirect_uri)
-        //             .then((data: loginResponse) => {
-        //                 localStorage.setItem('API_TOKEN', data.token);
-        //                 Alert.alert('Success', 'You are now logged in!');
-        //                 navigation.navigate('HomePage');
-        //             })
-        //             .catch((err: any) => {
-        //                 Alert.alert('Error', err.message);
-        //             });
-        //     } else {
-        //         Alert.alert('Error', 'Something went wrong');
-        //     }
-        // });
+        console.log(SSODataDeezzer);
+        startAsync({
+            authUrl: url,
+        }).then(({ type, params }: any) => {
+            console.log('type', type);
+            if (type === 'success') {
+                const { code } = params;
+                getClient()
+                    .sso.deezerAuthCodeSso(code, true)
+                    .then((data: loginResponse) => {
+                        localStorage.setItem('API_TOKEN', data.token);
+                        Alert.alert('Success', 'You are now logged in!');
+                        navigation.navigate('HomePage');
+                    })
+                    .catch((err: any) => {
+                        Alert.alert('Error', err.message);
+                    });
+            } else if (type !== 'cancel') {
+                Alert.alert('Error', 'Something went wrong');
+            }
+        });
     };
 
     return (
@@ -224,8 +222,8 @@ export default function LoginScreen({ navigation, route }: Props) {
     // console.log({ SCHEME });
     // create redirect uri
     const redirectURI = makeRedirectUri({
-        native: `${SCHEME}://redirect`,
-        useProxy,
+        // native: `${SCHEME}://redirect`,
+        useProxy: true,
     });
 
     useEffect(() => {
@@ -236,7 +234,7 @@ export default function LoginScreen({ navigation, route }: Props) {
                 setSSODataSpotify(data);
             });
         getClient()
-            .sso.deezerConsentSso(redirectURI)
+            .sso.deezerConsentSso(true, redirectURI)
             .then((data: ssoUrl) => {
                 console.log(data);
                 setSSODataDeezer(data);

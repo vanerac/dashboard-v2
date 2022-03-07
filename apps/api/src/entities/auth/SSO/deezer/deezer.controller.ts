@@ -14,10 +14,10 @@ export default class DeezerController extends SSOController {
     static scope: string = configuration.deezerScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
-        const { callbackURL } = req.query;
+        const { secondaryClientId, callbackURL } = req.query;
         const scopes = DeezerController.scope.split(',');
         const params = {
-            client_id: DeezerController.clientId,
+            client_id: secondaryClientId ? DeezerTools.secondaryClientId : DeezerController.clientId,
             redirect_uri: callbackURL || DeezerController.callbackURL,
             scope: scopes.join(','),
             response_type: 'code',
@@ -32,12 +32,12 @@ export default class DeezerController extends SSOController {
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code, callbackURL } = req.query;
+            const { code, secondaryClientId } = req.query;
             const { user: sessionUser } = req.session;
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await DeezerTools.getToken(code, (callbackURL as string) || DeezerController.callbackURL);
+            const SSOToken = await DeezerTools.getToken(code, !!secondaryClientId);
             const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('deezer', user.id);
 
