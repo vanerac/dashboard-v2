@@ -7,6 +7,9 @@ import { useContext } from 'react';
 import { ColorSchemeName } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
+import { RootStackParamList, RootTabParamList } from '../types';
+import LinkingConfiguration from './LinkingConfiguration';
+
 import NotFoundScreen from '../screens/NotFoundScreen';
 import RegisterScreen from '../screens/login/RegisterScreen';
 import LoginScreen from '../screens/login/LoginScreen';
@@ -14,11 +17,11 @@ import HomeTabScreen from '../screens/tabs/HomeTabScreen';
 import SearchTabScreen from '../screens/tabs/SearchTabScreen';
 import LibraryTabScreen from '../screens/tabs/LibTabScreen';
 import { ThemeContext } from '../constants/ThemeContext';
-import { RootStackParamList, RootTabParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
 
 import AccountsHandlingModalScreen from '../screens/modals/AccountsHandlingModalScreen';
 import HistoryHandlingModalScreen from '../screens/modals/HistoryHandlingModalScreen';
+
+import PlaylistModalScreen from '../screens/modals/PlaylistModalScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     return (
@@ -75,6 +78,15 @@ function RootNavigator() {
                 <Stack.Screen
                     name="HistoryModal"
                     component={HistoryHandlingModalScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            </Stack.Group>
+            <Stack.Group screenOptions={{ presentation: 'card' }}>
+                <Stack.Screen
+                    name="PlaylistModal"
+                    component={PlaylistModalScreen}
                     options={{
                         headerShown: false,
                     }}
