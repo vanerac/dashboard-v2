@@ -55,6 +55,9 @@ function SpotifyTriggerSSO({ SSODataSpotify, navigation }: { SSODataSpotify: sso
 
 function DeezerTriggerSSO({ SSODataDeezzer, navigation }: { SSODataDeezzer: ssoUrl } & Props) {
     const { url, redirect_uri } = SSODataDeezzer;
+    console.log(redirect_uri);
+    console.log(navigation);
+    console.log(url);
 
     const triggerSSO = () => {
         console.log('triggerring deezer');
@@ -128,6 +131,47 @@ function GoogleTriggerSSO({ SSODataGoogle, navigation }: { SSODataGoogle: ssoUrl
     );
 }
 
+function LastfmTriggerSSO({ SSODataLastfm, navigation }: { SSODataLastfm: ssoUrl } & Props) {
+    const { url, redirect_uri } = SSODataLastfm;
+    console.log(redirect_uri);
+    console.log(navigation);
+    console.log(url);
+
+    const triggerSSO = () => {
+        console.log('triggerring google');
+        startAsync({
+            authUrl: url,
+        }).then(({ type, params }: any) => {
+            if (type === 'success') {
+                const { code } = params;
+                console.log('code => ', code);
+                // getClient()
+                //     .sso.googleAuthCodeSso(code, redirect_uri)
+                //     .then((data: loginResponse) => {
+                //         localStorage.setItem('API_TOKEN', data.token);
+                //         Alert.alert('Success', 'You are now logged in!');
+                //         navigation.navigate('HomePage');
+                //     })
+                //     .catch((err: any) => {
+                //         Alert.alert('Error', err.message);
+                //     });
+            } else {
+                Alert.alert('Error', 'Something went wrong');
+            }
+        });
+    };
+
+    return (
+        <View>
+            <TouchableOpacity onPress={triggerSSO}>
+                <Text>
+                    <Icon name="lastfm" size={40} color="#DB4437" />
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
 export default function LoginScreen({ navigation, route }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -165,7 +209,16 @@ export default function LoginScreen({ navigation, route }: Props) {
         scope: '',
         url: '',
         client_id: '',
-        redirect_uri: 'com.deezer.music://',
+        redirect_uri: 'com.google.music://',
+        base_url: '',
+    });
+
+    const [SSODataLastfm, setSSODataLastfm] = useState<ssoUrl>({
+        response_type: '',
+        scope: '',
+        url: '',
+        client_id: '',
+        redirect_uri: 'com.spotify.music://',
         base_url: '',
     });
     // console.log({ SCHEME });
@@ -193,6 +246,12 @@ export default function LoginScreen({ navigation, route }: Props) {
             .then((data: ssoUrl) => {
                 console.log(data);
                 setSSODataGoogle(data);
+            });
+        getClient()
+            .sso.lastfmConsentSso(redirectURI)
+            .then((data: ssoUrl) => {
+                console.log(data);
+                setSSODataLastfm(data);
             });
     }, []);
 
@@ -234,6 +293,7 @@ export default function LoginScreen({ navigation, route }: Props) {
                     <SpotifyTriggerSSO SSODataSpotify={SSODataSpotify} navigation={navigation} route={route} />
                     <DeezerTriggerSSO SSODataDeezzer={SSODataDeezzer} navigation={navigation} route={route} />
                     <GoogleTriggerSSO SSODataGoogle={SSODataGoogle} navigation={navigation} route={route} />
+                    <LastfmTriggerSSO SSODataLastfm={SSODataLastfm} navigation={navigation} route={route} />
                 </View>
             </View>
 
