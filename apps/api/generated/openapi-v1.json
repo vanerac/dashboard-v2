@@ -4937,7 +4937,7 @@
         "operationId": "getById",
         "parameters": [
           {
-            "name": "id",
+            "name": "albumId",
             "in": "path",
             "description": "Album id",
             "required": true,
@@ -5007,15 +5007,15 @@
         ],
         "summary": "Save album",
         "description": "Save album",
-        "operationId": "save",
+        "operationId": "saveAlbum",
         "parameters": [
           {
-            "name": "album",
-            "in": "body",
-            "description": "Album to save",
+            "name": "albumId",
+            "in": "path",
+            "description": "Album id",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/Album"
+              "type": "string"
             }
           }
         ],
@@ -5070,10 +5070,10 @@
         ],
         "summary": "Unsave album",
         "description": "Unsave album",
-        "operationId": "unsave",
+        "operationId": "unsaveAlbum",
         "parameters": [
           {
-            "name": "id",
+            "name": "albumId",
             "in": "path",
             "description": "Album id",
             "required": true,

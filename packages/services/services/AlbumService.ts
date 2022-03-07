@@ -31,18 +31,18 @@ export class AlbumService {
     /**
      * Get album by id
      * Get album by id
-     * @param id Album id
+     * @param albumId Album id
      * @returns Album Album found
      * @throws ApiError
      */
     public getById(
-        id: string,
+        albumId: string,
     ): CancelablePromise<Album> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/album/{albumId}',
             path: {
-                'id': id,
+                'albumId': albumId,
             },
             errors: {
                 400: `Bad Request`,
@@ -56,13 +56,19 @@ export class AlbumService {
     /**
      * Save album
      * Save album
+     * @param albumId Album id
      * @returns Album Album saved
      * @throws ApiError
      */
-    public save(): CancelablePromise<Album> {
+    public saveAlbum(
+        albumId: string,
+    ): CancelablePromise<Album> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/album/save/{albumId}',
+            path: {
+                'albumId': albumId,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -74,18 +80,18 @@ export class AlbumService {
     /**
      * Unsave album
      * Unsave album
-     * @param id Album id
+     * @param albumId Album id
      * @returns Album Album unsaved
      * @throws ApiError
      */
-    public unsave(
-        id: string,
+    public unsaveAlbum(
+        albumId: string,
     ): CancelablePromise<Album> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/album/unsave/{albumId}',
             path: {
-                'id': id,
+                'albumId': albumId,
             },
             errors: {
                 400: `Bad Request`,
