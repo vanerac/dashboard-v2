@@ -106,19 +106,13 @@ export class SsoService {
     /**
      * Redirects to SSO Auth screen
      * Redirects to SSO Auth screen
-     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @returns ssoUrl Success
      * @throws ApiError
      */
-    public deezerConsentSso(
-        secondaryClientId?: boolean,
-    ): CancelablePromise<ssoUrl> {
+    public deezerConsentSso(): CancelablePromise<ssoUrl> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/deezer/login',
-            query: {
-                'secondaryClientId': secondaryClientId,
-            },
         });
     }
 
@@ -126,17 +120,20 @@ export class SsoService {
      * Assign token tu user and/or login to user account
      * Assign token tu user and/or login to user account
      * @param code Auth code returned by provider
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @returns loginResponse Success
      * @throws ApiError
      */
     public deezerAuthCodeSso(
         code: string,
+        secondaryClientId?: boolean,
     ): CancelablePromise<loginResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/deezer/callback',
             query: {
                 'code': code,
+                'secondaryClientId': secondaryClientId,
             },
             errors: {
                 400: `Bad request`,
