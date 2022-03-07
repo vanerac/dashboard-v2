@@ -136,7 +136,7 @@ const Login = () => {
 
     const authDeezer = () => {
         getClient()
-            .sso.deezerConsentSso(false)
+            .sso.deezerConsentSso(false, 'http://localhost:3000/sso/deezer')
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);
