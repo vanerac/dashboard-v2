@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { ThemeContext } from '../../constants/ThemeContext';
 import { getClient } from '../../utils/ApiClient';
 import { PlaylistWidget } from '../../../../packages/ui/Widgets/PlaylistWidget';
