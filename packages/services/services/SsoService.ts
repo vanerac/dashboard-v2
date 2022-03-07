@@ -155,18 +155,18 @@ export class SsoService {
     /**
      * Redirects to SSO Auth screen
      * Redirects to SSO Auth screen
-     * @param callbackUrl A callback URL to redirect to after SSO authentication
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @returns ssoUrl Success
      * @throws ApiError
      */
     public lastfmConsentSso(
-        callbackUrl?: string,
+        secondaryClientId?: boolean,
     ): CancelablePromise<ssoUrl> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/lastfm/login',
             query: {
-                'callbackURL': callbackUrl,
+                'secondaryClientId': secondaryClientId,
             },
         });
     }
@@ -174,21 +174,21 @@ export class SsoService {
     /**
      * Assign token tu user and/or login to user account
      * Assign token tu user and/or login to user account
-     * @param code Auth code returned by provider
-     * @param callbackUrl A callback URL to redirect to after SSO authentication
+     * @param token Auth code returned by provider
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @returns loginResponse Success
      * @throws ApiError
      */
     public lastfmAuthCodeSso(
-        code: string,
-        callbackUrl?: string,
+        token: string,
+        secondaryClientId?: boolean,
     ): CancelablePromise<loginResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/lastfm/callback',
             query: {
-                'code': code,
-                'callbackURL': callbackUrl,
+                'token': token,
+                'secondaryClientId': secondaryClientId,
             },
             errors: {
                 400: `Bad request`,

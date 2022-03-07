@@ -7,12 +7,12 @@
       "description": "Redirects to SSO Auth screen",
       "parameters": [
         {
-          "name": "callbackURL",
+          "name": "secondaryClientId",
           "in": "query",
-          "description": "A callback URL to redirect to after SSO authentication",
+          "description": "use the secondary client ID to use for SSO authentication",
           "required": false,
           "schema": {
-            "type": "string"
+            "type": "boolean"
           }
         }
       ],
@@ -39,7 +39,7 @@
       "security": [],
       "parameters": [
         {
-          "name": "code",
+          "name": "token",
           "in": "query",
           "description": "Auth code returned by provider",
           "required": true,
@@ -48,12 +48,12 @@
           }
         },
         {
-          "name": "callbackURL",
+          "name": "secondaryClientId",
           "in": "query",
-          "description": "A callback URL to redirect to after SSO authentication",
+          "description": "use the secondary client ID to use for SSO authentication",
           "required": false,
           "schema": {
-            "type": "string"
+            "type": "boolean"
           }
         }
       ],
