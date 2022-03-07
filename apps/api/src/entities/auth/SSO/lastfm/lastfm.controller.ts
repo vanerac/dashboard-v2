@@ -41,8 +41,10 @@ export default class LastFmController extends SSOController {
                 access_token: token,
                 expires_in: 3600,
             };
-            const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token);
+            const sessionKey = await LastFmTools.getSessionKey(SSOToken);
+            const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token, sessionKey);
             let userData: User & any = await findUserByService('lastfm', user.id);
+            SSOToken.sessionKey = sessionKey;
 
             if (userData) {
                 await updateToken(userData, user, SSOToken);
@@ -58,8 +60,9 @@ export default class LastFmController extends SSOController {
             delete userData.iat;
             delete userData.exp;
             const userToken = generateToken(userData);
-            res.status(200).json({ userToken });
+            res.status(200).json({ token: userToken });
         } catch (e) {
+            console.log(e);
             if ((e as any).code === '23505') {
                 res.status(409).json({
                     message: 'Account already assigned to another user',
@@ -67,7 +70,6 @@ export default class LastFmController extends SSOController {
             } else {
                 res.status(500).send(e);
             }
-            console.log(e);
         }
     }
 }
