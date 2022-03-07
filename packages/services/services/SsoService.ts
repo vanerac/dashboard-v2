@@ -106,13 +106,22 @@ export class SsoService {
     /**
      * Redirects to SSO Auth screen
      * Redirects to SSO Auth screen
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
+     * @param callbackUrl redirect URL to use for SSO authentication
      * @returns ssoUrl Success
      * @throws ApiError
      */
-    public deezerConsentSso(): CancelablePromise<ssoUrl> {
+    public deezerConsentSso(
+        secondaryClientId?: boolean,
+        callbackUrl?: string,
+    ): CancelablePromise<ssoUrl> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/deezer/login',
+            query: {
+                'secondaryClientId': secondaryClientId,
+                'callbackURL': callbackUrl,
+            },
         });
     }
 

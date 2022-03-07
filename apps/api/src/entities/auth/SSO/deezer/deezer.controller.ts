@@ -14,10 +14,10 @@ export default class DeezerController extends SSOController {
     static scope: string = configuration.deezerScopes;
 
     static async getCode(req: Request, res: Response): Promise<void> {
-        const { callbackURL } = req.query;
+        const { mobile, callbackURL } = req.query;
         const scopes = DeezerController.scope.split(',');
         const params = {
-            client_id: DeezerController.clientId,
+            client_id: mobile ? DeezerTools.secondaryClientId : DeezerController.clientId,
             redirect_uri: callbackURL || DeezerController.callbackURL,
             scope: scopes.join(','),
             response_type: 'code',
