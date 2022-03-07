@@ -175,31 +175,4 @@ export class StatsService {
         });
     }
 
-    /**
-     * Get global top albums
-     * Get global top albums
-     * @param limit Limit
-     * @param offset Offset
-     * @returns AlbumStats Success
-     * @throws ApiError
-     */
-    public getGlobalTopAlbums(
-        limit?: number,
-        offset?: number,
-    ): CancelablePromise<AlbumStats> {
-        return this.httpRequest.request({
-            method: 'GET',
-            url: '/stats/charts/top/albums/weekly',
-            query: {
-                'limit': limit,
-                'offset': offset,
-            },
-            errors: {
-                401: `Unauthorized`,
-                404: `Not found`,
-                500: `Internal server error`,
-            },
-        });
-    }
-
 }
