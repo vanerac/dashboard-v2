@@ -7,7 +7,7 @@ import { Button, Container, Grid, Link, TextField, Typography } from '@mui/mater
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiRadioFm, mdiSpotify, mdiMusicNoteEighth } from '@mdi/js';
+import { mdiMusicNoteEighth, mdiRadioFm, mdiSpotify } from '@mdi/js';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -136,7 +136,7 @@ const Login = () => {
 
     const authDeezer = () => {
         getClient()
-            .sso.deezerConsentSso('http://localhost:3000/sso/deezer')
+            .sso.deezerConsentSso(false)
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);
