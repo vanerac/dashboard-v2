@@ -18,6 +18,10 @@ export default {
     deezerClientSecret: process.env.DEEZER_CLIENT_SECRET || '',
     deezerRedirectUri: process.env.DEEZER_REDIRECT_URI || '',
     deezerScopes: process.env.DEEZER_SCOPES || '',
+
+    deezerSecondaryClientSecret: process.env.DEEZER_SECONDARY_CLIENT_SECRET || '',
+    deezerSecondaryClientId: process.env.DEEZER_SECONDARY_CLIENT_ID || '',
+
     // Last.fm SSO Infos
     lastfmClientId: process.env.LASTFM_CLIENT_ID || '',
     lastfmClientSecret: process.env.LASTFM_CLIENT_SECRET || '',
