@@ -174,20 +174,20 @@ export class SsoService {
     /**
      * Assign token tu user and/or login to user account
      * Assign token tu user and/or login to user account
-     * @param code Auth code returned by provider
+     * @param token Auth code returned by provider
      * @param callbackUrl A callback URL to redirect to after SSO authentication
      * @returns loginResponse Success
      * @throws ApiError
      */
     public lastfmAuthCodeSso(
-        code: string,
+        token: string,
         callbackUrl?: string,
     ): CancelablePromise<loginResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/auth/sso/lastfm/callback',
             query: {
-                'code': code,
+                'token': token,
                 'callbackURL': callbackUrl,
             },
             errors: {
