@@ -17,8 +17,8 @@ const useProxy = Constants.appOwnership === 'expo' && Platform.OS !== 'web';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
-function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props) {
-    const { url, redirect_uri } = SSOData;
+function SpotifyTriggerSSO({ SSODataSpotify, navigation }: { SSODataSpotify: ssoUrl } & Props) {
+    const { url, redirect_uri } = SSODataSpotify;
 
     const triggerSSO = () => {
         startAsync({
@@ -53,6 +53,81 @@ function SpotifyTriggerSSO({ SSOData, navigation }: { SSOData: ssoUrl } & Props)
     );
 }
 
+function DeezerTriggerSSO({ SSODataDeezzer, navigation }: { SSODataDeezzer: ssoUrl } & Props) {
+    const { url, redirect_uri } = SSODataDeezzer;
+
+    const triggerSSO = () => {
+        console.log('triggerring deezer');
+        // startAsync({
+        //     authUrl: url,
+        // }).then(({ type, params }: any) => {
+        //     if (type === 'success') {
+        //         const { code } = params;
+        //         getClient()
+        //             .sso.spotifyAuthCodeSso(code, redirect_uri)
+        //             .then((data: loginResponse) => {
+        //                 localStorage.setItem('API_TOKEN', data.token);
+        //                 Alert.alert('Success', 'You are now logged in!');
+        //                 navigation.navigate('HomePage');
+        //             })
+        //             .catch((err: any) => {
+        //                 Alert.alert('Error', err.message);
+        //             });
+        //     } else {
+        //         Alert.alert('Error', 'Something went wrong');
+        //     }
+        // });
+    };
+
+    return (
+        <View>
+            <TouchableOpacity onPress={triggerSSO}>
+                <Text>
+                    <Icon name="deezer" size={40} color="#1DB954" />
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
+function GoogleTriggerSSO({ SSODataGoogle, navigation }: { SSODataGoogle: ssoUrl } & Props) {
+    const { url, redirect_uri } = SSODataGoogle;
+
+    const triggerSSO = () => {
+        console.log('triggerring google');
+        startAsync({
+            authUrl: url,
+        }).then(({ type, params }: any) => {
+            if (type === 'success') {
+                const { code } = params;
+                console.log('code => ', code);
+                getClient()
+                    .sso.googleAuthCodeSso(code, redirect_uri)
+                    .then((data: loginResponse) => {
+                        localStorage.setItem('API_TOKEN', data.token);
+                        Alert.alert('Success', 'You are now logged in!');
+                        navigation.navigate('HomePage');
+                    })
+                    .catch((err: any) => {
+                        Alert.alert('Error', err.message);
+                    });
+            } else {
+                Alert.alert('Error', 'Something went wrong');
+            }
+        });
+    };
+
+    return (
+        <View>
+            <TouchableOpacity onPress={triggerSSO}>
+                <Text>
+                    <Icon name="youtube" size={40} color="#1DB954" />
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
 export default function LoginScreen({ navigation, route }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -67,12 +142,30 @@ export default function LoginScreen({ navigation, route }: Props) {
         }
     }
 
-    const [SSOData, setSSOData] = useState<ssoUrl>({
+    const [SSODataSpotify, setSSODataSpotify] = useState<ssoUrl>({
         response_type: '',
         scope: '',
         url: '',
         client_id: '',
         redirect_uri: 'com.spotify.music://',
+        base_url: '',
+    });
+
+    const [SSODataDeezzer, setSSODataDeezer] = useState<ssoUrl>({
+        response_type: '',
+        scope: '',
+        url: '',
+        client_id: '',
+        redirect_uri: 'com.deezer.music://',
+        base_url: '',
+    });
+
+    const [SSODataGoogle, setSSODataGoogle] = useState<ssoUrl>({
+        response_type: '',
+        scope: '',
+        url: '',
+        client_id: '',
+        redirect_uri: 'com.deezer.music://',
         base_url: '',
     });
     // console.log({ SCHEME });
@@ -86,13 +179,27 @@ export default function LoginScreen({ navigation, route }: Props) {
         getClient()
             .sso.spotifyConsentSso(redirectURI)
             .then((data: ssoUrl) => {
-                setSSOData(data);
+                console.log(data);
+                setSSODataSpotify(data);
+            });
+        getClient()
+            .sso.deezerConsentSso(redirectURI)
+            .then((data: ssoUrl) => {
+                console.log(data);
+                setSSODataDeezer(data);
+            });
+        getClient()
+            .sso.googleConsentSso(redirectURI)
+            .then((data: ssoUrl) => {
+                console.log(data);
+                setSSODataGoogle(data);
             });
     }, []);
 
     return (
         <View style={[styles.container, { backgroundColor: theme.primary }]}>
             <View style={[styles.inputView, { backgroundColor: theme.secondary }]}>
+                {/* <Text>{SSOData}</Text> */}
                 <TextInput
                     style={[styles.TextInput, { color: theme.text }]}
                     placeholder="email"
@@ -124,7 +231,9 @@ export default function LoginScreen({ navigation, route }: Props) {
             <View style={styles.ssoText}>
                 <Text style={{ color: theme.text }}>Or log in with :</Text>
                 <View style={styles.ssoIcons}>
-                    <SpotifyTriggerSSO SSOData={SSOData} navigation={navigation} route={route} />
+                    <SpotifyTriggerSSO SSODataSpotify={SSODataSpotify} navigation={navigation} route={route} />
+                    <DeezerTriggerSSO SSODataDeezzer={SSODataDeezzer} navigation={navigation} route={route} />
+                    <GoogleTriggerSSO SSODataGoogle={SSODataGoogle} navigation={navigation} route={route} />
                 </View>
             </View>
 
