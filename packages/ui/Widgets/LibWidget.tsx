@@ -28,7 +28,7 @@ export const LibWidget: React.FC<WidgetProps> = ({
       .playlist.getAllPlaylists(widgetService)
       .then((dataP: any) => {
         setDataPlaylist(dataP);
-        console.log(dataP);
+        // console.log(dataP);
       });
   }, []);
 

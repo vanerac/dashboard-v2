@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
 import { Playlist } from "../../services";
 
@@ -15,7 +15,7 @@ export const PlaylistCard = ({
   config: PlaylistDisplayConfig;
   handlePlaylistCardClick: any;
 }) => {
-  console.log(playlist);
+  // console.log(playlist);
   return (
     <TouchableOpacity
       style={stylesheet.primaryContainer}

@@ -4,9 +4,11 @@ import { ThemeContext } from '../../constants/ThemeContext';
 import { getClient } from '../../utils/ApiClient';
 import { PlaylistWidget } from '../../../../packages/ui/Widgets/PlaylistWidget';
 import { Service } from '../../../../packages/services';
+import { useUserMusic } from '../../hooks/useUserMusic';
 
 export default function PlaylistModalScreen() {
     const { theme } = useContext(ThemeContext);
+    const { userMusic } = useUserMusic();
 
     const test = () => {
         console.log('oui oui baguette');
@@ -31,9 +33,9 @@ export default function PlaylistModalScreen() {
     }, []);
 
     return (
-        <ScrollView style={{ backgroundColor: theme.primary }}>
+        <View style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
-                {loading ? (
+                {loading && userMusic ? (
                     <PlaylistWidget
                         deleteWidget={test}
                         widgetKey={1}
@@ -41,12 +43,13 @@ export default function PlaylistModalScreen() {
                         clientAPi={getClient}
                         handlePlaylistCardClick={handlePlaylistCardClick}
                         handleTrackCardClick={handleTrackCardClick}
+                        playlist={userMusic}
                     />
                 ) : (
                     <ActivityIndicator />
                 )}
             </View>
-        </ScrollView>
+        </View>
     );
 }
 

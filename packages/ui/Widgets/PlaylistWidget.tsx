@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { TrackList } from "../Lists/TrackList";
+import { Playlist } from "../../services";
 import { TrackCardType } from "../Cards/TrackCard";
 import { PlaylistCard } from "../Cards/PlaylistCard";
+
+// import { UserMusicContext } from "../../../apps/app/constants/UserMusicContext";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -11,6 +14,7 @@ interface WidgetProps {
   clientAPi: Function;
   handleTrackCardClick: any;
   handlePlaylistCardClick: any;
+  playlist: Playlist;
 }
 
 export const PlaylistWidget: React.FC<WidgetProps> = ({
@@ -20,32 +24,36 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
   clientAPi,
   handleTrackCardClick,
   handlePlaylistCardClick,
+  playlist,
 }) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
 
-  const [dataPlaylist, setDataPlaylist] = useState([]);
+  // const { setUserMusic } = useContext(UserMusicContext);
+  // const [dataPlaylist, setDataPlaylist] = useState([]);
   const [dataTracks, setDataTracks] = useState([]);
 
   useEffect(() => {
+    // clientAPi()
+    //   .playlist.getAllPlaylists(widgetService)
+    //   .then((dataPlaylist: any) => {
+    //     setDataPlaylist(dataPlaylist);
+    // console.log(dataPlaylist);
     clientAPi()
-      .playlist.getAllPlaylists(widgetService)
-      .then((dataPlaylist: any) => {
-        setDataPlaylist(dataPlaylist);
-        console.log(dataPlaylist);
-        clientAPi()
-          .playlist.getPlaylistTracks(widgetService, dataPlaylist[0].id)
-          .then((dataTrack: any) => setDataTracks(dataTrack));
+      .playlist.getPlaylistTracks(widgetService, playlist.id)
+      .then((dataTrack: any) => {
+        setDataTracks(dataTrack);
       });
-  }, []);
+  });
+  // }, []);
 
   return (
-    <ScrollView style={stylesheet.container}>
-      {dataPlaylist.length ? (
+    <View style={stylesheet.container}>
+      {playlist.id.length ? (
         <>
           <PlaylistCard
-            playlist={dataPlaylist[0]}
+            playlist={playlist}
             config={{ provider: true }}
             handlePlaylistCardClick={handlePlaylistCardClick}
           />
@@ -58,7 +66,7 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
       ) : (
         <ActivityIndicator />
       )}
-    </ScrollView>
+    </View>
   );
 };
 

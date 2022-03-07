@@ -1,14 +1,12 @@
 import React from 'react';
-// import { Playlist } from '../../../packages/services';
+import { Playlist } from '../../../packages/services';
 
-export const music = {
-    playlist: {
-        id: String,
-        provider: String,
-    },
+type UserMusicContextValue = {
+    userMusic?: Playlist;
+    setUserMusic: ($services: Playlist | undefined) => void;
 };
 
-export const MusicContext = React.createContext({
-    Playlist: music.playlist,
-    setPlaylist: () => {},
+export const UserMusicContext = React.createContext<UserMusicContextValue>({
+    userMusic: undefined,
+    setUserMusic: () => {},
 });

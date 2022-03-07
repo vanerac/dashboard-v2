@@ -5,11 +5,13 @@ import { ThemeContext } from '../../constants/ThemeContext';
 
 import { Service } from '../../../../packages/services';
 import { getClient } from '../../utils/ApiClient';
+import { useUserMusic } from '../../hooks/useUserMusic';
 
 import { LibWidget } from '../../../../packages/ui/Widgets/LibWidget';
 
-export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProps<'LibraryTab'>) {
+export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps<'LibraryTab'>) {
     const { theme } = useContext(ThemeContext);
+    const { userMusic } = useUserMusic();
 
     const test = () => {
         console.log('oui oui baguette');
@@ -26,7 +28,8 @@ export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProp
     }, []);
 
     const handlePlaylistCardClick = () => {
-        console.log('PlaylistListCard pressed');
+        console.log('USER MUSIC', userMusic);
+        nav.navigate('PlaylistModal');
     };
 
     return (

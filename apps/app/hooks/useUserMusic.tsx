@@ -1,7 +1,7 @@
 import React from 'react';
-import { UserServicesContext } from '../constants/UserServicesContext';
+import { UserMusicContext } from '../constants/UserMusicContext';
 
-export const useUserPlaylist = () => {
-    const { userServices } = React.useContext(UserServicesContext);
-    return { userServices };
+export const useUserMusic = () => {
+    const { userMusic } = React.useContext(UserMusicContext);
+    return { userMusic };
 };
