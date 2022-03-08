@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { TrackList } from "../Lists/TrackList";
-import { Playlist } from "../../services";
-import { TrackCardType } from "../Cards/TrackCard";
-import { PlaylistCard } from "../Cards/PlaylistCard";
+import React, {useEffect, useState} from "react";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {TrackList} from "../Lists/TrackList";
+import {Playlist} from "../../services";
+import {TrackCardType} from "../Cards/TrackCard";
+import {PlaylistCard} from "../Cards/PlaylistCard";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -31,6 +31,8 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
   // const { setUserMusic } = useContext(UserMusicContext);
   // const [dataPlaylist, setDataPlaylist] = useState([]);
   const [dataTracks, setDataTracks] = useState([]);
+
+  console.log('playlist', playlist);
 
   useEffect(() => {
     clientAPi()
