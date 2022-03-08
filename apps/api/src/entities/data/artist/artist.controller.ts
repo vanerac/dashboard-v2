@@ -7,7 +7,6 @@ import {
     SpotifyArtistService,
 } from './artist.service';
 import { Providers } from '../../../tools/types';
-import { PlaylistService } from '../playlists/playlist.service';
 
 const servicesList: {
     [provider: string]: ArtistService;
@@ -26,7 +25,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -36,6 +35,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.getArtistById;
+            console.log(fn, id, provider);
             const artists = await fn(accessToken, id);
             return res.json(artists);
         } catch (error: any) {
@@ -51,7 +51,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -59,8 +59,23 @@ export default class ArtistController {
             }
             const { id } = req.params;
 
+            switch (provider) {
+                case Providers.SPOTIFY:
+                    return res.json(await SpotifyArtistService.getFollowedArtists(accessToken));
+                case Providers.DEEZER:
+                    return res.json(await DeezerArtistService.getFollowedArtists(accessToken));
+                case Providers.GOOGLE:
+                    return res.json(await GoogleArtistService.getFollowedArtists(accessToken));
+                case Providers.APPLE:
+                    return res.json(await AppleArtistService.getFollowedArtists(accessToken));
+                default:
+                    return res.status(400).json({
+                        error: 'Service not found',
+                    });
+            }
             // @ts-ignore
             const fn = serviceInstance.getFollowedArtists;
+            console.log(servicesList, fn, id, provider);
             const artists = await fn(accessToken, id);
             return res.json(artists);
         } catch (error: any) {
@@ -76,7 +91,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -86,6 +101,7 @@ export default class ArtistController {
 
             // @ts-ignore
             const fn = serviceInstance.followArtist;
+            console.log(fn, accessToken, id);
             const artist = await fn(accessToken, id);
             return res.json(artist);
         } catch (error: any) {
@@ -101,7 +117,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -126,7 +142,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -151,7 +167,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -176,7 +192,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',
@@ -201,7 +217,7 @@ export default class ArtistController {
                 });
             }
             const { provider, accessToken } = req.session.service;
-            const serviceInstance: PlaylistService = servicesList[provider];
+            const serviceInstance: ArtistService = servicesList[provider];
             if (!serviceInstance) {
                 return res.status(400).json({
                     error: 'Service not found',

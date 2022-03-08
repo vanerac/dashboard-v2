@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { ArtistList } from "../Lists/ArtistList";
-import { Artist } from "../../services";
+import React, {useEffect, useState} from "react";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {ArtistList} from "../Lists/ArtistList";
+import {Artist} from "../../services";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -31,6 +31,7 @@ export const ArtistWidget: React.FC<WidgetProps> = ({
   };
 
   useEffect(() => {
+    console.log('getting followed artists')
     clientAPi()
       .artist.getFollowedArtists(widgetService)
       .then((followedArtists: any) => {

@@ -2135,7 +2135,7 @@
         }
       }
     },
-    "/data/{serviceId}/artist/{artistId}": {
+    "/data/{serviceId}/artist/id/{artistId}": {
       "get": {
         "tags": [
           "Artist"

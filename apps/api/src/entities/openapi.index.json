@@ -107,7 +107,7 @@
     "/data/{serviceId}/search": {
       "$ref": "data/search/search.path.json#/search"
     },
-    "/data/{serviceId}/artist/{artistId}": {
+    "/data/{serviceId}/artist/id/{artistId}": {
       "$ref": "data/artist/artist.path.json#/getArtistById"
     },
     "/data/{serviceId}/artist/{artistId}/albums": {
