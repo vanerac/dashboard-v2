@@ -11,7 +11,7 @@ interface WidgetProps {
   clientAPi: Function;
 }
 
-export const UserTopTrackWidget: React.FC<WidgetProps> = ({
+export const GlobalTopTrackWidget: React.FC<WidgetProps> = ({
   deleteWidget,
   widgetKey,
   clientAPi,
@@ -32,7 +32,7 @@ export const UserTopTrackWidget: React.FC<WidgetProps> = ({
 
   useEffect(() => {
     clientAPi()
-      .stats.getMyTopTracks(20)
+      .stats.getGlobalTopTracks(20)
       .then((topTracks: any) => {
         setDataTrack(topTracks);
         console.log("Top Tracks: ", topTracks);
@@ -41,7 +41,7 @@ export const UserTopTrackWidget: React.FC<WidgetProps> = ({
 
   return (
     <View style={stylesheet.container}>
-      <Text style={{ fontSize: 16, color: theme.text }}>Your top Tracks :</Text>
+      <Text style={{ fontSize: 16, color: theme.text }}>Popular songs :</Text>
       {dataTrack.length ? (
         <TrackList
           trackArray={dataTrack}

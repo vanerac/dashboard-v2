@@ -10,7 +10,7 @@ interface WidgetProps {
   clientAPi: Function;
 }
 
-export const TopArtistWidget: React.FC<WidgetProps> = ({
+export const GlobalTopArtistWidget: React.FC<WidgetProps> = ({
   deleteWidget,
   widgetKey,
   clientAPi,
@@ -40,7 +40,7 @@ export const TopArtistWidget: React.FC<WidgetProps> = ({
 
   return (
     <View style={stylesheet.container}>
-      <Text style={{ fontSize: 16, color: theme.text }}>Popular :</Text>
+      <Text style={{ fontSize: 16, color: theme.text }}>Popular Artists :</Text>
       {dataArtist.length ? (
         <ArtistList
           options={{ provider: false }}

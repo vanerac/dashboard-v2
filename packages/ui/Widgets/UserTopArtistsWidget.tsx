@@ -10,7 +10,7 @@ interface WidgetProps {
   clientAPi: Function;
 }
 
-export const TopArtistWidget: React.FC<WidgetProps> = ({
+export const UserTopArtistWidget: React.FC<WidgetProps> = ({
   deleteWidget,
   widgetKey,
   clientAPi,
