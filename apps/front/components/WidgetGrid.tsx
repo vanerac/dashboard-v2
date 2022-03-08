@@ -11,7 +11,6 @@ import { LibWidget } from '../../../packages/ui/Widgets/LibWidget';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
-
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
