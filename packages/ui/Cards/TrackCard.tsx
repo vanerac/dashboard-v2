@@ -80,6 +80,7 @@ const stylesheet = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     justifyContent: "space-around",
+    maxWidth: 230,
   },
 
   imageAlbum: {
