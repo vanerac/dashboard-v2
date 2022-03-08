@@ -1,14 +1,31 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useContext } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import { RootStackParamList } from '../../types';
 import { ThemeContext } from '../../constants/ThemeContext';
 import Icon from 'react-native-vector-icons/Octicons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Service } from '../../../../packages/services';
+import { getClient } from '../../utils/ApiClient';
+import { ArtistWidget } from '../../../../packages/ui/Widgets/ArtistWidget';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AccountsModal'>;
 
 export default function HomeTabScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
+
+    const test = () => {
+        console.log('oui oui baguette');
+    };
+
+    const [userServices, setUserServices] = useState<Service[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        getClient()
+            .services.getAllUserServices()
+            .then((services) => setUserServices(services.services as Service[]))
+            .then(() => setLoading(true));
+    }, []);
 
     return (
         <View style={{ backgroundColor: theme.primary }}>
@@ -27,6 +44,17 @@ export default function HomeTabScreen({ navigation }: Props) {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {/*{loading ? (*/}
+                {/*    <ArtistWidget*/}
+                {/*        deleteWidget={test}*/}
+                {/*        widgetKey={1}*/}
+                {/*        widgetService={userServices[0].id}*/}
+                {/*        clientAPi={getClient}*/}
+                {/*        handleArtistListClick={() => console.log('wallah')}*/}
+                {/*    />*/}
+                {/*) : (*/}
+                {/*    <ActivityIndicator />*/}
+                {/*)}*/}
             </View>
         </View>
     );
