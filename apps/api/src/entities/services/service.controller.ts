@@ -32,7 +32,7 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, provider, enabled, status, accountName FROM services WHERE userid = $1 and enabled = true`;
+            const query = `SELECT id, provider, enabled, status, accountName FROM services WHERE userid = $1 `;
             console.log(userId);
             const { rows: services } = await Pool.query(query, [userId]);
             if (!services) {

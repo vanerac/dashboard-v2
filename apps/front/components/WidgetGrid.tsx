@@ -7,6 +7,8 @@ import 'react-resizable/css/styles.css';
 import { getClient } from '../utils/ApiClient';
 import { LibWidget } from '../../../packages/ui/Widgets/LibWidget';
 import { SearchWidget } from '@area/ui/Widgets/SearchWidget';
+import { ArtistWidget } from '@area/ui/Widgets/ArtistWidget';
+import { AlbumWidget } from '@area/ui/Widgets/AlbumWidget';
 
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
@@ -54,7 +56,13 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                                     clientAPi={getClient}
                                 />
                             ),
-                            album: 'album',
+                            album: (
+                                <AlbumWidget
+                                    deleteWidget={props.deleteWidget}
+                                    widgetKey={l.widgetKey}
+                                    clientAPi={getClient}
+                                />
+                            ),
                             stat: 'stat',
                             playlist: (
                                 <LibWidget
@@ -65,7 +73,15 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                                     isMobileApp={false}
                                 />
                             ),
-                            artist: 'artist',
+                            artist: (
+                                <ArtistWidget
+                                    deleteWidget={props.deleteWidget}
+                                    widgetKey={l.widgetKey}
+                                    widgetService={l.widgetService}
+                                    clientAPi={getClient}
+                                    handleArtistListClick={console.log}
+                                />
+                            ),
                         }[l.widgetType]
                     }
                 </div>
