@@ -15,7 +15,7 @@ export function parseServiceId(req: Request, res: Response, next: NextFunction) 
             });
         }
         const { id: userId } = req.session.user;
-        if (!serviceId) {
+        if (!serviceId || serviceId == 'undefined') {
             return res.status(400).send('Missing service id');
         }
         const query =

@@ -27,13 +27,16 @@ export class SpotifyAlbumService extends AlbumService {
             },
         });
 
-        return response.data.items.map((item: any) => ({
-            id: item.id,
-            name: item.name,
-            artist: item.artists[0].name,
-            images: item.images,
-            uri: item.uri,
-        }));
+        return response.data.items.map((item: any) => {
+            console.log(item);
+            return {
+                id: item.album.id,
+                name: item.album.name,
+                artist: item.album.artists[0].name,
+                image: item.album.images[0].url,
+                uri: item.uri,
+            };
+        });
     }
 
     static async getById(accessToken: string, id: string): Promise<Album> {

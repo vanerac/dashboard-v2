@@ -60,6 +60,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                                 <AlbumWidget
                                     deleteWidget={props.deleteWidget}
                                     widgetKey={l.widgetKey}
+                                    widgetService={l.widgetService}
                                     clientAPi={getClient}
                                 />
                             ),
