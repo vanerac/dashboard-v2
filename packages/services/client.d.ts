@@ -1,5 +1,6 @@
 import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
+import { AlbumService } from './services/AlbumService';
 import { ArtistService } from './services/ArtistService';
 import { AuthenticationService } from './services/AuthenticationService';
 import { DevicesService } from './services/DevicesService';
@@ -13,6 +14,7 @@ import { TrackService } from './services/TrackService';
 import { WidgetService } from './services/WidgetService';
 declare type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export declare class ApiClient {
+    readonly album: AlbumService;
     readonly artist: ArtistService;
     readonly authentication: AuthenticationService;
     readonly devices: DevicesService;
