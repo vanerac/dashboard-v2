@@ -85,7 +85,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const spotifyService = connectedServices.find((service: { provider: string }) => service.provider === 'spotify');
     const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
-    const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+    const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastfm');
     const deezerService = connectedServices.find((service: { provider: string }) => service.provider === 'deezer');
     let userName = undefined;
     let $val = undefined;

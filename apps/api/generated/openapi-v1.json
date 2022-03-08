@@ -525,7 +525,7 @@
         "security": [],
         "parameters": [
           {
-            "name": "code",
+            "name": "token",
             "in": "query",
             "description": "Auth code returned by provider",
             "required": true,
