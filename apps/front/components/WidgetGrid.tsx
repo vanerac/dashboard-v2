@@ -21,7 +21,20 @@ const SearchWidgetWrapper = ({ deleteWidget, widgetKey, widgetService, clientAPi
 
     return (
         <>
-            <input type={'text'} onChange={handleChange} value={searchStr} />
+            <input
+                type={'text'}
+                style={{
+                    width: '100%',
+                    backgroundColor: 'white',
+                    padding: '14px 20px',
+                    margin: '8px 0',
+                    border: 'none',
+                    borderRadius: '4px',
+                }}
+                onChange={handleChange}
+                placeholder="Search…"
+                value={searchStr}
+            />
             <SearchWidget
                 key={widgetKey}
                 widgetKey={widgetKey}
