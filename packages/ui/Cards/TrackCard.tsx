@@ -34,7 +34,6 @@ export const TrackCard = ({
 }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <TouchableOpacity
