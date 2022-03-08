@@ -31,18 +31,16 @@ export const TopArtistWidget: React.FC<WidgetProps> = ({
 
   useEffect(() => {
     clientAPi()
-      .stats.getMyTopArtists(20)
-      .then((topArtists: any) => {
-        setDataArtist(topArtists);
-        console.log("Top Artists: ", topArtists);
+      .stats.getGlobalTopArtists(20)
+      .then((globalTopArtists: any) => {
+        setDataArtist(globalTopArtists);
+        console.log("Popular: ", globalTopArtists);
       });
   }, []);
 
   return (
     <View style={stylesheet.container}>
-      <Text style={{ fontSize: 16, color: theme.text }}>
-        Your top Artists :
-      </Text>
+      <Text style={{ fontSize: 16, color: theme.text }}>Popular :</Text>
       {dataArtist.length ? (
         <ArtistList
           options={{ provider: false }}

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { TrackList } from "../Lists/TrackList";
 import { Track } from "../../services";
 import { TrackCardType } from "../Cards/TrackCard";
+import { ThemeContext } from "../../../apps/app/constants/ThemeContext";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -18,6 +19,8 @@ export const TopTrackWidget: React.FC<WidgetProps> = ({
   const $onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
+
+  const { theme } = useContext(ThemeContext);
 
   const [dataTrack, setDataTrack] = useState([]);
   // const [selectTrack, setSelectTrack] = useState<Track>();
@@ -38,7 +41,7 @@ export const TopTrackWidget: React.FC<WidgetProps> = ({
 
   return (
     <View style={stylesheet.container}>
-      <Text>Your top Tracks :</Text>
+      <Text style={{ fontSize: 16, color: theme.text }}>Your top Tracks :</Text>
       {dataTrack.length ? (
         <TrackList
           trackArray={dataTrack}
