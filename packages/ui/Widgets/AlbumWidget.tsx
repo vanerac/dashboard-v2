@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { AlbumList } from "../Lists/AlbumList";
-import { Album } from "../../services";
+import React, {useEffect, useState} from "react";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {AlbumList} from "../Lists/AlbumList";
+import {Album} from "../../services";
 
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
   clientAPi: Function;
+  widgetService: string;
 }
 
 export const AlbumWidget: React.FC<WidgetProps> = ({
   deleteWidget,
   widgetKey,
   clientAPi,
+  widgetService
 }) => {
   const $onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
+
+  console.log(widgetService)
 
   const [dataAlbum, setDataAlbum] = useState([]);
   // const [selectAlbum, setSelectAlbum] = useState<Album>();
@@ -28,7 +32,7 @@ export const AlbumWidget: React.FC<WidgetProps> = ({
 
   useEffect(() => {
     clientAPi()
-      .album.getAllSavedAlbums()
+      .album.getAllSavedAlbums(widgetService)
       .then((savedAlbums: any) => {
         setDataAlbum(savedAlbums);
         console.log("LDKJDSLKFJSDLFKJSDFLKDJFSLDKFJ", savedAlbums);

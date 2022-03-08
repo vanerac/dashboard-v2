@@ -7,7 +7,6 @@ import { parseServiceId } from '../tools/service.tools';
 import playbackRoutes from './playback/playback.routes';
 import widgetRoutes from './widget/widget.routes';
 import statsRoutes from './stats/stats.routes';
-import albumRoutes from './data/album/album.routes';
 
 const router = Router();
 
@@ -17,6 +16,6 @@ router.use('/playback', verifyToken, playbackRoutes);
 router.use('/data/:serviceId', [verifyToken, parseServiceId], dataRoutes);
 router.use('/widget', verifyToken, widgetRoutes);
 router.use('/stats', verifyToken, statsRoutes);
-router.use('/albums', verifyToken, albumRoutes);
+// router.use('/album', verifyToken, albumRoutes);
 
 export default router;

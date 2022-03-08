@@ -7,6 +7,17 @@
       "summary": "Get all saved albums",
       "description": "Get all saved albums",
       "operationId": "getAllSavedAlbums",
+      "parameters": [{
+        "name": "serviceId",
+        "in": "path",
+        "description": "ID of service to return playlists for",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+      ],
       "responses": {
         "200": {
           "description": "Artist found",
@@ -71,6 +82,16 @@
           "required": true,
           "schema": {
             "type": "string"
+          }
+        },
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       ],
@@ -145,6 +166,16 @@
           "schema": {
             "type": "string"
           }
+        },
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
         }
       ],
       "responses": {
@@ -207,6 +238,16 @@
           "required": true,
           "schema": {
             "type": "string"
+          }
+        },
+        {
+          "name": "serviceId",
+          "in": "path",
+          "description": "ID of service to return playlists for",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       ],
