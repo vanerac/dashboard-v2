@@ -59,6 +59,9 @@
     "/service/{serviceId}/update": {
       "$ref": "services/service.path.json#/updateService"
     },
+    "/service/{serviceId}/toggle": {
+      "$ref": "services/service.path.json#/toggleService"
+    },
     "/widget": {
       "$ref": "widget/widget.path.json#/getAllUserWidgets"
     },

@@ -76,7 +76,7 @@ const handleInput = (value: any) => {
     console.log(value);
 };
 
-export default function SearchAppBar({ addWidget, connectedServices }) {
+export default function SearchAppBar({ addWidget, connectedServices }: { addWidget: any; connectedServices: any[] }) {
     const cookies = new Cookies();
     const { switchToDarkMode, switchToLightMode, darkModeActive } = useDarkMode();
     const nextMode = darkModeActive ? 'Light' : 'Dark';
@@ -266,6 +266,29 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                 <ListItemIcon>{<InboxIcon />}</ListItemIcon>
                 <ListItemText primary={'Logout'} />
             </ListItem>
+            <ListItem>
+                <ListItemText primary={'Service List:'} />
+            </ListItem>
+            {connectedServices.map((service) => {
+                return (
+                    <ListItem key={service.id}>
+                        <ListItemText primary={service.provider} />
+                        <ListItemText primary={service.accountname} />
+                        <button
+                            onClick={() => {
+                                getClient().services.deleteService(service.id);
+                            }}>
+                            Delete
+                        </button>
+                        <button
+                            onClick={() => {
+                                getClient().services.toggleService(service.id);
+                            }}>
+                            Toggle
+                        </button>
+                    </ListItem>
+                );
+            })}
         </Box>
     );
 
@@ -330,7 +353,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
                                 <Button
-                                    disabled={lastFMService}
+                                    // disabled={lastFMService}
                                     color="info"
                                     fullWidth
                                     startIcon={svgLastFM}
@@ -342,7 +365,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
-                                    disabled={googleService}
+                                    // disabled={googleService}
                                     fullWidth
                                     color="error"
                                     startIcon={<GoogleIcon />}
@@ -354,7 +377,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
-                                    disabled={spotifyService}
+                                    // disabled={spotifyService}
                                     fullWidth
                                     color="secondary"
                                     startIcon={svgSpotify}
@@ -366,7 +389,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
-                                    disabled={appleService}
+                                    // disabled={appleService}
                                     fullWidth
                                     color="primary"
                                     startIcon={<AppleIcon />}
@@ -378,7 +401,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Button
-                                    disabled={deezerService}
+                                    // disabled={deezerService}
                                     fullWidth
                                     color="primary"
                                     startIcon={svgTmpDeezer}

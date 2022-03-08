@@ -18,7 +18,8 @@ export function parseServiceId(req: Request, res: Response, next: NextFunction) 
         if (!serviceId) {
             return res.status(400).send('Missing service id');
         }
-        const query = 'SELECT accesstoken as "accessToken", * FROM services WHERE id = $1 AND userid = $2';
+        const query =
+            'SELECT accesstoken as "accessToken", * FROM services WHERE id = $1 AND userid = $2 and enabled = true';
         const {
             rows: [service],
         } = await Pool.query(query, [serviceId, userId]);
@@ -42,7 +43,7 @@ export function hasService(provider: string) {
         }
         const { id: userId } = req.session.user;
 
-        const query = `SELECT * FROM services WHERE provider = $1 AND userid = $2`;
+        const query = `SELECT * FROM services WHERE provider = $1 AND userid = $2 and enabled = true`;
         const data = Pool.query(query, [provider, userId]);
         Promise.resolve(data).then(({ rows: [service] }) => {
             if (!service) {

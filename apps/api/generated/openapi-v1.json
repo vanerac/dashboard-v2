@@ -916,6 +916,61 @@
         }
       }
     },
+    "/service/{serviceId}/toggle": {
+      "put": {
+        "operationId": "toggleService",
+        "tags": [
+          "services"
+        ],
+        "summary": "Disable user service",
+        "description": "Disables a user service",
+        "security": [],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "Service ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/widget": {
       "get": {
         "tags": [

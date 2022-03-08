@@ -103,4 +103,27 @@ export class ServicesService {
         });
     }
 
+    /**
+     * Disable user service
+     * Disables a user service
+     * @param serviceId Service ID
+     * @returns ServiceResponse Success
+     * @throws ApiError
+     */
+    public toggleService(
+        serviceId: string,
+    ): CancelablePromise<ServiceResponse> {
+        return this.httpRequest.request({
+            method: 'PUT',
+            url: '/service/{serviceId}/toggle',
+            path: {
+                'serviceId': serviceId,
+            },
+            errors: {
+                401: `Unauthorized`,
+                500: `Internal server error`,
+            },
+        });
+    }
+
 }
