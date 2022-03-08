@@ -15,19 +15,26 @@ export const PlaylistList = ({
   options: PlaylistDisplayConfig;
   direction: boolean;
   column: number;
-  handlePlaylistCardClick: any;
+  handlePlaylistCardClick: (toto: Playlist) => any;
 }) => {
   const { setUserMusic } = useContext(UserMusicContext);
 
-  const DataPlaylistList = ({ playlist }: { playlist: Playlist }) => (
-    <PlaylistCard
-      config={{ provider: options.provider }}
-      playlist={playlist}
-      handlePlaylistCardClick={() => {
-        setUserMusic(playlist), handlePlaylistCardClick();
-      }}
-    />
-  );
+  const DataPlaylistList = ({ playlist }: { playlist: Playlist }) => {
+    const handleClickTest = (playlist: Playlist) => {
+      console.log(playlist);
+      handlePlaylistCardClick(playlist);
+    };
+
+    return (
+      <PlaylistCard
+        config={{ provider: options.provider }}
+        playlist={playlist}
+        handlePlaylistCardClick={() => {
+          setUserMusic(playlist), handleClickTest(playlist);
+        }}
+      />
+    );
+  };
 
   const renderItem = ({ item }: { item: Playlist }) => (
     <DataPlaylistList playlist={item} />
