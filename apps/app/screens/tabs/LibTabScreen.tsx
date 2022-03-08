@@ -47,7 +47,10 @@ export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps
                         handlePlaylistCardClick={handlePlaylistCardClick}
                     />
                 ) : (
-                    <ActivityIndicator />
+                    <>
+                        <Text>sldkfjsldfkjs</Text>
+                        <ActivityIndicator />
+                    </>
                 )}
             </View>
         </View>

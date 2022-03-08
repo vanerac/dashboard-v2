@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { PlaylistList } from "../Lists/PlaylistList";
+// import { useUserMusic } from "@area/app/hooks/useUserMusic";
+import { PlaylistWidget } from "./PlaylistWidget";
+import { Playlist } from "../../services";
 
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
   widgetService: string;
   clientAPi: Function;
-  handlePlaylistCardClick: any;
+  handlePlaylistCardClick: (toto: string) => any;
 }
 
 export const LibWidget: React.FC<WidgetProps> = ({
@@ -22,28 +25,49 @@ export const LibWidget: React.FC<WidgetProps> = ({
   };
 
   const [dataPlaylist, setDataPlaylist] = useState([]);
+  const [selectPlaylist, setSelectPlaylist] = useState<Playlist>();
+
+  const click = (playlist: Playlist) => {
+    console.log("bitch -> ", playlist);
+    setSelectPlaylist(playlist);
+  };
 
   useEffect(() => {
     clientAPi()
       .playlist.getAllPlaylists(widgetService)
       .then((dataP: any) => {
         setDataPlaylist(dataP);
-        // console.log(dataP);
+        console.log(dataP);
       });
   }, []);
 
   return (
     <View style={stylesheet.container}>
       {dataPlaylist.length ? (
-        <PlaylistList
-          options={{ provider: false }}
-          PlaylistArray={dataPlaylist}
-          direction={false}
-          column={2}
-          handlePlaylistCardClick={handlePlaylistCardClick}
-        />
+        selectPlaylist === undefined ? (
+          <PlaylistList
+            options={{ provider: false }}
+            PlaylistArray={dataPlaylist}
+            direction={false}
+            column={2}
+            handlePlaylistCardClick={click}
+          />
+        ) : (
+          <PlaylistWidget
+            deleteWidget={click}
+            widgetKey={1}
+            widgetService={widgetService}
+            clientAPi={clientAPi}
+            handlePlaylistCardClick={() => console.log("playlist clicked")}
+            handleTrackCardClick={() => console.log("track clicked")}
+            playlist={selectPlaylist}
+          />
+        )
       ) : (
-        <ActivityIndicator />
+        <>
+          <Text>in lib</Text>
+          <ActivityIndicator />
+        </>
       )}
     </View>
   );
