@@ -11,10 +11,6 @@ import { LibWidget } from '../../../packages/ui/Widgets/LibWidget';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
-    const handlePlaylistClick = () => {
-        console.log('wallah');
-    };
-
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
@@ -37,7 +33,7 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                                     widgetKey={l.widgetKey}
                                     widgetService={l.widgetService}
                                     clientAPi={getClient}
-                                    handlePlaylistCardClick={handlePlaylistClick}
+                                    isMobileApp={false}
                                 />
                             ),
                             artist: 'artist',

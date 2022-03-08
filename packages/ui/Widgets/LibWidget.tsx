@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Button,
+} from "react-native";
 import { PlaylistList } from "../Lists/PlaylistList";
 // import { useUserMusic } from "@area/app/hooks/useUserMusic";
 import { PlaylistWidget } from "./PlaylistWidget";
@@ -11,7 +17,8 @@ interface WidgetProps {
   widgetKey: number;
   widgetService: string;
   clientAPi: Function;
-  handlePlaylistCardClick: (toto: string) => any;
+  // handlePlaylistCardClick: (toto: string) => any;
+  isMobileApp: Boolean;
 }
 
 export const LibWidget: React.FC<WidgetProps> = ({
@@ -19,7 +26,7 @@ export const LibWidget: React.FC<WidgetProps> = ({
   widgetKey,
   widgetService,
   clientAPi,
-  handlePlaylistCardClick,
+  isMobileApp,
 }) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
@@ -31,7 +38,6 @@ export const LibWidget: React.FC<WidgetProps> = ({
   const [selectPlaylist, setSelectPlaylist] = useState<Playlist>();
 
   const click = (playlist: Playlist) => {
-    console.log("bitch -> ", playlist);
     setSelectPlaylist(playlist);
   };
 
@@ -46,9 +52,11 @@ export const LibWidget: React.FC<WidgetProps> = ({
 
   return (
     <View style={[stylesheet.container, { backgroundColor: theme.primary }]}>
-      <Button onPress={onClickDeleteWidget} title="okok">
-        delete widget
-      </Button>
+      {!isMobileApp ? (
+        <Button onPress={onClickDeleteWidget} title="X" />
+      ) : (
+        <Text>A toi de jouer koeck</Text>
+      )}
       {dataPlaylist.length ? (
         selectPlaylist === undefined ? (
           <PlaylistList

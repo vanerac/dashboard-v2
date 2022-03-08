@@ -5,13 +5,13 @@ import { ThemeContext } from '../../constants/ThemeContext';
 
 import { Service } from '../../../../packages/services';
 import { getClient } from '../../utils/ApiClient';
-import { useUserMusic } from '../../hooks/useUserMusic';
+// import { useUserMusic } from '../../hooks/useUserMusic';
 
 import { LibWidget } from '../../../../packages/ui/Widgets/LibWidget';
 
-export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps<'LibraryTab'>) {
+export default function LibraryTabScreen({ navigation: $nav }: RootTabScreenProps<'LibraryTab'>) {
     const { theme } = useContext(ThemeContext);
-    const { userMusic } = useUserMusic();
+    // const { userMusic } = useUserMusic();
 
     const test = () => {
         console.log('oui oui baguette');
@@ -27,10 +27,10 @@ export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps
             .then(() => setLoading(true));
     }, []);
 
-    const handlePlaylistCardClick = () => {
-        console.log('USER MUSIC', userMusic);
-        nav.navigate('PlaylistModal');
-    };
+    // const handlePlaylistCardClick = () => {
+    //     console.log('USER MUSIC', userMusic);
+    //     nav.navigate('PlaylistModal');
+    // };
 
     return (
         <View style={{ backgroundColor: theme.primary }}>
@@ -44,7 +44,8 @@ export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps
                         widgetKey={1}
                         widgetService={userServices[0].id}
                         clientAPi={getClient}
-                        handlePlaylistCardClick={handlePlaylistCardClick}
+                        isMobileApp={true}
+                        // handlePlaylistCardClick={handlePlaylistCardClick}
                     />
                 ) : (
                     <>
