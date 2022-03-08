@@ -51,15 +51,7 @@ export const LibWidget: React.FC<WidgetProps> = ({
   return (
     <View style={stylesheet.container}>
       {dataPlaylist.length ? (
-        isLib ? (
-          <PlaylistList
-            options={{ provider: false }}
-            PlaylistArray={dataPlaylist}
-            direction={false}
-            column={2}
-            handlePlaylistCardClick={click}
-          />
-        ) : (
+        isLib && selectPlaylist ? (
           <PlaylistWidget
             deleteWidget={click}
             widgetKey={1}
@@ -68,6 +60,14 @@ export const LibWidget: React.FC<WidgetProps> = ({
             handlePlaylistCardClick={unclick}
             handleTrackCardClick={() => console.log("track clicked")}
             playlist={selectPlaylist}
+          />
+        ) : (
+          <PlaylistList
+            options={{ provider: false }}
+            PlaylistArray={dataPlaylist}
+            direction={false}
+            column={2}
+            handlePlaylistCardClick={click}
           />
         )
       ) : (
