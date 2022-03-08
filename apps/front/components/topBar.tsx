@@ -269,24 +269,30 @@ export default function SearchAppBar({ addWidget, connectedServices }: { addWidg
             <ListItem>
                 <ListItemText primary={'Service List:'} />
             </ListItem>
+            <Divider />
             {connectedServices.map((service) => {
                 return (
-                    <ListItem key={service.id}>
-                        <ListItemText primary={service.provider} />
-                        <ListItemText primary={service.accountname} />
-                        <button
-                            onClick={() => {
-                                getClient().services.deleteService(service.id);
-                            }}>
-                            Delete
-                        </button>
-                        <button
-                            onClick={() => {
-                                getClient().services.toggleService(service.id);
-                            }}>
-                            Toggle
-                        </button>
-                    </ListItem>
+                    <>
+                        <ListItem key={service.id}>
+                            <ListItemText primary={service.provider.charAt(0).toUpperCase() + service.provider.slice(1)} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText primary={service.accountname} />
+                            <Button
+                                onClick={() => {
+                                    getClient().services.deleteService(service.id);
+                                }}>
+                                Delete
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    getClient().services.toggleService(service.id);
+                                }}>
+                                Toggle
+                            </Button>
+                        </ListItem>
+                        <Divider />
+                    </>
                 );
             })}
         </Box>
