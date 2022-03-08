@@ -11,7 +11,7 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, provider, enabled FROM services WHERE id = $1 AND userid = $2`;
+            const query = `SELECT id, provider, enabled, accountName FROM services WHERE id = $1 AND userid = $2`;
             const { rows: services } = await Pool.query(query, [id, userId]);
             if (!services || services.length === 0) {
                 return res.status(404).json({
@@ -32,7 +32,8 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, provider, enabled, status FROM services WHERE userid = $1`;
+            const query = `SELECT id, provider, enabled, status, accountName FROM services WHERE userid = $1`;
+            console.log(userId);
             const { rows: services } = await Pool.query(query, [userId]);
             if (!services) {
                 return res.status(404).json({
@@ -58,7 +59,7 @@ export default class ServiceController {
             }
             const { id: userId } = req.session.user;
             const { enabled } = req.body;
-            const query = `UPDATE services SET enabled = $1 WHERE id = $2 AND userid = $3 RETURNING id, provider, enabled`;
+            const query = `UPDATE services SET enabled = $1 WHERE id = $2 AND userid = $3 RETURNING id, provider, enabled, accountName`;
             const { rows: services } = await Pool.query(query, [enabled, id, userId]);
             if (!services || services.length === 0) {
                 return res.status(404).json({

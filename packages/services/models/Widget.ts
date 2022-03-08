@@ -9,21 +9,8 @@ export type Widget = {
     'y': number;
     width: number;
     height: number;
-    type: Widget.type;
+    type: 'stat' | 'album' | 'playlist' | 'artist' | 'search';
     data: string;
     createdAt: string;
     editedAt: string;
 };
-
-export namespace Widget {
-
-    export enum type {
-        STAT = 'stat',
-        ALBUM = 'album',
-        PLAYLIST = 'playlist',
-        ARTIST = 'artist',
-        SEARCH = 'search',
-    }
-
-
-}

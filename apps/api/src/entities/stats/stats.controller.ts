@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Album, Artist, Tag, Track } from '../../../../../packages/services';
+import { LastFmTools } from '../../tools/SSO/lastfm.tools';
+import axios from 'axios';
 
 export default class StatsController {
     // myTopArtists
@@ -10,27 +12,29 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
+            const { secondaryClient } = req.query;
+            const { sessionkey } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettopartists',
-                user: '',
                 period: 'overall',
-                limit: '10',
-                api_key: '',
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { topartists } = json;
-            const { artist } = topartists;
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                topartists: { artist },
+            } = response.data;
             // Map to Artist type
             const artists: Artist[] = artist.map((artist: any) => ({
                 type: 'artist',
@@ -58,35 +62,35 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
-
-            const params: { [key: string]: any } = {
+            const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
+            const params = {
                 method: 'user.gettoptracks',
-                user: '',
                 period: 'overall',
-                limit: '10',
-                api_key: '',
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { toptracks } = json;
-            const { track } = toptracks;
-            // Map to Artist type
+            // @ts-ignore
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                toptracks: { track },
+            } = response.data;
+            // Map to Track type
             const tracks: Track[] = track.map((track: any) => ({
                 type: 'track',
                 id: track.mbid,
                 name: track.name,
                 image: track.image[3]['#text'],
                 provider: 'lastfm',
-                followers: track.listeners,
+                duration: track.duration,
                 external_urls: track.url,
             }));
             res.status(200).json({
@@ -105,35 +109,36 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
-
-            const params: { [key: string]: any } = {
+            const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
+            const params = {
                 method: 'user.gettopalbums',
-                user: '',
                 period: 'overall',
-                limit: '10',
-                api_key: '',
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { toptracks } = json;
-            const { album } = toptracks;
-            // Map to Artist type
+            // @ts-ignore
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                topalbums: { album },
+            } = response.data;
+            // Map to Album type
             const albums: Album[] = album.map((album: any) => ({
                 type: 'album',
                 id: album.mbid,
                 name: album.name,
                 image: album.image[3]['#text'],
                 provider: 'lastfm',
-                followers: album.listeners,
                 external_urls: album.url,
             }));
             res.status(200).json({
@@ -152,35 +157,36 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
-
-            const params: { [key: string]: any } = {
+            const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
+            const params = {
                 method: 'user.gettoptags',
-                user: '',
-                limit: '10',
-                api_key: '',
+                period: 'overall',
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { toptracks } = json;
-            const { tag } = toptracks;
-            // Map to Artist type
+            // @ts-ignore
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                toptags: { tag },
+            } = response.data;
+            // Map to Tag type
             const tags: Tag[] = tag.map((tag: any) => ({
                 type: 'tag',
                 id: tag.name,
                 name: tag.name,
                 image: tag.image[3]['#text'],
                 provider: 'lastfm',
-                followers: tag.count,
-                external_urls: tag.url,
             }));
             res.status(200).json({
                 tags,
@@ -198,26 +204,28 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
-
-            const params: { [key: string]: any } = {
+            const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
+            const params = {
                 method: 'chart.gettopartists',
-                api_key: '',
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                period: '7day',
-                limit: '10',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { toptracks } = json;
-            const { artist } = toptracks;
+            // @ts-ignore
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                artists: { artist },
+            } = response.data;
             // Map to Artist type
             const artists: Artist[] = artist.map((artist: any) => ({
                 type: 'artist',
@@ -225,7 +233,6 @@ export default class StatsController {
                 name: artist.name,
                 image: artist.image[3]['#text'],
                 provider: 'lastfm',
-                followers: artist.listeners,
                 external_urls: artist.url,
             }));
             res.status(200).json({
@@ -244,34 +251,36 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
-
-            const params: { [key: string]: any } = {
+            const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
+            const params = {
                 method: 'chart.gettoptracks',
-                api_key: '',
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                period: '7day',
-                limit: '10',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { toptracks } = json;
-            const { track } = toptracks;
-            // Map to Artist type
+            // @ts-ignore
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                tracks: { track },
+            } = response.data;
+            // Map to Track type
             const tracks: Track[] = track.map((track: any) => ({
                 type: 'track',
                 id: track.mbid,
                 name: track.name,
                 image: track.image[3]['#text'],
                 provider: 'lastfm',
-                followers: track.listeners,
+                artist: track.artist.name,
                 external_urls: track.url,
             }));
             res.status(200).json({
@@ -290,34 +299,35 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
-            const { accessToken } = req.session.service;
-
-            const params: { [key: string]: any } = {
+            const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
+            const params = {
                 method: 'chart.gettopalbums',
-                api_key: '',
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
-                callback: '',
                 page: '1',
-                autocorrect: '1',
-                period: '7day',
-                limit: '10',
-                accessToken,
+                sk: sessionkey,
             };
-            const url = `https://ws.audioscrobbler.com/2.0/?${Object.keys(params)
-                .map((key) => `${key}=${params[key]}`)
-                .join('&')}`;
-            const response = await fetch(url);
-            const json = await response.json();
-            const { toptracks } = json;
-            const { album } = toptracks;
-            // Map to Artist type
+            // @ts-ignore
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
+            );
+            const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
+            const {
+                albums: { album },
+            } = response.data;
+            // Map to Album type
             const albums: Album[] = album.map((album: any) => ({
                 type: 'album',
                 id: album.mbid,
                 name: album.name,
                 image: album.image[3]['#text'],
                 provider: 'lastfm',
-                followers: album.listeners,
                 external_urls: album.url,
             }));
             res.status(200).json({

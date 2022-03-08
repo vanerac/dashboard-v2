@@ -1,20 +1,20 @@
 CREATE TYPE loginType AS ENUM ('classic', 'SSO');
 CREATE TYPE serviceStatus AS ENUM ('OK', 'KO');
-CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple');
+CREATE TYPE serviceProvider AS ENUM ('spotify', 'deezer', 'google', 'apple', 'lastfm');
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TYPE widgetType AS ENUM('stat', 'album', 'playlist', 'artist', 'search');
+CREATE TYPE widgetType AS ENUM ('stat', 'album', 'playlist', 'artist', 'search');
 
 CREATE TABLE IF NOT EXISTS Users
 (
-    id          uuid PRIMARY KEY             DEFAULT uuid_generate_v4(),
-    email       VARCHAR(256) UNIQUE NULL,
-    displayName TEXT                NOT NULL,
-    password    VARCHAR(256)        NULL,
-    createdAt   DATE                NOT NULL DEFAULT NOW(),
-    lastLogin   DATE                NULL,
-    editedAt    DATE                NOT NULL DEFAULT NOW(),
-    loginType   loginType           NOT NULL DEFAULT 'classic',
+    id          uuid PRIMARY KEY     DEFAULT uuid_generate_v4(),
+    email       TEXT UNIQUE NULL,
+    displayName TEXT        NOT NULL,
+    password    TEXT        NULL,
+    createdAt   DATE        NOT NULL DEFAULT NOW(),
+    lastLogin   DATE        NULL,
+    editedAt    DATE        NOT NULL DEFAULT NOW(),
+    loginType   loginType   NOT NULL DEFAULT 'classic',
     CONSTRAINT unique_email CHECK (loginType = 'classic' AND email IS NOT NULL OR loginType = 'SSO' AND email IS NULL)
 
 );
@@ -27,9 +27,11 @@ CREATE TABLE IF NOT EXISTS Services
     clientId     VARCHAR(256)    NOT NULL,
     enabled      BOOLEAN         NOT NULL DEFAULT TRUE,
     userId       uuid            NOT NULL,
-    accessToken  VARCHAR(256)    NOT NULL,
+    accessToken  TEXT            NOT NULL,
     tokenExpires TIMESTAMP       NULL,
-    refreshToken VARCHAR(256)    NULL,
+    refreshToken TEXT            NULL,
+    sessionKey   TEXT            NULL,
+    accountName  VARCHAR(256)    NULL,
     status       serviceStatus   NOT NULL DEFAULT 'OK',
     createdAt    DATE            NOT NULL DEFAULT NOW(),
     editedAt     DATE            NOT NULL DEFAULT NOW(),
@@ -40,18 +42,17 @@ CREATE TABLE IF NOT EXISTS Services
 
 CREATE TABLE IF NOT EXISTS Widgets
 (
-    id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    serviceId   uuid NOT NULL,
-    userId      uuid NOT NULL,
-    config      TEXT NOT NULL,
-    x           INT  NOT NULL    DEFAULT 0,
-    y           INT  NOT NULL    DEFAULT 0,
-    w           INT  NOT NULL,
-    h           INT  NOT NULL,
-    type        widgetType NOT NULL,
-    data        VARCHAR(256) NULL,
-    createdAt   DATE NOT NULL DEFAULT NOW(),
-    editedAt    DATE NOT NULL DEFAULT NOW(),
+    id        uuid PRIMARY KEY      DEFAULT uuid_generate_v4(),
+    serviceId uuid         NOT NULL,
+    userId    uuid         NOT NULL,
+    x         INT          NOT NULL DEFAULT 0,
+    y         INT          NOT NULL DEFAULT 0,
+    width     INT          NOT NULL,
+    height    INT          NOT NULL,
+    type      widgetType   NOT NULL,
+    data      VARCHAR(256) NULL,
+    createdAt DATE         NOT NULL DEFAULT NOW(),
+    editedAt  DATE         NOT NULL DEFAULT NOW(),
     CONSTRAINT fk_serviceId FOREIGN KEY (serviceId) REFERENCES Services (id) ON DELETE CASCADE,
     CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES Users (id) ON DELETE CASCADE
 );

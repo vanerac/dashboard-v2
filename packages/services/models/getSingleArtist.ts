@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type getSingleArtist = {
-    type?: getSingleArtist.type;
+    type?: 'artist' | 'album' | 'track' | 'playlist';
     id: string;
     name: string;
     image: string;
@@ -11,15 +11,3 @@ export type getSingleArtist = {
     followers: number;
     external_urls: string;
 };
-
-export namespace getSingleArtist {
-
-    export enum type {
-        ARTIST = 'artist',
-        ALBUM = 'album',
-        TRACK = 'track',
-        PLAYLIST = 'playlist',
-    }
-
-
-}

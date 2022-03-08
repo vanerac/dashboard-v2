@@ -8,16 +8,24 @@ export class DeezerTools implements SSOTools {
     static callbackURL: string = configuration.deezerRedirectUri || '';
     static scope: string = configuration.deezerScopes || '';
 
-    static async getToken(code: string, $callbackURL: string): Promise<Token> {
+    static secondaryClientId: string = configuration.deezerSecondaryClientId || '';
+    static secondaryClientSecret: string = configuration.deezerSecondaryClientSecret || '';
+
+    static async getToken(code: string, mobile: boolean): Promise<Token> {
         const url = 'https://connect.deezer.com/oauth/access_token.php';
         const params = {
-            app_id: DeezerTools.clientId,
-            secret: DeezerTools.clientSecret,
+            app_id: mobile ? DeezerTools.secondaryClientId : DeezerTools.clientId,
+            secret: mobile ? DeezerTools.secondaryClientSecret : DeezerTools.clientSecret,
             code: code,
             output: 'json',
         };
         const response = await axios.get(url, { params });
-        return response.data;
+        return {
+            access_token: response.data.access_token,
+            expires_in: response.data.expires || 0,
+            provider: 'deezer',
+            refresh_token: response.data.refresh_token,
+        };
     }
 
     static async refreshToken(refreshToken: string): Promise<Token> {
@@ -38,6 +46,11 @@ export class DeezerTools implements SSOTools {
             access_token: token,
         };
         const response = await axios.get(url, { params });
-        return response.data;
+        return {
+            displayName: response.data.name,
+            email: response.data.email,
+            id: response.data.id,
+            password: '',
+        };
     }
 }

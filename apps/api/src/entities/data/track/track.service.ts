@@ -50,13 +50,14 @@ export class SpotifyTrackService extends TrackService {
         return {
             image: response.data.album.images[0].url,
             playable: true,
-            type: Track.type.TRACK,
+            type: 'track',
             id: response.data.id,
             name: response.data.name,
             artist: response.data.artist[0].name,
             album: response.data.album.name,
             duration: response.data.duration_ms,
             provider: 'spotify',
+            uri: response.data.uri,
         };
     }
 
@@ -90,7 +91,7 @@ export class SpotifyTrackService extends TrackService {
             external_urls: response.data.album.artist[0].external_urls,
             followers: response.data.album.artist[0].followers,
             image: response.data.album.artist[0].images[0].url,
-            type: Track.type.TRACK,
+            type: 'track',
             id: response.data.album.artist[0].id,
             name: response.data.album.artist[0].name,
             provider: 'spotify',
@@ -151,13 +152,14 @@ export class AppleTrackService extends TrackService {
         return {
             image: response.data.attributes.artwork.url,
             playable: true,
-            type: Track.type.TRACK,
+            type: 'track',
             id: response.data.id,
             name: response.data.attributes.name,
             artist: response.data.attributes.artistName,
             album: response.data.attributes.albumName,
             duration: response.data.attributes.durationInMillis,
             provider: 'apple',
+            uri: response.data.attributes.url,
         };
     }
 
@@ -191,7 +193,7 @@ export class AppleTrackService extends TrackService {
             external_urls: response.data.attributes.artistUrl,
             followers: response.data.attributes.artistId,
             image: response.data.attributes.artwork.url,
-            type: Track.type.ARTIST,
+            type: 'artist',
             id: response.data.relationships.artists.data[0].id,
             name: response.data.attributes.artistName,
             provider: 'apple',
@@ -270,13 +272,14 @@ export class YoutubeTrackService extends TrackService {
         return {
             image: response.data.items[0].snippet.thumbnails.default.url,
             playable: true,
-            type: Track.type.TRACK,
+            type: 'track',
             id: response.data.items[0].id,
             name: response.data.items[0].snippet.title,
             artist: response.data.items[0].snippet.channelTitle,
             album: response.data.items[0].snippet.channelTitle,
             duration: response.data.items[0].contentDetails.duration,
             provider: 'youtube',
+            uri: `https://www.youtube.com/watch?v=${response.data.items[0].id}`,
         };
     }
 
@@ -304,7 +307,7 @@ export class YoutubeTrackService extends TrackService {
             external_urls: response.data.items[0].snippet.channelId,
             followers: 0,
             image: response.data.items[0].snippet.thumbnails.default.url,
-            type: Artist.type.ARTIST,
+            type: 'artist',
             id: response.data.items[0].snippet.channelId,
             name: response.data.items[0].snippet.channelTitle,
             provider: 'youtube',
@@ -362,13 +365,14 @@ export class DeezerTrackService extends TrackService {
         return {
             image: response.data.album.cover_big,
             playable: false,
-            type: Track.type.TRACK,
+            type: 'track',
             id: response.data.id,
             name: response.data.title,
             artist: response.data.artist.name,
             album: response.data.album.title,
             duration: response.data.duration,
             provider: 'deezer',
+            uri: response.data.preview,
         };
     }
 
@@ -399,7 +403,7 @@ export class DeezerTrackService extends TrackService {
             external_urls: response.data.artist.link,
             followers: response.data.artist.nb_fan,
             image: response.data.artist.picture_big,
-            type: Artist.type.ARTIST,
+            type: 'artist',
         };
     }
 

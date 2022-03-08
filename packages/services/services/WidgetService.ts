@@ -58,7 +58,7 @@ export class WidgetService {
     ): CancelablePromise<Array<Widget>> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/widget/{widgetId}/delete',
+            url: '/widget/delete/{widgetId}',
             path: {
                 'widgetId': widgetId,
             },
@@ -88,7 +88,7 @@ export class WidgetService {
     ): CancelablePromise<Array<Widget>> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/widget/{widgetId}/update',
+            url: '/widget/update/{widgetId}',
             path: {
                 'widgetId': widgetId,
             },

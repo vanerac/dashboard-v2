@@ -5,7 +5,7 @@
 import type { Track } from './Track';
 
 export type Playlist = {
-    type?: Playlist.type;
+    type?: 'artist' | 'album' | 'track' | 'playlist';
     id: string;
     name: string;
     description?: string;
@@ -13,15 +13,3 @@ export type Playlist = {
     provider: string;
     tracks?: Array<Track>;
 };
-
-export namespace Playlist {
-
-    export enum type {
-        ARTIST = 'artist',
-        ALBUM = 'album',
-        TRACK = 'track',
-        PLAYLIST = 'playlist',
-    }
-
-
-}

@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type getTrackResponse = {
-    type: getTrackResponse.type;
+    type: 'artist' | 'album' | 'track' | 'playlist';
     id: string;
     name: string;
     artist: string;
@@ -12,16 +12,5 @@ export type getTrackResponse = {
     image: string;
     provider: string;
     playable: boolean;
+    uri: string;
 };
-
-export namespace getTrackResponse {
-
-    export enum type {
-        ARTIST = 'artist',
-        ALBUM = 'album',
-        TRACK = 'track',
-        PLAYLIST = 'playlist',
-    }
-
-
-}

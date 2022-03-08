@@ -16,12 +16,14 @@ export class StatsService {
     /**
      * Get my top artists
      * Get my top artists
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @param limit Limit
      * @param offset Offset
      * @returns ArtistStats Success
      * @throws ApiError
      */
     public getMyTopArtists(
+        secondaryClientId?: boolean,
         limit?: number,
         offset?: number,
     ): CancelablePromise<ArtistStats> {
@@ -29,6 +31,7 @@ export class StatsService {
             method: 'GET',
             url: '/stats/me/top/artists',
             query: {
+                'secondaryClientId': secondaryClientId,
                 'limit': limit,
                 'offset': offset,
             },
@@ -43,12 +46,14 @@ export class StatsService {
     /**
      * Get my top tracks
      * Get my top tracks
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @param limit Limit
      * @param offset Offset
      * @returns TrackStats Success
      * @throws ApiError
      */
     public getMyTopTracks(
+        secondaryClientId?: boolean,
         limit?: number,
         offset?: number,
     ): CancelablePromise<TrackStats> {
@@ -56,6 +61,7 @@ export class StatsService {
             method: 'GET',
             url: '/stats/me/top/tracks',
             query: {
+                'secondaryClientId': secondaryClientId,
                 'limit': limit,
                 'offset': offset,
             },
@@ -70,12 +76,14 @@ export class StatsService {
     /**
      * Get my top albums
      * Get my top albums
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @param limit Limit
      * @param offset Offset
      * @returns AlbumStats Success
      * @throws ApiError
      */
     public getMyTopAlbums(
+        secondaryClientId?: boolean,
         limit?: number,
         offset?: number,
     ): CancelablePromise<AlbumStats> {
@@ -83,6 +91,7 @@ export class StatsService {
             method: 'GET',
             url: '/stats/me/top/albums',
             query: {
+                'secondaryClientId': secondaryClientId,
                 'limit': limit,
                 'offset': offset,
             },
@@ -97,12 +106,14 @@ export class StatsService {
     /**
      * Get my top tags
      * Get my top tags
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @param limit Limit
      * @param offset Offset
      * @returns TagStats Success
      * @throws ApiError
      */
     public getMyTopTags(
+        secondaryClientId?: boolean,
         limit?: number,
         offset?: number,
     ): CancelablePromise<TagStats> {
@@ -110,6 +121,7 @@ export class StatsService {
             method: 'GET',
             url: '/stats/me/top/tags',
             query: {
+                'secondaryClientId': secondaryClientId,
                 'limit': limit,
                 'offset': offset,
             },
@@ -124,12 +136,14 @@ export class StatsService {
     /**
      * Get global top artists
      * Get global top artists
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @param limit Limit
      * @param offset Offset
      * @returns ArtistStats Success
      * @throws ApiError
      */
     public getGlobalTopArtists(
+        secondaryClientId?: boolean,
         limit?: number,
         offset?: number,
     ): CancelablePromise<ArtistStats> {
@@ -137,6 +151,7 @@ export class StatsService {
             method: 'GET',
             url: '/stats/charts/top/artists/weekly',
             query: {
+                'secondaryClientId': secondaryClientId,
                 'limit': limit,
                 'offset': offset,
             },
@@ -151,12 +166,14 @@ export class StatsService {
     /**
      * Get global top tracks
      * Get global top tracks
+     * @param secondaryClientId use the secondary client ID to use for SSO authentication
      * @param limit Limit
      * @param offset Offset
      * @returns TrackStats Success
      * @throws ApiError
      */
     public getGlobalTopTracks(
+        secondaryClientId?: boolean,
         limit?: number,
         offset?: number,
     ): CancelablePromise<TrackStats> {
@@ -164,33 +181,7 @@ export class StatsService {
             method: 'GET',
             url: '/stats/charts/top/tracks/weekly',
             query: {
-                'limit': limit,
-                'offset': offset,
-            },
-            errors: {
-                401: `Unauthorized`,
-                404: `Not found`,
-                500: `Internal server error`,
-            },
-        });
-    }
-
-    /**
-     * Get global top albums
-     * Get global top albums
-     * @param limit Limit
-     * @param offset Offset
-     * @returns AlbumStats Success
-     * @throws ApiError
-     */
-    public getGlobalTopAlbums(
-        limit?: number,
-        offset?: number,
-    ): CancelablePromise<AlbumStats> {
-        return this.httpRequest.request({
-            method: 'GET',
-            url: '/stats/charts/top/albums/weekly',
-            query: {
+                'secondaryClientId': secondaryClientId,
                 'limit': limit,
                 'offset': offset,
             },

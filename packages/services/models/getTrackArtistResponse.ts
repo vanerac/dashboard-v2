@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type getTrackArtistResponse = {
-    type?: getTrackArtistResponse.type;
+    type?: 'artist' | 'album' | 'track' | 'playlist';
     id: string;
     name: string;
     image: string;
@@ -11,15 +11,3 @@ export type getTrackArtistResponse = {
     followers: number;
     external_urls: string;
 };
-
-export namespace getTrackArtistResponse {
-
-    export enum type {
-        ARTIST = 'artist',
-        ALBUM = 'album',
-        TRACK = 'track',
-        PLAYLIST = 'playlist',
-    }
-
-
-}

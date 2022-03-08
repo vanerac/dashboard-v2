@@ -49,7 +49,6 @@ export default class SpotifyController extends SSOController {
                 await linkService(sessionUser, user, SSOToken);
                 userData = sessionUser;
             } else {
-                console.log('Not loggedm creating user');
                 userData = await createUser(user.displayName, user.email, '', 'SSO');
                 await linkService(userData, user, SSOToken);
             }
@@ -61,6 +60,7 @@ export default class SpotifyController extends SSOController {
             const token = generateToken(userData);
             res.status(200).json({ token });
         } catch (e) {
+            console.error(e);
             if ((e as any).code === '23505') {
                 res.status(409).json({
                     message: 'Account already assigned to another user',

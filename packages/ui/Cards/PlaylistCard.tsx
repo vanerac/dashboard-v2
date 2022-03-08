@@ -1,39 +1,74 @@
-import {Playlist} from "../../services";
-import React, {useEffect, useState} from 'react'
-import {View} from "react-native";
-import {Client} from "../../global";
-import {onClick, ServiceProvider} from "../index";
+import React, { useEffect, useState, useContext } from "react";
+import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
+import { Playlist } from "../../services";
 
-type PlaylistFetchProps = {
-    id: string;
-    provider: ServiceProvider;
-}
+export type PlaylistDisplayConfig = {
+  provider: boolean;
+};
 
-type PlaylistProps = {
-    playlist: Playlist;
-    onClick: onClick;
-}
+export const PlaylistCard = ({
+  playlist,
+  config,
+  handlePlaylistCardClick,
+}: {
+  playlist: Playlist;
+  config: PlaylistDisplayConfig;
+  handlePlaylistCardClick: any;
+}) => {
+  // console.log(playlist);
+  return (
+    <TouchableOpacity
+      style={stylesheet.primaryContainer}
+      onPress={handlePlaylistCardClick}
+    >
+      <Image
+        style={stylesheet.playlistCover}
+        source={{ uri: playlist.image }}
+      />
+      <View style={stylesheet.identifiersContainer}>
+        <Text style={stylesheet.playlistTitle}> {playlist.name} </Text>
+        {config.provider ? (
+          <Text style={stylesheet.playlistOrAlbum}>
+            {" "}
+            - playlist - {playlist.provider} -{" "}
+          </Text>
+        ) : (
+          <Text style={stylesheet.playlistOrAlbum}>- playlist -</Text>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
-export function PlaylistCardFetch(props: PlaylistFetchProps & { onClick: onClick}) {
-    const [Playlist, setPlaylist] = useState<Playlist>();
+const stylesheet = StyleSheet.create({
+  primaryContainer: {
+    // backgroundColor: "#212121",
+    alignItems: "center",
+    width: "50%",
+    // height: 260,
+    // minHeight: 260,
+    marginTop: 30,
+  },
 
-    useEffect(() => {
-        Client.playlist.getPlaylistById(props.id, props.provider).then((val )=>setPlaylist(val.playlist));
-    }, [props.id, props.provider]);
+  identifiersContainer: {
+    alignItems: "center",
+    justifyContent: "space-around",
+    margin: 13,
+  },
 
-    if (!Playlist) {
-        return <View/>;
-    }
-    return PlaylistCard({...props, playlist: Playlist});
-}
+  playlistTitle: {
+    color: "white",
+    fontSize: 17,
+    marginBottom: 6,
+  },
 
+  playlistOrAlbum: {
+    color: "white",
+  },
 
-export default function PlaylistCard(props: PlaylistProps) {
-    // use React native syntax
-
-    return (
-        <View>
-            <View/>
-        </View>
-    );
-}
+  playlistCover: {
+    width: 200,
+    height: 200,
+    borderRadius: 7,
+  },
+});

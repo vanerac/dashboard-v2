@@ -5,5 +5,6 @@
 import type { Track } from './Track';
 
 export type PlayTrackRequest = {
-    track?: Track;
+    track: Track;
+    serviceId: string;
 };

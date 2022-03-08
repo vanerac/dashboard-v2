@@ -7,7 +7,7 @@ import { Button, Container, Grid, Link, TextField, Typography } from '@mui/mater
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiRadioFm, mdiSpotify } from '@mdi/js';
+import { mdiMusicNoteEighth, mdiRadioFm, mdiSpotify } from '@mdi/js';
 import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -38,8 +38,8 @@ const Login = () => {
     };
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpenErrorModal = () => setOpen(true);
+    const handleCloseErrorModal = () => setOpen(false);
 
     const updatePassword = (event: any) => {
         setErrorEmptyFieldPassword('');
@@ -60,6 +60,12 @@ const Login = () => {
     const svgLastFM = (
         <SvgIcon>
             <path d={mdiRadioFm} />
+        </SvgIcon>
+    );
+
+    const svgTmpDeezer = (
+        <SvgIcon>
+            <path d={mdiMusicNoteEighth} />
         </SvgIcon>
     );
 
@@ -88,7 +94,7 @@ const Login = () => {
                     Router.push('/');
                 })
                 // Todo: Handle 401: Token expired
-                .catch(handleOpen);
+                .catch(handleOpenErrorModal);
         }
     };
 
@@ -112,11 +118,12 @@ const Login = () => {
 
     const authLastFM = () => {
         getClient()
-            .sso.lastfmConsentSso('http://localhost:3000/getLastFMCode')
+            .sso.lastfmConsentSso(false)
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);
-            });
+            })
+            .catch((error) => console.log(error));
     };
 
     const authApple = () => {
@@ -124,6 +131,17 @@ const Login = () => {
         //     console.log(data);
         //     Router.push(data.url);
         // });
+        handleOpenErrorModal();
+    };
+
+    const authDeezer = () => {
+        getClient()
+            .sso.deezerConsentSso(false, 'http://localhost:3000/sso/deezer')
+            .then((data) => {
+                console.log(data);
+                Router.push(data.url);
+            })
+            .catch((error) => console.log(error));
     };
 
     return (
@@ -196,6 +214,17 @@ const Login = () => {
                                     Login with Apple
                                 </Button>
                             </Grid>
+                            <Grid item xs={12} md={6}>
+                                <Button
+                                    fullWidth
+                                    color="primary"
+                                    startIcon={svgTmpDeezer}
+                                    onClick={authDeezer}
+                                    size="large"
+                                    variant="contained">
+                                    Login with Deezer
+                                </Button>
+                            </Grid>
                         </Grid>
                         <Box
                             sx={{
@@ -256,7 +285,7 @@ const Login = () => {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={open}
-                onClose={handleClose}
+                onClose={handleCloseErrorModal}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{

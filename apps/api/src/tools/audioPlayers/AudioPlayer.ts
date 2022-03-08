@@ -1,13 +1,15 @@
 import { EventEmitter } from 'events';
 import { Track } from '../../../../../packages/services';
+import { Stream } from 'puppeteer-stream';
+import { Browser, Page } from 'puppeteer';
 
-export type AudioPlayerEvents = 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
+export type AudioPlayerEvents = 'unknown' | 'ready' | 'playing' | 'pause' | 'seek' | 'stopped' | 'error';
 
-export abstract class AudioPlayer extends EventEmitter {
+export class AudioPlayer extends EventEmitter {
     static readonly DEFAULT_VOLUME = 1;
     static readonly DEFAULT_LOOP = false;
 
-    protected _state: AudioPlayerEvents = 'stopped';
+    protected _state: AudioPlayerEvents = 'unknown';
     protected _playingTrack: Track | null = null;
 
     protected _isPlaying: boolean | undefined;
@@ -18,8 +20,12 @@ export abstract class AudioPlayer extends EventEmitter {
     protected _duration: number | undefined;
     protected _queue: Track[] | undefined;
 
-    protected constructor() {
+    protected _browser: Browser | undefined;
+    protected _page: Page | undefined;
+
+    constructor(protected token: string) {
         super();
+        this.token = token;
     }
 
     public get state(): AudioPlayerEvents {
@@ -31,6 +37,15 @@ export abstract class AudioPlayer extends EventEmitter {
         this.emit('stateChanged', state);
     }
 
+    public async getStream(): Promise<Stream> {
+        throw new Error('Not implemented');
+    }
+
+    public async updateToken(token: string): Promise<void> {
+        this.token = token;
+        await this.updateSession();
+    }
+
     public get playingTrack(): Track | null {
         return this._playingTrack;
     }
@@ -38,6 +53,30 @@ export abstract class AudioPlayer extends EventEmitter {
     protected set playingTrack(track: Track | null) {
         this._playingTrack = track;
         this.emit('playingTrackChanged', track);
+    }
+
+    protected async updateSession() {
+        throw new Error('Not implemented');
+    }
+
+    protected async playTrack($track: Track): Promise<void> {
+        throw new Error('Not implemented');
+    }
+
+    protected async pauseTrack(): Promise<void> {
+        throw new Error('Not implemented');
+    }
+
+    protected async resumeTrack(): Promise<void> {
+        throw new Error('Not implemented');
+    }
+
+    protected async stopTrack(): Promise<void> {
+        throw new Error('Not implemented');
+    }
+
+    protected async seekTrack($time: number): Promise<void> {
+        throw new Error('Not implemented');
     }
 
     public async play(track: Track): Promise<void> {
@@ -69,25 +108,5 @@ export abstract class AudioPlayer extends EventEmitter {
     public async seek(time: number): Promise<void> {
         this._currentTime = time;
         return this.seekTrack(time);
-    }
-
-    protected async playTrack($track: Track): Promise<void> {
-        throw new Error('Not implemented');
-    }
-
-    protected async pauseTrack(): Promise<void> {
-        throw new Error('Not implemented');
-    }
-
-    protected async resumeTrack(): Promise<void> {
-        throw new Error('Not implemented');
-    }
-
-    protected async stopTrack(): Promise<void> {
-        throw new Error('Not implemented');
-    }
-
-    protected async seekTrack($time: number): Promise<void> {
-        throw new Error('Not implemented');
     }
 }

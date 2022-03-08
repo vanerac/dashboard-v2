@@ -1,4 +1,4 @@
-import { ServiceUserData, SSOController } from '../../../../tools/types';
+import { ServiceUserData, SSOController, Token } from '../../../../tools/types';
 import { Request, Response } from 'express';
 import configuration from '../../../../../configuration';
 import { LastFmTools } from '../../../../tools/SSO/lastfm.tools';
@@ -16,13 +16,14 @@ export default class LastFmController extends SSOController {
     static async getCode(req: Request, res: Response): Promise<void> {
         // redirect to lastFm for authentication
         // callback url sends to /api/auth/lastFm/callback
-        const { callbackURL } = req.query;
+        // const { callbackURL } = req.query;
+
+        const { secondaryClientId } = req.query;
 
         const params = {
-            client_id: LastFmController.clientId,
-            response_type: 'code',
-            redirect_uri: callbackURL || LastFmController.callbackURL,
-            scope: LastFmController.scope,
+            api_key: JSON.parse((secondaryClientId as string) || 'false')
+                ? LastFmTools.secondaryClientId
+                : LastFmController.clientId,
         };
         // @ts-ignore
         const url = `https://www.last.fm/api/auth/?${new URLSearchParams(params)}`;
@@ -32,14 +33,29 @@ export default class LastFmController extends SSOController {
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { code, callbackURL } = req.query;
+            const { token, secondaryClientId } = req.query;
             const { user: sessionUser } = req.session;
-            if (!code || typeof code !== 'string') {
+            if (!token || typeof token !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await LastFmTools.getToken(code, (callbackURL as string) || LastFmController.callbackURL);
-            const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token);
+            // const SSOToken = await LastFmTools.getToken(token, (callbackURL as string) || LastFmController.callbackURL);
+            const SSOToken: Token = {
+                provider: 'lastfm',
+                refresh_token: '',
+                access_token: token,
+                expires_in: 3600,
+            };
+            const sessionKey = await LastFmTools.getSessionKey(
+                SSOToken,
+                !!JSON.parse((secondaryClientId as string) || 'false'),
+            );
+            const user: ServiceUserData = await LastFmTools.getUserInfos(
+                SSOToken.access_token,
+                sessionKey,
+                !!secondaryClientId,
+            );
             let userData: User & any = await findUserByService('lastfm', user.id);
+            SSOToken.sessionKey = sessionKey;
 
             if (userData) {
                 await updateToken(userData, user, SSOToken);
@@ -54,9 +70,10 @@ export default class LastFmController extends SSOController {
             delete userData.password;
             delete userData.iat;
             delete userData.exp;
-            const token = generateToken(userData);
-            res.status(200).json({ token });
+            const userToken = generateToken(userData);
+            res.status(200).json({ token: userToken });
         } catch (e) {
+            console.log(e);
             if ((e as any).code === '23505') {
                 res.status(409).json({
                     message: 'Account already assigned to another user',

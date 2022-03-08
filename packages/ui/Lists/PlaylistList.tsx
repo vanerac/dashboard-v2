@@ -1,55 +1,59 @@
-import {onClick} from "..";
-import {Playlist, Service, Track} from "../../services";
-import {Text, View} from "react-native";
-import {Client} from "../../global";
+import React, { useContext } from "react";
+import { FlatList, StyleSheet } from "react-native";
+import { PlaylistCard, PlaylistDisplayConfig } from "../Cards/PlaylistCard";
+import { Playlist } from "../../services";
+import { UserMusicContext } from "../../../apps/app/constants/UserMusicContext";
 
-type PlaylistListProps = {
-    playlists: Playlist[];
-    onClick: onClick
+export const PlaylistList = ({
+  PlaylistArray,
+  options,
+  direction,
+  column,
+  handlePlaylistCardClick,
+}: {
+  PlaylistArray: Array<Playlist>;
+  options: PlaylistDisplayConfig;
+  direction: boolean;
+  column: number;
+  handlePlaylistCardClick: (toto: Playlist) => any;
+}) => {
+  const { setUserMusic } = useContext(UserMusicContext);
+
+  const DataPlaylistList = ({ playlist }: { playlist: Playlist }) => {
+    const handleClickTest = (playlist: Playlist) => {
+      console.log(playlist);
+      handlePlaylistCardClick(playlist);
+    };
+
+    return (
+      <PlaylistCard
+        config={{ provider: options.provider }}
+        playlist={playlist}
+        handlePlaylistCardClick={() => {
+          setUserMusic(playlist), handleClickTest(playlist);
+        }}
+      />
+    );
+  };
+
+  const renderItem = ({ item }: { item: Playlist }) => (
+    <DataPlaylistList playlist={item} />
+  );
+
+  return (
+    <FlatList
+      style={stylesheet.container}
+      data={PlaylistArray}
+      renderItem={renderItem}
+      numColumns={column}
+      keyExtractor={(_item, index) => index.toString()}
+      horizontal={direction}
+    />
+  );
 };
 
-export default function PlaylistList(props: PlaylistListProps) {
-
-    return (
-        props.playlists.map((playlist: Playlist, index: number) => {
-            return (
-                <View key={index}>
-                <PlaylistListItem playlist={playlist} onClick={props.onClick}/>
-            </View>
-        )
-        })
-    )
-}
-
-
-export function PlaylistListItem(props: {playlist: Playlist, onClick: onClick}) {
-
-    /* Todo
-     *  Add track
-     *  Play playlist
-     *  Save playlist
-     */
-
-
-    const addTrack = (service: Service ,track: Track, playlist: Playlist) => {
-        Client.playlist.addToPlaylist(track.id, service.id, playlist.id);
-    };
-
-    const playPlaylist = (playlist: Playlist) => {
-        // Client.playlist.playPlaylist(playlist); // todo
-    };
-
-    const savePlaylist = (service: Service , playlist: Playlist) => {
-        Client.playlist.save(service.id, playlist.id); // todo
-    };
-
-    const unsavePlaylist = (service: Service, playlist: Playlist) => {
-        Client.playlist.unsave(service.id, playlist.id); //todo
-    };
-
-    return (
-        <View>
-            <Text>{props.playlist.name}</Text>
-        </View>
-    )
-}
+const stylesheet = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
+});

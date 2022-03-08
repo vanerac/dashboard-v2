@@ -1,4 +1,5 @@
 import { Album, Artist, Playlist, Track } from '../../../../../../packages/services';
+import axios from 'axios';
 
 export class ArtistService {
     static async getArtistById($accessToken: string, $artistId: string): Promise<Artist> {
@@ -213,8 +214,11 @@ export class DeezerArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const params = {
+            access_token: accessToken,
+        };
+        const response = await axios.get(url, { headers, params });
+        const json = await response.data;
         const artist: Artist = {
             id: json.id,
             name: json.name,
@@ -231,9 +235,12 @@ export class DeezerArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
-        const albums: Album[] = json.data.map((album: any) => {
+        const params = {
+            access_token: accessToken,
+        };
+        const response = await axios.get(url, { headers, params });
+        const json = await response.data;
+        return json.data.map((album: any) => {
             return {
                 id: album.id,
                 name: album.title,
@@ -243,7 +250,6 @@ export class DeezerArtistService implements ArtistService {
                 provider: 'deezer',
             };
         });
-        return albums;
     }
     // get artist top tracks
 
@@ -252,18 +258,21 @@ export class DeezerArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
-        const tracks: Track[] = json.data.map((track: any) => {
+        const params = {
+            access_token: accessToken,
+        };
+        const response = await axios.get(url, { headers, params });
+        const json = await response.data;
+        return json.data.map((track: any) => {
             return {
                 id: track.id,
                 name: track.title,
                 image: track.album.cover_xl,
+                duration: track.duration,
                 external_urls: track.link,
                 provider: 'deezer',
             };
         });
-        return tracks;
     }
     // get artist related artists
     static async getArtistRelatedArtists(accessToken: string, artistId: string): Promise<Artist[]> {
@@ -271,9 +280,12 @@ export class DeezerArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
-        const artists: Artist[] = json.data.map((artist: any) => {
+        const params = {
+            access_token: accessToken,
+        };
+        const response = await axios.get(url, { headers, params });
+        const json = await response.data;
+        return json.data.map((artist: any) => {
             return {
                 id: artist.id,
                 name: artist.name,
@@ -283,7 +295,6 @@ export class DeezerArtistService implements ArtistService {
                 provider: 'deezer',
             };
         });
-        return artists;
     }
 
     // get artist playlists
@@ -292,9 +303,12 @@ export class DeezerArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
-        const playlists: Playlist[] = json.data.map((playlist: any) => {
+        const params = {
+            access_token: accessToken,
+        };
+        const response = await axios.get(url, { headers, params });
+        const json = await response.data;
+        return json.data.map((playlist: any) => {
             return {
                 id: playlist.id,
                 name: playlist.title,
@@ -303,7 +317,6 @@ export class DeezerArtistService implements ArtistService {
                 provider: 'deezer',
             };
         });
-        return playlists;
     }
 }
 
