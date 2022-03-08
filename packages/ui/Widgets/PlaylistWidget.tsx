@@ -5,8 +5,6 @@ import { Playlist } from "../../services";
 import { TrackCardType } from "../Cards/TrackCard";
 import { PlaylistCard } from "../Cards/PlaylistCard";
 
-// import { UserMusicContext } from "../../../apps/app/constants/UserMusicContext";
-
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
