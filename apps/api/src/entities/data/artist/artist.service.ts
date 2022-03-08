@@ -43,8 +43,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const response = await axios.get(url, { headers });
+        const json = response.data;
         // parse artist to type Artist
         const parsed: Artist = {
             provider: 'spotify',
@@ -63,8 +63,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const response = await axios.get(url, { headers });
+        const json = response.data;
         const artists: Artist[] = json.artists.items.map((artist: any) => {
             return {
                 id: artist.id,
@@ -83,14 +83,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers,
-            body: JSON.stringify({
-                ids: [artistId],
-            }),
-        });
-        const json = await response.json();
+        const response = await axios.put(url, { ids: [artistId] }, { headers });
+        const json = response.data;
         const artist: Artist = {
             id: json.artists.items[0].id,
             name: json.artists.items[0].name,
@@ -108,14 +102,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, {
-            method: 'DELETE',
-            headers,
-            body: JSON.stringify({
-                ids: [artistId],
-            }),
-        });
-        const json = await response.json();
+        const response = await axios.delete(url, { data: { ids: [artistId] }, headers });
+        const json = response.data;
         const artist: Artist = {
             id: json.artists.items[0].id,
             name: json.artists.items[0].name,
@@ -133,8 +121,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const reponse = await axios.get(url, { headers });
+        const json = reponse.data;
         const albums: Album[] = json.items.map((album: any) => {
             return {
                 id: album.id,
@@ -153,8 +141,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const response = await axios.get(url, { headers });
+        const json = response.data;
         const tracks: Track[] = json.tracks.map((track: any) => {
             return {
                 id: track.id,
@@ -172,8 +160,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const response = await axios.get(url, { headers });
+        const json = response.data;
         const artists: Artist[] = json.artists.map((artist: any) => {
             return {
                 id: artist.id,
@@ -192,8 +180,8 @@ export class SpotifyArtistService implements ArtistService {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        const response = await fetch(url, { headers });
-        const json = await response.json();
+        const response = await axios.get(url, { headers });
+        const json = response.data;
         const playlists: Playlist[] = json.items.map((playlist: any) => {
             return {
                 id: playlist.id,

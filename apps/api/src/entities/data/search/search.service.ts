@@ -37,35 +37,35 @@ export class SpotifySearchService extends SearchService {
                     provider: 'spotify',
                 } as Track),
         );
-        const albums = data.albums.map(
-            (album: { id: any; name: any; artists: { name: any }[]; images: { url: any }[]; uri: any }) =>
-                ({
-                    id: album.id,
-                    name: album.name,
-                    artist: album.artists[0].name,
-                    image: album.images[0].url,
-                    provider: 'spotify',
-                } as Album),
-        );
-        const artists = data.artists.map(
-            (artist: { id: any; name: any; images: { url: any }[] }) =>
-                ({
-                    id: artist.id,
-                    name: artist.name,
-                    image: artist.images[0].url,
-                    provider: 'spotify',
-                } as Artist),
-        );
-        const playlists = data.playlists.map(
-            (playlist: { id: any; name: any; images: { url: any }[] }) =>
-                ({
-                    id: playlist.id,
-                    name: playlist.name,
-                    image: playlist.images[0].url,
-                    provider: 'spotify',
-                } as Playlist),
-        );
-        return [...tracks, ...albums, ...artists, ...playlists];
+        // const albums = data.albums.map(
+        //     (album: { id: any; name: any; artists: { name: any }[]; images: { url: any }[]; uri: any }) =>
+        //         ({
+        //             id: album.id,
+        //             name: album.name,
+        //             artist: album.artists[0].name,
+        //             image: album.images[0].url,
+        //             provider: 'spotify',
+        //         } as Album),
+        // );
+        // const artists = data.artists.map(
+        //     (artist: { id: any; name: any; images: { url: any }[] }) =>
+        //         ({
+        //             id: artist.id,
+        //             name: artist.name,
+        //             image: artist.images[0].url,
+        //             provider: 'spotify',
+        //         } as Artist),
+        // );
+        // const playlists = data.playlists.map(
+        //     (playlist: { id: any; name: any; images: { url: any }[] }) =>
+        //         ({
+        //             id: playlist.id,
+        //             name: playlist.name,
+        //             image: playlist.images[0].url,
+        //             provider: 'spotify',
+        //         } as Playlist),
+        // );
+        return [...tracks];
     }
 }
 
