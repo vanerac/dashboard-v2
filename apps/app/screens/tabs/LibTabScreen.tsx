@@ -44,7 +44,8 @@ export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps
                         widgetKey={1}
                         widgetService={userServices[0].id}
                         clientAPi={getClient}
-                        handlePlaylistCardClick={handlePlaylistCardClick}
+                        isMobileApp={true}
+                        // handlePlaylistCardClick={handlePlaylistCardClick}
                     />
                 ) : (
                     <>
