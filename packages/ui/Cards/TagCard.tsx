@@ -11,7 +11,9 @@ export const TagCard = ({ tag }: { tag: Tag }) => {
       style={stylesheet.container}
       onPress={() => console.log(tag.name)}
     >
-      <Text style={{ color: theme.text }}>{tag.name}</Text>
+      <Text style={{ color: theme.text }}>
+        {tag.name} - {tag.count}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -19,7 +21,7 @@ export const TagCard = ({ tag }: { tag: Tag }) => {
 const stylesheet = StyleSheet.create({
   container: {
     height: 20,
-    width: "50",
+    width: 50,
     backgroundColor: "transparent",
     alignSelf: "center",
     justifyContent: "center",
