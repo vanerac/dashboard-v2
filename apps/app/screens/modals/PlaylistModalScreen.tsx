@@ -1,20 +1,25 @@
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
-import { RootTabScreenProps } from '../../types';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { ThemeContext } from '../../constants/ThemeContext';
-
-import { Service } from '../../../../packages/services';
 import { getClient } from '../../utils/ApiClient';
+import { PlaylistWidget } from '../../../../packages/ui/Widgets/PlaylistWidget';
+import { Service } from '../../../../packages/services';
 import { useUserMusic } from '../../hooks/useUserMusic';
 
-import { LibWidget } from '../../../../packages/ui/Widgets/LibWidget';
-
-export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps<'LibraryTab'>) {
+export default function PlaylistModalScreen() {
     const { theme } = useContext(ThemeContext);
     const { userMusic } = useUserMusic();
 
     const test = () => {
         console.log('oui oui baguette');
+    };
+
+    const handlePlaylistCardClick = () => {
+        console.log('PlaylistCardPressed');
+    };
+
+    const handleTrackCardClick = () => {
+        console.log('TrackCardPressed');
     };
 
     const [userServices, setUserServices] = useState<Service[]>([]);
@@ -27,30 +32,21 @@ export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps
             .then(() => setLoading(true));
     }, []);
 
-    const handlePlaylistCardClick = () => {
-        console.log('USER MUSIC', userMusic);
-        nav.navigate('PlaylistModal');
-    };
-
     return (
         <View style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
-                <View style={[styles.topView, { backgroundColor: theme.primary }]}>
-                    <Text style={[styles.title, { color: theme.text }]}>Library</Text>
-                </View>
-                {loading ? (
-                    <LibWidget
+                {loading && userMusic ? (
+                    <PlaylistWidget
                         deleteWidget={test}
                         widgetKey={1}
                         widgetService={userServices[0].id}
                         clientAPi={getClient}
                         handlePlaylistCardClick={handlePlaylistCardClick}
+                        handleTrackCardClick={handleTrackCardClick}
+                        playlist={userMusic}
                     />
                 ) : (
-                    <>
-                        <Text>sldkfjsldfkjs</Text>
-                        <ActivityIndicator />
-                    </>
+                    <ActivityIndicator />
                 )}
             </View>
         </View>
@@ -58,20 +54,35 @@ export default function LibraryTabScreen({ navigation: nav }: RootTabScreenProps
 }
 
 const styles = StyleSheet.create({
+    line: {
+        borderBottomWidth: 1,
+        marginTop: 42,
+        width: '80%',
+        marginLeft: '10%',
+    },
+
     primaryContainer: {
         justifyContent: 'flex-start',
         paddingTop: 70,
         height: '100%',
     },
 
-    topView: {
-        flexDirection: 'row',
+    secondaryContainer: {
+        justifyContent: 'flex-start',
+        marginLeft: 30,
+        marginTop: 40,
+        backgroundColor: 'transparent',
     },
 
     title: {
         fontSize: 25,
         fontWeight: 'bold',
         marginLeft: 30,
+    },
+
+    serviceText: {
+        fontSize: 22,
+        margin: 10,
     },
 
     separator: {

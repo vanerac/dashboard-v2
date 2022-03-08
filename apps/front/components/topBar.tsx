@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,7 +27,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SvgIcon from '@mui/material/SvgIcon';
-import { mdiRadioFm, mdiSpotify, mdiMusicNoteEighth } from '@mdi/js';
+import { mdiMusicNoteEighth, mdiRadioFm, mdiSpotify } from '@mdi/js';
 import { getClient } from '../utils/ApiClient';
 import { UrlObject } from 'url';
 
@@ -85,7 +85,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
     const spotifyService = connectedServices.find((service: { provider: string }) => service.provider === 'spotify');
     const googleService = connectedServices.find((service: { provider: string }) => service.provider === 'google');
     const appleService = connectedServices.find((service: { provider: string }) => service.provider === 'apple');
-    const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastFM');
+    const lastFMService = connectedServices.find((service: { provider: string }) => service.provider === 'lastfm');
     const deezerService = connectedServices.find((service: { provider: string }) => service.provider === 'deezer');
     let userName = undefined;
     let $val = undefined;
@@ -203,7 +203,7 @@ export default function SearchAppBar({ addWidget, connectedServices }) {
 
     const authDeezer = () => {
         getClient()
-            .sso.deezerConsentSso('http://localhost:3000/sso/deezer')
+            .sso.deezerConsentSso(false, 'http://localhost:3000/sso/deezer')
             .then((data) => {
                 console.log(data);
                 Router.push(data.url);

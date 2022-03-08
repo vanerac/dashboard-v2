@@ -8,11 +8,14 @@ export class DeezerTools implements SSOTools {
     static callbackURL: string = configuration.deezerRedirectUri || '';
     static scope: string = configuration.deezerScopes || '';
 
-    static async getToken(code: string, $callbackURL: string): Promise<Token> {
+    static secondaryClientId: string = configuration.deezerSecondaryClientId || '';
+    static secondaryClientSecret: string = configuration.deezerSecondaryClientSecret || '';
+
+    static async getToken(code: string, mobile: boolean): Promise<Token> {
         const url = 'https://connect.deezer.com/oauth/access_token.php';
         const params = {
-            app_id: DeezerTools.clientId,
-            secret: DeezerTools.clientSecret,
+            app_id: mobile ? DeezerTools.secondaryClientId : DeezerTools.clientId,
+            secret: mobile ? DeezerTools.secondaryClientSecret : DeezerTools.clientSecret,
             code: code,
             output: 'json',
         };

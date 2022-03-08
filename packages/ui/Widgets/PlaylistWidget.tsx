@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { TrackList } from "../Lists/TrackList";
+import { Playlist } from "../../services";
 import { TrackCardType } from "../Cards/TrackCard";
-import { PlaylistCard, PlaylistDisplayConfig } from "../Cards/PlaylistCard";
+import { PlaylistCard } from "../Cards/PlaylistCard";
+
+// import { UserMusicContext } from "../../../apps/app/constants/UserMusicContext";
 
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
   widgetService: string;
   clientAPi: Function;
+  handleTrackCardClick: any;
+  handlePlaylistCardClick: any;
+  playlist: Playlist;
 }
 
 export const PlaylistWidget: React.FC<WidgetProps> = ({
@@ -16,43 +22,51 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
   widgetKey,
   widgetService,
   clientAPi,
+  handleTrackCardClick,
+  handlePlaylistCardClick,
+  playlist,
 }) => {
   const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
 
-  const [dataPlaylist, setDataPlaylist] = useState([]);
+  // const { setUserMusic } = useContext(UserMusicContext);
+  // const [dataPlaylist, setDataPlaylist] = useState([]);
   const [dataTracks, setDataTracks] = useState([]);
 
   useEffect(() => {
+    // clientAPi()
+    //   .playlist.getAllPlaylists(widgetService)
+    //   .then((dataPlaylist: any) => {
+    //     setDataPlaylist(dataPlaylist);
+    // console.log(dataPlaylist);
     clientAPi()
-      .playlist.getAllPlaylists(widgetService)
-      .then((dataP: any) => {
-        setDataPlaylist(dataP);
-        console.log(dataP);
-        clientAPi()
-          .playlist.getPlaylistTracks(widgetService, dataP[0].id)
-          .then((dataT: any) => setDataTracks(dataT));
+      .playlist.getPlaylistTracks(widgetService, playlist.id)
+      .then((dataTrack: any) => {
+        setDataTracks(dataTrack);
       });
-  }, []);
+  });
+  // }, []);
 
   return (
-    <ScrollView style={stylesheet.container}>
-      {dataPlaylist.length ? (
+    <View style={stylesheet.container}>
+      {playlist.id.length ? (
         <>
           <PlaylistCard
-            playlist={dataPlaylist[0]}
+            playlist={playlist}
             config={{ provider: true }}
+            handlePlaylistCardClick={handlePlaylistCardClick}
           />
           <TrackList
             trackArray={dataTracks}
             options={{ type: TrackCardType.TOGGLE }}
+            handleTrackCardClick={handleTrackCardClick}
           />
         </>
       ) : (
-        <Text>flsdkjfdlskfjsdlkj</Text>
+        <ActivityIndicator />
       )}
-    </ScrollView>
+    </View>
   );
 };
 

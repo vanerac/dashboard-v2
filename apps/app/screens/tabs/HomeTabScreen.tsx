@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, { useContext } from 'react';
 import { RootStackParamList } from '../../types';
 import { ThemeContext } from '../../constants/ThemeContext';
@@ -11,7 +11,7 @@ export default function HomeTabScreen({ navigation }: Props) {
     const { theme } = useContext(ThemeContext);
 
     return (
-        <ScrollView style={{ backgroundColor: theme.primary }}>
+        <View style={{ backgroundColor: theme.primary }}>
             <View style={[styles.primaryContainer, { backgroundColor: theme.primary }]}>
                 <View style={[styles.topView, { backgroundColor: theme.primary }]}>
                     <Text style={[styles.title, { color: theme.text }]}>Welcome</Text>
@@ -28,13 +28,14 @@ export default function HomeTabScreen({ navigation }: Props) {
                     </View>
                 </View>
             </View>
-        </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     primaryContainer: {
         justifyContent: 'flex-start',
+        alignSelf: 'flex-start',
         paddingTop: 70,
         height: '100%',
     },
