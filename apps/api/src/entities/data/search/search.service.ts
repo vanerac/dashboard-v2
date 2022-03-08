@@ -1,4 +1,5 @@
 import { Album, Artist, Playlist, SearchResult, Track } from '../../../../../../packages/services';
+import axios from 'axios';
 
 export abstract class SearchService {
     static async search($accessToken: string, $query: string): Promise<SearchResult | unknown> {
@@ -8,8 +9,13 @@ export abstract class SearchService {
 
 export class SpotifySearchService extends SearchService {
     static async search(accessToken: string, query: string): Promise<SearchResult> {
-        const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`);
-        const data = await response.json();
+        const url = `https://api.spotify.com/v1/search?q=${query}&type=track,artist,album,playlist`;
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        const { data } = response;
         const tracks = data.tracks.items.map(
             (track: {
                 id: any;
@@ -110,8 +116,17 @@ export class AppleSearchService extends SearchService {
 
 export class DeezerSearchService extends SearchService {
     static async search(accessToken: string, query: string): Promise<SearchResult> {
-        const response = await fetch(`https://api.deezer.com/search?q=${query}&output=json`);
-        const data = await response.json();
+        const url = `https://api.deezer.com/search?q=${query}&limit=50`;
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        const { data } = response;
+        if (data.error) {
+            throw new Error(data.error.message);
+        }
+        console.log(data);
         const tracks = data.data.map(
             (track: {
                 id: any;
@@ -165,10 +180,9 @@ export class DeezerSearchService extends SearchService {
 // Youtube service
 export class GoogleSearchService extends SearchService {
     static async search(accessToken: string, query: string): Promise<SearchResult> {
-        const response = await fetch(
-            `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${process.env.GOOGLE_API_KEY}`,
-        );
-        const data = await response.json();
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${accessToken}`;
+        const response = await axios.get(url);
+        const { data } = response;
         const videos = data.items.map(
             (video: { id: any; snippet: { title: any; description: any; thumbnails: { url: any } } }) =>
                 ({

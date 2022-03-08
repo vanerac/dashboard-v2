@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
-import { SearchList } from "../Lists/SearchList";
+import React, {useEffect, useState} from "react";
+import {ActivityIndicator, ScrollView, StyleSheet} from "react-native";
+import {SearchList} from "../Lists/SearchList";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -20,17 +20,35 @@ export const SearchWidget: React.FC<WidgetProps> = ({
   const $onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
-
   const [dataSearch, setDataSearch] = useState([]);
 
   useEffect(() => {
-    clientAPi()
-      .search.searchGet(widgetService, searchString)
-      .then((searchResult: any) => {
-        setDataSearch(searchResult);
-        console.log(searchResult);
-      });
+    try {
+      clientAPi()
+          .search.searchGet(widgetService, searchString)
+          .then((searchResult: any) => {
+            setDataSearch(searchResult);
+            console.log(searchResult);
+          });
+    } catch (error) {
+      console.log(error);
+    }
+
   }, []);
+
+  useEffect(() => {
+    try {
+      clientAPi()
+          .search.searchGet(widgetService, searchString)
+          .then((searchResult: any) => {
+            setDataSearch(searchResult);
+            console.log(searchResult);
+          });
+    } catch (error) {
+      console.log(error);
+    }
+
+  }, [searchString]);
 
   return (
     <ScrollView style={stylesheet.container}>
