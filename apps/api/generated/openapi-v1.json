@@ -916,6 +916,61 @@
         }
       }
     },
+    "/service/{serviceId}/toggle": {
+      "put": {
+        "operationId": "toggleService",
+        "tags": [
+          "services"
+        ],
+        "summary": "Disable user service",
+        "description": "Disables a user service",
+        "security": [],
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "Service ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/widget": {
       "get": {
         "tags": [
@@ -2080,7 +2135,7 @@
         }
       }
     },
-    "/data/{serviceId}/artist/{artistId}": {
+    "/data/{serviceId}/artist/id/{artistId}": {
       "get": {
         "tags": [
           "Artist"
@@ -4935,7 +4990,7 @@
         }
       }
     },
-    "/album/": {
+    "/data/{serviceId}/album/": {
       "get": {
         "tags": [
           "Album"
@@ -4943,6 +4998,18 @@
         "summary": "Get all saved albums",
         "description": "Get all saved albums",
         "operationId": "getAllSavedAlbums",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Artist found",
@@ -4990,7 +5057,7 @@
         }
       }
     },
-    "/album/{albumId}": {
+    "/data/{serviceId}/album/{albumId}": {
       "get": {
         "tags": [
           "Album"
@@ -5006,6 +5073,16 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -5063,7 +5140,7 @@
         }
       }
     },
-    "/album/save/{albumId}": {
+    "/data/{serviceId}/album/save/{albumId}": {
       "post": {
         "tags": [
           "Album"
@@ -5079,6 +5156,16 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -5126,7 +5213,7 @@
         }
       }
     },
-    "/album/unsave/{albumId}": {
+    "/data/{serviceId}/album/unsave/{albumId}": {
       "delete": {
         "tags": [
           "Album"
@@ -5142,6 +5229,16 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "ID of service to return playlists for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],

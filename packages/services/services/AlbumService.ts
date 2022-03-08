@@ -13,13 +13,19 @@ export class AlbumService {
     /**
      * Get all saved albums
      * Get all saved albums
+     * @param serviceId ID of service to return playlists for
      * @returns Album Artist found
      * @throws ApiError
      */
-    public getAllSavedAlbums(): CancelablePromise<Array<Album>> {
+    public getAllSavedAlbums(
+        serviceId: string,
+    ): CancelablePromise<Array<Album>> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/album/',
+            url: '/data/{serviceId}/album/',
+            path: {
+                'serviceId': serviceId,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -32,17 +38,20 @@ export class AlbumService {
      * Get album by id
      * Get album by id
      * @param albumId Album id
+     * @param serviceId ID of service to return playlists for
      * @returns Album Album found
      * @throws ApiError
      */
     public getById(
         albumId: string,
+        serviceId: string,
     ): CancelablePromise<Album> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/album/{albumId}',
+            url: '/data/{serviceId}/album/{albumId}',
             path: {
                 'albumId': albumId,
+                'serviceId': serviceId,
             },
             errors: {
                 400: `Bad Request`,
@@ -57,17 +66,20 @@ export class AlbumService {
      * Save album
      * Save album
      * @param albumId Album id
+     * @param serviceId ID of service to return playlists for
      * @returns Album Album saved
      * @throws ApiError
      */
     public saveAlbum(
         albumId: string,
+        serviceId: string,
     ): CancelablePromise<Album> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/album/save/{albumId}',
+            url: '/data/{serviceId}/album/save/{albumId}',
             path: {
                 'albumId': albumId,
+                'serviceId': serviceId,
             },
             errors: {
                 400: `Bad Request`,
@@ -81,17 +93,20 @@ export class AlbumService {
      * Unsave album
      * Unsave album
      * @param albumId Album id
+     * @param serviceId ID of service to return playlists for
      * @returns Album Album unsaved
      * @throws ApiError
      */
     public unsaveAlbum(
         albumId: string,
+        serviceId: string,
     ): CancelablePromise<Album> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/album/unsave/{albumId}',
+            url: '/data/{serviceId}/album/unsave/{albumId}',
             path: {
                 'albumId': albumId,
+                'serviceId': serviceId,
             },
             errors: {
                 400: `Bad Request`,

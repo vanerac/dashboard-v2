@@ -32,7 +32,7 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `SELECT id, provider, enabled, status, accountName FROM services WHERE userid = $1`;
+            const query = `SELECT id, provider, enabled, status, accountName FROM services WHERE userid = $1 `;
             console.log(userId);
             const { rows: services } = await Pool.query(query, [userId]);
             if (!services) {
@@ -85,7 +85,7 @@ export default class ServiceController {
                 });
             }
             const { id: userId } = req.session.user;
-            const query = `DELETE FROM services WHERE id = $1 AND userid = $2`;
+            const query = `DELETE FROM services WHERE id = $1 AND userid = $2 RETURNING id, provider, enabled, accountName`;
             const { rows: services } = await Pool.query(query, [id, userId]);
             if (!services || services.length === 0) {
                 return res.status(404).json({
@@ -94,6 +94,32 @@ export default class ServiceController {
             }
             return res.status(200).json({
                 message: 'Service deleted',
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async toggleService(req: Request, res: Response, next: NextFunction) {
+        // if user want to disable a service
+        try {
+            const { id } = req.params;
+            if (!req.session.user) {
+                return res.status(401).json({
+                    message: 'Unauthorized',
+                });
+            }
+            const { id: userId } = req.session.user;
+            const query = `UPDATE services SET enabled = NOT enabled WHERE id = $1 AND userid = $2 RETURNING id, provider, enabled, accountName`;
+            const { rows: services } = await Pool.query(query, [id, userId]);
+            if (!services || services.length === 0) {
+                return res.status(404).json({
+                    message: 'Service not found',
+                });
+            }
+            return res.status(200).json({
+                message: 'Service toggled',
+                data: services,
             });
         } catch (error) {
             next(error);

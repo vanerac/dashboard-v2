@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 // import { Service } from '../../../../packages/services';
 // import { getClient } from '../../utils/ApiClient';
 // import { ArtistWidget } from '../../../../packages/ui/Widgets/ArtistWidget';
+// import { AlbumWidget } from '../../../../packages/ui/Widgets/AlbumWidget';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AccountsModal'>;
 
@@ -16,7 +17,7 @@ export default function HomeTabScreen({ navigation }: Props) {
     // const test = () => {
     //     console.log('oui oui baguette');
     // };
-    //
+
     // const [userServices, setUserServices] = useState<Service[]>([]);
     // const [loading, setLoading] = useState(false);
 
@@ -52,6 +53,11 @@ export default function HomeTabScreen({ navigation }: Props) {
                 {/*        clientAPi={getClient}*/}
                 {/*        handleArtistListClick={() => console.log('wallah')}*/}
                 {/*    />*/}
+                {/*) : (*/}
+                {/*    <ActivityIndicator />*/}
+                {/*)}*/}
+                {/*{loading ? (*/}
+                {/*    <AlbumWidget deleteWidget={test} widgetKey={1} clientAPi={getClient} />*/}
                 {/*) : (*/}
                 {/*    <ActivityIndicator />*/}
                 {/*)}*/}

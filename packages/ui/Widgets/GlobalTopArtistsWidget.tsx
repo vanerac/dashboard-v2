@@ -1,26 +1,25 @@
-import React, {useEffect, useState} from "react";
-import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
-import {ArtistList} from "../Lists/ArtistList";
-import {Artist} from "../../services";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { ArtistList } from "../Lists/ArtistList";
+import { Artist } from "../../services";
+import { ThemeContext } from "../../../apps/app/constants/ThemeContext";
 
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
-  widgetService: string;
   clientAPi: Function;
-  handleArtistListClick: (toto: string) => any;
 }
 
-export const ArtistWidget: React.FC<WidgetProps> = ({
+export const GlobalTopArtistWidget: React.FC<WidgetProps> = ({
   deleteWidget,
   widgetKey,
-  widgetService,
   clientAPi,
-  handleArtistListClick,
 }) => {
   const $onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
+
+  const { theme } = useContext(ThemeContext);
 
   const [dataArtist, setDataArtist] = useState([]);
   // const [selectArtist, setSelectArtist] = useState<Artist>();
@@ -31,18 +30,17 @@ export const ArtistWidget: React.FC<WidgetProps> = ({
   };
 
   useEffect(() => {
-    console.log('getting followed artists')
     clientAPi()
-      .artist.getFollowedArtists(widgetService)
-      .then((followedArtists: any) => {
-        setDataArtist(followedArtists);
-        console.log("LDKJDSLKFJSDLFKJSDFLKDJFSLDKFJ", followedArtists);
+      .stats.getGlobalTopArtists(20)
+      .then((globalTopArtists: any) => {
+        setDataArtist(globalTopArtists);
+        console.log("Popular: ", globalTopArtists);
       });
   }, []);
 
   return (
     <View style={stylesheet.container}>
-      <Text>You've liked :</Text>
+      <Text style={{ fontSize: 16, color: theme.text }}>Popular Artists :</Text>
       {dataArtist.length ? (
         <ArtistList
           options={{ provider: false }}

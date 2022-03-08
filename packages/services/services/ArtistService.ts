@@ -27,7 +27,7 @@ export class ArtistService {
     ): CancelablePromise<getSingleArtist> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/data/{serviceId}/artist/{artistId}',
+            url: '/data/{serviceId}/artist/id/{artistId}',
             path: {
                 'serviceId': serviceId,
                 'artistId': artistId,

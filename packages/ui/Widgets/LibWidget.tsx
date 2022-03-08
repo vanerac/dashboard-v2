@@ -1,16 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  Button,
-} from "react-native";
-import { PlaylistList } from "../Lists/PlaylistList";
+import React, {useContext, useEffect, useState} from "react";
+import {ActivityIndicator, Button, StyleSheet, Text, View,} from "react-native";
+import {PlaylistList} from "../Lists/PlaylistList";
 // import { useUserMusic } from "@area/app/hooks/useUserMusic";
-import { PlaylistWidget } from "./PlaylistWidget";
-import { Playlist } from "../../services";
-import { ThemeContext } from "../../../apps/app/constants/ThemeContext";
+import {PlaylistWidget} from "./PlaylistWidget";
+import {Playlist} from "../../services";
+import {ThemeContext} from "../../../apps/app/constants/ThemeContext";
 
 interface WidgetProps {
   deleteWidget: Function;
@@ -36,9 +30,16 @@ export const LibWidget: React.FC<WidgetProps> = ({
 
   const [dataPlaylist, setDataPlaylist] = useState([]);
   const [selectPlaylist, setSelectPlaylist] = useState<Playlist>();
+  const [isLib, setIsLib] = useState<boolean>(true);
 
   const click = (playlist: Playlist) => {
     setSelectPlaylist(playlist);
+    // setIsLib(false);
+  };
+
+  const unclick = (playlist: Playlist) => {
+    // console.log(playlist);
+    setIsLib(true);
   };
 
   useEffect(() => {
@@ -55,26 +56,26 @@ export const LibWidget: React.FC<WidgetProps> = ({
       {!isMobileApp ? (
         <Button onPress={onClickDeleteWidget} title="X" />
       ) : (
-        <Text>A toi de jouer koeck</Text>
+        <Text></Text> // pas de commentaire ....
       )}
       {dataPlaylist.length ? (
-        selectPlaylist === undefined ? (
+        isLib && selectPlaylist ? (
+          <PlaylistWidget
+            deleteWidget={click}
+            widgetKey={1}
+            widgetService={widgetService}
+            clientAPi={clientAPi}
+            handlePlaylistCardClick={unclick}
+            handleTrackCardClick={() => console.log("track clicked")}
+            playlist={selectPlaylist}
+          />
+        ) : (
           <PlaylistList
             options={{ provider: false }}
             PlaylistArray={dataPlaylist}
             direction={false}
             column={2}
             handlePlaylistCardClick={click}
-          />
-        ) : (
-          <PlaylistWidget
-            deleteWidget={click}
-            widgetKey={1}
-            widgetService={widgetService}
-            clientAPi={clientAPi}
-            handlePlaylistCardClick={() => console.log("playlist clicked")}
-            handleTrackCardClick={() => console.log("track clicked")}
-            playlist={selectPlaylist}
           />
         )
       ) : (

@@ -9,6 +9,9 @@ export abstract class SearchService {
 
 export class SpotifySearchService extends SearchService {
     static async search(accessToken: string, query: string): Promise<SearchResult> {
+        if (!query || query.length < 3) {
+            return [];
+        }
         const url = `https://api.spotify.com/v1/search?q=${query}&type=track,artist,album,playlist`;
         const response = await axios.get(url, {
             headers: {
@@ -124,7 +127,7 @@ export class DeezerSearchService extends SearchService {
         });
         const { data } = response;
         if (data.error) {
-            throw new Error(data.error.message);
+            return [];
         }
         console.log(data);
         const tracks = data.data.map(

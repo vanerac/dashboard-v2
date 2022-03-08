@@ -3,7 +3,7 @@ import ArtistController from './artist.controller';
 
 const router = Router();
 
-router.get('/:id', ArtistController.getArtistById);
+router.get('/id/:id', ArtistController.getArtistById);
 router.get('/followed', ArtistController.getFollowedArtists);
 router.get('/:id/follow', ArtistController.followArtist);
 router.get('/:id/unfollow', ArtistController.unfollowArtist);

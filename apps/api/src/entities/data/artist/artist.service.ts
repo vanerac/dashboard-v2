@@ -318,6 +318,31 @@ export class DeezerArtistService implements ArtistService {
             };
         });
     }
+
+    static async getFollowedArtists(accessToken: string) {
+        const url = `https://api.deezer.com/user/me/following/artists`;
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+        const params = {
+            access_token: accessToken,
+        };
+        const response = await axios.get(url, { headers, params });
+        const json = await response.data;
+        if (!json?.data?.length) {
+            return [];
+        }
+        return json.data.map((artist: any) => {
+            return {
+                id: artist.id,
+                name: artist.name,
+                image: artist.picture_xl,
+                followers: artist.nb_fan,
+                external_urls: artist.link,
+                provider: 'deezer',
+            };
+        });
+    }
 }
 
 // Youtube
@@ -415,6 +440,29 @@ export class GoogleArtistService implements ArtistService {
                 };
             });
         return playlists;
+    }
+
+    static async getFollowedArtists(accessToken: string) {
+        const url = `https://api.spotify.com/v1/me/following?type=artist&limit=50`;
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        const json = await response.json();
+        const artists: Artist[] = json.artists.items.map((artist: any) => {
+            return {
+                id: artist.id,
+                name: artist.name,
+                image: artist.images[0].url,
+                followers: artist.followers.total,
+                external_urls: {
+                    spotify: artist.id,
+                },
+                provider: 'spotify',
+            };
+        });
+        return artists;
     }
 }
 
