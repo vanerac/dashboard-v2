@@ -42,11 +42,11 @@ export const PlaylistCard = ({
 
 const stylesheet = StyleSheet.create({
   primaryContainer: {
-    backgroundColor: "#212121",
+    // backgroundColor: "#212121",
     alignItems: "center",
-    width: "100%",
-    height: 260,
-    minHeight: 260,
+    width: "50%",
+    // height: 260,
+    // minHeight: 260,
     marginTop: 30,
   },
 

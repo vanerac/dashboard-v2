@@ -5,8 +5,6 @@ import { Playlist } from "../../services";
 import { TrackCardType } from "../Cards/TrackCard";
 import { PlaylistCard } from "../Cards/PlaylistCard";
 
-// import { UserMusicContext } from "../../../apps/app/constants/UserMusicContext";
-
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
@@ -35,18 +33,13 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
   const [dataTracks, setDataTracks] = useState([]);
 
   useEffect(() => {
-    // clientAPi()
-    //   .playlist.getAllPlaylists(widgetService)
-    //   .then((dataPlaylist: any) => {
-    //     setDataPlaylist(dataPlaylist);
-    // console.log(dataPlaylist);
     clientAPi()
       .playlist.getPlaylistTracks(widgetService, playlist.id)
       .then((dataTrack: any) => {
         setDataTracks(dataTrack);
+        // console.log(data);
       });
-  });
-  // }, []);
+  }, []);
 
   return (
     <View style={stylesheet.container}>
@@ -74,6 +67,7 @@ const stylesheet = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
+    alignItems: "center",
   },
 
   playlistCard: {
