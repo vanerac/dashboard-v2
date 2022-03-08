@@ -11,10 +11,6 @@ import { LibWidget } from '../../../packages/ui/Widgets/LibWidget';
 let ResponsiveReactGridLayout = WidthProvider(RGL);
 
 const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
-    const handlePlaylistClick = () => {
-        console.log('wallah');
-    };
-
     const generateDOM = () => {
         return _.map(generateLayout(), function (l: any, i: Key) {
             return (
@@ -26,15 +22,27 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                     {/*    widgetService={l.widgetService}*/}
                     {/*    clientAPi={getClient}*/}
                     {/*/>*/}
-                    <LibWidget
-                        deleteWidget={props.deleteWidget}
-                        widgetKey={l.widgetKey}
-                        widgetService={l.widgetService}
-                        clientAPi={getClient}
-                        handlePlaylistCardClick={handlePlaylistClick}
-                    />
+                    {
+                        {
+                            search: 'search',
+                            album: 'album',
+                            stat: 'stat',
+                            playlist: (
+                                <LibWidget
+                                    deleteWidget={props.deleteWidget}
+                                    widgetKey={l.widgetKey}
+                                    widgetService={l.widgetService}
+                                    clientAPi={getClient}
+                                    isMobileApp={false}
+                                />
+                            ),
+                            artist: 'artist',
+                        }[l.widgetType]
+                    }
                 </div>
             );
+
+            // )
         });
     };
 
@@ -49,10 +57,10 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                 widgetService: props.widgetsAdded[i].serviceId,
                 widgetKey: props.widgetsAdded[i].id,
                 i: i.toString(),
-                maxW: 5,
-                minW: 2,
+                maxW: 9,
+                minW: 4,
                 minH: 2,
-                maxH: 5,
+                maxH: 7,
             };
         });
     }

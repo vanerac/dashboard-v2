@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Button,
+} from "react-native";
 import { PlaylistList } from "../Lists/PlaylistList";
 // import { useUserMusic } from "@area/app/hooks/useUserMusic";
 import { PlaylistWidget } from "./PlaylistWidget";
 import { Playlist } from "../../services";
+import { ThemeContext } from "../../../apps/app/constants/ThemeContext";
 
 interface WidgetProps {
   deleteWidget: Function;
   widgetKey: number;
   widgetService: string;
   clientAPi: Function;
-  handlePlaylistCardClick: (toto: string) => any;
+  // handlePlaylistCardClick: (toto: string) => any;
+  isMobileApp: Boolean;
 }
 
 export const LibWidget: React.FC<WidgetProps> = ({
@@ -18,18 +26,19 @@ export const LibWidget: React.FC<WidgetProps> = ({
   widgetKey,
   widgetService,
   clientAPi,
-  handlePlaylistCardClick,
+  isMobileApp,
 }) => {
-  const $onClickDeleteWidget = () => {
+  const onClickDeleteWidget = () => {
     deleteWidget(widgetKey);
   };
+
+  const { theme } = useContext(ThemeContext);
 
   const [dataPlaylist, setDataPlaylist] = useState([]);
   const [selectPlaylist, setSelectPlaylist] = useState<Playlist>();
   const [isLib, setIsLib] = useState<boolean>(true);
 
   const click = (playlist: Playlist) => {
-    console.log(playlist);
     setSelectPlaylist(playlist);
     setIsLib(false);
   };
@@ -49,7 +58,12 @@ export const LibWidget: React.FC<WidgetProps> = ({
   }, []);
 
   return (
-    <View style={stylesheet.container}>
+    <View style={[stylesheet.container, { backgroundColor: theme.primary }]}>
+      {!isMobileApp ? (
+        <Button onPress={onClickDeleteWidget} title="X" />
+      ) : (
+        <Text>A toi de jouer koeck</Text>
+      )}
       {dataPlaylist.length ? (
         isLib && selectPlaylist ? (
           <PlaylistWidget
@@ -79,12 +93,12 @@ export const LibWidget: React.FC<WidgetProps> = ({
 
 const stylesheet = StyleSheet.create({
   container: {
-    marginTop: 30,
+    // marginTop: 30,
     width: "100%",
     height: "100%",
   },
 
   playlistCard: {
-    marginBottom: 20,
+    // marginBottom: 20,
   },
 });
