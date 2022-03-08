@@ -223,6 +223,18 @@
     },
     "/stats/charts/top/tracks/weekly": {
       "$ref": "stats/stats.path.json#/globalWeeklyTopTracks"
+    },
+    "/album/": {
+      "$ref": "data/album/album.path.json#/getAllSavedAlbums"
+    },
+    "/album/{albumId}": {
+      "$ref": "data/album/album.path.json#/getById"
+    },
+    "/album/save/{albumId}": {
+      "$ref": "data/album/album.path.json#/save"
+    },
+    "/album/unsave/{albumId}": {
+      "$ref": "data/album/album.path.json#/unsave"
     }
   },
   "components": {
