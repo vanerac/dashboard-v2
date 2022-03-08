@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Artist } from "../../services";
+import { ThemeContext } from "../../../apps/app/constants/ThemeContext";
 
 export type ArtistDisplayConfig = {
   provider: boolean;
@@ -9,10 +10,13 @@ export type ArtistDisplayConfig = {
 export const ArtistCard = ({
   artist,
   config,
+  handleArtistCardClick,
 }: {
   artist: Artist;
   config: ArtistDisplayConfig;
+  handleArtistCardClick: any;
 }) => {
+  const { theme } = useContext(ThemeContext);
   console.log(artist);
   return (
     <View style={stylesheet.primaryContainer}>
@@ -20,12 +24,12 @@ export const ArtistCard = ({
       <View style={stylesheet.identifiersContainer}>
         <Text style={stylesheet.artistName}> {artist.name} </Text>
         {config.provider ? (
-          <Text style={stylesheet.artistOrAlbum}>
+          <Text style={{ color: theme.text }}>
             {" "}
             - artist - {artist.provider} -{" "}
           </Text>
         ) : (
-          <Text style={stylesheet.artistOrAlbum}>- artist -</Text>
+          <Text style={{ color: theme.text }}>- artist -</Text>
         )}
       </View>
     </View>
@@ -53,7 +57,7 @@ const stylesheet = StyleSheet.create({
     marginBottom: 6,
   },
 
-  artistOrAlbum: {
+  artistText: {
     color: "white",
   },
 

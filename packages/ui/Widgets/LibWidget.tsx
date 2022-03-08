@@ -70,10 +70,7 @@ export const LibWidget: React.FC<WidgetProps> = ({
           />
         )
       ) : (
-        <>
-          <Text>in lib</Text>
-          <ActivityIndicator />
-        </>
+        <ActivityIndicator />
       )}
     </View>
   );
