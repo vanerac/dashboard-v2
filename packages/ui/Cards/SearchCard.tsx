@@ -9,55 +9,32 @@ import {
 } from "react-native";
 // import { CheckBox } from "react-native-elements";
 // import Icon from "react-native-vector-icons/Entypo";
-import { Track } from "../../services";
+import { Track, Artist, Album, Playlist } from "../../services";
 
-export enum TrackCardType {
-  CHECKBOX,
-  TOGGLE,
-  OPTIONS,
-}
-
-export type TrackDisplayConfig = {
-  title?: boolean;
-  artist_album?: boolean;
-  type: TrackCardType;
-};
-
-export const TrackCard = ({
-  config,
-  track,
-  handleTrackCardClick,
+export const SearchCard = ({
+  data,
 }: {
-  config: TrackDisplayConfig;
-  track: Track;
-  handleTrackCardClick: any;
+  data: Track | Artist | Album | Playlist;
 }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <TouchableOpacity
-      style={stylesheet.horizontalContainer}
-      onPress={handleTrackCardClick}
-    >
+    <View style={stylesheet.horizontalContainer}>
       <View style={stylesheet.songIdentifiers}>
-        <Image style={stylesheet.imageAlbum} source={{ uri: track.image }} />
+        <Image style={stylesheet.image} source={{ uri: data.image }} />
         <View style={stylesheet.textIdentifiers}>
-          <Text style={stylesheet.text}>{track.name}</Text>
-          <Text style={stylesheet.text}>{track.artist}</Text>
+          <Text style={stylesheet.text}>{data.name}</Text>
+          {/*<Text style={stylesheet.text}>{data.artist}</Text>*/}
         </View>
       </View>
-      {config.type === TrackCardType.TOGGLE ? (
-        <Switch
-          style={stylesheet.toggle}
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-      ) : (
-        <></>
-      )}
-    </TouchableOpacity>
+      <Switch
+        style={stylesheet.toggle}
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
+    </View>
   );
 };
 
@@ -82,7 +59,7 @@ const stylesheet = StyleSheet.create({
     justifyContent: "space-around",
   },
 
-  imageAlbum: {
+  image: {
     height: 50,
     width: 50,
     margin: 10,

@@ -6,12 +6,18 @@ import { Track } from "../../services";
 export const TrackList = ({
   trackArray,
   options,
+  handleTrackCardClick,
 }: {
   trackArray: Array<Track>;
   options: TrackDisplayConfig;
+  handleTrackCardClick: any;
 }) => {
   const DataTrackList = ({ track }: { track: Track }) => (
-    <TrackCard config={{ type: options.type }} track={track} />
+    <TrackCard
+      config={{ type: options.type }}
+      track={track}
+      handleTrackCardClick={handleTrackCardClick}
+    />
   );
 
   const renderItem = ({ item }: { item: Track }) => (
@@ -24,6 +30,7 @@ export const TrackList = ({
       data={trackArray}
       renderItem={renderItem}
       keyExtractor={(_item, index) => index.toString()}
+      scrollEnabled={true}
     />
   );
 };
