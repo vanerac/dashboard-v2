@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { Key, useState } from 'react';
 import _ from 'lodash';
 import RGL, { WidthProvider } from 'react-grid-layout';
-import { Key } from 'react';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 // import { CardTest } from '../../../packages/ui/CardTest';
 import { getClient } from '../utils/ApiClient';
 import { LibWidget } from '../../../packages/ui/Widgets/LibWidget';
+import { SearchWidget } from '@area/ui/Widgets/SearchWidget';
 
 let ResponsiveReactGridLayout = WidthProvider(RGL);
+
+const SearchWidgetWrapper = ({ deleteWidget, widgetKey, widgetService, clientAPi }) => {
+    const [searchStr, setSearchStr] = useState<string>('');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchStr(e.target.value);
+    };
+
+    return (
+        <>
+            <input type={'text'} onChange={handleChange} value={searchStr} />
+            <SearchWidget
+                key={widgetKey}
+                widgetKey={widgetKey}
+                widgetService={widgetService}
+                clientAPi={clientAPi}
+                searchString={searchStr}
+                deleteWidget={deleteWidget}
+            />
+        </>
+    );
+};
 
 const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
     const generateDOM = () => {
@@ -24,7 +46,14 @@ const ShowcaseLayout = (props: { widgetsAdded: any; deleteWidget: any }) => {
                     {/*/>*/}
                     {
                         {
-                            search: 'search',
+                            search: (
+                                <SearchWidgetWrapper
+                                    deleteWidget={props.deleteWidget}
+                                    widgetKey={l.widgetKey}
+                                    widgetService={l.widgetService}
+                                    clientAPi={getClient}
+                                />
+                            ),
                             album: 'album',
                             stat: 'stat',
                             playlist: (
