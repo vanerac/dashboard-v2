@@ -18,8 +18,10 @@ export default class LastFmController extends SSOController {
         // callback url sends to /api/auth/lastFm/callback
         // const { callbackURL } = req.query;
 
+        const { secondaryClientId } = req.query;
+
         const params = {
-            api_key: LastFmController.clientId,
+            api_key: secondaryClientId ? LastFmTools.secondaryClientId : LastFmController.clientId,
         };
         // @ts-ignore
         const url = `https://www.last.fm/api/auth/?${new URLSearchParams(params)}`;
@@ -29,7 +31,7 @@ export default class LastFmController extends SSOController {
     static async getToken(req: Request, res: Response): Promise<void> {
         // get token, create user and return token
         try {
-            const { token } = req.query;
+            const { token, secondaryClientId } = req.query;
             const { user: sessionUser } = req.session;
             if (!token || typeof token !== 'string') {
                 throw new Error('No code provided');
@@ -41,8 +43,12 @@ export default class LastFmController extends SSOController {
                 access_token: token,
                 expires_in: 3600,
             };
-            const sessionKey = await LastFmTools.getSessionKey(SSOToken);
-            const user: ServiceUserData = await LastFmTools.getUserInfos(SSOToken.access_token, sessionKey);
+            const sessionKey = await LastFmTools.getSessionKey(SSOToken, !!secondaryClientId);
+            const user: ServiceUserData = await LastFmTools.getUserInfos(
+                SSOToken.access_token,
+                sessionKey,
+                !!secondaryClientId,
+            );
             let userData: User & any = await findUserByService('lastfm', user.id);
             SSOToken.sessionKey = sessionKey;
 

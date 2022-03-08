@@ -9,6 +9,8 @@ export class LastFmTools implements SSOTools {
     static clientSecret: string = configuration.lastFmClientSecret;
     static callbackURL: string = configuration.lastFmRedirectUri;
     static scope: string = configuration.lastFmScopes;
+    static secondaryClientId: string = configuration.lastFmSecondaryClientId;
+    static secondaryClientSecret: string = configuration.lastFmSecondaryClientSecret;
 
     static createSignature(params: any, secret: string): string {
         let sig = '';
@@ -24,20 +26,23 @@ export class LastFmTools implements SSOTools {
         return crypto.createHash('md5').update(sig, 'utf8').digest('hex');
     }
 
-    static async getSessionKey(token: Token): Promise<string> {
+    static async getSessionKey(token: Token, secondaryClient: boolean): Promise<string> {
         const params = {
             method: 'auth.getSession',
-            api_key: LastFmTools.clientId,
+            api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
             token: token.access_token,
             format: 'json',
         };
         // @ts-ignore
-        params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+        params.api_sig = LastFmTools.createSignature(
+            params,
+            secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+        );
         const response = await axios.get('https://ws.audioscrobbler.com/2.0/', { params });
         return response.data.session.key;
     }
 
-    static async getUserInfos(token: string, sessionKey: string): Promise<ServiceUserData> {
+    static async getUserInfos(token: string, sessionKey: string, secondaryClient: boolean): Promise<ServiceUserData> {
         const params = {
             method: 'user.getInfo',
             api_key: LastFmTools.clientId,
@@ -45,7 +50,10 @@ export class LastFmTools implements SSOTools {
             sk: sessionKey,
         };
         // @ts-ignore
-        params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+        params.api_sig = LastFmTools.createSignature(
+            params,
+            secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+        );
         const response = await axios.get('https://ws.audioscrobbler.com/2.0/', { params });
         return {
             id: response.data.user.name,

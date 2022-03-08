@@ -7,6 +7,15 @@
       "operationId": "getMyTopArtists",
       "parameters": [
         {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
           "name": "limit",
           "in": "query",
           "description": "Limit",
@@ -78,6 +87,15 @@
       "description": "Get my top tracks",
       "operationId": "getMyTopTracks",
       "parameters": [
+        {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
         {
           "name": "limit",
           "in": "query",
@@ -151,6 +169,15 @@
       "operationId": "getMyTopAlbums",
       "parameters": [
         {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
           "name": "limit",
           "in": "query",
           "description": "Limit",
@@ -222,6 +249,15 @@
       "description": "Get my top tags",
       "operationId": "getMyTopTags",
       "parameters": [
+        {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
         {
           "name": "limit",
           "in": "query",
@@ -295,6 +331,15 @@
       "operationId": "getGlobalTopArtists",
       "parameters": [
         {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        {
           "name": "limit",
           "in": "query",
           "description": "Limit",
@@ -366,6 +411,15 @@
       "description": "Get global top tracks",
       "operationId": "getGlobalTopTracks",
       "parameters": [
+        {
+          "name": "secondaryClientId",
+          "in": "query",
+          "description": "use the secondary client ID to use for SSO authentication",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        },
         {
           "name": "limit",
           "in": "query",

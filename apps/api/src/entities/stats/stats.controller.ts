@@ -12,17 +12,21 @@ export default class StatsController {
                     error: 'No service selected',
                 });
             }
+            const { secondaryClient } = req.query;
             const { sessionkey } = req.session.service;
 
             const params: { [key: string]: any } = {
                 method: 'user.gettopartists',
                 period: 'overall',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 topartists: { artist },
@@ -55,16 +59,20 @@ export default class StatsController {
                 });
             }
             const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
             const params = {
                 method: 'user.gettoptracks',
                 period: 'overall',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             // @ts-ignore
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 toptracks: { track },
@@ -96,16 +104,20 @@ export default class StatsController {
                 });
             }
             const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
             const params = {
                 method: 'user.gettopalbums',
                 period: 'overall',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             // @ts-ignore
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 topalbums: { album },
@@ -136,16 +148,20 @@ export default class StatsController {
                 });
             }
             const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
             const params = {
                 method: 'user.gettoptags',
                 period: 'overall',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             // @ts-ignore
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 toptags: { tag },
@@ -175,15 +191,19 @@ export default class StatsController {
                 });
             }
             const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
             const params = {
                 method: 'chart.gettopartists',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             // @ts-ignore
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 artists: { artist },
@@ -214,15 +234,19 @@ export default class StatsController {
                 });
             }
             const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
             const params = {
                 method: 'chart.gettoptracks',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             // @ts-ignore
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 tracks: { track },
@@ -254,15 +278,19 @@ export default class StatsController {
                 });
             }
             const { sessionkey } = req.session.service;
+            const { secondaryClient } = req.query;
             const params = {
                 method: 'chart.gettopalbums',
-                api_key: LastFmTools.clientId,
+                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             // @ts-ignore
-            params.api_sig = LastFmTools.createSignature(params, LastFmTools.clientSecret);
+            params.api_sig = LastFmTools.createSignature(
+                params,
+                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+            );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
                 albums: { album },
