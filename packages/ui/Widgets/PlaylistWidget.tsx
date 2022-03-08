@@ -43,7 +43,7 @@ export const PlaylistWidget: React.FC<WidgetProps> = ({
 
   return (
     <View style={stylesheet.container}>
-      {playlist.id.length ? (
+      {playlist ? (
         <>
           <PlaylistCard
             playlist={playlist}

@@ -36,9 +36,16 @@ export const LibWidget: React.FC<WidgetProps> = ({
 
   const [dataPlaylist, setDataPlaylist] = useState([]);
   const [selectPlaylist, setSelectPlaylist] = useState<Playlist>();
+  const [isLib, setIsLib] = useState<boolean>(true);
 
   const click = (playlist: Playlist) => {
     setSelectPlaylist(playlist);
+    setIsLib(false);
+  };
+
+  const unclick = (playlist: Playlist) => {
+    console.log(playlist);
+    setIsLib(true);
   };
 
   useEffect(() => {
@@ -58,23 +65,23 @@ export const LibWidget: React.FC<WidgetProps> = ({
         <Text>A toi de jouer koeck</Text>
       )}
       {dataPlaylist.length ? (
-        selectPlaylist === undefined ? (
+        isLib && selectPlaylist ? (
+          <PlaylistWidget
+            deleteWidget={click}
+            widgetKey={1}
+            widgetService={widgetService}
+            clientAPi={clientAPi}
+            handlePlaylistCardClick={unclick}
+            handleTrackCardClick={() => console.log("track clicked")}
+            playlist={selectPlaylist}
+          />
+        ) : (
           <PlaylistList
             options={{ provider: false }}
             PlaylistArray={dataPlaylist}
             direction={false}
             column={2}
             handlePlaylistCardClick={click}
-          />
-        ) : (
-          <PlaylistWidget
-            deleteWidget={click}
-            widgetKey={1}
-            widgetService={widgetService}
-            clientAPi={clientAPi}
-            handlePlaylistCardClick={() => console.log("playlist clicked")}
-            handleTrackCardClick={() => console.log("track clicked")}
-            playlist={selectPlaylist}
           />
         )
       ) : (
