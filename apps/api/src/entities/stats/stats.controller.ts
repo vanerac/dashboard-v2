@@ -18,14 +18,18 @@ export default class StatsController {
             const params: { [key: string]: any } = {
                 method: 'user.gettopartists',
                 period: 'overall',
-                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
             };
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
@@ -71,7 +75,9 @@ export default class StatsController {
             // @ts-ignore
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
@@ -108,7 +114,9 @@ export default class StatsController {
             const params = {
                 method: 'user.gettopalbums',
                 period: 'overall',
-                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
@@ -116,7 +124,9 @@ export default class StatsController {
             // @ts-ignore
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
@@ -152,7 +162,9 @@ export default class StatsController {
             const params = {
                 method: 'user.gettoptags',
                 period: 'overall',
-                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
@@ -160,7 +172,9 @@ export default class StatsController {
             // @ts-ignore
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
@@ -194,7 +208,9 @@ export default class StatsController {
             const { secondaryClient } = req.query;
             const params = {
                 method: 'chart.gettopartists',
-                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
@@ -202,7 +218,9 @@ export default class StatsController {
             // @ts-ignore
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
@@ -237,7 +255,9 @@ export default class StatsController {
             const { secondaryClient } = req.query;
             const params = {
                 method: 'chart.gettoptracks',
-                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
@@ -245,7 +265,9 @@ export default class StatsController {
             // @ts-ignore
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {
@@ -281,7 +303,9 @@ export default class StatsController {
             const { secondaryClient } = req.query;
             const params = {
                 method: 'chart.gettopalbums',
-                api_key: secondaryClient ? LastFmTools.secondaryClientId : LastFmTools.clientId,
+                api_key: JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientId
+                    : LastFmTools.clientId,
                 format: 'json',
                 page: '1',
                 sk: sessionkey,
@@ -289,7 +313,9 @@ export default class StatsController {
             // @ts-ignore
             params.api_sig = LastFmTools.createSignature(
                 params,
-                secondaryClient ? LastFmTools.secondaryClientSecret : LastFmTools.clientSecret,
+                JSON.parse((secondaryClient as string) || 'false')
+                    ? LastFmTools.secondaryClientSecret
+                    : LastFmTools.clientSecret,
             );
             const response = await axios.get('https://ws.audioscrobbler.com/2.0', { params });
             const {

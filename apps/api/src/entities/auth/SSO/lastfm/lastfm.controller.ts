@@ -21,7 +21,9 @@ export default class LastFmController extends SSOController {
         const { secondaryClientId } = req.query;
 
         const params = {
-            api_key: secondaryClientId ? LastFmTools.secondaryClientId : LastFmController.clientId,
+            api_key: JSON.parse((secondaryClientId as string) || 'false')
+                ? LastFmTools.secondaryClientId
+                : LastFmController.clientId,
         };
         // @ts-ignore
         const url = `https://www.last.fm/api/auth/?${new URLSearchParams(params)}`;
@@ -43,7 +45,10 @@ export default class LastFmController extends SSOController {
                 access_token: token,
                 expires_in: 3600,
             };
-            const sessionKey = await LastFmTools.getSessionKey(SSOToken, !!secondaryClientId);
+            const sessionKey = await LastFmTools.getSessionKey(
+                SSOToken,
+                !!JSON.parse((secondaryClientId as string) || 'false'),
+            );
             const user: ServiceUserData = await LastFmTools.getUserInfos(
                 SSOToken.access_token,
                 sessionKey,

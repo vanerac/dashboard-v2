@@ -17,7 +17,9 @@ export default class DeezerController extends SSOController {
         const { secondaryClientId, callbackURL } = req.query;
         const scopes = DeezerController.scope.split(',');
         const params = {
-            client_id: secondaryClientId ? DeezerTools.secondaryClientId : DeezerController.clientId,
+            client_id: JSON.parse((secondaryClientId as string) || 'false')
+                ? DeezerTools.secondaryClientId
+                : DeezerController.clientId,
             redirect_uri: callbackURL || DeezerController.callbackURL,
             scope: scopes.join(','),
             response_type: 'code',
@@ -37,7 +39,7 @@ export default class DeezerController extends SSOController {
             if (!code || typeof code !== 'string') {
                 throw new Error('No code provided');
             }
-            const SSOToken = await DeezerTools.getToken(code, !!secondaryClientId);
+            const SSOToken = await DeezerTools.getToken(code, !!JSON.parse((secondaryClientId as string) || 'false'));
             const user: ServiceUserData = await DeezerTools.getUserInfos(SSOToken.access_token);
             let userData: User & any = await findUserByService('deezer', user.id);
 
