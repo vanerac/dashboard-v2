@@ -34,7 +34,7 @@ const Dasboard = () => {
             serviceId: undefined,
             x: 0,
             y: 0,
-            width: 2,
+            width: 4,
             height: 2,
             type: typeService,
             data: 'string',
