@@ -27,6 +27,10 @@ export default {
     lastfmClientSecret: process.env.LASTFM_CLIENT_SECRET || '',
     lastfmRedirectUri: process.env.LASTFM_REDIRECT_URI || '',
     lastfmScopes: process.env.LASTFM_SCOPES || '',
+
+    lastFmSecondaryClientId: process.env.LASTFM_SECONDARY_CLIENT_ID || '',
+    lastFmSecondaryClientSecret: process.env.LASTFM_SECONDARY_CLIENT_SECRET || '',
+
     // Apple SSO Infos
     appleClientId: process.env.APPLE_CLIENT_ID || '',
     appleClientSecret: process.env.APPLE_CLIENT_SECRET || '',
